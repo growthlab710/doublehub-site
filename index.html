@@ -792,11 +792,12 @@
           月に1〜2回程度、プロダクトの最新情報を配信予定です。
         </p>
       </div>
-      <!-- Benchmark Email フォーム組み込み用 -->
-      <!-- TODO: Benchmark Emailのフォームコード取得後、action URLを差し替える -->
-      <form class="newsletter__form" id="newsletter-form" method="POST" action="" target="_blank">
+      <!-- MailerLite 埋め込みフォーム -->
+      <form class="newsletter__form" id="newsletter-form">
         <label for="email" class="sr-only">メールアドレス</label>
-        <input id="email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
+        <input id="email" name="fields[email]" type="email" placeholder="you@example.com" required autocomplete="email">
+        <input type="hidden" name="ml-submit" value="1">
+        <input type="hidden" name="anticsrf" value="true">
         <button type="submit" class="btn btn--teal" style="width:100%">更新案内を受け取る</button>
         <p class="newsletter__note" id="form-note" aria-live="polite">メールアドレスはニュースレター配信のみに使用します。</p>
       </form>

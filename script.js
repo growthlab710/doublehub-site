@@ -146,21 +146,39 @@
   });
 })();
 
-// ── Newsletter form ──
+// ── Newsletter form (MailerLite 埋め込み) ──
 (function () {
+  const MAILERLITE_ENDPOINT = 'https://assets.mailerlite.com/jsonp/2223697/forms/183005205234714071/takel';
+
   const form = document.getElementById('newsletter-form');
   const note = document.getElementById('form-note');
-  if (!(form instanceof HTMLFormElement) || !note) return;
+  const btn  = form ? form.querySelector('button[type="submit"]') : null;
+  if (!(form instanceof HTMLFormElement) || !note || !btn) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const data = new FormData(form);
-    const email = String(data.get('email') || '').trim();
+    const email = String(new FormData(form).get('fields[email]') || '').trim();
     if (!email) {
       note.textContent = 'メールアドレスを入力してください。';
       return;
     }
-    note.textContent = '登録ありがとうございます。本番ではニュースレター配信サービスに接続します。';
-    form.reset();
+
+    btn.disabled = true;
+    note.textContent = '送信中...';
+
+    const body = new FormData();
+    body.append('fields[email]', email);
+    body.append('ml-submit', '1');
+    body.append('anticsrf', 'true');
+
+    try {
+      await fetch(MAILERLITE_ENDPOINT, { method: 'POST', body });
+      note.textContent = '登録ありがとうございます！確認メールをお送りしました。';
+      form.reset();
+    } catch {
+      note.textContent = '通信エラーが発生しました。インターネット接続をご確認ください。';
+    } finally {
+      btn.disabled = false;
+    }
   });
 })();
