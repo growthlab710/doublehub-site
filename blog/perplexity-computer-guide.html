@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perplexity Computerとは何か——「AIが別のAIに仕事を振る」時代の到来 | DoubleHub</title>
+<meta name="description" content="2026年2月に発表されたPerplexity Computer。19のAIモデルを協調させ、複雑なワークフローを自動実行する仕組みを、個人開発者の視点でわかりやすく解説する。">
+<meta property="og:title" content="Perplexity Computerとは何か——「AIが別のAIに仕事を振る」時代の到来 | DoubleHub">
+<meta property="og:description" content="2026年2月に発表されたPerplexity Computer。19のAIモデルを協調させ、複雑なワークフローを自動実行する仕組みを、個人開発者の視点でわかりやすく解説する。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://doublehub.jp/blog/perplexity-computer-guide.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Perplexity Computerとは何か——「AIが別のAIに仕事を振る」時代の到来 | DoubleHub">
+<meta name="twitter:description" content="19のAIモデルを協調させ、複雑なワークフローを自動実行するPerplexity Computerを個人開発者の視点で解説。">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Perplexity Computerとは何か——「AIが別のAIに仕事を振る」時代の到来",
+      "author": {
+        "@type": "Person",
+        "name": "Naoki",
+        "url": "https://doublehub.jp/about.html",
+        "description": "iOSアプリ個人開発者・DoubleHub作者"
+      },
+      "datePublished": "2026-03-26",
+      "dateModified": "2026-03-26",
+      "publisher": {
+        "@type": "Organization",
+        "name": "DoubleHub"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://doublehub.jp/blog/perplexity-computer-guide.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Perplexity Computerは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Perplexity Computerは、Perplexity Maxティアで利用可能です。無料プランでは利用できないため、Maxプランへの加入が必要です。最新の料金体系はPerplexity公式サイトで確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ChatGPTとの違いは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ChatGPTは基本的に単一のモデル（GPTシリーズ）で会話を処理します。一方、Perplexity Computerは19の異なるAIモデルを協調させ、タスクの種類に応じて最適なモデルを自動選択します。たとえば推論にはOpus 4.6、リサーチにはGemini、画像生成にはNano Bananaといった使い分けです。また、各タスクが隔離されたコンピュート環境で実行される点も大きな違いです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Perplexity Computerでプログラミングもできますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい。各タスクが隔離されたコンピュート環境（ファイルシステム、ブラウザ、ツール連携を含む）で実行されるため、コードの生成・実行・テストまでを一貫して行えます。Webサイトの構築やデータ分析スクリプトの作成など、複数ステップにまたがるプログラミングタスクにも対応しています。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <nav class="breadcrumb container" aria-label="パンくずリスト">
+      <a href="../index.html">DoubleHub</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="./index.html">ブログ</a>
+      <span class="breadcrumb__sep">›</span>
+      <span>Perplexity Computerとは何か</span>
+    </nav>
+
+    <header class="article__header">
+      <span class="article__cluster" data-category="ai-info">AI情報</span>
+      <h1 class="article__title">Perplexity Computerとは何か——「AIが別のAIに仕事を振る」時代の到来</h1>
+      <div class="article__meta">
+        <span>著者: <a class="article__author-link" href="../about.html">Naoki</a></span>
+        <span class="article__meta-sep">|</span>
+        <span>公開: 2026年3月26日</span>
+      </div>
+      <p class="article__updated">最終更新: 2026年3月26日</p>
+    </header>
+
+    <div class="article__content">
+
+      <p><strong>「AIに仕事を頼む」のではなく、「AIが別のAIに仕事を振る」。</strong>2026年2月にPerplexityが発表した「Perplexity Computer」は、19の異なるAIモデルを協調させ、複雑なタスクをサブエージェントに分割して自動実行する仕組みです。従来の「1つのAIに1つの質問」というインターフェースを根本から変えるこのプロダクトを、個人開発者の視点で解説します。</p>
+
+      <h2>Perplexity Computerの概要——「汎用デジタルワーカー」</h2>
+
+      <p>Perplexity Computerは、Perplexityが「汎用デジタルワーカー」と呼ぶAIエージェントシステムです。Ars Technicaの報道では「AIエージェントが他のAIエージェントに仕事を割り当てる」と表現されています。</p>
+
+      <p>基本的な動作フローは以下の通りです。</p>
+
+      <ol>
+        <li><strong>目標の記述:</strong> ユーザーが達成したいゴールを自然言語で伝える</li>
+        <li><strong>タスク分解:</strong> メインエージェントがゴールをタスクとサブタスクに分解する</li>
+        <li><strong>サブエージェント割り当て:</strong> 各サブタスクに最適なAIモデルを選択し、サブエージェントとして割り当てる</li>
+        <li><strong>並列実行:</strong> 各サブエージェントが隔離されたコンピュート環境で独立に実行する</li>
+        <li><strong>統合:</strong> 結果を統合してユーザーに返す</li>
+      </ol>
+
+      <p>Perplexity公式ブログによれば、このアーキテクチャはOpenClawの直接的な後継として位置づけられています。</p>
+
+      <h2>19モデル協調——なぜ複数のAIを使い分けるのか</h2>
+
+      <p>Perplexity Computerの最大の特徴は、19の異なるAIモデルを目的別に使い分ける点です。Forbesの報道によれば、主なモデルの役割分担は以下のようになっています。</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>役割</th>
+            <th>使用モデル</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>コア推論</td>
+            <td>Opus 4.6</td>
+          </tr>
+          <tr>
+            <td>リサーチ</td>
+            <td>Gemini</td>
+          </tr>
+          <tr>
+            <td>画像生成</td>
+            <td>Nano Banana</td>
+          </tr>
+          <tr>
+            <td>動画生成</td>
+            <td>Veo 3.1</td>
+          </tr>
+          <tr>
+            <td>高速処理</td>
+            <td>Grok</td>
+          </tr>
+          <tr>
+            <td>長文コンテキスト</td>
+            <td>ChatGPT 5.2</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>なぜ単一のモデルではなく複数を使い分けるのか。理由はシンプルで、現時点では「すべてが得意なAI」は存在しないからです。推論が強いモデルは画像生成が苦手だったり、高速なモデルは深い分析に弱かったりする。Perplexity Computerは、各モデルの強みだけを組み合わせることで、単一モデルでは到達できない品質を目指しています。</p>
+
+      <h2>サブエージェント分割——タスクの「分業」の仕組み</h2>
+
+      <p>Perplexity Computerのもう一つの核心は、サブエージェントによるタスク分割です。</p>
+
+      <p>たとえば「競合3社のSaaS製品を比較して、レポートをPDFで作成して」と依頼した場合、以下のように分割されます。</p>
+
+      <ul>
+        <li><strong>リサーチ担当:</strong> 各社の公式サイトやレビューサイトから情報を収集（Geminiが担当）</li>
+        <li><strong>分析担当:</strong> 収集した情報を構造化し、比較軸を整理（Opus 4.6が担当）</li>
+        <li><strong>ビジュアル担当:</strong> 比較表やグラフを生成（専用モデルが担当）</li>
+        <li><strong>文書作成担当:</strong> レポートをPDF形式で出力（コンピュート環境で実行）</li>
+      </ul>
+
+      <p>これらのサブタスクは可能な限り並列で実行されるため、人間が順番にこなすよりもはるかに速い。Ars Technicaはこの仕組みを「AIエージェントが他のAIエージェントに仕事を割り当てる」と評しています。</p>
+
+      <h2>隔離されたコンピュート環境——安全に「実行」できる理由</h2>
+
+      <p>従来のAIチャットボットは「テキストを生成する」だけでした。Perplexity Computerは違います。各タスクが隔離されたコンピュート環境で実行されます。この環境には以下が含まれます。</p>
+
+      <ul>
+        <li><strong>ファイルシステム:</strong> ファイルの作成・編集・保存が可能</li>
+        <li><strong>ブラウザ:</strong> Webページの閲覧・情報収集が可能</li>
+        <li><strong>ツール連携:</strong> 外部サービスとの接続が可能</li>
+      </ul>
+
+      <p>「隔離されている」というのがポイントです。各サブエージェントは独立した環境で動くため、あるタスクの失敗が他のタスクに影響しません。セキュリティの観点からも、ユーザーのローカル環境に直接アクセスすることなく、サンドボックス内で完結する設計です。</p>
+
+      <h2>個人開発者・個人利用者にとってのメリット</h2>
+
+      <p>Perplexity Computerは企業向けの大規模ツールに見えるかもしれませんが、個人にとっても大きなメリットがあります。</p>
+
+      <h3>1. 一人で「チーム」を持てる</h3>
+
+      <p>個人開発者にとって最大のボトルネックは「自分一人しかいない」ことです。リサーチ、デザイン、コーディング、ドキュメント作成——すべてを自分でやる必要がある。Perplexity Computerは、これらを並列に処理してくれるサブエージェント群を提供します。実質的に、一人でありながら小さなチームを持てるようになります。</p>
+
+      <h3>2. ツールの選定が不要になる</h3>
+
+      <p>「この作業にはどのAIモデルが最適か」を考える必要がなくなります。リサーチにはGemini、推論にはOpus、画像にはNano Bananaと、Perplexity Computerが自動で最適なモデルを選んでくれる。AIツールの選定に費やしていた時間を、本来の開発に充てられます。</p>
+
+      <h3>3. 複雑なワークフローの自動化</h3>
+
+      <p>「調査して → 分析して → レポートにまとめて」のような複数ステップのワークフローを、一つの指示で完了できます。個人利用者にとっても、旅行の計画、確定申告の準備、引っ越しの比較検討など、調べものと実行が絡む作業で威力を発揮します。</p>
+
+      <h2>従来のAIチャットとの違いを整理する</h2>
+
+      <p>Perplexity Computerの位置づけを明確にするために、従来のAIチャットボットとの違いを整理します。</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>従来のAIチャット</th>
+            <th>Perplexity Computer</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>モデル</td>
+            <td>単一モデル</td>
+            <td>19モデル協調</td>
+          </tr>
+          <tr>
+            <td>タスク処理</td>
+            <td>1問1答の逐次処理</td>
+            <td>サブタスク分割・並列実行</td>
+          </tr>
+          <tr>
+            <td>実行環境</td>
+            <td>テキスト生成のみ</td>
+            <td>ファイルシステム・ブラウザ・ツール連携</td>
+          </tr>
+          <tr>
+            <td>得意領域</td>
+            <td>対話・文章生成</td>
+            <td>複数ステップのワークフロー全体</td>
+          </tr>
+          <tr>
+            <td>出力</td>
+            <td>テキスト</td>
+            <td>テキスト・ファイル・画像・動画</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>つまり、従来のAIチャットが「賢い会話相手」だとすれば、Perplexity Computerは「仕事を実際にやってくれるチーム」です。質問に答えるだけでなく、ファイルを作り、調べ物をし、結果をまとめるところまでを一貫して行います。</p>
+
+      <h2>利用条件と注意点</h2>
+
+      <p>Perplexity Computerは、Perplexity Maxティアで利用可能です。無料プランでは利用できません。</p>
+
+      <p>注意すべき点もあります。</p>
+
+      <ul>
+        <li><strong>実行結果の確認は必須:</strong> AIが自動で実行するとはいえ、生成されたファイルやレポートの内容は必ず人間が確認すべきです</li>
+        <li><strong>複雑すぎるタスクは分割して指示:</strong> 一度に大きすぎるゴールを与えると、タスク分解の精度が落ちる場合があります</li>
+        <li><strong>機密情報の取り扱い:</strong> クラウド上のコンピュート環境で実行されるため、機密性の高いデータの取り扱いには注意が必要です</li>
+      </ul>
+
+      <h2>まとめ——「AIがAIに仕事を振る」時代の意味</h2>
+
+      <p>Perplexity Computerが示しているのは、AIの使い方の次のフェーズです。これまでは「人間がAIに質問する」という1対1の関係でした。これからは「人間がゴールを伝え、AIがAIに仕事を振る」という1対多の関係になる。</p>
+
+      <p>個人開発者にとって、これは一人で戦える範囲が飛躍的に広がることを意味します。19のモデルが得意分野で協調してくれるのは、19人の専門家チームを持つのに近い。もちろん現時点では完璧ではありませんが、方向性として「AIエージェントの協調」が主流になっていくのは間違いないでしょう。</p>
+
+      <p>重要なのは、この技術を「すごい」で終わらせず、自分の日常のワークフローにどう組み込むかを考えることです。</p>
+
+      <!-- CTA Banner -->
+      <div class="article-cta">
+        <h3 class="article-cta__title">DoubleHubサイトもPerplexity Computerで構築しています</h3>
+        <p class="article-cta__desc">このDoubleHubのサイト自体が、Perplexity Computerを活用して構築されています。AIエージェントの実力を体感したい方は、ぜひサイト全体をご覧ください。</p>
+        <a class="btn btn--primary" href="../index.html">DoubleHubトップページへ →</a>
+      </div>
+
+    </div>
+
+    <!-- Sources Section -->
+    <section class="article-sources">
+      <h2>出典・参考</h2>
+      <ul class="sources-list">
+        <li><a href="https://www.perplexity.ai/hub/blog/introducing-perplexity-computer" target="_blank" rel="noopener noreferrer">Introducing Perplexity Computer — Perplexity公式ブログ（2026年2月25日）</a></li>
+        <li><a href="https://arstechnica.com/ai/2026/02/perplexity-announces-computer-an-ai-agent-that-assigns-work-to-other-ai-agents/" target="_blank" rel="noopener noreferrer">Perplexity announces Computer, an AI agent that assigns work to other AI agents — Ars Technica（2026年2月26日）</a></li>
+        <li><a href="https://www.forbes.com/sites/ronschmelzer/2026/02/27/perplexity-computer-links-ai-agents-to-do-the-work/" target="_blank" rel="noopener noreferrer">Perplexity Computer Links AI Agents To Do The Work — Forbes（2026年2月27日）</a></li>
+      </ul>
+    </section>
+
+    <!-- FAQ Section -->
+    <div class="article__faq">
+      <h2>よくある質問</h2>
+      <details open>
+        <summary>Perplexity Computerは無料で使えますか？</summary>
+        <p>Perplexity Computerは、Perplexity Maxティアで利用可能です。無料プランでは利用できないため、Maxプランへの加入が必要です。最新の料金体系はPerplexity公式サイトで確認してください。</p>
+      </details>
+      <details>
+        <summary>ChatGPTとの違いは何ですか？</summary>
+        <p>ChatGPTは基本的に単一のモデル（GPTシリーズ）で会話を処理します。一方、Perplexity Computerは19の異なるAIモデルを協調させ、タスクの種類に応じて最適なモデルを自動選択します。たとえば推論にはOpus 4.6、リサーチにはGemini、画像生成にはNano Bananaといった使い分けです。また、各タスクが隔離されたコンピュート環境で実行される点も大きな違いです。</p>
+      </details>
+      <details>
+        <summary>Perplexity Computerでプログラミングもできますか？</summary>
+        <p>はい。各タスクが隔離されたコンピュート環境（ファイルシステム、ブラウザ、ツール連携を含む）で実行されるため、コードの生成・実行・テストまでを一貫して行えます。Webサイトの構築やデータ分析スクリプトの作成など、複数ステップにまたがるプログラミングタスクにも対応しています。</p>
+      </details>
+    </div>
+
+    <!-- Author Box -->
+    <div class="author-box">
+      <div class="author-box__avatar">N</div>
+      <div>
+        <div class="author-box__name">Naoki</div>
+        <div class="author-box__role">iOSアプリ個人開発者・DoubleHub作者</div>
+        <p class="author-box__bio">
+          西日本在住。Swift を中心に AI×習慣化×自己理解をテーマとしたアプリを開発。TrainNote、Book Compass、DoubleHub の作者。
+        </p>
+        <a class="author-box__link" href="../about.html">著者プロフィールを見る →</a>
+      </div>
+    </div>
+
+    <!-- Related Articles -->
+    <div class="related-articles">
+      <h2 class="related-articles__title">関連記事</h2>
+      <div class="related-articles__grid">
+        <a class="related-card" href="./claude-code-auto-mode.html">
+          <span class="related-card__cluster">AIニュース</span>
+          <span class="related-card__title">Claude Code「Auto Mode」登場——AIが自分で安全なアクションを判断する時代に</span>
+        </a>
+        <a class="related-card" href="./indie-dev-ai-implementation.html">
+          <span class="related-card__cluster">個人開発×AI</span>
+          <span class="related-card__title">個人開発でAI機能を実装する方法</span>
+        </a>
+        <a class="related-card" href="./ai-habit-guide.html">
+          <span class="related-card__cluster">AI×習慣化</span>
+          <span class="related-card__title">AIを活用した習慣化の完全ガイド2026</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<!-- Footer -->
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

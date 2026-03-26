@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code「Auto Mode」登場——AIが自分で安全なアクションを判断する時代に | DoubleHub</title>
+<meta name="description" content="Anthropicが2026年3月にリリースしたClaude Codeの新機能「Auto Mode」を解説。開発者の日常ワークフローがどう変わるのか、個人開発者の視点から紹介する。">
+<meta property="og:title" content="Claude Code「Auto Mode」登場——AIが自分で安全なアクションを判断する時代に | DoubleHub">
+<meta property="og:description" content="Anthropicが2026年3月にリリースしたClaude Codeの新機能「Auto Mode」を解説。開発者の日常ワークフローがどう変わるのか、個人開発者の視点から紹介する。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://doublehub.jp/blog/claude-code-auto-mode.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Code「Auto Mode」登場——AIが自分で安全なアクションを判断する時代に | DoubleHub">
+<meta name="twitter:description" content="Anthropicが2026年3月にリリースしたClaude Codeの新機能「Auto Mode」を解説。個人開発者の視点から紹介。">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Claude Code「Auto Mode」登場——AIが自分で安全なアクションを判断する時代に",
+      "author": {
+        "@type": "Person",
+        "name": "Naoki",
+        "url": "https://doublehub.jp/about.html",
+        "description": "iOSアプリ個人開発者・DoubleHub作者"
+      },
+      "datePublished": "2026-03-26",
+      "dateModified": "2026-03-26",
+      "publisher": {
+        "@type": "Organization",
+        "name": "DoubleHub"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://doublehub.jp/blog/claude-code-auto-mode.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Auto Modeは無料で使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Auto Modeは現在リサーチプレビューとして公開されており、Claude CodeのCLIツールを利用できるユーザーであれば追加料金なしで試すことができます。ただし対応モデルはClaude Sonnet 4.6およびOpus 4.6に限定されています。Enterprise/APIユーザー向けに順次展開中のため、最新の利用条件はAnthropic公式サイトで確認してください。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Auto Modeでコードが壊れるリスクはありますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Auto Modeでは、AIが各アクションの安全性を自動判断しますが、リスクがゼロになるわけではありません。Anthropicも「isolated environments（隔離された環境）」での使用を推奨しています。Gitでブランチを切ってから使う、テスト環境で動かすなど、従来のソフトウェア開発のベストプラクティスと併用することが重要です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Auto Modeと従来のdangerously-skip-permissionsの違いは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "dangerously-skip-permissionsはすべての確認をスキップする「全許可」モードでした。Auto Modeは、AIがアクションごとにリスクを判断し、安全なものだけを自動実行する仕組みです。つまり、利便性と安全性のバランスを取った進化版と言えます。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <nav class="breadcrumb container" aria-label="パンくずリスト">
+      <a href="../index.html">DoubleHub</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="./index.html">ブログ</a>
+      <span class="breadcrumb__sep">›</span>
+      <span>Claude Code「Auto Mode」登場</span>
+    </nav>
+
+    <header class="article__header">
+      <span class="article__cluster" data-category="ai-news">AIニュース</span>
+      <h1 class="article__title">Claude Code「Auto Mode」登場——AIが自分で安全なアクションを判断する時代に</h1>
+      <div class="article__meta">
+        <span>著者: <a class="article__author-link" href="../about.html">Naoki</a></span>
+        <span class="article__meta-sep">|</span>
+        <span>公開: 2026年3月26日</span>
+      </div>
+      <p class="article__updated">最終更新: 2026年3月26日</p>
+    </header>
+
+    <div class="article__content">
+
+      <p><strong>Anthropicが、Claude Codeに「Auto Mode」を追加した。</strong>2026年3月24日にリサーチプレビューとして公開されたこの機能は、AIが各アクションの安全性を自分で判断し、安全なものは確認なしで自動実行するという仕組みです。個人開発者にとっては、開発中の「承認疲れ」から解放される大きな一歩。本記事では、Auto Modeの仕組みと、同時に追加されたauto-plan・auto-memory・voice modeの3つの新機能について解説します。</p>
+
+      <h2>Auto Modeとは何か——「全許可」ではなく「賢い判断」</h2>
+
+      <p>Claude Codeにはこれまで<code>dangerously-skip-permissions</code>というフラグがありました。名前の通り、すべての確認をスキップする「全許可」モードです。便利ではあるものの、危険なコマンドも無条件で実行されるリスクがありました。</p>
+
+      <p>Auto Modeはその安全版です。AIがタスク実行時にアクションごとのリスクを評価し、安全と判断したものだけを自動で実行します。ファイルの読み取りやコードの生成など低リスクな操作は自動で進み、ファイルの削除やシステム設定の変更など高リスクな操作ではユーザーに確認を求めます。</p>
+
+      <p>TechCrunchの報道によれば、Anthropicはこの機能を「Claude Codeにより多くの制御を渡しつつも、手綱は握ったまま」と位置づけています。</p>
+
+      <h3>対応モデルと利用条件</h3>
+
+      <p>Auto Modeが利用できるのは、現時点でClaude Sonnet 4.6とOpus 4.6のみです。Enterprise/APIユーザー向けに順次展開されており、リサーチプレビューとして提供されています。Anthropicは「isolated environments（隔離された環境）」での使用を推奨しています。</p>
+
+      <h2>Auto Modeの具体的な動作イメージ</h2>
+
+      <p>たとえば「このSwiftファイルにユニットテストを追加して」と指示したケースを考えてみます。</p>
+
+      <p>Auto Mode以前は、テストファイルの作成、import文の追加、テストケースの記述、ファイルの保存——それぞれの操作でClaude Codeが「この操作を実行してよいですか？」と確認を求めてきました。テスト1つ書くだけで4〜5回の承認が必要になることも珍しくありません。</p>
+
+      <p>Auto Modeでは、これらの操作はすべて「安全」と判断され、自動で実行されます。一方、既存のプロダクションコードを大幅に書き換えるような操作では、従来通り確認が入ります。AIが操作のリスクレベルを判断し、適切な境界線を引いてくれるわけです。</p>
+
+      <h2>同時に追加された3つの新機能</h2>
+
+      <p>Auto Modeと同時期に、Claude Codeには3つの注目すべき機能が追加されています。</p>
+
+      <h3>1. Auto-Plan——自動でプランモードに切り替わる</h3>
+
+      <p>従来のClaude Codeでは、複雑なタスクを依頼したときに「まず計画を立てて」と手動で指示する必要がありました。Auto-Planでは、タスクの複雑さをAIが判断し、必要に応じて自動的にプランニングモードに切り替わります。</p>
+
+      <p>個人開発者にとってこれは地味に大きい。たとえば「このViewControllerをリファクタリングして」と投げたとき、AIがまず影響範囲を整理し、ステップを分解してから実行に移る。手動で段取りを指示する手間が省けます。</p>
+
+      <h3>2. Auto-Memory——ミスから学習するAI</h3>
+
+      <p>Auto-Memoryは、Claude Codeが自分の過去のミスや修正パターンを記憶し、同じ失敗を繰り返さないようにする仕組みです。</p>
+
+      <p>これは個人開発で特に効きます。プロジェクト固有のコーディング規約や、特定のライブラリの使い方など、繰り返し指摘していた内容をAIが自動で学習してくれる。セッションをまたいでも「前回言ったこと」が引き継がれるのは、一人で開発している身には心強いものがあります。</p>
+
+      <h3>3. Voice Mode——音声入力でプロンプトの摩擦を軽減</h3>
+
+      <p>Voice Modeは、音声でClaude Codeにプロンプトを入力できる機能です。キーボードから手を離さずにコードの修正指示を出したり、考えをそのまま話してタスクを依頼したりできます。</p>
+
+      <p>ターミナルで長いプロンプトを打つ手間が減るだけでなく、「この関数、引数の順番おかしい気がするから直して」といった口語的な指示もそのまま通る。思考の流れを止めずに開発を続けられる点が魅力です。</p>
+
+      <h2>個人開発者にとって何が変わるのか</h2>
+
+      <p>Auto Modeと3つの新機能を合わせると、Claude Codeの使い方が根本的に変わります。個人開発者の視点で整理すると、以下の3つの変化が大きいです。</p>
+
+      <h3>承認疲れからの解放</h3>
+
+      <p>個人開発では、AIにコード生成を任せつつも、ファイル操作のたびに「y/n」で承認する作業が地味にストレスでした。Auto Modeにより、安全な操作は自動で進むため、開発のフロー状態を維持しやすくなります。</p>
+
+      <h3>文脈の蓄積</h3>
+
+      <p>Auto-Memoryによって、プロジェクト固有の知識がセッション間で蓄積されます。一人で開発していると「前にこう決めた」という暗黙知が多くなりがちですが、それをAIが覚えてくれるのは実質的なペアプログラマーを得たようなものです。</p>
+
+      <h3>計画の自動化</h3>
+
+      <p>Auto-Planにより、複雑なリファクタリングや機能追加でも、まずAIが計画を立ててくれる。個人開発者は設計判断に集中でき、段取りの部分はAIに任せられます。</p>
+
+      <h2>実際の開発フローはどう変わるか</h2>
+
+      <p>Auto Mode導入前後で、個人開発の典型的なフローがどう変わるかを整理します。</p>
+
+      <h3>Before: Auto Mode以前</h3>
+      <ol>
+        <li>タスクを指示する</li>
+        <li>Claude Codeが計画を提示（手動でplan modeを指定）</li>
+        <li>計画を確認して承認</li>
+        <li>各ファイル操作のたびに承認（5〜10回）</li>
+        <li>途中で前のセッションの文脈が失われ、再度説明</li>
+      </ol>
+
+      <h3>After: Auto Mode + 新機能</h3>
+      <ol>
+        <li>タスクを指示する（音声入力も可）</li>
+        <li>Auto-Planが自動で計画を立てる</li>
+        <li>安全な操作は自動実行、高リスク操作のみ確認</li>
+        <li>Auto-Memoryがプロジェクトの文脈を記憶</li>
+      </ol>
+
+      <p>承認回数が大幅に減り、セッションをまたいだ文脈も維持される。結果として、一つのタスクにかかる「作業以外の時間」が目に見えて短くなります。</p>
+
+      <h2>注意点——安全に使うために</h2>
+
+      <p>Auto Modeは便利ですが、万能ではありません。Anthropicが「isolated environments」での使用を推奨しているのには理由があります。</p>
+
+      <ul>
+        <li><strong>Gitブランチを切ってから使う:</strong> Auto Modeで自動実行されたコード変更は、必ずブランチ上で行い、レビュー後にマージするのが安全です</li>
+        <li><strong>テスト環境で動かす:</strong> 本番環境のデータベースに直接触れる操作は、Auto Modeであっても避けるべきです</li>
+        <li><strong>リサーチプレビューであることを意識する:</strong> まだ正式リリースではないため、予期しない挙動がある可能性を念頭に置いてください</li>
+      </ul>
+
+      <p>AIに任せる範囲が広がるほど、人間側のレビューの質が重要になる。これはAuto Modeに限らず、AIコーディングツール全般に言えることです。</p>
+
+      <h2>まとめ——「AIが判断する」時代の始まり</h2>
+
+      <p>Claude CodeのAuto Modeは、単なる利便性の向上ではありません。「どのアクションが安全か」をAI自身が判断するという、AIエージェントの自律性における重要な一歩です。</p>
+
+      <p>個人開発者にとっては、承認疲れの解消、文脈の蓄積、計画の自動化という3つの恩恵が大きい。一方で、隔離環境での使用やGitを活用した安全策は引き続き欠かせません。</p>
+
+      <p>AIが賢くなるほど、それを使う人間の判断力が問われる。Auto Modeはその問いを改めて突きつけてくる機能です。</p>
+
+      <!-- CTA Banner -->
+      <div class="article-cta">
+        <h3 class="article-cta__title">DoubleHubも開発にClaude Codeを活用しています</h3>
+        <p class="article-cta__desc">DoubleHubのサイト構築やアプリ開発では、Claude Codeを日常的に活用しています。AIツールを使った個人開発の実践例に興味がある方は、ぜひトップページをご覧ください。</p>
+        <a class="btn btn--primary" href="../index.html">DoubleHubトップページへ →</a>
+      </div>
+
+    </div>
+
+    <!-- Sources Section -->
+    <section class="article-sources">
+      <h2>出典・参考</h2>
+      <ul class="sources-list">
+        <li><a href="https://techcrunch.com/2026/03/24/anthropic-hands-claude-code-more-control-but-keeps-it-on-a-leash/" target="_blank" rel="noopener noreferrer">Anthropic hands Claude Code more control, but keeps it on a leash — TechCrunch（2026年3月24日）</a></li>
+        <li><a href="https://www.youtube.com/watch?v=A_ZebzPOY1k" target="_blank" rel="noopener noreferrer">Claude Code changed recently — YouTube（2026年3月12日）</a></li>
+      </ul>
+    </section>
+
+    <!-- FAQ Section -->
+    <div class="article__faq">
+      <h2>よくある質問</h2>
+      <details open>
+        <summary>Auto Modeは無料で使えますか？</summary>
+        <p>Auto Modeは現在リサーチプレビューとして公開されており、Claude CodeのCLIツールを利用できるユーザーであれば追加料金なしで試すことができます。ただし対応モデルはClaude Sonnet 4.6およびOpus 4.6に限定されています。Enterprise/APIユーザー向けに順次展開中のため、最新の利用条件はAnthropic公式サイトで確認してください。</p>
+      </details>
+      <details>
+        <summary>Auto Modeでコードが壊れるリスクはありますか？</summary>
+        <p>Auto Modeでは、AIが各アクションの安全性を自動判断しますが、リスクがゼロになるわけではありません。Anthropicも「isolated environments（隔離された環境）」での使用を推奨しています。Gitでブランチを切ってから使う、テスト環境で動かすなど、従来のソフトウェア開発のベストプラクティスと併用することが重要です。</p>
+      </details>
+      <details>
+        <summary>Auto Modeと従来のdangerously-skip-permissionsの違いは何ですか？</summary>
+        <p>dangerously-skip-permissionsはすべての確認をスキップする「全許可」モードでした。Auto Modeは、AIがアクションごとにリスクを判断し、安全なものだけを自動実行する仕組みです。つまり、利便性と安全性のバランスを取った進化版と言えます。</p>
+      </details>
+    </div>
+
+    <!-- Author Box -->
+    <div class="author-box">
+      <div class="author-box__avatar">N</div>
+      <div>
+        <div class="author-box__name">Naoki</div>
+        <div class="author-box__role">iOSアプリ個人開発者・DoubleHub作者</div>
+        <p class="author-box__bio">
+          西日本在住。Swift を中心に AI×習慣化×自己理解をテーマとしたアプリを開発。TrainNote、Book Compass、DoubleHub の作者。
+        </p>
+        <a class="author-box__link" href="../about.html">著者プロフィールを見る →</a>
+      </div>
+    </div>
+
+    <!-- Related Articles -->
+    <div class="related-articles">
+      <h2 class="related-articles__title">関連記事</h2>
+      <div class="related-articles__grid">
+        <a class="related-card" href="./perplexity-computer-guide.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">Perplexity Computerとは何か——「AIが別のAIに仕事を振る」時代の到来</span>
+        </a>
+        <a class="related-card" href="./indie-dev-ai-implementation.html">
+          <span class="related-card__cluster">個人開発×AI</span>
+          <span class="related-card__title">個人開発でAI機能を実装する方法</span>
+        </a>
+        <a class="related-card" href="./ai-habit-guide.html">
+          <span class="related-card__cluster">AI×習慣化</span>
+          <span class="related-card__title">AIを活用した習慣化の完全ガイド2026</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<!-- Footer -->
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

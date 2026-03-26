@@ -1,0 +1,21 @@
+{
+  "name": "DoubleHub",
+  "short_name": "DoubleHub",
+  "description": "あなたの成長データをつなぎ、もう一人の自分を育てるプロジェクト",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAFA",
+  "theme_color": "#2A9D8F",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="./favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Compass — 読んだ本が、思考の地図になる | DoubleHub</title>
+<meta name="description" content="Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。">
+<meta property="og:title" content="Book Compass — 読んだ本が、思考の地図になる | DoubleHub">
+<meta property="og:description" content="Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://doublehub.jp/bookcompass.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Book Compass — 読んだ本が、思考の地図になる | DoubleHub">
+<meta name="twitter:description" content="Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。">
+<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="./index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="./images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="./trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="./bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="./index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./blog/index.html">ブログ</a>
+      <a class="nav__link" href="./about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="section container">
+    <div class="detail-hero">
+      <div class="detail-hero__copy">
+        <span class="app-name-tag">Book Compass</span>
+        <h1 class="section__title" style="font-size:var(--text-2xl)">読んだ本が、<br>思考の地図になっていく。</h1>
+        <p class="section__subtitle">
+          Book Compass は、読書記録を整理しながら、関心や価値観の変化を可視化するサービスです。
+          DoubleHub につながると、その地図は「何を大事にしているか」の輪郭になります。
+        </p>
+        <div class="hero__actions" style="justify-content:flex-start;margin-top:var(--space-6)">
+          <a href="https://apps.apple.com/us/app/bookcompass-%E8%AA%AD%E6%9B%B8%E7%9F%A5%E8%AD%98%E3%83%9E%E3%83%83%E3%83%97/id6760604663?itscg=30200&itsct=apps_box_badge&mttnsubad=6760604663" target="_blank" rel="noopener noreferrer">
+            <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000" alt="App Storeでダウンロード" style="height:44px;object-fit:contain;" />
+          </a>
+          <a class="btn btn--secondary" href="./index.html#ecosystem">全体構想に戻る</a>
+        </div>
+      </div>
+
+      <div class="spotlight__visual">
+        <div class="phone-mock">
+          <img src="./images/bookcompass-map.jpg" alt="Book Compass ナレッジマップ画面" class="phone-mock__real-img" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- App Screenshots -->
+  <section class="section--tight container">
+    <div class="section__header fade-in">
+      <span class="section__label">App Screenshots</span>
+      <h2 class="section__title">Book Compass の主な画面。</h2>
+    </div>
+    <div class="detail-screenshots fade-in">
+      <figure class="detail-screenshot-item">
+        <img src="./images/bookcompass-map.jpg" alt="ナレッジ・コンパス — 領域マップ" loading="lazy">
+        <figcaption>ナレッジ・コンパス — 読書の広がり</figcaption>
+      </figure>
+      <figure class="detail-screenshot-item">
+        <img src="./images/bookcompass-axis.jpg" alt="偏りの見取り図" loading="lazy">
+        <figcaption>偏りの見取り図 — 傾向バランス</figcaption>
+      </figure>
+      <figure class="detail-screenshot-item">
+        <img src="./images/bookcompass-detail.jpg" alt="本の詳細画面" loading="lazy">
+        <figcaption>本棚 — ステータスと知的ポジション</figcaption>
+      </figure>
+      <figure class="detail-screenshot-item">
+        <img src="./images/bookcompass-summary.jpg" alt="読書サマリー" loading="lazy">
+        <figcaption>読書サマリー — AI による整理</figcaption>
+      </figure>
+      <figure class="detail-screenshot-item">
+        <img src="./images/bookcompass-notes.jpg" alt="呟きメモ一覧" loading="lazy">
+        <figcaption>呟き — 読書中の気づき</figcaption>
+      </figure>
+      <figure class="detail-screenshot-item">
+        <img src="./images/bookcompass-explore.jpg" alt="探す画面" loading="lazy">
+        <figcaption>探す — AI が理由つきで提案</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- What Book Compass Does -->
+  <section class="section--tight container">
+    <div class="section__header fade-in">
+      <span class="section__label">Features</span>
+      <h2 class="section__title">Book Compass でできること。</h2>
+    </div>
+    <div class="detail-grid fade-in">
+      <article class="detail-card">
+        <span class="section__label">Knowledge Compass</span>
+        <h3 class="detail-card__title">読書の広がりが地図になる。</h3>
+        <p class="detail-card__desc">
+          思想・哲学、社会・ビジネス、文学、科学など領域ごとの読書バランスを可視化。
+          気になる領域をタップすると、傾向バランスを軸で見られます。
+        </p>
+      </article>
+      <article class="detail-card">
+        <span class="section__label">AI Reading Summary</span>
+        <h3 class="detail-card__title">読んだ記録をAIが整理し、あとから意味のある形にする。</h3>
+        <p class="detail-card__desc">
+          読書中のつぶやきを保存するだけでなく、AIが「印象の要約」「繰り返し出ているテーマ」
+          「行動につながった示唆」「未整理の論点」に整理。後から見返したとき、自分の思考の流れが追いやすい状態に。
+        </p>
+      </article>
+      <article class="detail-card">
+        <span class="section__label">Book Recommendation</span>
+        <h3 class="detail-card__title">次に読む本を、"理由つき"で提案する。</h3>
+        <p class="detail-card__desc">
+          過去の呟きや読書傾向をもとに、「深める」と「広げる」の2軸で次の一冊を提案。
+          なぜこの本が自分に合うのか、納得できる理由が見えるレコメンド。
+        </p>
+      </article>
+      <article class="detail-card">
+        <span class="section__label">What Double Learns</span>
+        <h3 class="detail-card__title">ダブルが理解するのは、読了冊数ではなく思考の方向。</h3>
+        <ul>
+          <li>最近どんなテーマに惹かれているか</li>
+          <li>繰り返し悩む問いは何か</li>
+          <li>価値観がどの方向へ動いているか</li>
+          <li>言語化しきれていない思考の傾向</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- AI Chat -->
+  <section class="section container">
+    <div class="section__header fade-in">
+      <span class="section__label">AI Chat</span>
+      <h2 class="section__title">本について、もう一人の自分と対話する。</h2>
+    </div>
+    <div class="two-col fade-in">
+      <p>
+        Book Compass のチャットは「何でも答えてくれるAI先生」ではありません。
+        あなたの読書記録を根拠にして、一緒に整理する読書パートナーです。
+        上から教え込まない、それっぽいことを断定しない。自分の読書記録を起点に、考えを深める壁打ち相手。
+      </p>
+      <p>
+        「あなたが以前こういうことを気にしていたから、今回もここが引っかかっているのかもしれない」
+        「この本で残った問いは、前に読んだ別の本の気づきとつながるかもしれない」
+        そういうふうに返せることを目指しています。
+      </p>
+    </div>
+  </section>
+
+  <!-- Flow -->
+  <section class="section container">
+    <div class="section__header fade-in">
+      <span class="section__label">Flow Into DoubleHub</span>
+      <h2 class="section__title">Book Compass から、どんな入力が入るか。</h2>
+    </div>
+    <div class="flow-cards fade-in">
+      <article class="flow-card">
+        <span class="flow-card__label">サービス内で価値になること</span>
+        <p class="flow-card__desc">読書の記録、メモ整理、興味テーマの可視化、理由つきの本の提案。</p>
+      </article>
+      <article class="flow-card">
+        <span class="flow-card__label">DoubleHub に入る情報</span>
+        <p class="flow-card__desc">関心の変化、思考のクセ、心が動くトピック。構造化されたインサイトとして連携。</p>
+      </article>
+      <article class="flow-card">
+        <span class="flow-card__label">将来返せる提案</span>
+        <p class="flow-card__desc">次に読むべき一冊や、いまの課題に合う知的インプットの提案。他の生活データと合わせた総合的な判断。</p>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="./images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="./index.html">トップページ</a>
+    <a href="./trainnote.html">TrainNote</a>
+  </div>
+</footer>
+
+<script src="./script.js"></script>
+</body>
+</html>

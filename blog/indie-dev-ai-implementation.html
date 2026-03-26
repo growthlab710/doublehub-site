@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>個人開発でAI機能を実装する方法——SwiftでAIアプリを作った全記録 | DoubleHub</title>
+<meta name="description" content="個人開発者がAI機能をiOSアプリに組み込むには？TrainNote AI CoachとBook Compass AI整理を実装した経験から、技術選定・設計・コスト管理まで全工程を振り返る。">
+<meta property="og:title" content="個人開発でAI機能を実装する方法——SwiftでAIアプリを作った全記録">
+<meta property="og:description" content="個人開発者がAI機能をiOSアプリに組み込むには？TrainNote AI CoachとBook Compass AI整理を実装した経験から、技術選定・設計・コスト管理まで全工程を振り返る。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://doublehub.jp/blog/indie-dev-ai-implementation.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="個人開発でAI機能を実装する方法——SwiftでAIアプリを作った全記録">
+<meta name="twitter:description" content="個人開発者がAI機能をiOSアプリに組み込むには？TrainNote AI CoachとBook Compass AI整理を実装した経験から、技術選定・設計・コスト管理まで全工程を振り返る。">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "個人開発でAI機能を実装する方法——SwiftでAIアプリを作った全記録",
+      "author": {
+        "@type": "Person",
+        "name": "Naoki",
+        "url": "https://doublehub.jp/about.html",
+        "description": "iOSアプリ個人開発者・DoubleHub作者"
+      },
+      "datePublished": "2026-03-25",
+      "dateModified": "2026-03-25",
+      "publisher": {
+        "@type": "Organization",
+        "name": "DoubleHub"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://doublehub.jp/blog/indie-dev-ai-implementation.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "個人開発者でもAI機能は実装できますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "はい、実装できます。ただし、LLMに丸投げするのではなく、ローカル分析とLLMの役割分離を設計し、コスト管理の仕組みを整えることが重要です。TrainNoteとBook Compassでは、段階的な実行レベルとキャッシュの活用で個人でも運用可能な設計にしています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "AI機能の実装にどのくらいの費用がかかりますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LLM APIの利用料が主なコストです。常時実行を避けてオンデマンド＋キャッシュの設計にすれば、個人開発の規模なら月額数百〜数千円に抑えられます。重要なのは、不要なLLM実行を避ける設計を最初から組み込むことです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "SwiftでLLM APIを呼び出すのは難しいですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "API呼び出し自体はHTTPリクエストなので難しくありません。重要なのはAPI呼び出しの前後の設計——プロンプトの管理、入力コンテキストの構造化、出力のパース、エラーハンドリング、キャッシュ——を整えることです。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "プロンプト管理はどうしていますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "PromptCatalogパターンを採用しています。役割ごとにプロンプトを分離し、IDとバージョンを付与。生成結果にはpromptVersionやmodelIDを保存し、後から品質変化を追跡できるようにしています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "AI機能を入れてアプリの開発負担はどう変わりましたか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "初期の設計負担は増えますが、ユーザー体験の差別化効果は大きいです。特にコーチングや対話型の機能は、ルールベースでは実現しにくい柔軟さを提供できます。運用面ではプロンプト調整やコスト監視が継続的に必要になります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "DoubleHubとの連携はどう設計していますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "各アプリが単体で価値を持ちつつ、構造化データをexport-for-double形式で外部連携可能にする設計です。生ログではなく要約やinsightを渡す前提にすることで、プライバシーと横断活用のバランスを取っています。DoubleHubは現在開発中（Coming Soon）です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "AIの安全性にはどう配慮していますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "医療判断は行わない、体調不良時は安全側へ倒す、断定しすぎない、根拠のないアドバイスを避けるなどの原則を設けています。AIが前に出すぎず、あくまでユーザーの意思決定を補助する設計にしています。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <nav class="breadcrumb container" aria-label="パンくずリスト">
+      <a href="../index.html">DoubleHub</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="./index.html">ブログ</a>
+      <span class="breadcrumb__sep">›</span>
+      <span>個人開発でAI機能を実装する方法</span>
+    </nav>
+
+    <header class="article__header">
+      <span class="article__cluster">個人開発×AI</span>
+      <h1 class="article__title">個人開発でAI機能を実装する方法——SwiftでAIアプリを作った全記録</h1>
+      <div class="article__meta">
+        <span>著者: <a class="article__author-link" href="../about.html">Naoki</a></span>
+        <span class="article__meta-sep">|</span>
+        <span>公開: 2026年3月25日</span>
+      </div>
+      <p class="article__updated">最終更新: 2026年3月25日</p>
+    </header>
+
+    <div class="article__content">
+
+      <p><strong>結論から言えば、個人開発者でもAI機能は実装できる。</strong>ただし、LLMに丸投げする設計ではうまくいかない。重要なのは「何をローカルで処理し、何をLLMに任せるか」の分離設計と、運用コストを制御する仕組みを最初から組み込むことだ。</p>
+
+      <p>この記事では、TrainNote の AI Coach と Book Compass の AI 読書整理という2つのアプリで実際にAI機能を設計・実装した全工程を振り返る。技術選定からプロンプト管理、コスト管理、そしてDoubleHubエコシステムを見据えたデータ設計まで、個人開発者向けに実践知をまとめた。</p>
+
+      <h2>なぜAI機能を入れようと思ったか</h2>
+
+      <p>きっかけはBook Compassの開発だった。読書メモの整理や傾向の可視化を考えていく中で、ある気づきがあった。</p>
+
+      <p><strong>AIは開発ツールとしてだけでなく、ユーザー体験（UX）の一部として機能する。</strong></p>
+
+      <p>GitHub CopilotやClaude Codeなどの開発支援AIは、コードを書く側の生産性を上げるツールだ。それはそれで価値がある。しかし、Book Compassの開発を進める中で、AIがユーザーの体験そのものに入り込むことで、ルールベースでは実現しにくい柔軟なサポートが可能になることに気づいた。</p>
+
+      <p>読書メモの整理は人によって「何が整理されている状態か」が違う。筋トレのアドバイスもユーザーの目標・環境・体調によって最適解が変わる。こうした一人ひとり異なるニーズへの対応が、AI機能の本当の価値だと考えた。</p>
+
+      <h2>TrainNote AI Coach の技術設計——4層構造</h2>
+
+      <p>TrainNote の AI Coach V2 では、4つの層で構成される設計を採用した。「単なる定型アドバイス表示ではなく、ユーザーの記録と会話をもとに育っていくAIパーソナルトレーナー」を目指す設計だ。</p>
+
+      <h3>第1層: Local Analyzer</h3>
+
+      <p>トレーニング記録から事実を抽出するローカル分析レイヤー。LLMを使わず、アプリ内で完結する。</p>
+
+      <ul>
+        <li>今週の実施回数・部位ごとの最終実施日</li>
+        <li>特定種目の直近推移</li>
+        <li>データ不足、停滞、頻度不足、再開タイミングの判定</li>
+        <li>LLMに渡す前提情報の整理</li>
+      </ul>
+
+      <p>この層があることで、LLMに生データを無秩序に渡すことを防げる。事実整理はアプリ側で行い、柔軟な説明や深掘りだけをLLMに任せる——この分離が設計の根幹だ。</p>
+
+      <h3>第2層: Coach Memory</h3>
+
+      <p>ユーザーとのやり取りで得た継続的な情報を保持する層。会話ログ全文を渡すのではなく、意味のある情報へ抽出して保持する。</p>
+
+      <ul>
+        <li>目標（方向性レベル＋構造化した定量目標）</li>
+        <li>週の希望頻度、1回の目安時間、器具環境</li>
+        <li>コーチの雰囲気の好み（厳しめ／優しめ）</li>
+        <li>苦手な種目、提案から外したい部位</li>
+        <li>説明済みの知識、過去の提案への反応</li>
+      </ul>
+
+      <p>一時的な反応（「今日は違う」）と長期的な設定（「有酸素は不要」）を別レイヤーで管理する点が重要だ。</p>
+
+      <h3>第3層: LLM Coach</h3>
+
+      <p>Local Analyzerの事実、Coach Memory、必要最小限の会話履歴要約をもとに、柔軟な提案・説明・対話を返す層。</p>
+
+      <p>LLMが担うのは「ユーザーに伝わる文章化」「深掘り質問への回答」「コーチらしい対話」「状況に合う言い方の選択」だ。一方、生データの無秩序な解釈、安全ポリシーの最終判断、重量アップ可否の唯一の根拠にはしない。</p>
+
+      <h3>第4層: Insight Cache</h3>
+
+      <p>生成済みのコーチング結果をキャッシュする層。ホーム表示や再表示で無駄な再生成を防ぐ。</p>
+
+      <ul>
+        <li>トレーニング完了後の短いレビュー</li>
+        <li>翌日の一言コーチング</li>
+        <li>週次レビュー</li>
+        <li>詳細コーチング要約</li>
+      </ul>
+
+      <p>この4層構造により、LLMの実行を価値がある場面に集中させつつ、ユーザーには途切れのないコーチング体験を提供できる。<a href="./ai-trainer-vs-human.html">AIパーソナルトレーナーとヒトのトレーナーの違い</a>でも解説しているが、この設計は「リアルのパーソナルトレーナーの代替に少しずつ近づく」ことを意識している。</p>
+
+      <h2>Book Compass のAI設計——読書パートナーとして</h2>
+
+      <p>Book Compassでは、AIの役割をTrainNoteとは異なるかたちで設計した。目指したのは「何でも答えてくれるAI先生」ではなく、<strong>読書パートナー</strong>という位置づけだ。</p>
+
+      <h3>メモ整理: 読書中の気づきを構造化する</h3>
+
+      <p>読書中の「つぶやき」をただ保存するだけでなく、AIがそれらを整理して、後から見た時に思考の流れが追いやすい状態にする。ここで大事なのは本の一般的な要約を返すことではなく、「この人はこの本をどう読んだのか」を起点に整理すること。知識の代行ではなく、理解の補助だ。</p>
+
+      <h3>傾向可視化: 自分の読書傾向を目に見える形にする</h3>
+
+      <p>読書メモや記録から、以下のような傾向を可視化する。</p>
+
+      <ul>
+        <li>どんな観点に反応しやすいのか</li>
+        <li>どんなテーマを繰り返し考えているのか</li>
+        <li>自分の関心がどの方向に広がっているのか</li>
+      </ul>
+
+      <p>単に「何冊読んだか」ではなく、読書を通じた自分の思考パターンを可視化する。これは<a href="./lifedata-self-understanding.html">ライフデータで自分を知る</a>というテーマにも直結する。</p>
+
+      <h3>対話型チャット: 壁打ち相手としてのAI</h3>
+
+      <p>チャット機能では「上から教え込まない」「それっぽいことを断定しない」「自分の読書記録を根拠にして一緒に整理する」という方針を貫いている。</p>
+
+      <blockquote>
+        <p>「あなたが以前こういうことを気にしていたから、今回もここが引っかかっているのかもしれない」——このように、ユーザーの記録に根拠を持った対話を目指す。</p>
+      </blockquote>
+
+      <p>AIが前に出すぎると、便利そうに見えても体験としては浅くなる。少し控えめなくらいが読書の支援としてはちょうどいい。</p>
+
+      <h2>LLM実行の基本方針——常時実行ではなくオンデマンド</h2>
+
+      <p>AI機能でもっとも注意すべきはLLMの実行タイミングだ。アプリ起動のたびにLLMを呼ぶ設計は、コストとUXの両面で破綻する。</p>
+
+      <h3>走らせない場面</h3>
+      <ul>
+        <li>アプリ起動のたび</li>
+        <li>ホーム表示のたび</li>
+        <li>ユーザーがAI機能を見ていない場面</li>
+      </ul>
+
+      <h3>段階的な実行レベル</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>レベル</th>
+            <th>処理内容</th>
+            <th>LLM使用</th>
+            <th>用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>レベル0</strong></td>
+            <td>アプリ内分析のみ</td>
+            <td>なし</td>
+            <td>データ不足時、ホームの軽量プレビュー</td>
+          </tr>
+          <tr>
+            <td><strong>レベル1</strong></td>
+            <td>短いLLMコーチングを生成＋キャッシュ</td>
+            <td>トリガー時のみ</td>
+            <td>ホームの入口表示、トレーニング後レビュー</td>
+          </tr>
+          <tr>
+            <td><strong>レベル2</strong></td>
+            <td>詳細シートまたはチャットで深い分析</td>
+            <td>明示的に開いた時</td>
+            <td>詳細コーチング、対話</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>MVPでは「レベル0 ＋ レベル2の最小版」から始めるのが現実的だ。レベル1はキャッシュ設計が整ってから追加すればよい。</p>
+
+      <div class="article-cta">
+        <h3 class="article-cta__title">AI機能を搭載したアプリを体験する</h3>
+        <p class="article-cta__desc">TrainNote の AI Coach、Book Compass の AI 読書整理——実際に動くAI機能を確認できます。</p>
+        <a class="btn btn--primary" href="../index.html#services">DoubleHub サービス一覧を見る</a>
+      </div>
+
+      <h2>プロンプト管理の実践——PromptCatalogパターン</h2>
+
+      <p>プロンプトをコードに直書きすると、調整のたびにアプリ全体のビルドが必要になる。TrainNoteでは<strong>PromptCatalog</strong>パターンでプロンプトを管理している。</p>
+
+      <h3>設計の要点</h3>
+
+      <ul>
+        <li><strong>役割ごとに分離:</strong> coach_preview、coach_detail、coach_chat_reply、post_workout_review、weekly_reviewなど</li>
+        <li><strong>バージョン管理:</strong> 各プロンプトにIDとバージョンを付与</li>
+        <li><strong>入力コンテキストの型を固定:</strong> LLMに渡す情報を構造化</li>
+        <li><strong>出力形式の構造化:</strong> なるべくJSON等で受け取り、パース可能にする</li>
+        <li><strong>トレーサビリティ:</strong> 生成結果にpromptVersion、modelID、knowledgeVersionを保存</li>
+      </ul>
+
+      <p>Swiftでのインターフェース例:</p>
+
+      <blockquote>
+        <p>CoachPromptTemplate にはid、version、systemPrompt、developerPrompt、outputSchemaを持たせる。CoachPromptCatalog プロトコルでtemplateメソッドを定義し、View や Service 本体にプロンプト文面を直書きしない。</p>
+      </blockquote>
+
+      <p>開発初期はアプリ内でテンプレートとして持ち、運用を見据えた段階でバックエンド側（Supabase Edge Functionsなど）に寄せていく方針だ。これにより、App Store審査を待たずにプロンプト調整が可能になる。</p>
+
+      <h2>コスト管理の工夫</h2>
+
+      <p>個人開発でAI機能を運用するうえで、コスト管理は避けて通れない。以下の工夫で、<a href="./ai-habit-guide.html">AIを活用した習慣化</a>のための機能を持続可能にしている。</p>
+
+      <h3>キャッシュ活用</h3>
+      <ul>
+        <li>Insight Cacheで生成済み結果を再利用</li>
+        <li>ホーム表示ではキャッシュ済みの一言コーチングを表示</li>
+        <li>同じデータ状態で再度開いても再生成しない</li>
+      </ul>
+
+      <h3>不要なLLM実行を避ける設計</h3>
+      <ul>
+        <li>Local Analyzerでデータ不足を事前判定——データが足りなければLLMを呼ばない</li>
+        <li>ユーザーがAI機能を見ていない場面では実行しない</li>
+        <li>週次レビューなど低頻度タスクは決まったタイミングでのみ生成</li>
+      </ul>
+
+      <h3>構造化入力でトークン数を削減</h3>
+      <ul>
+        <li>会話ログ全文ではなく、Coach Memoryの構造化データを渡す</li>
+        <li>Local Analyzerが事実を整理した状態でLLMに渡す</li>
+        <li>毎回全件送信ではなく、差分や要約を活用</li>
+      </ul>
+
+      <h2>DoubleHub連携を見据えた設計</h2>
+
+      <p>TrainNoteやBook Compassは単体で価値が閉じる設計にしつつ、将来のDoubleHub連携（Coming Soon）を見据えたデータ設計を組み込んでいる。</p>
+
+      <h3>整合している点</h3>
+      <ul>
+        <li>各アプリが単体で完結する価値を持つ</li>
+        <li>生の会話全文ではなく、構造化したMemoryやInsightを重視</li>
+        <li>毎回リアルタイムに全件取得ではなく、要約やキャッシュを活用する前提</li>
+        <li>将来的にLLM実行やプロンプト管理をバックエンドへ寄せられる設計</li>
+      </ul>
+
+      <h3>export-for-double を意識したデータ分離</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>データ種別</th>
+            <th>ローカル専用</th>
+            <th>将来エクスポート可能</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>画面状態</td>
+            <td>一時的なUI反応</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>トレーニング記録</td>
+            <td>セッション途中経過</td>
+            <td>週次・月次サマリー</td>
+          </tr>
+          <tr>
+            <td>会話データ</td>
+            <td>未整理の下書き</td>
+            <td>構造化されたchat_insights</td>
+          </tr>
+          <tr>
+            <td>コーチング結果</td>
+            <td>—</td>
+            <td>要約、高レベルな洞察</td>
+          </tr>
+          <tr>
+            <td>ユーザー設定</td>
+            <td>—</td>
+            <td>共有してよいプロフィール項目</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>DoubleHubは生ログより構造化データを受け取る方がよい。TrainNote側で意味のある粒度へ要約しておくことが、将来の横断活用とプライバシーの両面で扱いやすい。</p>
+
+      <h2>比較表: AIを入れる前と入れた後</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>AI導入前</th>
+            <th>AI導入後</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ユーザーへの提案</td>
+            <td>ルールベースの固定メッセージ</td>
+            <td>記録・目標・好みに合わせた柔軟な提案</td>
+          </tr>
+          <tr>
+            <td>パーソナライズ</td>
+            <td>設定項目ベース（静的）</td>
+            <td>会話から学習し、継続的に進化</td>
+          </tr>
+          <tr>
+            <td>開発の複雑さ</td>
+            <td>ロジックの実装のみ</td>
+            <td>プロンプト設計＋API連携＋キャッシュ設計が追加</td>
+          </tr>
+          <tr>
+            <td>運用コスト</td>
+            <td>ほぼゼロ</td>
+            <td>LLM API利用料（設計次第で制御可能）</td>
+          </tr>
+          <tr>
+            <td>ユーザー体験の深さ</td>
+            <td>画一的</td>
+            <td>個人に寄り添った対話型サポート</td>
+          </tr>
+          <tr>
+            <td>差別化の度合い</td>
+            <td>機能比較で勝負</td>
+            <td>体験そのものの質で差別化</td>
+          </tr>
+          <tr>
+            <td>データ活用</td>
+            <td>記録の表示のみ</td>
+            <td>記録からインサイトを生成し、次の行動に繋げる</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>個人開発でAI機能を入れるために意識すべきこと</h2>
+
+      <p>2つのアプリでAI機能を実装して見えてきた、個人開発者向けの教訓をまとめる。</p>
+
+      <ol>
+        <li><strong>ローカル分析とLLMの役割を明確に分離する</strong>——LLMに丸投げしない</li>
+        <li><strong>コストを設計の初期段階で考える</strong>——「あとで最適化」では遅い</li>
+        <li><strong>プロンプトを管理可能な単位にする</strong>——PromptCatalog、バージョン管理</li>
+        <li><strong>キャッシュを前提とした設計にする</strong>——同じ結果を何度も生成しない</li>
+        <li><strong>安全面の配慮を忘れない</strong>——医療判断はしない、体調不良時は安全側へ</li>
+        <li><strong>将来の連携を意識してデータを構造化する</strong>——生ログより構造化insightを重視</li>
+      </ol>
+
+      <p>AIは、開発を助けるツールとしてだけでなく、ユーザーが受け取る価値の中に入れると、また別の景色が見えてくる。個人開発だからこそ、小さく始めて、段階的に育てていくアプローチが有効だ。</p>
+
+      <div class="article-cta">
+        <h3 class="article-cta__title">DoubleHub サービス一覧</h3>
+        <p class="article-cta__desc">TrainNote（筋トレ記録 × AIコーチ）、Book Compass（読書記録 × AI整理）、そしてDoubleHub（Coming Soon）。AI機能を搭載したアプリ群をご覧ください。</p>
+        <a class="btn btn--primary" href="../index.html#services">サービス一覧を見る →</a>
+      </div>
+
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="article__faq">
+      <h2>よくある質問</h2>
+      <details open>
+        <summary>個人開発者でもAI機能は実装できますか？</summary>
+        <p>はい、実装できます。ただし、LLMに丸投げするのではなく、ローカル分析とLLMの役割分離を設計し、コスト管理の仕組みを整えることが重要です。TrainNoteとBook Compassでは、段階的な実行レベルとキャッシュの活用で個人でも運用可能な設計にしています。</p>
+      </details>
+      <details>
+        <summary>AI機能の実装にどのくらいの費用がかかりますか？</summary>
+        <p>LLM APIの利用料が主なコストです。常時実行を避けてオンデマンド＋キャッシュの設計にすれば、個人開発の規模なら月額数百〜数千円に抑えられます。重要なのは、不要なLLM実行を避ける設計を最初から組み込むことです。</p>
+      </details>
+      <details>
+        <summary>SwiftでLLM APIを呼び出すのは難しいですか？</summary>
+        <p>API呼び出し自体はHTTPリクエストなので難しくありません。重要なのはAPI呼び出しの前後の設計——プロンプトの管理、入力コンテキストの構造化、出力のパース、エラーハンドリング、キャッシュ——を整えることです。</p>
+      </details>
+      <details>
+        <summary>プロンプト管理はどうしていますか？</summary>
+        <p>PromptCatalogパターンを採用しています。役割ごとにプロンプトを分離し、IDとバージョンを付与。生成結果にはpromptVersionやmodelIDを保存し、後から品質変化を追跡できるようにしています。開発初期はアプリ内に持ち、運用段階ではバックエンドに移行予定です。</p>
+      </details>
+      <details>
+        <summary>AI機能を入れてアプリの開発負担はどう変わりましたか？</summary>
+        <p>初期の設計負担は増えますが、ユーザー体験の差別化効果は大きいです。特にコーチングや対話型の機能は、ルールベースでは実現しにくい柔軟さを提供できます。運用面ではプロンプト調整やコスト監視が継続的に必要になります。</p>
+      </details>
+      <details>
+        <summary>DoubleHubとの連携はどう設計していますか？</summary>
+        <p>各アプリが単体で価値を持ちつつ、構造化データをexport-for-double形式で外部連携可能にする設計です。生ログではなく要約やinsightを渡す前提にすることで、プライバシーと横断活用のバランスを取っています。DoubleHubは現在開発中（Coming Soon）です。</p>
+      </details>
+      <details>
+        <summary>AIの安全性にはどう配慮していますか？</summary>
+        <p>医療判断は行わない、体調不良時は安全側へ倒す、断定しすぎない、根拠のないアドバイスを避けるなどの原則を設けています。AIが前に出すぎず、あくまでユーザーの意思決定を補助する設計にしています。</p>
+      </details>
+    </div>
+
+    <!-- Author Box -->
+    <div class="author-box">
+      <div class="author-box__avatar">N</div>
+      <div>
+        <div class="author-box__name">Naoki</div>
+        <div class="author-box__role">iOSアプリ個人開発者・DoubleHub作者</div>
+        <p class="author-box__bio">
+          西日本在住。Swift を中心に AI×習慣化×自己理解をテーマとしたアプリを開発。TrainNote、Book Compass、DoubleHub の作者。
+        </p>
+        <a class="author-box__link" href="../about.html">著者プロフィールを見る →</a>
+      </div>
+    </div>
+
+    <!-- Related Articles -->
+    <div class="related-articles">
+      <h2 class="related-articles__title">関連記事</h2>
+      <div class="related-articles__grid">
+        <a class="related-card" href="./ai-trainer-vs-human.html">
+          <span class="related-card__cluster">個人開発×AI</span>
+          <h3 class="related-card__title">AIパーソナルトレーナーとヒトのトレーナーの違い</h3>
+        </a>
+        <a class="related-card" href="./ai-habit-guide.html">
+          <span class="related-card__cluster">AI×習慣化</span>
+          <h3 class="related-card__title">AIを活用した習慣化の完全ガイド2026</h3>
+        </a>
+        <a class="related-card" href="./lifedata-self-understanding.html">
+          <span class="related-card__cluster">ライフデータ×自己理解</span>
+          <h3 class="related-card__title">ライフデータで自分を知る</h3>
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<!-- Footer -->
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
