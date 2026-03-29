@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Gemini、ChatGPTとClaudeからチャット履歴のインポートが可能に——AI間データ移行時代の到来 | DoubleHub</title>
+<meta name="description" content="Google GeminiがChatGPTとClaudeからチャット履歴・メモリをインポートできる機能を公開。AIデータポータビリティ競争の背景と、ユーザーにとっての意味を解説します。">
+<meta property="og:title" content="Google Gemini、ChatGPTとClaudeからチャット履歴のインポートが可能に | DoubleHub">
+<meta property="og:description" content="Google GeminiがChatGPTとClaudeからチャット履歴・メモリをインポートできる機能を公開。AIデータポータビリティ競争の背景と意味を解説。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://doublehub.jp/blog/gemini-chat-import.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Google Gemini、ChatGPTとClaudeからチャット履歴のインポートが可能に | DoubleHub">
+<meta name="twitter:description" content="AIデータポータビリティ競争が本格化。Geminiのインポート機能の詳細と、ユーザーにとっての意味を解説。">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Google Gemini、ChatGPTとClaudeからチャット履歴のインポートが可能に——AI間データ移行時代の到来",
+      "author": {
+        "@type": "Person",
+        "name": "Naoki",
+        "url": "https://doublehub.jp/about.html",
+        "description": "iOSアプリ個人開発者・DoubleHub作者"
+      },
+      "datePublished": "2026-03-29",
+      "dateModified": "2026-03-29",
+      "publisher": {
+        "@type": "Organization",
+        "name": "DoubleHub"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://doublehub.jp/blog/gemini-chat-import.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "GeminiにChatGPTのチャット履歴をインポートするとどうなる？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ChatGPTでの過去の会話履歴やメモリ情報がGeminiに転送され、Geminiがあなたの過去のやり取りを踏まえた応答を返せるようになります。ゼロからの関係構築が不要になります。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "AIのチャット履歴を移行するメリットは？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AIが蓄積した「あなたの文脈」を引き継げるため、新しいAIでも最初からパーソナライズされた応答が得られます。AIサービスの乗り換えコストが大幅に下がります。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <nav class="breadcrumb container" aria-label="パンくずリスト">
+      <a href="../index.html">DoubleHub</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="./index.html">ブログ</a>
+      <span class="breadcrumb__sep">›</span>
+      <span>Gemini チャットインポート</span>
+    </nav>
+
+    <header class="article__header">
+      <span class="article__cluster" data-category="ai-news">AIニュース</span>
+      <h1 class="article__title">Google Gemini、ChatGPTとClaudeからチャット履歴のインポートが可能に——AI間データ移行時代の到来</h1>
+      <div class="article__meta">
+        <span>著者: <a class="article__author-link" href="../about.html">Naoki</a></span>
+        <span class="article__meta-sep">|</span>
+        <span>公開: 2026年3月29日</span>
+      </div>
+      <p class="article__updated">最終更新: 2026年3月29日</p>
+    </header>
+
+    <div class="article__content">
+
+      <p><strong>Google Geminiが、ChatGPTとClaudeからチャット履歴やメモリ情報をインポートできるツールを2026年3月下旬に公開しました。</strong>AIアシスタント間でデータを移行できるこの機能は、「AIデータポータビリティ」という新しい競争軸の始まりを意味しています。</p>
+
+      <p>この記事では、Geminiのインポート機能の概要、なぜGoogleがこの機能を出したのか、そしてユーザーにとって何が変わるのかを整理します。</p>
+
+      <hr>
+
+      <h2>Geminiのインポート機能とは？</h2>
+
+      <p>今回Googleが公開したのは、他のAIサービスで蓄積されたチャット履歴とメモリ情報をGeminiに取り込むためのツールです。</p>
+
+      <p>対応している移行元は以下の2つです。</p>
+
+      <ul>
+        <li><strong>ChatGPT</strong>（OpenAI）— チャット履歴とメモリ</li>
+        <li><strong>Claude</strong>（Anthropic）— チャット履歴</li>
+      </ul>
+
+      <p>インポートすることで、Geminiはあなたの過去のやり取りを踏まえた応答を返せるようになります。つまり、ゼロから関係を構築し直す必要がなくなるということです。</p>
+
+      <h2>なぜGoogleはこの機能を出したのか？</h2>
+
+      <p>背景にあるのは、AIサービス間の激しいユーザー獲得競争です。</p>
+
+      <p>2026年3月時点のフロンティアモデルの状況を見ると、Claude Opus 4.6、GPT-5.4、Gemini 3.1 Proが主要ベンチマークでほぼ拮抗しています。SWE-bench VerifiedではClaude Opus 4.6が80.8%でリード、ARC-AGI-2抽象推論ではGemini 3.1 Proが77.1%で首位、エージェント実行タスクではGPT-5.4が75.1%で最強。つまり、モデルの性能差だけでは差別化しにくい状況になっています。</p>
+
+      <p>そこでGoogleが仕掛けたのが「乗り換えコストの解消」です。性能が横並びなら、すでに蓄積した会話データを引き継げるサービスにユーザーが流れるのは自然な流れです。さらにGemini 3.1 Proは入力100万トークンあたり2ドル、出力100万トークンあたり12ドルと、フロンティア性能をコモディティ価格で提供しています。</p>
+
+      <p>「性能で勝てるかわからないなら、乗り換えやすさで勝つ」——これがGoogleの戦略です。</p>
+
+      <h2>「AIデータポータビリティ」はなぜ重要なのか？</h2>
+
+      <p>AIにとって「あなたを理解する」ことの基盤は、過去のやり取りの蓄積です。</p>
+
+      <p>ChatGPTのメモリ機能やClaudeのプロジェクト機能を使い込んでいる人ほど、AIは「この人はどういう人か」を把握しています。しかしこれまでは、その蓄積を別のサービスに持ち出す方法がありませんでした。</p>
+
+      <p>つまり「AIが自分を理解してくれている」こと自体が、サービスのロックインになっていたわけです。</p>
+
+      <p>Geminiのインポート機能は、この構造を崩しにかかっています。データが移行できるなら、ユーザーは「いまどのモデルが一番自分に合うか」でサービスを選べるようになります。</p>
+
+      <h2>個人開発者から見た所感</h2>
+
+      <p>DoubleHubを開発している立場から見ると、この動きは非常に興味深いものです。</p>
+
+      <p>DoubleHubが目指しているのは、トレーニング記録（TrainNote）、読書記録（Book Compass）、日々のタスクや対話など、複数のデータソースを横断して「あなたを理解する存在」を育てることです。Geminiのインポート機能が示しているのは、まさに「AIにとって文脈の蓄積こそが価値」だという同じ認識です。</p>
+
+      <p>ただし、チャット履歴の移行だけでは「理解」には限界があります。会話ログだけでなく、行動データ（運動頻度、読書傾向、タスク管理のパターン）まで含めて横断的に読める状態をつくること。それがDoubleHubが取り組んでいる方向であり、単純なチャット移行の先にある課題だと考えています。</p>
+
+      <h2>ユーザーにとって何が変わるのか</h2>
+
+      <p>今回の発表がもたらす変化をまとめると、以下の3つです。</p>
+
+      <ul>
+        <li><strong>AIの「乗り換えコスト」が下がる</strong> — 新しいAIを試すハードルが低くなります。</li>
+        <li><strong>競争がモデル性能だけでなく「体験」に移る</strong> — 同じ文脈を持った状態で比較されるようになるため、UI/UXやパーソナライズの質が差別化の鍵になります。</li>
+        <li><strong>「AIに自分を理解してもらう」価値が顕在化する</strong> — データを移行してまで関係を継続したいということは、ユーザーがAIとの文脈の蓄積に価値を感じている証拠です。</li>
+      </ul>
+
+      <p>AIのデータポータビリティ競争は始まったばかりです。今後、OpenAIやAnthropicがどう応じるかも含めて、注視していきたいと思います。</p>
+
+      <!-- CTA Banner -->
+      <div class="article-cta">
+        <h3 class="article-cta__title">複数のデータをつなぎ、あなたを理解する存在を育てる</h3>
+        <p class="article-cta__desc">DoubleHub は読書、筋トレ、タスク、日々の対話をつなぎ合わせて「もう一人の自分」を育てるプロジェクトです。</p>
+        <a class="btn btn--primary" href="../index.html">DoubleHub を見る</a>
+      </div>
+
+    </div>
+
+    <section class="article-sources">
+      <h2>出典・参考</h2>
+      <ul class="sources-list">
+        <li><a href="https://winbuzzer.com/2026/03/27/google-gemini-imports-chats-memory-chatgpt-claude-xcxwbn/" target="_blank" rel="noopener noreferrer">Google Gemini Now Imports Chats and Memory from ChatGPT, Claude — WinBuzzer（2026年3月27日）</a></li>
+        <li><a href="https://www.bloomberg.com/news/articles/2026-03-26/google-gemini-adds-tool-to-make-it-easier-to-switch-from-chatgpt" target="_blank" rel="noopener noreferrer">AI Users Gain New Option to Transfer Chat History to Google Gemini — Bloomberg（2026年3月26日）</a></li>
+        <li><a href="https://medium.com/@Micheal-Lanham/the-march-2026-frontier-gpt-5-4-vs-gemini-3-1-vs-claude-4-6-daebf22e672e" target="_blank" rel="noopener noreferrer">The March 2026 Frontier: GPT-5.4 vs. Gemini 3.1 vs. Claude 4.6 — Medium（2026年3月）</a></li>
+      </ul>
+    </section>
+
+    <div class="article__faq">
+      <h2>よくある質問</h2>
+      <details open>
+        <summary>GeminiにChatGPTのチャット履歴をインポートするとどうなる？</summary>
+        <p>ChatGPTでの過去の会話履歴やメモリ情報がGeminiに転送され、Geminiがあなたの過去のやり取りを踏まえた応答を返せるようになります。ゼロからの関係構築が不要になります。</p>
+      </details>
+      <details>
+        <summary>AIのチャット履歴を移行するメリットは？</summary>
+        <p>AIが蓄積した「あなたの文脈」を引き継げるため、新しいAIでも最初からパーソナライズされた応答が得られます。AIサービスの乗り換えコストが大幅に下がります。</p>
+      </details>
+    </div>
+
+    <div class="author-box">
+      <div class="author-box__avatar">N</div>
+      <div>
+        <div class="author-box__name">Naoki</div>
+        <div class="author-box__role">iOSアプリ個人開発者・DoubleHub作者</div>
+        <p class="author-box__bio">
+          鳥取県米子市在住。Swift を中心に AI×習慣化×自己理解をテーマとしたアプリを開発。TrainNote、Book Compass、DoubleHub の作者。
+        </p>
+        <a class="author-box__link" href="../about.html">著者プロフィールを見る →</a>
+      </div>
+    </div>
+
+    <div class="related-articles">
+      <h2 class="related-articles__title">関連記事</h2>
+      <div class="related-articles__grid">
+        <a class="related-card" href="./lifedata-self-understanding.html">
+          <span class="related-card__cluster">ブログ</span>
+          <span class="related-card__title">ライフデータで自分を知る</span>
+        </a>
+        <a class="related-card" href="./perplexity-computer-guide.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">Perplexity Computerとは何か</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

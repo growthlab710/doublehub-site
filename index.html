@@ -6,13 +6,13 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="manifest" href="./manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DoubleHub — あなたの成長データをつなぎ、もう一人の自分を育てる</title>
-<meta name="description" content="読書、筋トレ、タスク、予定。バラバラだった記録をつなぎ、あなたを理解する「ダブル」を育てるプロジェクト DoubleHub。">
+<title>DoubleHub — 自分を本当に理解してくれる存在が、そばにいたら。</title>
+<meta name="description" content="DoubleHub は、あなたの記録をつなぎ合わせて「もう一人の自分」を育てるプロジェクトです。あなたを誰よりも理解する、頼れる相棒へ。">
 <meta name="theme-color" content="#FAFAFA">
 
 <!-- OGP -->
-<meta property="og:title" content="DoubleHub — あなたの成長データをつなぎ、もう一人の自分を育てる">
-<meta property="og:description" content="読書、筋トレ、タスク、予定。バラバラだった記録をつなぎ、あなたを理解する「ダブル」を育てるプロジェクト DoubleHub。">
+<meta property="og:title" content="DoubleHub — 自分を本当に理解してくれる存在が、そばにいたら。">
+<meta property="og:description" content="DoubleHub は、あなたの記録をつなぎ合わせて「もう一人の自分」を育てるプロジェクトです。あなたを誰よりも理解する、頼れる相棒へ。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://doublehub.jp/">
 <meta property="og:site_name" content="DoubleHub">
@@ -23,8 +23,8 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="DoubleHub — あなたの成長データをつなぎ、もう一人の自分を育てる">
-<meta name="twitter:description" content="読書、筋トレ、タスク、予定。バラバラだった記録をつなぎ、あなたを理解する「ダブル」を育てるプロジェクト DoubleHub。">
+<meta name="twitter:title" content="DoubleHub — 自分を本当に理解してくれる存在が、そばにいたら。">
+<meta name="twitter:description" content="DoubleHub は、あなたの記録をつなぎ合わせて「もう一人の自分」を育てるプロジェクトです。あなたを誰よりも理解する、頼れる相棒へ。">
 
 <!-- JSON-LD: WebSite + Organization -->
 <script type="application/ld+json">
@@ -36,7 +36,7 @@
       "@id": "https://doublehub.jp/#website",
       "url": "https://doublehub.jp/",
       "name": "DoubleHub",
-      "description": "読書、筋トレ、タスク、予定。バラバラだった記録をつなぎ、あなたを理解する「ダブル」を育てるプロジェクト。",
+      "description": "あなたの記録をつなぎ合わせて「もう一人の自分」を育てるプロジェクト。",
       "inLanguage": "ja",
       "publisher": {
         "@id": "https://doublehub.jp/#organization"
@@ -103,77 +103,74 @@
       <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <a class="nav__cta" href="#newsletter">更新を受け取る</a>
+      <!-- <a class="nav__cta" href="#newsletter">更新を受け取る</a> -->
     </nav>
   </div>
 </header>
 
 <main id="top">
 
-  <!-- Hero -->
+  <!-- ① Hero — 感情的な掴み -->
   <section class="hero container">
-    <span class="hero__label">Connected Growth Platform</span>
-    <h1 class="hero__title">バラバラだった記録が<br>つながると、<br>あなたを理解する。</h1>
+    <span class="hero__label">Your Personal Partner</span>
+    <h1 class="hero__title">自分のことを<br>本当に理解してくれる存在が、<br>そばにいたら。</h1>
     <p class="hero__desc">
-      読書、筋トレ、タスク管理、日々の対話。DoubleHub は、散らばった生活データをつなぎ合わせて
+      DoubleHub は、あなたの日々の記録をつなぎ合わせて
       「もう一人の自分」を育てるプロジェクトです。
     </p>
     <div class="hero__actions">
-      <a class="btn btn--primary" href="#ecosystem">エコシステムを見る</a>
-      <a class="btn btn--secondary" href="#services">各サービスの詳細</a>
+      <a class="btn btn--primary" href="#use-cases">どう役に立つのか見る</a>
+      <a class="btn btn--secondary" href="#services">今すぐ使えるサービス</a>
     </div>
 
-    <!-- Hub Visual — Redesigned -->
-    <div class="hub-visual-v2" aria-hidden="true">
-      <div class="hub-v2__ring">
-        <div class="hub-v2__node hub-v2__node--top">
-          <span class="hub-v2__node-icon">📘</span>
-          <span class="hub-v2__node-label">思考</span>
+    <!-- App Screenshots -->
+    <div class="hero__screenshots">
+      <figure class="hero__screenshot-item">
+        <div class="phone-mock phone-mock--hero">
+          <img src="./images/doublehub-task.jpg" alt="DoubleHub タスク振り分け画面" class="phone-mock__real-img" loading="lazy">
         </div>
-        <div class="hub-v2__node hub-v2__node--right">
-          <span class="hub-v2__node-icon">💪</span>
-          <span class="hub-v2__node-label">習慣</span>
+        <figcaption class="hero__screenshot-caption">タスクをまとめて話しかけると、ダブルが自動で振り分けしてくれる</figcaption>
+      </figure>
+      <figure class="hero__screenshot-item">
+        <div class="phone-mock phone-mock--hero">
+          <img src="./images/doublehub-chat.jpg" alt="DoubleHub チャット画面" class="phone-mock__real-img" loading="lazy">
         </div>
-        <div class="hub-v2__node hub-v2__node--bottom">
-          <span class="hub-v2__node-icon">💰</span>
-          <span class="hub-v2__node-label">お金</span>
-        </div>
-        <div class="hub-v2__node hub-v2__node--left">
-          <span class="hub-v2__node-icon">📋</span>
-          <span class="hub-v2__node-label">日常</span>
-        </div>
-        <!-- Connecting lines (SVG) -->
-        <svg class="hub-v2__connections" viewBox="0 0 400 400" fill="none">
-          <line x1="200" y1="60" x2="200" y2="170" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.3"/>
-          <line x1="340" y1="200" x2="230" y2="200" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.3"/>
-          <line x1="200" y1="340" x2="200" y2="230" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.3"/>
-          <line x1="60" y1="200" x2="170" y2="200" stroke="var(--color-primary)" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.3"/>
-        </svg>
-        <!-- Center -->
-        <div class="hub-v2__center">
-          <span class="hub-v2__center-name">DoubleHub</span>
-          <span class="hub-v2__center-sub">もう一人の自分</span>
-        </div>
-      </div>
+        <figcaption class="hero__screenshot-caption">あなたの理解者としてチャットでやり取りできる</figcaption>
+      </figure>
+    </div>
+  </section>
 
-      <!-- Three-stage journey (integrated below diagram) -->
-      <div class="hub-v2__journey">
-        <div class="hub-v2__step">
-          <span class="hub-v2__step-num">1</span>
-          <span class="hub-v2__step-title">現在の入口</span>
-          <span class="hub-v2__step-text">TrainNote / Book Compass / DoubleHub 本体</span>
-        </div>
-        <div class="hub-v2__step-arrow">→</div>
-        <div class="hub-v2__step">
-          <span class="hub-v2__step-num">2</span>
-          <span class="hub-v2__step-title">今後の拡張</span>
-          <span class="hub-v2__step-text">家計・健康・娯楽などの生活サービス</span>
-        </div>
-        <div class="hub-v2__step-arrow">→</div>
-        <div class="hub-v2__step">
-          <span class="hub-v2__step-num">3</span>
-          <span class="hub-v2__step-title">目指す状態</span>
-          <span class="hub-v2__step-text">成長と満足度の高い選択を支えるダブル</span>
+  <hr class="divider container">
+
+  <!-- ② Ideal — いつもそばにいる相棒 -->
+  <section class="section container" id="ideal">
+    <div class="section__header section__header--center fade-in">
+      <span class="section__label">Your Partner</span>
+      <h2 class="section__title">いつもそばにいる、<br>頼れる相棒のような存在。</h2>
+    </div>
+    <div class="ideal fade-in">
+      <div class="ideal__main">
+        <p class="ideal__lead">
+          ただ話を聞いてくれるだけじゃない。<br>
+          あなたのことを理解した上で、あなたのためになることを返してくれる。
+        </p>
+        <div class="ideal__contrast">
+          <div class="ideal__contrast-item ideal__contrast-item--not">
+            <span class="ideal__contrast-label">そうじゃない</span>
+            <ul>
+              <li>ただ甘やかすだけの存在</li>
+              <li>上辺で合わせるだけの会話相手</li>
+              <li>毎回リセットされる AI チャット</li>
+            </ul>
+          </div>
+          <div class="ideal__contrast-item ideal__contrast-item--yes">
+            <span class="ideal__contrast-label">DoubleHub が目指す姿</span>
+            <ul>
+              <li>あなたの性格や習慣を理解している</li>
+              <li>理解しているからこそ、的確に返せる</li>
+              <li>使うほどに、あなたへの理解が深まる</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -181,14 +178,190 @@
 
   <hr class="divider container">
 
-  <!-- Ecosystem -->
+  <!-- ③ Problem — でも今は、それができていない -->
+  <section class="section container">
+    <div class="section__header section__header--center fade-in">
+      <span class="section__label">Problem</span>
+      <h2 class="section__title">でも今は、<br>本当の理解者がいない。</h2>
+    </div>
+    <div class="problem-visual fade-in">
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="problem-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
+              <circle cx="16" cy="20" r="8" fill="var(--color-primary)" opacity="0.15"/>
+              <circle cx="32" cy="20" r="8" fill="var(--color-accent-warm)" opacity="0.15"/>
+              <circle cx="24" cy="32" r="8" fill="var(--color-text-faint)" opacity="0.15"/>
+            </svg>
+          </div>
+          <h3 class="problem-card__title">話せる相手はいる。<br>でも理解者は少ない。</h3>
+          <p class="problem-card__desc">SNSでつながっている人はいる。雑談できる友人もいる。でも、自分の趣味・思考・好き嫌い・頑張り方まで本当に理解してくれている人は、ほとんどいない。</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
+              <rect x="8" y="12" width="32" height="24" rx="6" stroke="var(--color-border)" stroke-width="2" fill="none"/>
+              <path d="M16 24h16M16 30h10" stroke="var(--color-text-faint)" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="38" cy="14" r="6" fill="var(--color-accent-warm)" opacity="0.3"/>
+              <text x="38" y="17" text-anchor="middle" font-size="8" fill="var(--color-accent-warm)" font-weight="700">!</text>
+            </svg>
+          </div>
+          <h3 class="problem-card__title">AI チャットも増えた。<br>でも毎回リセットされる。</h3>
+          <p class="problem-card__desc">便利な AI は増えた。でも会話するたびにゼロから。あなたの性格も、先週何に悩んでいたかも知らない。結局、一般的なアドバイスしか返ってこない。</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card__icon">
+            <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
+              <rect x="4" y="4" width="16" height="16" rx="4" fill="var(--color-primary)" opacity="0.2"/>
+              <rect x="28" y="4" width="16" height="16" rx="4" fill="var(--color-accent-warm)" opacity="0.2"/>
+              <rect x="4" y="28" width="16" height="16" rx="4" fill="var(--color-accent-warm)" opacity="0.2"/>
+              <rect x="28" y="28" width="16" height="16" rx="4" fill="var(--color-primary)" opacity="0.2"/>
+            </svg>
+          </div>
+          <h3 class="problem-card__title">記録アプリはある。<br>でも全体像は誰も見ていない。</h3>
+          <p class="problem-card__desc">読書、筋トレ、タスク管理、家計。便利なアプリは増えたのに、それぞれバラバラ。あなたの全体像を把握している存在は、どこにもいない。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ Solution — DoubleHub はこう解決する -->
+  <section class="section container" id="solution">
+    <div class="section__header section__header--center fade-in">
+      <span class="section__label">Solution</span>
+      <h2 class="section__title">DoubleHub は、<br>あなたを理解することから始める。</h2>
+    </div>
+    <div class="solution fade-in">
+      <div class="solution__steps">
+        <div class="solution__step">
+          <div class="solution__step-num">1</div>
+          <h3 class="solution__step-title">日々の記録や対話を積み重ねる</h3>
+          <p class="solution__step-desc">あなたとの対話や、連携アプリからの記録を通じて、DoubleHub はあなた自身を少しずつ理解していきます。</p>
+        </div>
+        <div class="solution__step">
+          <div class="solution__step-num">2</div>
+          <h3 class="solution__step-title">好き、苦手、頑張り方のクセを学ぶ</h3>
+          <p class="solution__step-desc">好きなもの、苦手なこと、朝型か夜型か、追い込みすぎると止まるタイプか。使うほどに、あなたへの理解が深まっていく。</p>
+        </div>
+        <div class="solution__step">
+          <div class="solution__step-num">3</div>
+          <h3 class="solution__step-title">理解しているから、的確に返せる</h3>
+          <p class="solution__step-desc">あなたを知っているからこそ、上辺じゃないアドバイスができる。一般論ではなく、あなたに合った具体的な一歩を提案します。</p>
+        </div>
+      </div>
+      <!-- DoubleHub アプリ画面: 理解度やメモリーが見える画面があれば最適 -->
+      <div class="solution__visual">
+        <div class="phone-mock">
+          <img src="./images/doublehub-memory.jpg" alt="DoubleHub があなたを理解している画面" class="phone-mock__real-img" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider container">
+
+  <!-- ⑤ Use Cases — たとえば、こういうとき -->
+  <section class="section container" id="use-cases">
+    <div class="section__header section__header--center fade-in">
+      <span class="section__label">Use Cases</span>
+      <h2 class="section__title">理解者がいると、<br>こんなふうに変わる。</h2>
+      <p class="section__subtitle">
+        あなたを理解していない AI と、あなたを知っている DoubleHub。<br>
+        同じ悩みに対する返答がどう変わるか見てみてください。
+      </p>
+    </div>
+
+    <div class="use-cases fade-in">
+
+      <!-- Case 1: TrainNote — サボりがちなとき -->
+      <article class="use-case">
+        <div class="use-case__header">
+          <span class="use-case__badge use-case__badge--trainnote">TrainNote 連携</span>
+          <h3 class="use-case__title">サボりがちになってきたとき</h3>
+        </div>
+        <div class="use-case__comparison">
+          <div class="use-case__generic">
+            <span class="use-case__ai-label">一般的な AI</span>
+            <p class="use-case__ai-response">「筋トレは継続が大事です。モチベーションを保つために目標を見直してみましょう。」</p>
+          </div>
+          <div class="use-case__doublehub">
+            <span class="use-case__ai-label">DoubleHub</span>
+            <p class="use-case__ai-response">「2週間空くとそのまま1ヶ月止まりやすいのがあなたのパターンだよね。今日は家で腕立て10回だけでもいいから、ゼロにしないのが大事。」</p>
+          </div>
+        </div>
+        <p class="use-case__why">TrainNote の記録から「中断 → 復帰」のパターンを知っているから、タイミングと強度を適切に提案できる。</p>
+      </article>
+
+      <!-- Case 2: Book Compass — 停滞感 -->
+      <article class="use-case">
+        <div class="use-case__header">
+          <span class="use-case__badge use-case__badge--bookcompass">Book Compass 連携</span>
+          <h3 class="use-case__title">漠然とした停滞感があるとき</h3>
+        </div>
+        <div class="use-case__comparison">
+          <div class="use-case__generic">
+            <span class="use-case__ai-label">一般的な AI</span>
+            <p class="use-case__ai-response">「新しいことに挑戦してみましょう。視野を広げるために異分野の本を読んでみてはいかがですか。」</p>
+          </div>
+          <div class="use-case__doublehub">
+            <span class="use-case__ai-label">DoubleHub</span>
+            <p class="use-case__ai-response">「最近ビジネス書ばかりだけど、前に科学の本を読んだ時に『視点が一気に広がった』って書いてたよね。違うジャンルを1冊挟んでみるのはどう？」</p>
+          </div>
+        </div>
+        <p class="use-case__why">Book Compass の読書メモから、過去にどのジャンルがあなたに効いたかを知っているから、具体的かつ根拠のある提案ができる。</p>
+      </article>
+
+      <!-- Case 3: 横断 — 全体的に調子が悪い -->
+      <article class="use-case">
+        <div class="use-case__header">
+          <span class="use-case__badge use-case__badge--cross">データ横断</span>
+          <h3 class="use-case__title">「最近なんか調子悪い」と感じているとき</h3>
+        </div>
+        <div class="use-case__comparison">
+          <div class="use-case__generic">
+            <span class="use-case__ai-label">一般的な AI</span>
+            <p class="use-case__ai-response">「十分な休息を取って、無理のない範囲で活動しましょう。」</p>
+          </div>
+          <div class="use-case__doublehub">
+            <span class="use-case__ai-label">DoubleHub</span>
+            <p class="use-case__ai-response">「TrainNote の運動頻度が3週間で半分に落ちてる。Book Compass も2週間新しい本を開いてない。前にこのパターンになった時は仕事の負荷が原因だったよね。今週は回復に振り切って、来週からまた始めよう。」</p>
+          </div>
+        </div>
+        <p class="use-case__why">複数のサービスを横断して全体の変化を読み取り、過去の類似パターンと照合して提案する。単体アプリや汎用 AI にはできないこと。</p>
+      </article>
+
+      <!-- Case 4: 人生の選択 -->
+      <article class="use-case">
+        <div class="use-case__header">
+          <span class="use-case__badge use-case__badge--cross">データ横断</span>
+          <h3 class="use-case__title">人生の選択に迷っているとき</h3>
+        </div>
+        <div class="use-case__comparison">
+          <div class="use-case__generic">
+            <span class="use-case__ai-label">一般的な AI</span>
+            <p class="use-case__ai-response">「転職で重視すべきポイントは年収、成長環境、ワークライフバランスです。」</p>
+          </div>
+          <div class="use-case__doublehub">
+            <span class="use-case__ai-label">DoubleHub</span>
+            <p class="use-case__ai-response">「3ヶ月前に読んだ本で『安定より挑戦を選びたい』って書いてたよね。最近の運動の記録を見ても調子は良さそう。今のコンディションなら、挑戦する側に振ってみていいんじゃない？」</p>
+          </div>
+        </div>
+        <p class="use-case__why">あなたの価値観、性格、今のコンディションを踏まえて、一般論ではなく「あなたに合う選択肢」を返せる。</p>
+      </article>
+
+    </div>
+  </section>
+
+  <hr class="divider container">
+
+  <!-- ⑥ Ecosystem — つながるほど、理解が深まる -->
   <section class="section container" id="ecosystem">
     <div class="section__header section__header--center fade-in">
-      <span class="section__label">Input Ecosystem</span>
-      <h2 class="section__title">すべてが、ダブルの材料になる。</h2>
+      <span class="section__label">Ecosystem</span>
+      <h2 class="section__title">つながるほど、<br>理解が深まる。</h2>
       <p class="section__subtitle">
-        各サービスからどんなデータが入り、どう洞察になるか。
-        気になるサービスを選ぶと、ダブルが受け取る情報が切り替わります。
+        相棒の理解を深めるための入口。ひとつから始めて、つなげるほどあなたへの理解が増していく。<br>
+        気になるサービスを選ぶと、DoubleHub が受け取る情報が切り替わります。
       </p>
     </div>
 
@@ -203,7 +376,7 @@
           <option value="health">健康・ヘルスケア（Future）— 睡眠・生活リズム</option>
         </select>
       </div>
-      
+
       <div class="ecosystem__tabs" role="tablist" aria-label="入力サービス一覧">
         <button class="ecosystem__tab is-active" type="button" data-target="trainnote" role="tab" aria-selected="true">
           <span class="ecosystem__tab-badge ecosystem__tab-badge--current">Current</span>
@@ -308,7 +481,6 @@
               </ul>
             </div>
           </div>
-          <!-- Abstract placeholder for unreleased service -->
           <div class="ecosystem__abstract-visual">
             <div class="abstract-card">
               <svg viewBox="0 0 200 160" fill="none" class="abstract-card__svg">
@@ -399,85 +571,9 @@
     </div>
   </section>
 
-  <!-- Problem -->
-  <section class="section container">
-    <div class="section__header section__header--center fade-in">
-      <span class="section__label">Problem</span>
-      <h2 class="section__title">記録しているのに、<br>全体像は見えない。</h2>
-    </div>
-    <div class="problem-visual fade-in">
-      <div class="problem-grid">
-        <div class="problem-card">
-          <div class="problem-card__icon">
-            <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
-              <rect x="4" y="4" width="16" height="16" rx="4" fill="var(--color-primary)" opacity="0.2"/>
-              <rect x="28" y="4" width="16" height="16" rx="4" fill="var(--color-accent-warm)" opacity="0.2"/>
-              <rect x="4" y="28" width="16" height="16" rx="4" fill="var(--color-accent-warm)" opacity="0.2"/>
-              <rect x="28" y="28" width="16" height="16" rx="4" fill="var(--color-primary)" opacity="0.2"/>
-            </svg>
-          </div>
-          <h3 class="problem-card__title">アプリごとに閉じた記録</h3>
-          <p class="problem-card__desc">読書、筋トレ、タスク管理、家計、健康。便利なサービスは増えたのに、それぞれの記録は別々のアプリに閉じたまま。</p>
-        </div>
-        <div class="problem-card">
-          <div class="problem-card__icon">
-            <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
-              <circle cx="24" cy="24" r="18" stroke="var(--color-border)" stroke-width="2" stroke-dasharray="4 4"/>
-              <circle cx="24" cy="24" r="8" fill="var(--color-text-faint)" opacity="0.3"/>
-              <text x="24" y="28" text-anchor="middle" font-size="12" fill="var(--color-text-muted)">?</text>
-            </svg>
-          </div>
-          <h3 class="problem-card__title">断片的な自分の理解</h3>
-          <p class="problem-card__desc">努力の全体像が見えないから、判断の根拠が直感頼り。「自分のことがよくわからない」状態が続く。</p>
-        </div>
-        <div class="problem-card">
-          <div class="problem-card__icon">
-            <svg viewBox="0 0 48 48" fill="none" width="48" height="48">
-              <path d="M12 36 L24 12 L36 36" stroke="var(--color-primary)" stroke-width="2" fill="none" opacity="0.3"/>
-              <path d="M18 36 L24 20 L30 36" stroke="var(--color-primary)" stroke-width="2" fill="var(--color-primary-soft)"/>
-              <line x1="8" y1="36" x2="40" y2="36" stroke="var(--color-border)" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <h3 class="problem-card__title">つなげることで見える文脈</h3>
-          <p class="problem-card__desc">DoubleHub が目指すのは、バラバラなデータを無理やり一つにすることではなく、必要なときにつないで「いまの自分に合う判断」を返せる状態。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Growth Loop -->
-  <section class="section container">
-    <div class="section__header section__header--center fade-in">
-      <span class="section__label">Growth Loop</span>
-      <h2 class="section__title">単体で役立ち、<br>つながるとさらに深くなる。</h2>
-    </div>
-    <div class="cards cards--4 fade-in">
-      <div class="card">
-        <div class="card__number">1</div>
-        <h3 class="card__title">それぞれで価値を出す</h3>
-        <p class="card__desc">TrainNote も Book Compass も DoubleHub 本体も、単体で使う意味がある。</p>
-      </div>
-      <div class="card">
-        <div class="card__number">2</div>
-        <h3 class="card__title">データがにじみ出る</h3>
-        <p class="card__desc">習慣、思考、判断、感情。あなたらしさが少しずつ記録される。</p>
-      </div>
-      <div class="card">
-        <div class="card__number">3</div>
-        <h3 class="card__title">ダブルが横断して読む</h3>
-        <p class="card__desc">一つのアプリだけでは見えない傾向を、文脈ごと理解していく。</p>
-      </div>
-      <div class="card">
-        <div class="card__number">4</div>
-        <h3 class="card__title">次の選択が変わる</h3>
-        <p class="card__desc">努力、投資、休息まで含めて、より満足度の高い一歩を提案する。</p>
-      </div>
-    </div>
-  </section>
-
   <hr class="divider container">
 
-  <!-- Current Entrances -->
+  <!-- ⑦ Current Entrances -->
   <section class="section container" id="services">
     <div class="section__header section__header--center fade-in">
       <span class="section__label">Current Entrances</span>
@@ -614,49 +710,9 @@
     </div>
   </section>
 
-  <!-- Scenarios -->
-  <section class="section container">
-    <div class="section__header section__header--center fade-in">
-      <span class="section__label">Use Cases</span>
-      <h2 class="section__title">点だった努力が、<br>満足度の高い選択に変わる。</h2>
-    </div>
-    <div class="scenarios fade-in">
-      <div class="scenario">
-        <div class="scenario__icon">💸</div>
-        <h3 class="scenario__title">お金を使いすぎた気がするとき</h3>
-        <p class="scenario__desc">
-          将来的には、家計アプリから支出傾向を読み、自己投資や娯楽も含めて
-          「満足度が高い配分」を提案できるようにしていきます。
-        </p>
-      </div>
-      <div class="scenario">
-        <div class="scenario__icon">🔋</div>
-        <h3 class="scenario__title">モチベーションが落ちているとき</h3>
-        <p class="scenario__desc">
-          TrainNote の運動量低下、Book Compass の読書テーマの偏り、タスク詰まりをまとめて見て、
-          小さく戻れる一歩を提案します。
-        </p>
-      </div>
-      <div class="scenario">
-        <div class="scenario__icon">🧭</div>
-        <h3 class="scenario__title">「次に何をすればいい？」と迷うとき</h3>
-        <p class="scenario__desc">
-          複数のデータを横断してあなたの現在地を把握し、いまの自分に合った具体的な次の一歩を提案します。
-        </p>
-      </div>
-      <div class="scenario">
-        <div class="scenario__icon">📊</div>
-        <h3 class="scenario__title">成長の実感が欲しいとき</h3>
-        <p class="scenario__desc">
-          単体アプリでは見えない「全体としての前進」を可視化。読書量、運動頻度、タスク達成率を横断して、自分の変化を確認できます。
-        </p>
-      </div>
-    </div>
-  </section>
-
   <hr class="divider container">
 
-  <!-- Roadmap -->
+  <!-- ⑧ Roadmap -->
   <section class="section container" id="roadmap">
     <div class="section__header section__header--center fade-in">
       <span class="section__label">Roadmap</span>
@@ -705,24 +761,24 @@
     </div>
   </section>
 
-  <!-- Vision -->
+  <!-- ⑨ Vision -->
   <section class="section container">
     <div class="section__header section__header--center fade-in">
       <span class="section__label">Vision</span>
-      <h2 class="section__title">人の可能性をつなぎたい。</h2>
+      <h2 class="section__title">あなたのことを、<br>世界で一番理解する存在へ。</h2>
     </div>
     <div class="vision-rich fade-in">
       <div class="vision-rich__main">
         <blockquote class="vision-rich__quote">
-          「自分のことを、もう少し理解してくれる存在がそばにいたら。」<br>
-          DoubleHub は、その問いから始まっています。
+          ただ甘やかすだけじゃない。上辺で合わせるだけでもない。<br>
+          あなたを理解した上で、あなたのためになることを返す。<br>
+          そういう存在を、テクノロジーでつくりたい。
         </blockquote>
         <p>
           DoubleHub は、テクノロジーで人間を置き換えるためのプロジェクトではありません。
-          バラバラな努力や記録をつなぎ直し、人間の可能性をバージョンアップするための試みです。
+          バラバラな努力や記録をつなぎ直し、あなたの可能性を広げるための試みです。
         </p>
         <p>
-          各サービスは単なる集客導線ではなく、ダブルを育てるための本物の入口として設計します。
           一つ一つの記録が、あなた自身の輪郭を少しずつ鮮明にしていく。
           それが、より満足度の高い判断を積み重ねていく土台になると信じています。
         </p>
@@ -747,7 +803,7 @@
     </div>
   </section>
 
-  <!-- FAQ -->
+  <!-- ⑩ FAQ -->
   <section class="section container" id="faq">
     <div class="section__header section__header--center fade-in">
       <span class="section__label">FAQ</span>
@@ -782,8 +838,8 @@
     </div>
   </section>
 
-  <!-- Newsletter -->
-  <section class="section container" id="newsletter">
+  <!-- Newsletter（準備中・非表示） -->
+  <section class="section container" id="newsletter" hidden>
     <div class="newsletter fade-in">
       <div>
         <h2 class="newsletter__title">構想の更新を、いちばん早く。</h2>
@@ -819,7 +875,7 @@
     <a href="./bookcompass.html">Book Compass</a>
     <a href="./blog/index.html">ブログ</a>
     <a href="./about.html">著者について</a>
-    <a href="#newsletter">更新案内</a>
+    <!-- <a href="#newsletter">更新案内</a> -->
   </div>
 </footer>
 
