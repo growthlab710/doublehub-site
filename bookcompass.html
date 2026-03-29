@@ -21,6 +21,14 @@
 <meta name="twitter:title" content="Book Compass — 読んだ本が、思考の地図になる | DoubleHub">
 <meta name="twitter:description" content="Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。">
 <link rel="stylesheet" href="./styles.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJW7K08F6F');
+</script>
 </head>
 <body>
 
@@ -77,7 +85,7 @@
           DoubleHub につながると、その地図は「何を大事にしているか」の輪郭になります。
         </p>
         <div class="hero__actions" style="justify-content:flex-start;margin-top:var(--space-6)">
-          <a href="https://apps.apple.com/us/app/bookcompass-%E8%AA%AD%E6%9B%B8%E7%9F%A5%E8%AD%98%E3%83%9E%E3%83%83%E3%83%97/id6760604663?itscg=30200&itsct=apps_box_badge&mttnsubad=6760604663" target="_blank" rel="noopener noreferrer">
+          <a href="https://apps.apple.com/us/app/bookcompass-%E8%AA%AD%E6%9B%B8%E7%9F%A5%E8%AD%98%E3%83%9E%E3%83%83%E3%83%97/id6760604663?itscg=30200&itsct=apps_box_badge&mttnsubad=6760604663" target="_blank" rel="noopener noreferrer" onclick="gtag('event', 'appstore_click', {app_name: 'BookCompass', page: 'bookcompass'})">
             <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000" alt="App Storeでダウンロード" style="height:44px;object-fit:contain;" />
           </a>
           <a class="btn btn--secondary" href="./index.html#ecosystem">全体構想に戻る</a>

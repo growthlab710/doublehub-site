@@ -21,6 +21,14 @@
 <meta name="twitter:title" content="TrainNote — 身体の記録が、続け方の理解になる | DoubleHub">
 <meta name="twitter:description" content="TrainNote は筋トレの記録を超えて、あなたの継続パターンや目標への向き合い方を残すサービスです。">
 <link rel="stylesheet" href="./styles.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJW7K08F6F');
+</script>
 </head>
 <body>
 
@@ -78,7 +86,7 @@
           DoubleHub につながると、身体のログは意志のログにもなります。
         </p>
         <div class="hero__actions" style="justify-content:flex-start;margin-top:var(--space-6)">
-          <a href="https://apps.apple.com/us/app/trainnote/id6759539755?itscg=30200&itsct=apps_box_artwork&mttnsubad=6759539755" target="_blank" rel="noopener noreferrer">
+          <a href="https://apps.apple.com/us/app/trainnote/id6759539755?itscg=30200&itsct=apps_box_artwork&mttnsubad=6759539755" target="_blank" rel="noopener noreferrer" onclick="gtag('event', 'appstore_click', {app_name: 'TrainNote', page: 'trainnote'})">
             <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000" alt="App Storeでダウンロード" style="height:44px;object-fit:contain;" />
           </a>
           <a class="btn btn--secondary" href="./index.html#ecosystem">全体構想に戻る</a>
