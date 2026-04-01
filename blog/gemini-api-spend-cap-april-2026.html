@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gemini API、4月から課金上限が強制適用へ——突然の利用停止を防ぐために今すぐやること | DoubleHub</title>
+<meta name="description" content="2026年4月1日からGemini APIのスペンドキャップ（月間課金上限）が強制適用される。上限到達でAPIが翌月まで全停止するリスクがあり、開発者は今すぐ対策が必要だ。">
+<meta property="og:title" content="Gemini API、4月から課金上限が強制適用へ——突然の利用停止を防ぐために今すぐやること | DoubleHub">
+<meta property="og:description" content="2026年4月1日からGemini APIのスペンドキャップが強制適用。上限到達でAPIが翌月まで全停止するリスクがあり、開発者は今すぐ対策が必要だ。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://doublehub.jp/blog/gemini-api-spend-cap-april-2026.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gemini API、4月から課金上限が強制適用へ——突然の利用停止を防ぐために今すぐやること | DoubleHub">
+<meta name="twitter:description" content="4月1日からGemini APIのスペンドキャップが強制適用。上限到達でAPIが翌月まで全停止するリスクがある。">
+<link rel="stylesheet" href="../styles.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJW7K08F6F');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "Gemini API、4月から課金上限が強制適用へ——突然の利用停止を防ぐために今すぐやること",
+      "author": {
+        "@type": "Person",
+        "name": "Naoki",
+        "url": "https://doublehub.jp/about.html",
+        "description": "iOSアプリ個人開発者・DoubleHub作者"
+      },
+      "datePublished": "2026-03-31",
+      "dateModified": "2026-03-31",
+      "publisher": {
+        "@type": "Organization",
+        "name": "DoubleHub"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://doublehub.jp/blog/gemini-api-spend-cap-april-2026.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "スペンドキャップに達したらどうなりますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "そのビリングアカウントに紐づく全Gemini APIリクエストが翌月1日まで停止されます。プロジェクトごとの個別停止ではなく、アカウント全体が対象になる点に注意が必要です。上限引き上げの申請（override request）を事前に提出しておくことで回避できます。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "無料ティアのユーザーも影響を受けますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "4月1日のスペンドキャップ強制適用は有料ティア（Tier 1〜3）が対象です。無料ティアは支出が発生しないため直接の影響はありません。ただし2025年12月にRPD（1日あたりのリクエスト数）が大幅に削減されており、無料ティアの利用可能範囲自体が以前より狭くなっています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Gemini 2.0 Flashはいつまで使えますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Googleの発表によると、Gemini 2.0 FlashとGemini 2.0 Flash-Liteは2026年6月1日に廃止予定です。現在これらのモデルを本番環境で使用している場合は、Gemini 2.5 FlashまたはGemini 2.5 Flash-Liteへの移行を4月〜5月中に完了しておくことを推奨します。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <nav class="breadcrumb container" aria-label="パンくずリスト">
+      <a href="../index.html">DoubleHub</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="./index.html">ブログ</a>
+      <span class="breadcrumb__sep">›</span>
+      <span>Gemini API 課金上限 4月強制適用</span>
+    </nav>
+
+    <header class="article__header">
+      <span class="article__cluster" data-category="ai-news">AIニュース</span>
+      <h1 class="article__title">Gemini API、4月から課金上限が強制適用へ——突然の利用停止を防ぐために今すぐやること</h1>
+      <div class="article__meta">
+        <span>著者: <a class="article__author-link" href="../about.html">Naoki</a></span>
+        <span class="article__meta-sep">|</span>
+        <span>公開: 2026年3月31日</span>
+      </div>
+      <p class="article__updated">最終更新: 2026年3月31日</p>
+    </header>
+
+    <div class="article__content">
+
+      <p><strong>2026年4月1日から、Gemini APIのスペンドキャップ（月間課金上限額）が強制的に適用されるようになる。</strong>これまで上限額は設定されていたものの実際には機能していなかった。4月以降は上限に達した時点でビリングアカウント全体のAPIリクエストが翌月まで停止される。個人開発者から企業まで、Gemini APIを本番環境で使っている開発者は今すぐ対応が必要だ。</p>
+
+      <p>本記事では、今回の変更内容をGoogleの公式発表をもとに整理し、Tier別の上限額、注意すべきポイント、そして具体的な対策手順を解説する。</p>
+
+      <hr>
+
+      <h2>今回の変更——「あったけど効いていなかった」上限が本物になる</h2>
+
+      <p>Gemini APIの各利用ティアには以前から月間スペンドキャップ（支出上限）が設定されていた。しかし実態として、この上限はソフトな目安にすぎず、超過しても即座にリクエストが止まることはなかった。</p>
+
+      <p>2025年8月、この状態が深刻な問題を引き起こした。Gemini 2.5 Flash の画像生成機能における課金バグで、内部処理トークンが誤って高コストの「画像出力トークン」として計算され、一部の開発者に数万ドル規模の請求が届いた。このインシデントをきっかけに、Googleは課金の透明性向上と上限管理の強化を本格的に進めることになった。</p>
+
+      <p>今回の変更はその流れの集大成だ。上限に達した場合、そのビリングアカウントに紐づく<strong>全プロジェクトのGemini APIリクエストが翌月1日まで停止</strong>される。</p>
+
+      <h2>4月までの変更タイムライン</h2>
+
+      <table>
+        <thead>
+          <tr><th>日付</th><th>変更内容</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2026年3月16日</td>
+            <td>プロジェクト単位のスペンドキャップ（任意設定）が追加。新しい利用ティア（Usage Tier）システムと課金ダッシュボードが公開</td>
+          </tr>
+          <tr>
+            <td>2026年3月23日</td>
+            <td>新規ユーザー向けにプリペイド課金が必須化（最低チャージ額 $10）</td>
+          </tr>
+          <tr>
+            <td><strong>2026年4月1日</strong></td>
+            <td><strong>ビリングアカウント単位のティアスペンドキャップが強制適用開始</strong></td>
+          </tr>
+          <tr>
+            <td>2026年6月1日</td>
+            <td>Gemini 2.0 Flash / 2.0 Flash-Lite が廃止予定</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Tier別のスペンドキャップと昇格条件</h2>
+
+      <p>現在のGemini API利用資格は4段階のTierで管理されており、各Tierに月間の上限額が設定されている。</p>
+
+      <table>
+        <thead>
+          <tr><th>Tier</th><th>昇格条件</th><th>月間スペンドキャップ</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>無料</td>
+            <td>ビリングアカウント未接続</td>
+            <td>$0（課金なし）</td>
+          </tr>
+          <tr>
+            <td>Tier 1</td>
+            <td>ビリングアカウントを接続するだけで自動昇格</td>
+            <td>$250/月</td>
+          </tr>
+          <tr>
+            <td>Tier 2</td>
+            <td>累計 $100 消費 + 3日経過で自動昇格</td>
+            <td>$2,000/月</td>
+          </tr>
+          <tr>
+            <td>Tier 3</td>
+            <td>累計 $1,000 消費 + 30日経過で自動昇格</td>
+            <td>$20,000〜$100,000+/月</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>個人開発者のほとんどはTier 1に該当する。月 $250 というのは、小規模なアプリやプロトタイプであれば十分な余裕があるように見える。ただし、<strong>複数のプロジェクトを1つのビリングアカウントで管理している場合は合算</strong>される点に要注意だ。</p>
+
+      <h2>レート制限（RPM / TPM / RPD）の現状</h2>
+
+      <p>4月の変更は主にスペンドキャップの強制適用だが、レート制限（1分あたりのリクエスト数 / トークン数 / 1日あたりのリクエスト数）は2025年12月にすでに大幅な変更があった。現時点での主要モデルの制限は以下の通りだ。</p>
+
+      <h3>無料ティア</h3>
+
+      <table>
+        <thead>
+          <tr><th>モデル</th><th>RPM（分あたり）</th><th>TPM（分あたりトークン）</th><th>RPD（日あたり）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Gemini 2.5 Pro</td><td>5</td><td>250,000</td><td>100</td></tr>
+          <tr><td>Gemini 2.5 Flash</td><td>10</td><td>250,000</td><td>250</td></tr>
+          <tr><td>Gemini 2.5 Flash-Lite</td><td>15</td><td>250,000</td><td>1,000</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Tier 1（有料）</h3>
+
+      <table>
+        <thead>
+          <tr><th>モデル</th><th>RPM</th><th>TPM</th><th>RPD</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Gemini 2.5 Pro</td><td>150</td><td>1,000,000</td><td>1,000〜1,500</td></tr>
+          <tr><td>Gemini 2.5 Flash</td><td>200〜300</td><td>1,000,000〜2,000,000</td><td>1,500</td></tr>
+          <tr><td>Gemini 2.5 Flash-Lite</td><td>300</td><td>1,000,000〜2,000,000</td><td>1,500</td></tr>
+        </tbody>
+      </table>
+
+      <p>最新の正確な数値はモデルやプレビュー状態によって変化するため、<a href="https://ai.google.dev/gemini-api/docs/rate-limits" target="_blank" rel="noopener noreferrer">Google AI公式ドキュメントのレート制限ページ</a>で直接確認することを推奨する。</p>
+
+      <h2>最も影響を受けるのは誰か</h2>
+
+      <h3>1. 複数プロジェクトを1つのビリングアカウントで管理している開発者</h3>
+      <p>スペンドキャップはビリングアカウント単位で適用される。プロジェクトAとプロジェクトBを同じアカウントで管理している場合、合算消費額が上限に達した時点で両方が停止する。プロジェクトごとに個別のビリングアカウントを用意するか、プロジェクト単位のスペンドキャップ（3月16日に追加された機能）を活用したい。</p>
+
+      <h3>2. トラフィックが予測しにくい本番環境の開発者</h3>
+      <p>ユーザー数の急増やバズによるリクエスト集中が起きた場合、月間上限に想定外のタイミングで到達する可能性がある。Tier 1の $250 は小規模アプリには十分だが、急成長フェーズに入ったプロダクトでは早期にTier 2昇格の条件を満たしておく、または上限引き上げ申請を準備しておくべきだ。</p>
+
+      <h3>3. Gemini 2.0 Flash / 2.0 Flash-Lite を本番利用中の開発者</h3>
+      <p>スペンドキャップとは別に、Gemini 2.0 Flash と 2.0 Flash-Lite は2026年6月1日に廃止予定だ。4月の変更と合わせてモデルの移行計画も必要になる。移行先は Gemini 2.5 Flash（バランス型）または Gemini 2.5 Flash-Lite（軽量型）が候補になる。</p>
+
+      <h2>今すぐやるべき5つの対策</h2>
+
+      <h3>1. 現在のティアと消費額を確認する</h3>
+      <p><a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer">Google AI Studio</a> にログインし、自分のアカウントのティアと今月の消費額を確認する。意外と把握していない開発者が多い。</p>
+
+      <h3>2. プロジェクト単位のスペンドキャップを設定する</h3>
+      <p>3月16日に追加されたプロジェクト単位の任意キャップを設定する。プロジェクトAに $100、プロジェクトBに $80 のように割り当てておくと、アカウント全体の停止を防ぎながら個別のコスト管理ができる。</p>
+
+      <h3>3. 使用量アラートを設定する</h3>
+      <p>Google Cloud の予算アラートを使い、月間消費額が 50% / 80% / 95% に達した時点でメール通知を受け取るよう設定する。早期に気づければ対処できる。</p>
+
+      <h3>4. 上限引き上げが必要なら申請を準備する</h3>
+      <p>Tier 1の $250 では不足する見込みがある場合は、Google AI Studioから override request（上限引き上げ申請）を提出できる。審査に時間がかかる場合があるため、余裕を持って申請しておきたい。</p>
+
+      <h3>5. Gemini 2.0 系モデルからの移行を計画する</h3>
+      <p>6月廃止に向けて、Gemini 2.5 系への移行を4〜5月中に完了しておく。APIのエンドポイントとモデル名を変更するだけで動作するケースがほとんどだが、レスポンスの品質や速度に違いが出る場合があるため、テスト環境で十分に検証してから本番適用する。</p>
+
+      <h2>個人開発者としての所感</h2>
+
+      <p>私自身、TrainNote や Book Compass のバックエンドで Gemini API を利用している。正直、これまでの「上限はあるが効かない」状態は安心感があった一方、2025年8月の課金バグ問題を見ると、Googleにとっても開発者にとっても不健全な状態だったとは思う。</p>
+
+      <p>今回の変更は「透明性と予測可能性を高める」という方向性として理解できる。スペンドキャップが強制適用されることで、予期しない高額請求のリスクは下がる。ただしそのトレードオフとして、上限到達による突然の停止リスクが現実になるため、事前の設定と監視が欠かせない。</p>
+
+      <p>個人開発者にとって特に大事なのは「知らなかった」で止まらないことだ。4月1日は来週に迫っている。今日のうちにGoogle AI Studioを開いて自分のアカウント状態を確認しておくことを強くすすめる。</p>
+
+      <!-- CTA -->
+      <div class="article-cta">
+        <h3 class="article-cta__title">AI活用アプリを個人開発で試してみませんか</h3>
+        <p class="article-cta__desc">TrainNoteはAI APIを活用した筋トレ記録アプリです。無料でダウンロードいただけます。</p>
+        <a class="btn btn--primary" href="../trainnote.html">TrainNoteを見る</a>
+      </div>
+
+    </div>
+
+    <!-- 出典セクション -->
+    <section class="article-sources">
+      <h2>出典・参考</h2>
+      <ul class="sources-list">
+        <li><a href="https://blog.google/innovation-and-ai/technology/developers-tools/more-control-over-gemini-api-costs/" target="_blank" rel="noopener noreferrer">Giving you more transparency and control over your Gemini API costs — Google Blog（2026年3月16日）</a></li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noopener noreferrer">Billing | Gemini API | Google AI for Developers（公式ドキュメント）</a></li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/rate-limits" target="_blank" rel="noopener noreferrer">Rate limits | Gemini API | Google AI for Developers（公式ドキュメント）</a></li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/changelog" target="_blank" rel="noopener noreferrer">Release notes | Gemini API（公式チェンジログ）</a></li>
+      </ul>
+    </section>
+
+    <!-- FAQ -->
+    <div class="article__faq">
+      <h2>よくある質問</h2>
+      <details open>
+        <summary>スペンドキャップに達したらどうなりますか？</summary>
+        <p>そのビリングアカウントに紐づく全Gemini APIリクエストが翌月1日まで停止されます。プロジェクトごとの個別停止ではなく、アカウント全体が対象になる点に注意が必要です。上限引き上げの申請（override request）を事前に提出しておくことで回避できます。</p>
+      </details>
+      <details>
+        <summary>無料ティアのユーザーも影響を受けますか？</summary>
+        <p>4月1日のスペンドキャップ強制適用は有料ティア（Tier 1〜3）が対象です。無料ティアは支出が発生しないため直接の影響はありません。ただし2025年12月にRPD（1日あたりのリクエスト数）が大幅に削減されており、無料ティアの利用可能範囲自体が以前より狭くなっています。</p>
+      </details>
+      <details>
+        <summary>Gemini 2.0 Flashはいつまで使えますか？</summary>
+        <p>Googleの発表によると、Gemini 2.0 FlashとGemini 2.0 Flash-Liteは2026年6月1日に廃止予定です。現在これらのモデルを本番環境で使用している場合は、Gemini 2.5 FlashまたはGemini 2.5 Flash-Liteへの移行を4月〜5月中に完了しておくことを推奨します。</p>
+      </details>
+    </div>
+
+    <!-- 著者ボックス -->
+    <div class="author-box">
+      <div class="author-box__avatar">N</div>
+      <div>
+        <div class="author-box__name">Naoki</div>
+        <div class="author-box__role">iOSアプリ個人開発者・DoubleHub作者</div>
+        <p class="author-box__bio">
+          西日本在住。Swift を中心に AI×習慣化×自己理解をテーマとしたアプリを開発。TrainNote、Book Compass、DoubleHub の作者。
+        </p>
+        <a class="author-box__link" href="../about.html">著者プロフィールを見る →</a>
+      </div>
+    </div>
+
+    <!-- 関連記事 -->
+    <div class="related-articles">
+      <h2 class="related-articles__title">関連記事</h2>
+      <div class="related-articles__grid">
+        <a class="related-card" href="./gemini-chat-import.html">
+          <span class="related-card__cluster">AIニュース</span>
+          <span class="related-card__title">Google Gemini、ChatGPTとClaudeからチャット履歴のインポートが可能に</span>
+        </a>
+        <a class="related-card" href="./ai-coding-agent-comparison-2026.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">AIコーディングエージェント比較2026——Claude Code, Cursor, GitHub Copilot, Devinの選び方</span>
+        </a>
+        <a class="related-card" href="./indie-dev-ai-implementation.html">
+          <span class="related-card__cluster">ブログ</span>
+          <span class="related-card__title">個人開発でAI機能を実装する方法——SwiftでAIアプリを作った全記録</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<!-- Footer -->
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
