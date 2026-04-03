@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLMベンチマーク入門——AIモデルの「成績表」を読む基礎知識 | DoubleHub</title>
+<meta name="description" content="ChatGPT・Claude・GeminiなどのAIモデルを比較する「ベンチマーク」とは何か。MMLU・HumanEval・GSM8Kなど主要な評価指標の種類と読み方を初心者向けにわかりやすく解説。">
+<meta property="og:title" content="LLMベンチマーク入門——AIモデルの「成績表」を読む基礎知識 | DoubleHub">
+<meta property="og:description" content="MMLU・HumanEval・GSM8Kなど主要LLMベンチマークの種類と読み方を初心者向けに解説。スコアが何を意味するかがわかる。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://doublehub.jp/blog/llm-benchmark-guide-basics.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="LLMベンチマーク入門 | DoubleHub">
+<meta name="twitter:description" content="MMLU・HumanEval・GSM8Kなど主要LLMベンチマークの種類と読み方を初心者向けに解説。">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "LLMベンチマーク入門——AIモデルの「成績表」を読む基礎知識",
+      "author": {
+        "@type": "Person",
+        "name": "Naoki",
+        "url": "https://doublehub.jp/about.html",
+        "description": "iOSアプリ個人開発者・DoubleHub作者"
+      },
+      "datePublished": "2026-04-03",
+      "dateModified": "2026-04-03",
+      "publisher": {
+        "@type": "Organization",
+        "name": "DoubleHub"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://doublehub.jp/blog/llm-benchmark-guide-basics.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "LLMのベンチマークとは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LLMのベンチマークとは、複数のAIモデルを同じ条件で比較するための標準化されたテスト問題セットです。知識・数学・コーディング・常識推論など分野別に異なるベンチマークが存在し、それぞれが異なる能力を測定します。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "MMLUとはどんなベンチマークですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MMLUは数学・物理・法律・医学など57の学術分野にわたる4択問題で構成されたベンチマークです。モデルの幅広い知識量を測るために最もよく引用される指標のひとつで、主要なフロンティアモデルは88〜92%前後を達成しています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ベンチマークスコアが高いモデルが実用でも優れていますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "必ずしもそうとは限りません。ベンチマークは特定の能力を測る設計になっており、実際の使用感（回答の自然さ・指示への追従性など）は別の評価が必要です。LMSYSのChatbot Arenaのような人間評価との組み合わせで総合的に判断することが重要です。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJW7K08F6F');
+</script>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <nav class="breadcrumb container" aria-label="パンくずリスト">
+      <a href="../index.html">DoubleHub</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="./index.html">ブログ</a>
+      <span class="breadcrumb__sep">›</span>
+      <span>LLMベンチマーク入門</span>
+    </nav>
+
+    <header class="article__header">
+      <span class="article__cluster" data-category="ai-info">AI情報</span>
+      <h1 class="article__title">LLMベンチマーク入門——AIモデルの「成績表」を読む基礎知識</h1>
+      <div class="article__meta">
+        <span>著者: <a class="article__author-link" href="../about.html">Naoki</a></span>
+        <span class="article__meta-sep">|</span>
+        <span>公開: 2026年4月3日</span>
+      </div>
+      <p class="article__updated">最終更新: 2026年4月3日</p>
+    </header>
+
+    <div class="article__content">
+
+      <p><strong>「MMLU 88.7%」「HumanEval 92%」——新しいAIモデルが発表されるたびに並ぶこれらの数字は、何を意味しているのか。</strong>ChatGPT、Claude、Geminiを比べるとき、ベンチマークの読み方を知っているかどうかで、見えてくる情報量がまるで変わります。</p>
+
+      <p>本記事では、LLMの主要なベンチマークを6カテゴリに整理し、それぞれが何を測るのか・スコアをどう読むのかを初心者向けに解説します。上位モデルのスコア比較表も掲載しているので、モデル選定の参考にもなります。</p>
+
+      <p>より深い話——ベンチマークの限界・歴史的変遷・エージェント時代の新評価軸——は<a href="./llm-benchmark-guide-advanced.html">上級編</a>で扱います。</p>
+
+      <hr>
+
+      <h2>ベンチマークとは何か</h2>
+
+      <p>ベンチマーク（benchmark）とは、<strong>標準化されたテスト問題セット</strong>のことです。同じ問題を複数のモデルに解かせることで、公平な性能比較ができます。</p>
+
+      <p>重要なのは「何を測るか」が明確に定義されている点です。知識の幅を測るもの、コーディング能力に特化したもの、数学の論理力を問うものと、目的ごとに異なるベンチマークが存在します。学校のテストに例えるなら、「国語のテスト」「数学のテスト」「英語のテスト」がそれぞれ別に存在するようなイメージです。</p>
+
+      <p>1つのスコアだけでモデル全体を判断できない理由はここにあります。「コーディングに強いがGPQAが低い」「数学は優秀だが常識推論が苦手」といった特性の違いを読み解くには、複数のベンチマークを組み合わせて見る必要があります。</p>
+
+      <hr>
+
+      <h2>カテゴリ1: 知識・推論系</h2>
+
+      <h3>MMLU（Massive Multitask Language Understanding）</h3>
+
+      <p>最も広く引用されるベンチマークのひとつです。数学・物理学・化学・法律・医学・倫理学・世界史など<strong>57の学術分野</strong>にわたる4択問題（約14,000問）で構成されています。</p>
+
+      <p>モデルの「幅広い知識量」を単一の数値で表現できるため、モデル発表資料には必ずといっていいほど掲載されます。一方で、2024年頃からはトップモデルが軒並み88〜92%に達しており、差がつきにくくなっています（飽和問題。詳しくは上級編で）。</p>
+
+      <p><strong>人間の目安:</strong> 一般成人〜70%前後、各分野の専門家で89%程度。</p>
+
+      <h3>GPQA（Graduate-Level Google-Proof Q&A）</h3>
+
+      <p>「Googleで検索しても解けないよう設計された、博士レベルの専門問題集」です。化学・生物学・物理学が中心で、正解を知っている専門家でも確認に時間がかかるような問題が揃っています。</p>
+
+      <p>なかでも難易度が高い<strong>「Diamondセット」（206問）</strong>は、各分野の専門家でも65%前後しか正答できないとされています。MMLUが飽和しつつある中で、上位モデルの実力を測る指標として注目されています。</p>
+
+      <h3>ARC-Challenge</h3>
+
+      <p>米国3〜9年生（小中学生）向けの科学テスト問題を4択形式にしたものです。「簡単そう」と思われがちですが、単純なキーワード検索では解けないよう選別された問題だけを集めているため、推論力が問われます。</p>
+
+      <hr>
+
+      <h2>カテゴリ2: 数学・論理系</h2>
+
+      <h3>GSM8K（Grade School Math 8K）</h3>
+
+      <p>小学生レベルの算数文章題8,500問です。各問題は複数のステップを経て解く構造になっており、<strong>多段階の数式推論</strong>能力を測ります。</p>
+
+      <p>2022年頃のモデルは50〜60%台でしたが、2024年以降のフロンティアモデルは95%を超えるのが当たり前になりました。現在は「最低限のベースライン」として使われることが多いです。</p>
+
+      <h3>MATH</h3>
+
+      <p>米国の高校・大学数学コンテスト（AMC、AIME、AHSMEなど）相当の問題12,500問を5段階の難易度に分けたものです。GSM8Kより一段上、競技数学レベルの推論力を測ります。</p>
+
+      <p>GPT-4（初期）では52.9%にとどまっていましたが、推論特化モデルの登場で大きく改善されました。2026年現在はo3が95.6%、Gemini 2.5 Proが91.8%を達成しており、モデル世代の進化が最も劇的に現れるベンチマークのひとつです。</p>
+
+      <h3>AIME（American Invitational Mathematics Examination）</h3>
+
+      <p>アメリカ数学招待試験の実際の問題を使ったベンチマークです。MATH よりさらに難しく、解答は整数0〜999の範囲に収まります。2025年以降、推論モデルがトップ高校生レベルの成績に並ぶケースが出てきており、数学AIの進歩を測る最前線のベンチマークになっています。</p>
+
+      <hr>
+
+      <h2>カテゴリ3: コーディング系</h2>
+
+      <h3>HumanEval</h3>
+
+      <p>OpenAIが公開したコーディングベンチマークで、Pythonの関数実装問題164問で構成されています。問題文（自然言語）とドキュメントが与えられ、モデルが関数本体を実装します。ユニットテストを通過すれば正解です。</p>
+
+      <p>指標は<strong>pass@1</strong>（1回の生成で正解する確率）が主流です。2022年頃のモデルは48%前後でしたが、GPT-4世代で87%台まで伸び、2026年現在のフロンティアモデル（Gemini 2.5 Pro 92.4%、o3 90.8%など）は90%前後が当たり前になっています。</p>
+
+      <h3>MBPP（Mostly Basic Programming Problems）</h3>
+
+      <p>Googleが公開したPythonの入門〜中級プログラミング問題374問です。HumanEvalよりやや簡単なため、コーディング基礎力の下限を測る指標として合わせて使われることが多いです。</p>
+
+      <h3>SWE-bench Verified</h3>
+
+      <p>実際のGitHubリポジトリに報告されたIssue（バグ修正・機能追加）を、実際のコードベースに対して解決するベンチマークです。単純なコード生成ではなく、既存のコードベースを読んで修正箇所を特定し・修正し・テストを通過させる、<strong>実際のソフトウェアエンジニアリング能力</strong>を測ります。</p>
+
+      <p>Devin（2024年初頭）が13.8%で話題になり、Claude 3.5 Sonnetは49%に達しました。2026年現在はClaude Opus 4.6（80.8%）・Sonnet 4.6（79.6%）がトップクラスで、モデル単体の賢さだけでなくエージェント設計の巧みさがスコアを大きく左右するベンチマークになっています。</p>
+
+      <hr>
+
+      <h2>カテゴリ4: 文章理解・常識推論系</h2>
+
+      <h3>HellaSwag</h3>
+
+      <p>文章の「自然な続き」を4択から選ぶタスクです。常識的な状況理解と文章の流れを読む能力を測ります。人間の正答率は95.6%ですが、GPT-4はすでに95.3%を達成しており、差がほとんどなくなっています。</p>
+
+      <h3>WinoGrande</h3>
+
+      <p>代名詞の参照先を文脈から判断する問題（Winograd Schema）の大規模版です。例えば「ジョンはマークにお金を貸した。彼は困っていたからだ」という文章で「彼」がどちらを指すかを答えます。常識と文脈理解が必要です。</p>
+
+      <h3>BoolQ</h3>
+
+      <p>Wikipediaの文書を読んだうえでYes/Noの質問に答える9,427問のテストです。文章理解と事実確認能力を測ります。</p>
+
+      <hr>
+
+      <h2>カテゴリ5: 安全性・誠実性系</h2>
+
+      <h3>TruthfulQA</h3>
+
+      <p>「人間が誤解しやすい」817の質問で構成され、有名な誤謬・迷信・都市伝説に引きずられずに正確な情報を答えられるかを測ります。</p>
+
+      <p>例: 「ナポレオンは身長が低かったのですか？」（実際は平均身長）「コロンブスは地球が丸いと証明した最初の人物ですか？」（地動説は古くから知られていた）——こうした問題に誤情報を答えてしまうと低スコアになります。</p>
+
+      <p>LLMが「自信満々に間違える（ハルシネーション）」傾向を測る指標として重要で、特に信頼性を重視するユースケースで参照されます。</p>
+
+      <hr>
+
+      <h2>カテゴリ6: 人間評価系</h2>
+
+      <h3>LMSYS Chatbot Arena（ELOレーティング）</h3>
+
+      <p>2つのモデルの回答を人間が並べて見て「どちらが優れているか」を選ぶ、クラウドソーシング型の評価システムです。チェスのELOと同じ仕組みで相対スコアを算出します。</p>
+
+      <p>自動ベンチマークでは測れない「回答の自然さ」「指示への追従性」「実用的な使いやすさ」を反映する点が最大の強みです。ただし、多数の一般ユーザーの好みに引きずられやすい（例: 長い・きれいな文章が高評価されやすい）という側面もあります。</p>
+
+      <hr>
+
+      <h2>代表モデルのスコア比較（2026年4月）</h2>
+
+      <p>下表は2026年4月時点の主要フロンティアモデルのベンチマークスコアです。GSM8Kは現在のトップモデルが95〜99%に達し差がつきにくくなっているため、代わりに実際の開発能力を測る<strong>SWE-bench</strong>を掲載しています。</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>モデル</th>
+            <th>MMLU</th>
+            <th>GPQA Diamond</th>
+            <th>HumanEval</th>
+            <th>MATH</th>
+            <th>SWE-bench</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Gemini 2.0 Flash</strong></td>
+            <td>78.9%</td>
+            <td>63.7%</td>
+            <td>79.4%</td>
+            <td>74.2%</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>GPT-4.5</strong></td>
+            <td>90.8%</td>
+            <td>71.4% ※1</td>
+            <td>88.0%</td>
+            <td>84.7%</td>
+            <td>38.0%</td>
+          </tr>
+          <tr>
+            <td><strong>Llama 4 Maverick</strong></td>
+            <td>88.0%</td>
+            <td>〜70%</td>
+            <td>85.3%</td>
+            <td>83.2%</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Claude Sonnet 4.6</strong></td>
+            <td>89.3%</td>
+            <td>74.1%</td>
+            <td>—</td>
+            <td>—</td>
+            <td>79.6%</td>
+          </tr>
+          <tr>
+            <td><strong>Claude Opus 4.6</strong></td>
+            <td>91.1%</td>
+            <td>91.3% ※2</td>
+            <td>—</td>
+            <td>—</td>
+            <td>80.8%</td>
+          </tr>
+          <tr>
+            <td><strong>Gemini 2.5 Pro</strong></td>
+            <td>90.1%</td>
+            <td>82.3%</td>
+            <td>92.4%</td>
+            <td>91.8%</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>o3（推論モデル）</strong></td>
+            <td>88.9%</td>
+            <td>81.7%</td>
+            <td>90.8%</td>
+            <td>95.6%</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><small>※ 各スコアは2026年4月時点の公開ベンチマークからの代表値。測定条件（few-shot数・CoT有無など）はソースによって異なります。— は公開値なし。※1 GPT-4.5のGPQAはscience GPQA（GPQA Diamondとは異なる場合あり）。※2 Claude Opus 4.6のGPQAはサードパーティ集計値（Iternal Technologies）。</small></p>
+
+      <hr>
+
+      <h2>スコアの読み方：3つの注意点</h2>
+
+      <h3>① few-shot と zero-shot の違い</h3>
+
+      <p>「5-shot」とは、本番の問題を出す前に5問分の例題（問題と正解のセット）をモデルに見せる方法です。「zero-shot」は例題なしで直接問う方法です。few-shotの方がスコアが上がりやすいため、比較する際は同じ条件かを確認する必要があります。</p>
+
+      <h3>② pass@1 と pass@k（コーディング系）</h3>
+
+      <p>コーディングベンチマークでは「何回生成したうちの何回が正解か」で測ります。<strong>pass@1</strong>は1回の生成で正解する確率、<strong>pass@10</strong>は10回生成したうちの少なくとも1回が正解する確率です。pass@kは kが大きいほどスコアが高くなるため、比較には同じ kの値を使うことが前提です。</p>
+
+      <h3>③ Chain-of-Thought（CoT）あり・なし</h3>
+
+      <p>「考える手順をステップごとに書き出してから答えなさい」という指示（CoTプロンプト）を加えるだけで、数学や論理問題のスコアが大幅に改善することがあります。特にGSM8KやMATHではCoTが事実上の標準になっており、CoTなしのスコアを比較に使うのは不公平になります。</p>
+
+      <hr>
+
+      <h2>まとめ——ベンチマークはモデルを「多角的に」見るツール</h2>
+
+      <p>本記事で紹介した6カテゴリのベンチマークをまとめます。</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>カテゴリ</th>
+            <th>代表的なベンチマーク</th>
+            <th>何を測るか</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>知識・推論</td>
+            <td>MMLU、GPQA、ARC</td>
+            <td>幅広い学術知識、専門的推論</td>
+          </tr>
+          <tr>
+            <td>数学・論理</td>
+            <td>GSM8K、MATH、AIME</td>
+            <td>多段階推論、競技数学</td>
+          </tr>
+          <tr>
+            <td>コーディング</td>
+            <td>HumanEval、SWE-bench</td>
+            <td>コード生成、実際の開発能力</td>
+          </tr>
+          <tr>
+            <td>文章理解・常識</td>
+            <td>HellaSwag、WinoGrande</td>
+            <td>常識的な状況理解、代名詞解決</td>
+          </tr>
+          <tr>
+            <td>安全性・誠実性</td>
+            <td>TruthfulQA</td>
+            <td>ハルシネーション・誤情報回答</td>
+          </tr>
+          <tr>
+            <td>人間評価</td>
+            <td>Chatbot Arena</td>
+            <td>実際の使いやすさ・人の好み</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>スコアを見るときは「<strong>何のベンチマークか</strong>」と「<strong>どういう条件で測ったか</strong>」の2点を確認する習慣をつけると、AIニュースの読み方が大きく変わります。</p>
+
+      <p>ただし、ベンチマークにはさまざまな落とし穴もあります——スコアの飽和、データ汚染、ベンチマークと実用の乖離など。これらは<a href="./llm-benchmark-guide-advanced.html"><strong>上級編</strong></a>で詳しく掘り下げます。</p>
+
+      <!-- CTA Banner -->
+      <div class="article-cta">
+        <h3 class="article-cta__title">次は上級編へ</h3>
+        <p class="article-cta__desc">飽和・データ汚染・エージェント時代の新評価軸など、ベンチマークの深い話を解説しています。</p>
+        <a class="btn btn--primary" href="./llm-benchmark-guide-advanced.html">LLMベンチマーク上級編を読む</a>
+      </div>
+
+    </div>
+
+    <section class="article-sources">
+      <h2>出典・参考</h2>
+      <ul class="sources-list">
+        <li>Hendrycks et al., "Measuring Massive Multitask Language Understanding", ICLR 2021</li>
+        <li>Chen et al., "Evaluating Large Language Models Trained on Code (HumanEval)", OpenAI 2021</li>
+        <li>Cobbe et al., "Training Verifiers to Solve Math Word Problems (GSM8K)", OpenAI 2021</li>
+        <li>Hendrycks et al., "Measuring Mathematical Problem Solving With the MATH Dataset", NeurIPS 2021</li>
+        <li>Rein et al., "GPQA: A Graduate-Level Google-Proof Q&A Benchmark", 2023</li>
+        <li>Jimenez et al., "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?", ICLR 2024</li>
+        <li>Lin et al., "TruthfulQA: Measuring How Models Mimic Human Falsehoods", ACL 2022</li>
+        <li>LMSYS Chatbot Arena Leaderboard — lmsys.org</li>
+      </ul>
+    </section>
+
+    <div class="article__faq">
+      <h2>よくある質問</h2>
+      <details open>
+        <summary>LLMのベンチマークとは何ですか？</summary>
+        <p>LLMのベンチマークとは、複数のAIモデルを同じ条件で比較するための標準化されたテスト問題セットです。知識・数学・コーディング・常識推論など分野別に異なるベンチマークが存在し、それぞれが異なる能力を測定します。</p>
+      </details>
+      <details>
+        <summary>MMLUとはどんなベンチマークですか？</summary>
+        <p>MMLUは数学・物理・法律・医学など57の学術分野にわたる4択問題で構成されたベンチマークです。モデルの幅広い知識量を測るために最もよく引用される指標のひとつで、主要なフロンティアモデルは88〜92%前後を達成しています。</p>
+      </details>
+      <details>
+        <summary>ベンチマークスコアが高いモデルが実用でも優れていますか？</summary>
+        <p>必ずしもそうとは限りません。ベンチマークは特定の能力を測る設計になっており、実際の使用感（回答の自然さ・指示への追従性など）は別の評価が必要です。LMSYSのChatbot Arenaのような人間評価との組み合わせで総合的に判断することが重要です。</p>
+      </details>
+    </div>
+
+    <div class="author-box">
+      <div class="author-box__avatar">N</div>
+      <div>
+        <div class="author-box__name">Naoki</div>
+        <div class="author-box__role">iOSアプリ個人開発者・DoubleHub作者</div>
+        <p class="author-box__bio">
+          西日本在住。Swift を中心に AI×習慣化×自己理解をテーマとしたアプリを開発。TrainNote、Book Compass、DoubleHub の作者。
+        </p>
+        <a class="author-box__link" href="../about.html">著者プロフィールを見る →</a>
+      </div>
+    </div>
+
+    <div class="related-articles">
+      <h2 class="related-articles__title">関連記事</h2>
+      <div class="related-articles__grid">
+        <a class="related-card" href="./llm-benchmark-guide-advanced.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">LLMベンチマーク上級編——飽和・汚染・エージェント時代の新評価軸</span>
+        </a>
+        <a class="related-card" href="./ai-coding-agent-comparison-2026.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">AIコーディングエージェント比較2026</span>
+        </a>
+        <a class="related-card" href="./perplexity-computer-guide.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">Perplexity Computerとは何か</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
