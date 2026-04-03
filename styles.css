@@ -2362,6 +2362,20 @@ a, button, [role="button"], input, textarea, select {
   flex-shrink: 0;
 }
 
+/* ── Hero Concept Image ── */
+.hero__concept {
+  margin-top: var(--space-10);
+  width: 100%;
+  max-width: 860px;
+}
+
+.hero__concept-img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl);
+  display: block;
+}
+
 /* ── Hero Screenshots ── */
 .hero__screenshots {
   display: flex;
