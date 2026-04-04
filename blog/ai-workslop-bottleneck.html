@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIが速すぎて、人間のレビューが詰まる——workslopとボトルネックの時代 | DoubleHub</title>
+<meta name="description" content="AIが大量に生成する微妙なアウトプット「workslop」が生産性を下げている。年間900万ドルの損失データや人間がボトルネックになる構造、AIアウトプットとの賢い付き合い方を解説。">
+<meta property="og:title" content="AIが速すぎて、人間のレビューが詰まる——workslopとボトルネックの時代 | DoubleHub">
+<meta property="og:description" content="AI生成の微妙なアウトプット「workslop」が生産性を破壊。年間900万ドルの損失データとボトルネック回避策を解説。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://doublehub.jp/blog/ai-workslop-bottleneck.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AIが速すぎて、人間のレビューが詰まる——workslopとボトルネックの時代 | DoubleHub">
+<meta name="twitter:description" content="AI生成の微妙なアウトプット「workslop」が生産性を破壊。ボトルネック回避策を解説。">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "AIが速すぎて、人間のレビューが詰まる——workslopとボトルネックの時代",
+      "author": {
+        "@type": "Person",
+        "name": "Naoki",
+        "url": "https://doublehub.jp/about.html",
+        "description": "iOSアプリ個人開発者・DoubleHub作者"
+      },
+      "datePublished": "2026-04-04",
+      "dateModified": "2026-04-04",
+      "publisher": {
+        "@type": "Organization",
+        "name": "DoubleHub"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://doublehub.jp/blog/ai-workslop-bottleneck.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "workslopとは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "workslop（ワークスロップ）とは、BetterUp LabsとStanford Social Media Labが2025年に提唱した用語で、「良い仕事に見せかけているが、タスクを実質的に前進させる中身を欠いたAI生成コンテンツ」を指します。3段落の美辞麗句で書かれたメールが、実は1行の箇条書きで済む内容だった——といった事例が典型です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "AIの導入で生産性は上がっていますか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "一部のタスクでは確実に上がっていますが、組織全体では期待ほどの成果が出ていないケースが多いです。Workdayの2026年調査によると、AIで節約した時間の約40%がリワーク（修正・検証）に消え、AIから一貫してプラスの成果を得ている従業員はわずか14%にとどまっています。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJW7K08F6F');
+</script>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <nav class="breadcrumb container" aria-label="パンくずリスト">
+      <a href="../index.html">DoubleHub</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="./index.html">ブログ</a>
+      <span class="breadcrumb__sep">›</span>
+      <span>workslopとボトルネックの時代</span>
+    </nav>
+
+    <header class="article__header">
+      <span class="article__cluster" data-category="ai-info">AI情報</span>
+      <h1 class="article__title">AIが速すぎて、人間のレビューが詰まる——workslopとボトルネックの時代</h1>
+      <div class="article__meta">
+        <span>著者: <a class="article__author-link" href="../about.html">Naoki</a></span>
+        <span class="article__meta-sep">|</span>
+        <span>公開: 2026年4月4日</span>
+      </div>
+      <p class="article__updated">最終更新: 2026年4月4日</p>
+      <p class="article__series">シリーズ「AIオフロード時代の人間の脳」: <a href="./ai-cognitive-offloading.html">第1回</a> / <a href="./ai-critical-thinking.html">第2回</a> / <strong>第3回</strong></p>
+    </header>
+
+    <div class="article__content">
+
+      <p><strong>このシリーズでは、<a href="./ai-cognitive-offloading.html">第1回</a>でAIへの認知的オフロードによる脳の変化を、<a href="./ai-critical-thinking.html">第2回</a>でクリティカルシンキングへの影響を見てきた。</strong>最終回となる本記事では、もっと切実で日常的な問題を扱う。</p>
+
+      <p>AIが大量のアウトプットを生成する時代に、<strong>最終判断をする人間の方がボトルネックになっている</strong>——という構造的な問題だ。</p>
+
+      <hr>
+
+      <h2>「workslop」——AIが量産する微妙なアウトプットの山</h2>
+
+      <p>2025年9月、BetterUp LabsとStanford Social Media Labが共同で提唱した<strong>「workslop（ワークスロップ）」</strong>という概念が、Harvard Business Reviewに掲載されて注目を集めた。</p>
+
+      <p>workslopとは、「<strong>良い仕事に見せかけているが、タスクを実質的に前進させる中身を欠いたAI生成コンテンツ</strong>」のことだ。ソーシャルメディアにおける低品質AI生成コンテンツを指す「AI slop」の職場版と考えればわかりやすい。</p>
+
+      <h3>具体例</h3>
+
+      <ul>
+        <li>1行の箇条書きで済む報告が、AIによって3段落の美辞麗句に膨張したメール</li>
+        <li>中身は薄いが見栄えだけは整ったスライド資料</li>
+        <li>要約として送られてきたが、元の文書を読んだ方が速いAI要約</li>
+        <li>動くには動くが、設計意図が不明瞭なAI生成コード</li>
+      </ul>
+
+      <p>共通するのは、<strong>見た目は「仕事をした感」があるが、受け手の時間を奪っている</strong>という点だ。</p>
+
+      <hr>
+
+      <h2>年間900万ドルの「見えない税金」</h2>
+
+      <p>BetterUp Labs / Stanford Social Media Labの調査（米国のフルタイムデスクワーカー1,150人、および18業界10,000人以上の12ヶ月追跡）は、workslopの具体的なコストを算出している。</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>数値</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>過去1ヶ月にworkslopを受け取った経験がある労働者</td>
+            <td><strong>41%</strong></td>
+          </tr>
+          <tr>
+            <td>workslopへの対処にかかる平均時間</td>
+            <td><strong>1時間56分</strong></td>
+          </tr>
+          <tr>
+            <td>従業員1人あたりの月間コスト</td>
+            <td>約<strong>$186</strong></td>
+          </tr>
+          <tr>
+            <td>10,000人規模の組織の年間損失</td>
+            <td>約<strong>900万ドル</strong></td>
+          </tr>
+          <tr>
+            <td>workslopを送った同僚への印象（苛立ちを感じた）</td>
+            <td><strong>53%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><small>出典: BetterUp Labs &amp; Stanford Social Media Lab, 2025年9月 / Harvard Business Review</small></p>
+
+      <p>注目すべきは「苛立ちを感じた」の53%だ。workslopは生産性を下げるだけでなく、<strong>送り手への信頼や能力の評価も下げている</strong>。「AIを使えば効率的」のはずが、使い方を間違えると逆効果になっている。</p>
+
+      <hr>
+
+      <h2>「AIが仕事を減らす」は幻想だったのか？</h2>
+
+      <p>HBRに掲載されたRanganathan &amp; Ye（2026年2月）の追跡調査は、さらに衝撃的な実態を報告している。</p>
+
+      <p>米国テック企業の約200人を8ヶ月間追跡した結果——</p>
+
+      <ul>
+        <li>従業員の<strong>83%</strong>がAIにより「仕事量が増加した」と回答</li>
+        <li>作業ペースの加速、タスク範囲の拡大、労働時間の延長が同時に発生</li>
+        <li>アソシエイトの<strong>62%</strong>、エントリーレベルの<strong>61%</strong>がバーンアウトを報告</li>
+      </ul>
+
+      <p>つまり、AIは個々のタスクを高速化したが、<strong>その分だけ新しいタスクが詰め込まれ、結果として仕事量が増えている</strong>のだ。</p>
+
+      <p>Workdayのグローバル調査（2026年1月）も同様の傾向を示す。従業員の85%がAIで週1〜7時間を節約していると答える一方、<strong>節約時間の約40%がリワーク（修正・書き直し・検証）に消失</strong>。AIから一貫して明確なプラスの成果を得ている従業員は<strong>わずか14%</strong>にとどまっている。</p>
+
+      <hr>
+
+      <h2>人間がボトルネックになる構造</h2>
+
+      <p>この問題の根本には、AIと人間の処理速度の非対称性がある。</p>
+
+      <p>AIエージェントは並列で動ける。5つのタスクを同時に処理し、5つのアウトプットを数分で生成する。しかし、人間のレビューは基本的にシーケンシャル（逐次的）だ。1つずつ読んで、評価して、判断する。</p>
+
+      <p>AIの処理速度が上がれば上がるほど、この非対称性は拡大する。</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>AI側</th>
+            <th>人間側</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>処理モデル</strong></td>
+            <td>並列（複数同時）</td>
+            <td>逐次（1つずつ）</td>
+          </tr>
+          <tr>
+            <td><strong>速度の傾向</strong></td>
+            <td>指数的に向上</td>
+            <td>ほぼ一定</td>
+          </tr>
+          <tr>
+            <td><strong>品質チェック</strong></td>
+            <td>自動テスト可能</td>
+            <td>文脈理解が必要</td>
+          </tr>
+          <tr>
+            <td><strong>疲労</strong></td>
+            <td>なし</td>
+            <td>判断疲れが蓄積</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Stack Overflowの開発者調査（2025年）によると、開発者の<strong>75%</strong>がAI出力に人間の検証を必要としていると回答。エンタープライズの<strong>76%</strong>がデプロイ前にhuman-in-the-loopプロセスを導入している。AIの出力を信頼してそのまま使えるケースはまだ少ない。</p>
+
+      <p>結果として、<strong>AIが生成する量 ＞ 人間がレビューできる量</strong>という不等式が日常化し、「レビュー待ちの山」が積み上がっていく。</p>
+
+      <hr>
+
+      <h2>複数エージェント時代のワークフローと人間の役割</h2>
+
+      <p>AIエージェントが1つだった時代は、まだ管理可能だった。しかし、2026年現在、先進的な使い方をしている人は<strong>複数の専門エージェントを並列で運用</strong>している。</p>
+
+      <p>例えば、個人開発で記事を1本書くプロセスを考えてみよう。</p>
+
+      <ul>
+        <li><strong>リサーチエージェント</strong>: 関連論文・記事を収集・要約</li>
+        <li><strong>構成エージェント</strong>: 記事のアウトラインを提案</li>
+        <li><strong>ライティングエージェント</strong>: 各セクションの下書きを生成</li>
+        <li><strong>ファクトチェックエージェント</strong>: 引用・数値の正確性を検証</li>
+      </ul>
+
+      <p>各エージェントは数分で結果を返す。しかし、人間はこれらを<strong>すべて読んで、矛盾がないか確認し、統合し、最終的な判断を下す</strong>必要がある。このプロセスは自動化できない。なぜなら、「この記事で何を伝えたいか」「読者にとって何が価値か」という判断は、AIには委ねられない人間の領域だからだ。</p>
+
+      <p>Googleのエンジニアリングリード、Addy Osmaniは「My LLM Coding Workflow Going into 2026」で、5つ以上のエージェントを並列運用する際には<strong>ダッシュボードツール</strong>（Conductor、Vibe Kanbanなど）で管理する必要があると述べている。エージェントの数が増えるほど、人間のオーケストレーション負荷も増大する。</p>
+
+      <hr>
+
+      <h2>人間側に求められる「メタスキル」</h2>
+
+      <p>ボトルネックを解消する鍵は、人間の処理速度を上げることではない。<strong>何をレビューし、何を信頼し、何を捨てるかの判断精度を上げること</strong>だ。</p>
+
+      <p>Christopher S. Penn（2025年）は、AI時代に不可欠な3つのメタスキルとして以下を挙げている。</p>
+
+      <h3>1. 批判的思考（Critical Thinking）</h3>
+
+      <p>AIは賢くなるほど「より巧妙なミス」を犯す。以前のAIの間違いは明らかにおかしかったが、最新モデルの間違いは一見正しく見える。<strong>AIの出力が正しいかを疑い続ける力</strong>が、最も基本的なメタスキルだ。</p>
+
+      <h3>2. 創造的思考（Creative Thinking）</h3>
+
+      <p>AIは依頼された内容を実行するが、自ら「こんなことをやったらどうか」とは提案しない。<strong>アイデアを能動的に生み出す力</strong>——何を作るか、どんな切り口で攻めるか——は依然として人間の仕事だ。</p>
+
+      <h3>3. 文脈的思考（Contextual Thinking）</h3>
+
+      <p>AIの出力品質は入力の品質に依存する（Garbage in, garbage out）。<strong>データの所在・品質・フォーマットを把握し、適切な文脈を与えて指示を出す力</strong>。これがなければ、どれだけ高性能なAIもworkslopしか返してこない。</p>
+
+      <hr>
+
+      <h2>workslopを増やさないための実践的な工夫</h2>
+
+      <p>最後に、日々の仕事でworkslopを減らし、ボトルネックを軽減するための具体的な工夫を提案する。</p>
+
+      <h3>工夫1: 「まず1案」で始める</h3>
+
+      <p>AIに「10案出して」と依頼するのは簡単だが、10案をレビューする時間がかかる。まずは<strong>「最も有力な1案を出して」</strong>と依頼し、方向性が合っていることを確認してから、必要に応じてバリエーションを追加する。</p>
+
+      <p>AI側のスループットを「人間がレビューできる量」に合わせて制御することが、workslop削減の基本だ。</p>
+
+      <h3>工夫2: 品質基準を先に伝える</h3>
+
+      <p>AIに出力を依頼するときに、「何が完了条件か」を具体的に伝える。</p>
+
+      <ul>
+        <li>「500字以内で、結論→理由→具体例の構成で」</li>
+        <li>「テストが通ることを確認してからコードを提出して」</li>
+        <li>「出典を明示して。出典がない情報は含めないで」</li>
+      </ul>
+
+      <p>品質基準を事前に設定するだけで、AIの出力が大幅に改善され、レビューの負荷が下がる。CIM（2026年）は、2026年のAI活用の鍵は「モデルそのものではなくシステム設計」であると指摘している。</p>
+
+      <h3>工夫3: 「AIに頼らない時間」を意識的に作る</h3>
+
+      <p><a href="./ai-critical-thinking.html">前回の記事</a>でも触れたが、毎日一定の時間を「自分で問題を考える」ことに使う習慣は、ボトルネック対策としても有効だ。AIなしで考える習慣があれば、AIの出力を受け取ったときに<strong>「これは正しいか？」と即座に嗅ぎ分ける直感</strong>——批判的直感——が鍛えられる。</p>
+
+      <p>この直感は、大量のAI出力を効率的にフィルタリングするための最強のツールだ。</p>
+
+      <hr>
+
+      <h2>シリーズまとめ: AIとの「共進化」のために</h2>
+
+      <p>3本のシリーズを通して見てきた構図をまとめる。</p>
+
+      <ul>
+        <li><strong><a href="./ai-cognitive-offloading.html">第1回</a></strong>: AIへの認知的オフロードにより、脳の使い方が「思考」から「モニタリングと統合」にシフトしている</li>
+        <li><strong><a href="./ai-critical-thinking.html">第2回</a></strong>: クリティカルシンキングは消えていないが、「質」が変わり、「スタミナ」が落ちやすくなっている</li>
+        <li><strong>第3回（本記事）</strong>: AIのアウトプットが増え続ける中、人間のレビューがボトルネックになり、workslopが生産性を下げている</li>
+      </ul>
+
+      <p>これらは別々の問題ではなく、<strong>一つの構造的変化の異なる断面</strong>だ。AIが推論・生成を担い、人間が評価・判断・意思決定を担う——という新しい分業が確立されつつある中で、人間側の能力とキャパシティが問われている。</p>
+
+      <p>センセーショナルに「AIが人間を退化させる」と煽りたいわけではない。歴史的に見ても、道具の発達は常に人間の能力を変容させてきた。文字の発明は暗記力を弱めたが、蓄積された知識に基づくより高度な思考を可能にした。</p>
+
+      <p>AIとの関係もおそらく同じだ。ある能力は鈍り、別の能力が鋭くなる。重要なのは、<strong>その変化を無自覚に受け入れるのではなく、自覚的に選択すること</strong>だ。</p>
+
+      <p>あなた自身の脳は、AIとの協働によってどう変わっているだろうか。意識的に「自分で考える」時間を取れているだろうか。</p>
+
+      <p>その問いを持ち帰ってもらえたら、このシリーズは目的を果たしたことになる。</p>
+
+      <!-- CTA Banner -->
+      <div class="article-cta">
+        <h3 class="article-cta__title">シリーズ第1回から読む</h3>
+        <p class="article-cta__desc">AIへの認知的オフロードとは何か。脳のCPU配分がどう変わっているかを解説しています。</p>
+        <a class="btn btn--primary" href="./ai-cognitive-offloading.html">第1回: 人間の脳はどう変わっているのか</a>
+      </div>
+
+    </div>
+
+    <section class="article-sources">
+      <h2>出典・参考</h2>
+      <ul class="sources-list">
+        <li>BetterUp Labs &amp; Stanford Social Media Lab "AI-Generated 'Workslop' Is Destroying Productivity", <em>Harvard Business Review</em>, 2025年9月</li>
+        <li>Ranganathan, A. &amp; Ye, X.M. "AI Doesn't Reduce Work — It Intensifies It", <em>Harvard Business Review</em>, 2026年2月</li>
+        <li>CNBC "AI-generated 'workslop' is here. It's killing teamwork and causing a multimillion dollar productivity problem", 2025年9月</li>
+        <li>Workday "New Workday Research: Companies Are Leaving AI Gains on the Table", 2026年1月</li>
+        <li>Stack Overflow Developer Survey 2025</li>
+        <li>Osmani, A. "My LLM Coding Workflow Going into 2026" — addyosmani.com</li>
+        <li>Penn, C.S. "The 3 Critical Meta Skills You Need to Thrive in an AI-Driven World", 2025年10月</li>
+        <li>CIM "AI in 2026: The Future Lies in System Design, Not in Models", 2026年</li>
+        <li>Microsoft Research "New Future of Work Report 2025"</li>
+        <li>McKinsey Global Institute / Fortune "AI Productivity Paradox", 2025-2026年</li>
+      </ul>
+    </section>
+
+    <div class="article__faq">
+      <h2>よくある質問</h2>
+      <details open>
+        <summary>workslopとは何ですか？</summary>
+        <p>workslop（ワークスロップ）とは、BetterUp LabsとStanford Social Media Labが2025年に提唱した用語で、「良い仕事に見せかけているが、タスクを実質的に前進させる中身を欠いたAI生成コンテンツ」を指します。3段落の美辞麗句で書かれたメールが、実は1行の箇条書きで済む内容だった——といった事例が典型です。</p>
+      </details>
+      <details>
+        <summary>AIの導入で生産性は上がっていますか？</summary>
+        <p>一部のタスクでは確実に上がっていますが、組織全体では期待ほどの成果が出ていないケースが多いです。Workdayの2026年調査によると、AIで節約した時間の約40%がリワーク（修正・検証）に消え、AIから一貫してプラスの成果を得ている従業員はわずか14%にとどまっています。</p>
+      </details>
+    </div>
+
+    <div class="author-box">
+      <div class="author-box__avatar">N</div>
+      <div>
+        <div class="author-box__name">Naoki</div>
+        <div class="author-box__role">iOSアプリ個人開発者・DoubleHub作者</div>
+        <p class="author-box__bio">
+          西日本在住。Swift を中心に AI×習慣化×自己理解をテーマとしたアプリを開発。TrainNote、Book Compass、DoubleHub の作者。
+        </p>
+        <a class="author-box__link" href="../about.html">著者プロフィールを見る →</a>
+      </div>
+    </div>
+
+    <div class="related-articles">
+      <h2 class="related-articles__title">シリーズ記事</h2>
+      <div class="related-articles__grid">
+        <a class="related-card" href="./ai-cognitive-offloading.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">第1回: 複数AIエージェントと働く時代に、人間の脳はどう変わっているのか</span>
+        </a>
+        <a class="related-card" href="./ai-critical-thinking.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">第2回: AIに考えさせる時代に、クリティカルシンキングはどうなるか</span>
+        </a>
+        <a class="related-card" href="./ai-coding-agent-comparison-2026.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">AIコーディングエージェント比較2026</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
