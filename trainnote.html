@@ -6,10 +6,10 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="manifest" href="./manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TrainNote — 身体の記録が、続け方の理解になる | DoubleHub</title>
-<meta name="description" content="TrainNote は筋トレの記録を超えて、あなたの継続パターンや目標への向き合い方を残すサービスです。">
-<meta property="og:title" content="TrainNote — 身体の記録が、続け方の理解になる | DoubleHub">
-<meta property="og:description" content="TrainNote は筋トレの記録を超えて、あなたの継続パターンや目標への向き合い方を残すサービスです。">
+<title>TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える</title>
+<meta name="description" content="190以上の科学論文を参照する5人の専門AIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。iOS専用の筋トレ記録×AIコーチングアプリ。">
+<meta property="og:title" content="TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える">
+<meta property="og:description" content="190以上の科学論文を参照する5人の専門AIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://doublehub.jp/trainnote.html">
 <meta property="og:site_name" content="DoubleHub">
@@ -18,8 +18,8 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TrainNote — 身体の記録が、続け方の理解になる | DoubleHub">
-<meta name="twitter:description" content="TrainNote は筋トレの記録を超えて、あなたの継続パターンや目標への向き合い方を残すサービスです。">
+<meta name="twitter:title" content="TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える">
+<meta name="twitter:description" content="190以上の科学論文を参照する5人の専門AIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。">
 <link rel="stylesheet" href="./styles.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
@@ -29,6 +29,267 @@
   gtag('js', new Date());
   gtag('config', 'G-DJW7K08F6F');
 </script>
+<style>
+/* ── TrainNote LP Specific Styles ── */
+
+/* Stats Bar */
+.tn-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  text-align: center;
+  padding: var(--space-8) 0;
+}
+
+.tn-stats__item {
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.tn-stats__number {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--color-primary);
+  line-height: 1.1;
+  margin-bottom: var(--space-2);
+}
+
+.tn-stats__label {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* Coach Cards */
+.tn-coaches {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.tn-coaches__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tn-coach-card {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: border-color var(--transition-interactive), box-shadow var(--transition-interactive);
+}
+
+.tn-coach-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+}
+
+.tn-coach-card__icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  background: var(--color-primary-soft);
+}
+
+.tn-coach-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+
+.tn-coach-card__tag {
+  display: inline-block;
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-left: var(--space-2);
+}
+
+.tn-coach-card__desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* Chat Showcase */
+.tn-chat-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+  padding: var(--space-8);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+/* Plan Comparison */
+.tn-plans {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.tn-plan {
+  padding: var(--space-6);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.tn-plan--featured {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary), var(--shadow-md);
+  position: relative;
+}
+
+.tn-plan__badge {
+  position: absolute;
+  top: calc(-1 * var(--space-3));
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  background: var(--color-primary);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.tn-plan__name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  margin-bottom: var(--space-4);
+}
+
+.tn-plan__features {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tn-plan__features li {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  padding-left: var(--space-5);
+  position: relative;
+}
+
+.tn-plan__features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-primary-soft);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%230A8A8A' stroke-width='1.5'%3E%3Cpath d='M2.5 6l2.5 2.5 4.5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px;
+}
+
+[data-theme="dark"] .tn-plan__features li::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%232EBDBD' stroke-width='1.5'%3E%3Cpath d='M2.5 6l2.5 2.5 4.5-5'/%3E%3C/svg%3E");
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .tn-plan__features li::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%232EBDBD' stroke-width='1.5'%3E%3Cpath d='M2.5 6l2.5 2.5 4.5-5'/%3E%3C/svg%3E");
+  }
+}
+
+.tn-plan__note {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-divider);
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  line-height: 1.6;
+}
+
+/* Final CTA */
+.tn-cta {
+  text-align: center;
+  padding: clamp(var(--space-12), 8vw, var(--space-24)) 0;
+}
+
+.tn-cta__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-3);
+}
+
+.tn-cta__desc {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-8);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.tn-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+/* Coach visual with phone mock */
+.tn-coaches__visual {
+  display: grid;
+  place-items: center;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .tn-coaches {
+    grid-template-columns: 1fr;
+  }
+  .tn-chat-showcase {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .tn-stats {
+    grid-template-columns: 1fr;
+  }
+  .tn-plans {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -74,34 +335,170 @@
 
 <main>
 
-  <!-- Hero -->
+  <!-- ====== 1. Hero ====== -->
   <section class="section container">
     <div class="detail-hero">
       <div class="detail-hero__copy">
         <span class="app-name-tag">TrainNote</span>
-        <h1 class="section__title" style="font-size:var(--text-2xl)">身体の記録が、<br>続け方の理解になる。</h1>
+        <h1 class="section__title" style="font-size:var(--text-2xl)">5人の専門AIコーチが、<br>あなたの筋トレを変える。</h1>
         <p class="section__subtitle">
-          TrainNote は筋トレ記録アプリでありながら、
-          「あなたがどうすれば続く人なのか」を残していくサービスです。
-          DoubleHub につながると、身体のログは意志のログにもなります。
+          筋トレ記録とAIコーチングが一体化した iOS アプリ。
+          190以上の科学論文をもとに、あなたの記録・傾向に合わせた個別提案を届けます。
         </p>
         <div class="hero__actions" style="justify-content:flex-start;margin-top:var(--space-6)">
           <a href="https://apps.apple.com/us/app/trainnote/id6759539755?itscg=30200&itsct=apps_box_artwork&mttnsubad=6759539755" target="_blank" rel="noopener noreferrer" onclick="gtag('event', 'appstore_click', {app_name: 'TrainNote', page: 'trainnote'})">
             <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000" alt="App Storeでダウンロード" style="height:44px;object-fit:contain;" />
           </a>
-          <a class="btn btn--secondary" href="./index.html#ecosystem">全体構想に戻る</a>
+          <a class="btn btn--secondary" href="#features">機能を見る</a>
         </div>
       </div>
 
       <div class="spotlight__visual">
         <div class="phone-mock">
-          <img src="./images/trainnote-home.jpg" alt="TrainNote ホーム画面" class="phone-mock__real-img" loading="lazy">
+          <img src="./images/trainnote-peak.jpg" alt="TrainNote ホーム画面 — PEAK バッジと AI Coach" class="phone-mock__real-img" loading="lazy">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- App Screenshots -->
+  <!-- ====== 2. Stats Bar ====== -->
+  <section class="section--tight container">
+    <div class="tn-stats fade-in">
+      <div class="tn-stats__item">
+        <div class="tn-stats__number">190+</div>
+        <div class="tn-stats__label">参照する科学論文・エビデンス</div>
+      </div>
+      <div class="tn-stats__item">
+        <div class="tn-stats__number">5名</div>
+        <div class="tn-stats__label">専属のAIコーチ</div>
+      </div>
+      <div class="tn-stats__item">
+        <div class="tn-stats__number">6領域</div>
+        <div class="tn-stats__label">トレーニング / 栄養 / 休養 / 研究 / 計画 / 心理</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 3. AI Coach Plus ====== -->
+  <section class="section container" id="ai-coach">
+    <div class="section__header fade-in">
+      <span class="section__label">AI Coach Plus</span>
+      <h2 class="section__title">専属の5名が、あなただけのチームに。</h2>
+      <p class="section__subtitle">
+        それぞれ異なる専門領域を持つAIコーチが、あなたのトレーニング履歴と目標に合わせて連携。
+        定型のアドバイスではなく、今のあなたに最適な提案を届けます。
+      </p>
+    </div>
+
+    <div class="tn-coaches fade-in">
+      <div class="tn-coaches__list">
+        <div class="tn-coach-card">
+          <div class="tn-coach-card__icon">🎯</div>
+          <div>
+            <div class="tn-coach-card__name">パーソナル メインコーチ<span class="tn-coach-card__tag">MAIN</span></div>
+            <div class="tn-coach-card__desc">今日の提案と調整。種目・重量・フォームの具体的なアクションまで、あなたの記録をもとに毎日アドバイス。</div>
+          </div>
+        </div>
+        <div class="tn-coach-card">
+          <div class="tn-coach-card__icon">📋</div>
+          <div>
+            <div class="tn-coach-card__name">プランコーチ</div>
+            <div class="tn-coach-card__desc">週間・月間の組み立て。部位分け、頻度設計、長期的なプログレッションを設計。</div>
+          </div>
+        </div>
+        <div class="tn-coach-card">
+          <div class="tn-coach-card__icon">🥗</div>
+          <div>
+            <div class="tn-coach-card__name">栄養・回復コーチ</div>
+            <div class="tn-coach-card__desc">食事・睡眠・回復のアドバイス。トレーニングに合わせた栄養と回復の最適化。</div>
+          </div>
+        </div>
+        <div class="tn-coach-card">
+          <div class="tn-coach-card__icon">🔥</div>
+          <div>
+            <div class="tn-coach-card__name">モチベーションコーチ</div>
+            <div class="tn-coach-card__desc">継続と成長の確認。心理面の伴走で、やる気が落ちたときも前に進める。</div>
+          </div>
+        </div>
+        <div class="tn-coach-card">
+          <div class="tn-coach-card__icon">📚</div>
+          <div>
+            <div class="tn-coach-card__name">知識スペシャリストコーチ</div>
+            <div class="tn-coach-card__desc">信頼できるエビデンス。190以上の科学論文を参照し、実践に結びつける。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tn-coaches__visual">
+        <div class="phone-mock">
+          <img src="./images/trainnote-coaches-list.jpg" alt="5名のAIコーチ一覧" class="phone-mock__real-img" loading="lazy">
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Showcase -->
+    <div class="tn-chat-showcase fade-in" style="margin-top:var(--space-8)">
+      <div>
+        <span class="section__label">Chat</span>
+        <h3 class="detail-card__title" style="font-size:var(--text-xl)">提案で終わらない。<br>チャットで深掘りできる。</h3>
+        <p class="detail-card__desc">
+          「なぜこの種目？」「重量を変えるべき？」「来週のプランは？」<br>
+          気になったことをその場でコーチに相談。提案の理由から次のアクションまで、会話で整理できます。
+        </p>
+      </div>
+      <div class="spotlight__visual">
+        <div class="phone-mock">
+          <img src="./images/trainnote-coach-chat.png" alt="AIコーチとのチャット画面" class="phone-mock__real-img" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 4. Core Features ====== -->
+  <section class="section--tight container" id="features">
+    <div class="section__header fade-in">
+      <span class="section__label">Features</span>
+      <h2 class="section__title">記録も、振り返りも、直感的に。</h2>
+    </div>
+    <div class="detail-grid fade-in">
+      <article class="detail-card">
+        <span class="section__label">Muscle Status & PEAK</span>
+        <h3 class="detail-card__title">部位ごとの回復状態が一目でわかる。</h3>
+        <p class="detail-card__desc">
+          胸・背中・脚・肩・腕・腹筋の6部位をリアルタイムに追跡。
+          前回からの経過日数をもとに、十分に回復した部位には PEAK バッジが表示。
+          次に鍛えるべき部位が直感的にわかります。
+        </p>
+      </article>
+      <article class="detail-card">
+        <span class="section__label">Smart Logging</span>
+        <h3 class="detail-card__title">前回の重量を見ながら、迷わず記録。</h3>
+        <p class="detail-card__desc">
+          前回データを常に確認しながら記録できるから、成長の実感がすぐ得られます。
+          両手ダンベルの合計計算や、自重負荷割合の設定にも対応。
+          実態に近い正確な記録が残せます。
+        </p>
+      </article>
+      <article class="detail-card">
+        <span class="section__label">Calendar & History</span>
+        <h3 class="detail-card__title">カレンダーで流れを見る。過去にも遡れる。</h3>
+        <p class="detail-card__desc">
+          カレンダー表示で部位ごとのトレーニング頻度と回復サイクルを可視化。
+          日付カードをタップすれば過去の日付に遡って記録を入力・確認できます。
+        </p>
+      </article>
+      <article class="detail-card">
+        <span class="section__label">Review & Graph</span>
+        <h3 class="detail-card__title">ウィークリー/マンスリーで成長を実感。</h3>
+        <p class="detail-card__desc">
+          ホーム画面からチップを切り替えるだけで、今週と今月のレビューを即確認。
+          ボリューム推移と変化率のグラフで、トレーニングの成長を直感的に把握できます。
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ====== 5. App Screenshots ====== -->
   <section class="section--tight container">
     <div class="section__header fade-in">
       <span class="section__label">App Screenshots</span>
@@ -109,8 +506,8 @@
     </div>
     <div class="detail-screenshots fade-in">
       <figure class="detail-screenshot-item">
-        <img src="./images/trainnote-home.jpg" alt="ホーム画面 — Muscle Status と AI Coach" loading="lazy">
-        <figcaption>ホーム — 部位の状態とAIコーチ</figcaption>
+        <img src="./images/trainnote-peak.jpg" alt="ホーム画面 — PEAK バッジとAI Coach" loading="lazy">
+        <figcaption>ホーム — PEAK と AI コーチ</figcaption>
       </figure>
       <figure class="detail-screenshot-item">
         <img src="./images/trainnote-training.jpg" alt="トレーニング記録画面" loading="lazy">
@@ -121,8 +518,12 @@
         <figcaption>AI Coach — 提案と根拠</figcaption>
       </figure>
       <figure class="detail-screenshot-item">
-        <img src="./images/trainnote-coach-chat.jpg" alt="AI Coach チャット画面" loading="lazy">
-        <figcaption>AI Coach — 深掘りチャット</figcaption>
+        <img src="./images/trainnote-coaches-list.jpg" alt="5名のAIコーチ一覧" loading="lazy">
+        <figcaption>AI Coach — 5名の専門コーチ</figcaption>
+      </figure>
+      <figure class="detail-screenshot-item">
+        <img src="./images/trainnote-coach-chat.png" alt="AI Coach チャット画面" loading="lazy">
+        <figcaption>チャット — 深掘り相談</figcaption>
       </figure>
       <figure class="detail-screenshot-item">
         <img src="./images/trainnote-calendar.jpg" alt="カレンダー画面" loading="lazy">
@@ -135,69 +536,54 @@
     </div>
   </section>
 
-  <!-- What TrainNote Does -->
-  <section class="section--tight container">
-    <div class="section__header fade-in">
-      <span class="section__label">Features</span>
-      <h2 class="section__title">TrainNote でできること。</h2>
+  <!-- ====== 6. Plans ====== -->
+  <section class="section container" id="plans">
+    <div class="section__header section__header--center fade-in">
+      <span class="section__label">Plans</span>
+      <h2 class="section__title">まずは無料で、はじめよう。</h2>
+      <p class="section__subtitle">
+        基本機能はすべて無料。AI Coach Plus にアップグレードすると、5名の専門コーチによるフルサポートが解放されます。
+      </p>
     </div>
-    <div class="detail-grid fade-in">
-      <article class="detail-card">
-        <span class="section__label">Muscle Status</span>
-        <h3 class="detail-card__title">部位ごとの状態が一目でわかる。</h3>
-        <p class="detail-card__desc">
-          胸、背中、脚、肩、腕、腹筋の6部位をリアルタイムに追跡。
-          前回からの間隔や PEAK 状態が視覚的にわかるから、次に鍛えるべき部位が直感的に判断できます。
-        </p>
-      </article>
-      <article class="detail-card">
-        <span class="section__label">AI Coach</span>
-        <h3 class="detail-card__title">あなたの記録を読む、AIパーソナルトレーナー。</h3>
-        <p class="detail-card__desc">
-          単なる定型アドバイスではなく、あなたのトレーニング記録と対話をもとに育っていくAIコーチ。
-          今日の提案、根拠、具体的なアクション、さらに深掘りできるチャットまで。
-        </p>
-      </article>
-      <article class="detail-card">
-        <span class="section__label">Training Log</span>
-        <h3 class="detail-card__title">記録は簡単に、振り返りは深く。</h3>
-        <p class="detail-card__desc">
-          種目・セット・重量・レップを素早く記録。前回データとの比較が常に見えるから、
-          成長の実感が得られます。カレンダーで継続パターンも一覧できます。
-        </p>
-      </article>
-      <article class="detail-card">
-        <span class="section__label">What Double Learns</span>
-        <h3 class="detail-card__title">ダブルが理解するのは、筋肉量より行動のクセ。</h3>
-        <ul>
-          <li>追い込みすぎると止まりやすいか</li>
-          <li>小さな達成で伸びるタイプか</li>
-          <li>再開のきっかけに何が効くか</li>
-          <li>週何回のペースが自然に続くか</li>
+    <div class="tn-plans fade-in">
+      <div class="tn-plan">
+        <h3 class="tn-plan__name">無料プラン</h3>
+        <ul class="tn-plan__features">
+          <li>トレーニング記録（セット・レップ・重量）</li>
+          <li>Muscle Status & PEAK バッジ</li>
+          <li>カレンダー・グラフ表示</li>
+          <li>ウィークリー/マンスリーレビュー</li>
+          <li>メインコーチの基本提案を閲覧</li>
         </ul>
-      </article>
+      </div>
+      <div class="tn-plan tn-plan--featured">
+        <span class="tn-plan__badge">初回利用割引あり</span>
+        <h3 class="tn-plan__name">AI Coach Plus</h3>
+        <ul class="tn-plan__features">
+          <li>無料プランの全機能</li>
+          <li>5名の専門コーチのフル提案</li>
+          <li>チャットで深掘り相談</li>
+          <li>栄養・回復・計画・心理まで6領域カバー</li>
+          <li>190以上の論文に基づく根拠あるアドバイス</li>
+        </ul>
+        <p class="tn-plan__note">料金の詳細はアプリ内でご確認ください。</p>
+      </div>
     </div>
   </section>
 
-  <!-- Flow -->
-  <section class="section container">
-    <div class="section__header fade-in">
-      <span class="section__label">Flow Into DoubleHub</span>
-      <h2 class="section__title">TrainNote から、どんな入力が入るか。</h2>
-    </div>
-    <div class="flow-cards fade-in">
-      <article class="flow-card">
-        <span class="flow-card__label">サービス内で価値になること</span>
-        <p class="flow-card__desc">トレーニングの記録、習慣化、AI コーチとのやり取り。週次レビューで振り返りの精度も上がる。</p>
-      </article>
-      <article class="flow-card">
-        <span class="flow-card__label">DoubleHub に入る情報</span>
-        <p class="flow-card__desc">継続の波、挫折しやすい条件、目標設定との相性。構造化されたインサイトとして連携。</p>
-      </article>
-      <article class="flow-card">
-        <span class="flow-card__label">将来返せる提案</span>
-        <p class="flow-card__desc">今日は頑張る日か、軽く戻る日か。いまの自分に合う再開の仕方。他の生活データと合わせた最適な提案。</p>
-      </article>
+  <!-- ====== 7. Final CTA ====== -->
+  <section class="section--tight container">
+    <div class="tn-cta fade-in">
+      <h2 class="tn-cta__title">記録するだけの筋トレは、もう終わりにしよう。</h2>
+      <p class="tn-cta__desc">
+        AIコーチと一緒に、あなたのトレーニングを次のレベルへ。
+      </p>
+      <div class="tn-cta__actions">
+        <a href="https://apps.apple.com/us/app/trainnote/id6759539755?itscg=30200&itsct=apps_box_artwork&mttnsubad=6759539755" target="_blank" rel="noopener noreferrer" onclick="gtag('event', 'appstore_click', {app_name: 'TrainNote', page: 'trainnote_bottom'})">
+          <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000" alt="App Storeでダウンロード" style="height:44px;object-fit:contain;" />
+        </a>
+        <a class="btn btn--secondary" href="./index.html#ecosystem">DoubleHub 全体構想を見る</a>
+      </div>
     </div>
   </section>
 
