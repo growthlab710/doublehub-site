@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「AI Brain Fry」と「Workload Creep」——AIと働く人を蝕む2つの新しい疲労 | DoubleHub</title>
+<meta name="description" content="AIツールの使いすぎで脳が焼ける「AI Brain Fry」と、仕事量が静かに膨張する「Workload Creep」。BCG・UC Berkeleyの最新研究データから、AIと働く人に忍び寄る2つの疲労の正体と自己チェック法を解説。">
+<meta property="og:title" content="「AI Brain Fry」と「Workload Creep」——AIと働く人を蝕む2つの新しい疲労 | DoubleHub">
+<meta property="og:description" content="AIで脳が焼ける「AI Brain Fry」と仕事量が膨張する「Workload Creep」。最新研究から2つの新しい疲労の正体を解説。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://doublehub.jp/blog/ai-brain-fry-workload-creep.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="「AI Brain Fry」と「Workload Creep」——AIと働く人を蝕む2つの新しい疲労 | DoubleHub">
+<meta name="twitter:description" content="AIで脳が焼ける「Brain Fry」と仕事が膨張する「Workload Creep」。最新研究データから解説。">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "「AI Brain Fry」と「Workload Creep」——AIと働く人を蝕む2つの新しい疲労",
+      "author": {
+        "@type": "Person",
+        "name": "Naoki",
+        "url": "https://doublehub.jp/about.html",
+        "description": "iOSアプリ個人開発者・DoubleHub作者"
+      },
+      "datePublished": "2026-04-13",
+      "dateModified": "2026-04-13",
+      "publisher": {
+        "@type": "Organization",
+        "name": "DoubleHub"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://doublehub.jp/blog/ai-brain-fry-workload-creep.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "AI Brain Fryとは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AI Brain Fry（AIブレインフライ）とは、AIツールの過度な使用や監視によって認知能力を超える精神的疲労が生じる状態です。2026年3月にBCG（ボストンコンサルティンググループ）とUC Riversideの研究チームが1,488人を対象とした調査で提唱しました。頭の中のノイズ感、思考の霧、決断疲れ、集中力低下などの症状が報告されています。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Workload Creepとは何ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Workload Creep（ワークロードクリープ）とは、AIの導入によって個々のタスクが高速化される一方で、浮いた時間に新しいタスクが次々と詰め込まれ、結果として仕事量が静かに増加していく現象です。UC BerkeleyのAruna Ranganathan准教授らが8ヶ月間の追跡調査で明らかにしました。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "AIツールはいくつまで同時に使っても大丈夫ですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BCGの調査によると、同時に使用するAIツールが3つ以下の場合は生産性が向上しますが、4つ以上になると生産性が急落することが確認されています。AIツールの数を意識的に制限し、1つの集中ブロックで扱うツール数を抑えることが推奨されています。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJW7K08F6F');
+</script>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <nav class="breadcrumb container" aria-label="パンくずリスト">
+      <a href="../index.html">DoubleHub</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="./index.html">ブログ</a>
+      <span class="breadcrumb__sep">›</span>
+      <span>AI Brain Fryと Workload Creep</span>
+    </nav>
+
+    <header class="article__header">
+      <span class="article__cluster" data-category="ai-info">AI情報</span>
+      <h1 class="article__title">「AI Brain Fry」と「Workload Creep」——AIと働く人を蝕む2つの新しい疲労</h1>
+      <div class="article__meta">
+        <span>著者: <a class="article__author-link" href="../about.html">Naoki</a></span>
+        <span class="article__meta-sep">|</span>
+        <span>公開: 2026年4月13日</span>
+      </div>
+      <p class="article__updated">最終更新: 2026年4月13日</p>
+      <p class="article__series">シリーズ「AIと健やかに働くための実践ガイド」: <strong>第1回</strong> / <a href="./ai-healthy-work-guide.html">第2回</a></p>
+    </header>
+
+    <div class="article__content">
+
+      <p><strong>AIを使いこなしている人ほど、実は疲弊している——。</strong>2026年に入り、BCGやUC Berkeleyの研究チームが相次いで発表した調査が、AIと人間の協業に潜む「見えない疲労」を数字で明らかにしました。</p>
+
+      <p>以前のシリーズ「<a href="./ai-cognitive-offloading.html">AIオフロード時代の人間の脳</a>」では、AIに思考を委ねることで脳の使い方がどう変化しているかを分析しました。今回はその「変化」が引き起こしている<strong>具体的な症状と構造的な問題</strong>に焦点を当てます。これからAIを仕事に取り入れる人にこそ知っておいてほしい内容です。</p>
+
+      <hr>
+
+      <h2>「AI Brain Fry」とは何か？——AIで脳が焼ける新しい職業病</h2>
+
+      <p>2026年3月、BCG（ボストンコンサルティンググループ）とUC Riversideの研究チームが、Harvard Business Reviewで<strong>「AI Brain Fry」</strong>という概念を提唱しました。</p>
+
+      <p>AI Brain Fryとは、<strong>AIツールの過度な使用や監視によって認知能力を超える精神的疲労が生じる状態</strong>です。頭の中にノイズが鳴り続けるような感覚、思考に霧がかかった状態、決断力の低下——参加者たちはこうした症状を報告しています。</p>
+
+      <p>米国のフルタイム労働者1,488人を対象とした調査から、その実態が浮かび上がりました。</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th>数値</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AI Brain Fryを経験している労働者</td>
+            <td><strong>14%</strong>（7人に1人）</td>
+          </tr>
+          <tr>
+            <td>高度な監視が必要なAI使用時の精神的努力の増加</td>
+            <td><strong>+14%</strong></td>
+          </tr>
+          <tr>
+            <td>精神疲労の増加</td>
+            <td><strong>+12%</strong></td>
+          </tr>
+          <tr>
+            <td>情報過負荷の増加</td>
+            <td><strong>+19%</strong></td>
+          </tr>
+          <tr>
+            <td>意思決定疲労の増加</td>
+            <td><strong>+33%</strong></td>
+          </tr>
+          <tr>
+            <td>重大エラーの増加</td>
+            <td><strong>+39%</strong></td>
+          </tr>
+          <tr>
+            <td>Brain Fry経験者の離職意向</td>
+            <td><strong>34%</strong>（非経験者は25%）</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><small>出典: BCG &amp; UC Riverside, Harvard Business Review（2026年3月）</small></p>
+
+      <p>特に注目すべきは<strong>意思決定疲労の+33%</strong>です。AIが出力を生成するたびに、「これは正しいか？」「採用するか？」という判断を人間が下す必要があります。その判断の繰り返しが、一日の終わりには脳を消耗させています。</p>
+
+      <hr>
+
+      <h2>なぜ「使うこと」より「監視すること」の方が疲れるのか？</h2>
+
+      <p>直感に反するかもしれませんが、AIを<strong>使う行為そのものより、AIの出力を監視・評価する行為の方が脳への負荷が大きい</strong>ことが研究で示されています。</p>
+
+      <p>AIにプロンプトを投げる（＝入力）は、自分の意図を言語化する能動的な作業です。一方、AIの出力をレビューする（＝監視）は、正確性・文脈の適切さ・品質を常に評価し続ける受動的な注意力を要します。</p>
+
+      <p>BCGの調査では、高度な監視を伴うAI利用時に<strong>精神的努力が14%増加</strong>していました。さらに、同時に使用するAIツールの数にも明確な閾値があります。</p>
+
+      <ul>
+        <li><strong>3つ以下</strong>のAIツール同時使用 → 生産性が向上</li>
+        <li><strong>4つ以上</strong>になると → 生産性が<strong>急落</strong></li>
+      </ul>
+
+      <p>複数のAIエージェントを並列で動かし、それぞれの出力をレビューし、統合し、判断する——この「マルチエージェント監視」が最も認知的コストの高い作業なのです。</p>
+
+      <hr>
+
+      <h2>AIを最も使いこなす人が、最も燃え尽きている？</h2>
+
+      <p>2026年2月、TechCrunchは「<strong>バーンアウトの最初の兆候は、AIを最も積極的に採用した人々から来ている</strong>」と報じました。UC Berkeleyの研究チームも同様の傾向を確認しています。</p>
+
+      <p>これは皮肉な構図です。AIの可能性にいち早く気づき、積極的に活用している人ほど、より多くのタスクを引き受け、より多くの出力を監視し、結果としてより深く疲弊しているのです。</p>
+
+      <p>BCGの調査では職種別の発症率にも大きな差がありました。マーケティング職が<strong>26%</strong>と最も高く、法務職は<strong>6%</strong>と最も低い結果に。AIの出力を大量に生成し、それを素早く判断・修正する必要がある職種ほど、Brain Fryのリスクが高まっています。</p>
+
+      <hr>
+
+      <h2>「Workload Creep」——AIで浮いた時間はどこへ消えたのか？</h2>
+
+      <p>もう1つの構造的な問題が、UC Berkeley Haas経営学部のAruna Ranganathan准教授とXingqi Maggie Ye氏が明らかにした<strong>「Workload Creep」（ワークロードクリープ）</strong>です。</p>
+
+      <p>約200人規模の米国テック企業を8ヶ月間追跡し、40件以上の詳細インタビューを実施した結果、研究チームは衝撃的な結論に至りました。</p>
+
+      <p>「<strong>意図せずして、AIは仕事を増やすことを容易にし、止めることを困難にする</strong>」</p>
+
+      <p>AIで個々のタスクが高速化されると、その浮いた時間は休息や深い思考には使われません。代わりに、<strong>新しいタスクが即座に詰め込まれます</strong>。しかも、以前は自分の担当外だった種類の仕事まで引き受けてしまう。研究チームはこれを「責任範囲の膨張（sphere of accountability の拡大）」と呼んでいます。</p>
+
+      <p>HBRに掲載されたRanganathan &amp; Ye の論文タイトルが、この現象を端的に表現しています——<strong>「AI Doesn't Reduce Work — It Intensifies It（AIは仕事を減らさない——強化する）」</strong>。</p>
+
+      <hr>
+
+      <h2>仕事と生活の境界が溶けていく</h2>
+
+      <p>Workload Creepの影響は、オフィスの中だけにとどまりません。</p>
+
+      <p>AIエージェントは24時間365日稼働します。自分が手を止めていてもAIは仕事を進めているし、結果が返ってきたら判断しなければなりません。この構造が、仕事とプライベートの境界を溶かしていきます。</p>
+
+      <p>歯磨きをしている最中に「あのエージェントにはこれを依頼しないと」と考える。お風呂に入りながら「別のエージェントの出力をチェックしなきゃ」と思う。<strong>脳が「待機モード」から抜け出せなくなる</strong>のです。</p>
+
+      <p>Fortune誌の報道によると、AIを活用する労働者はランチ休憩や会議の合間の数分間さえも「ちょっとしたAIクエリ」で埋めてしまう傾向があるとされています。現代の労働者は平均して<strong>47秒ごとにタスクを切り替えている</strong>というデータもあり、AIがこのペースをさらに加速させています。</p>
+
+      <hr>
+
+      <h2>あなたは大丈夫？ AI疲労の自己チェックリスト</h2>
+
+      <p>以下の項目に3つ以上該当する場合、AI Brain FryやWorkload Creepの影響を受けている可能性があります。</p>
+
+      <ul>
+        <li>AIの出力をレビューした後、頭にモヤがかかったような感覚がある</li>
+        <li>仕事以外の時間にも「次にAIに何を依頼するか」を考えてしまう</li>
+        <li>AIを使い始めてから、仕事は速くなったのに忙しさは増している</li>
+        <li>以前は自分の担当外だった種類の仕事まで引き受けるようになった</li>
+        <li>AIの出力が正しいかどうかの判断に自信が持てなくなってきた</li>
+        <li>同時に3つ以上のAIツールやエージェントを走らせていることが多い</li>
+        <li>「AIを使えばもっとできるはず」というプレッシャーを感じる</li>
+        <li>AIを使わずに自分の頭だけで考える時間がほとんどない</li>
+      </ul>
+
+      <p>これは診断ツールではなく、自分の状態に気づくための目安です。重要なのは、<strong>AIとの協業による疲労は「怠けているから」ではなく、認知負荷の構造的な問題である</strong>ということ。個人の努力不足ではなく、働き方の設計の問題なのです。</p>
+
+      <hr>
+
+      <h2>まとめ: 問題を知ることが、最初の一歩</h2>
+
+      <p>AI Brain FryとWorkload Creep。この2つの概念が示しているのは、AIが人間の仕事を「楽にする」という単純な図式は成り立たないということです。</p>
+
+      <p>AIは確かに個々のタスクを高速化します。しかし、その恩恵を享受するには、<strong>人間側の認知的なキャパシティを意識的に守る仕組み</strong>が必要です。仕組みなしにAIを導入すれば、「速くなった分だけ詰め込まれ、監視の負荷で脳が焼ける」という構造に陥ります。</p>
+
+      <p>では、具体的にどうすればいいのか？ <a href="./ai-healthy-work-guide.html">次の記事</a>では、AI時代に脳を守るための実践的なセルフマネジメント術を紹介します。</p>
+
+      <!-- CTA Banner -->
+      <div class="article-cta">
+        <h3 class="article-cta__title">AI疲れの対策を知る</h3>
+        <p class="article-cta__desc">「AI Brain Fry」と「Workload Creep」から脳を守るための、具体的な7つの実践法を紹介しています。</p>
+        <a class="btn btn--primary" href="./ai-healthy-work-guide.html">第2回: AI時代に脳を守る実践ガイド</a>
+      </div>
+
+    </div>
+
+    <section class="article-sources">
+      <h2>出典・参考</h2>
+      <ul class="sources-list">
+        <li><a href="https://hbr.org/2026/03/when-using-ai-leads-to-brain-fry" target="_blank" rel="noopener noreferrer">When Using AI Leads to "Brain Fry" — Harvard Business Review（2026年3月）</a></li>
+        <li><a href="https://hbr.org/2026/02/ai-doesnt-reduce-work-it-intensifies-it" target="_blank" rel="noopener noreferrer">AI Doesn't Reduce Work — It Intensifies It — Harvard Business Review（2026年2月）</a></li>
+        <li><a href="https://fortune.com/2026/03/10/ai-brain-fry-workplace-productivity-bcg-study/" target="_blank" rel="noopener noreferrer">'AI brain fry' is real — and it's making workers more exhausted, not more productive — Fortune（2026年3月）</a></li>
+        <li><a href="https://techcrunch.com/2026/02/09/the-first-signs-of-burnout-are-coming-from-the-people-who-embrace-ai-the-most/" target="_blank" rel="noopener noreferrer">The first signs of burnout are coming from the people who embrace AI the most — TechCrunch（2026年2月）</a></li>
+        <li><a href="https://fortune.com/2026/02/10/ai-future-of-work-white-collar-employees-technology-productivity-burnout-research-uc-berkeley/" target="_blank" rel="noopener noreferrer">In the workforce, AI is having the opposite effect it was supposed to — Fortune（2026年2月）</a></li>
+        <li><a href="https://www.cnn.com/2026/03/13/business/ai-brain-fry-nightcap" target="_blank" rel="noopener noreferrer">AI is exhausting workers so much, researchers have dubbed the condition 'AI brain fry' — CNN Business（2026年3月）</a></li>
+        <li><a href="https://publichealth.gmu.edu/news/2026-03/ai-and-rise-cognitive-overload" target="_blank" rel="noopener noreferrer">AI and the Rise of Cognitive Overload — George Mason University（2026年3月）</a></li>
+        <li><a href="https://creati.ai/ai-news/2026-02-11/uc-berkeley-study-ai-productivity-worker-burnout-cognitive-fatigue/" target="_blank" rel="noopener noreferrer">UC Berkeley Study Reveals AI Boosts Productivity But Increases Worker Burnout and Cognitive Fatigue — Creati.ai（2026年2月）</a></li>
+      </ul>
+    </section>
+
+    <div class="article__faq">
+      <h2>よくある質問</h2>
+      <details open>
+        <summary>AI Brain Fryとは何ですか？</summary>
+        <p>AI Brain Fry（AIブレインフライ）とは、AIツールの過度な使用や監視によって認知能力を超える精神的疲労が生じる状態です。2026年3月にBCG（ボストンコンサルティンググループ）とUC Riversideの研究チームが1,488人を対象とした調査で提唱しました。頭の中のノイズ感、思考の霧、決断疲れ、集中力低下などの症状が報告されています。</p>
+      </details>
+      <details>
+        <summary>Workload Creepとは何ですか？</summary>
+        <p>Workload Creep（ワークロードクリープ）とは、AIの導入によって個々のタスクが高速化される一方で、浮いた時間に新しいタスクが次々と詰め込まれ、結果として仕事量が静かに増加していく現象です。UC BerkeleyのAruna Ranganathan准教授らが8ヶ月間の追跡調査で明らかにしました。</p>
+      </details>
+      <details>
+        <summary>AIツールはいくつまで同時に使っても大丈夫ですか？</summary>
+        <p>BCGの調査によると、同時に使用するAIツールが3つ以下の場合は生産性が向上しますが、4つ以上になると生産性が急落することが確認されています。AIツールの数を意識的に制限し、1つの集中ブロックで扱うツール数を抑えることが推奨されています。</p>
+      </details>
+    </div>
+
+    <div class="author-box">
+      <div class="author-box__avatar">N</div>
+      <div>
+        <div class="author-box__name">Naoki</div>
+        <div class="author-box__role">iOSアプリ個人開発者・DoubleHub作者</div>
+        <p class="author-box__bio">
+          西日本在住。Swift を中心に AI×習慣化×自己理解をテーマとしたアプリを開発。TrainNote、Book Compass、DoubleHub の作者。
+        </p>
+        <a class="author-box__link" href="../about.html">著者プロフィールを見る →</a>
+      </div>
+    </div>
+
+    <div class="related-articles">
+      <h2 class="related-articles__title">関連記事</h2>
+      <div class="related-articles__grid">
+        <a class="related-card" href="./ai-healthy-work-guide.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">第2回: AI時代に脳を守る——「AI疲れ」を防ぐ実践セルフマネジメント術</span>
+        </a>
+        <a class="related-card" href="./ai-cognitive-offloading.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">複数AIエージェントと働く時代に、人間の脳はどう変わっているのか</span>
+        </a>
+        <a class="related-card" href="./ai-workslop-bottleneck.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">AIが速すぎて、人間のレビューが詰まる——workslopとボトルネックの時代</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

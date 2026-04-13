@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI時代に脳を守る——「AI疲れ」を防ぐ実践セルフマネジメント術 | DoubleHub</title>
+<meta name="description" content="AI Brain FryやWorkload Creepから脳を守るための7つの実践法。AIツールの同時使用制限、フォーカスウィンドウの確保、朝のノースクリーン習慣など、研究に基づく具体的なセルフマネジメント術を紹介。">
+<meta property="og:title" content="AI時代に脳を守る——「AI疲れ」を防ぐ実践セルフマネジメント術 | DoubleHub">
+<meta property="og:description" content="AI Brain FryやWorkload Creepから脳を守る7つの実践法。研究に基づく具体的なセルフマネジメント術。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://doublehub.jp/blog/ai-healthy-work-guide.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI時代に脳を守る——「AI疲れ」を防ぐ実践セルフマネジメント術 | DoubleHub">
+<meta name="twitter:description" content="AI疲れを防ぐ7つの実践法。同時使用制限、フォーカスウィンドウ、ノースクリーン習慣など。">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "headline": "AI時代に脳を守る——「AI疲れ」を防ぐ実践セルフマネジメント術",
+      "author": {
+        "@type": "Person",
+        "name": "Naoki",
+        "url": "https://doublehub.jp/about.html",
+        "description": "iOSアプリ個人開発者・DoubleHub作者"
+      },
+      "datePublished": "2026-04-13",
+      "dateModified": "2026-04-13",
+      "publisher": {
+        "@type": "Organization",
+        "name": "DoubleHub"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://doublehub.jp/blog/ai-healthy-work-guide.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "AIを使いながら脳を守るにはどうすればいいですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "同時に使用するAIツールを3つ以下に制限する、90分のフォーカスウィンドウを確保してAI通知をオフにする、朝の30〜60分はスクリーンに触れない、AIの待ち時間を次のタスク投入に使わず休息に充てるなどの実践が効果的です。個人の意志力だけに頼らず、ワークフローの設計レベルで認知負荷を管理することが重要です。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "AI疲れを感じたらまず何をすべきですか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "まず物理的にコンピュータから離れることが有効です。BCGの研究でも、AI Brain Fryを感じた労働者が物理的にPCから離れることを余儀なくされるケースが報告されています。5〜10分の短い散歩や、窓の外を眺めるだけでも認知資源の回復に効果があります。その上で、自分のAIツール使用パターンを見直し、同時監視数の制限やフォーカスウィンドウの設定など、構造的な対策を取り入れましょう。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "AIを使わない時間を作ると生産性は下がりませんか？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "短期的にはアウトプット量が減る可能性がありますが、中長期的には生産性が向上するという研究結果が出ています。BCGの調査では、AIツールを適切に制限した場合にバーンアウトが15%低減し、重大エラーも減少しました。「量の生産性」ではなく「質の生産性」に評価軸を移すことが、持続可能なAI活用の鍵です。"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJW7K08F6F');
+</script>
+</head>
+<body>
+
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article class="article">
+    <nav class="breadcrumb container" aria-label="パンくずリスト">
+      <a href="../index.html">DoubleHub</a>
+      <span class="breadcrumb__sep">›</span>
+      <a href="./index.html">ブログ</a>
+      <span class="breadcrumb__sep">›</span>
+      <span>AI疲れを防ぐ実践ガイド</span>
+    </nav>
+
+    <header class="article__header">
+      <span class="article__cluster" data-category="ai-info">AI情報</span>
+      <h1 class="article__title">AI時代に脳を守る——「AI疲れ」を防ぐ実践セルフマネジメント術</h1>
+      <div class="article__meta">
+        <span>著者: <a class="article__author-link" href="../about.html">Naoki</a></span>
+        <span class="article__meta-sep">|</span>
+        <span>公開: 2026年4月13日</span>
+      </div>
+      <p class="article__updated">最終更新: 2026年4月13日</p>
+      <p class="article__series">シリーズ「AIと健やかに働くための実践ガイド」: <a href="./ai-brain-fry-workload-creep.html">第1回</a> / <strong>第2回</strong></p>
+    </header>
+
+    <div class="article__content">
+
+      <p><strong>AIとの協業による疲労は、個人の意志力ではなく「仕組み」で防ぐもの——。</strong><a href="./ai-brain-fry-workload-creep.html">前回の記事</a>で紹介した「AI Brain Fry」と「Workload Creep」は、気合いや根性で乗り越えられる問題ではありません。BCGの研究チームも「個人のコーピング戦略だけでは構造的な問題は解決できない」と明言しています。</p>
+
+      <p>この記事では、研究データに基づいた<strong>7つの具体的な実践法</strong>を紹介します。すべてを一度に取り入れる必要はありません。自分に合いそうなものから1つ試してみてください。</p>
+
+      <hr>
+
+      <h2>1. 同時に監視するAIを3つ以下に制限する</h2>
+
+      <p>BCGの調査で最も明確だったのが、<strong>AIツールの同時使用数と生産性の関係</strong>です。3つ以下なら生産性が向上し、4つ以上で急落する。</p>
+
+      <p>これは「AIを使うな」という話ではありません。<strong>同時に走らせるAIの数を意識的に管理する</strong>ということです。</p>
+
+      <h3>実践のコツ</h3>
+
+      <ul>
+        <li>1つの集中ブロック（60〜90分）で扱うAIツールは<strong>最大3つ</strong>まで</li>
+        <li>複数エージェントを並列で走らせる場合は、<strong>出力が返ってくるタイミングをずらす</strong></li>
+        <li>「全部同時に監視する」のではなく、「1つずつ順番にレビューする」ワークフローに切り替える</li>
+      </ul>
+
+      <p>複数エージェントの並列運用は強力ですが、全ての出力を同時にレビューしようとすると認知負荷が跳ね上がります。<strong>AIの並列処理と、人間の逐次レビューを組み合わせる</strong>のがポイントです。</p>
+
+      <hr>
+
+      <h2>2. 「AIフリー」のフォーカスウィンドウを確保する</h2>
+
+      <p>現代の労働者は平均<strong>47秒ごとにタスクを切り替えている</strong>というデータがあります。AIツールの通知がこのペースをさらに加速させています。</p>
+
+      <p>対策はシンプルです。<strong>1日の中に、AIツールの通知を完全にオフにする時間帯を設ける</strong>こと。</p>
+
+      <h3>実践のコツ</h3>
+
+      <ul>
+        <li><strong>90分間</strong>のフォーカスウィンドウを1日1回以上確保する</li>
+        <li>この時間はAIチャット、エージェントの通知、Slackを閉じる</li>
+        <li>「自分の頭だけで考える」作業（設計、企画、振り返り）に充てる</li>
+        <li>カレンダーにブロックとして登録し、他の予定で潰されないようにする</li>
+      </ul>
+
+      <p>BCGのJulie Bedardも「認知資源の戦略的な配備」の重要性を指摘しています。全ての時間をAI監視に使うのではなく、<strong>人間にしかできない深い思考のために認知資源を温存する</strong>発想が必要です。</p>
+
+      <hr>
+
+      <h2>3. 朝の30〜60分はAIに触れない</h2>
+
+      <p>朝起きてすぐにAIエージェントへの指示出しを始めてしまうと、その日一日が「AIの出力を追いかけるモード」で始まります。脳が最もクリアな朝の時間帯を、AIの監視ではなく<strong>自分自身の思考と優先順位の整理</strong>に使いましょう。</p>
+
+      <h3>実践のコツ</h3>
+
+      <ul>
+        <li>起床後30〜60分は、スマホやPCでAIツールを開かない</li>
+        <li>この時間を使って「今日やるべきこと」「AIに任せること」「自分でやること」を整理する</li>
+        <li>ストレッチ、散歩、読書など、脳を「受信モード」ではなく「発信モード」にする活動を入れる</li>
+      </ul>
+
+      <p>これはデジタルデトックスの文脈で広く推奨されている実践ですが、AI時代にはさらに重要性が増しています。<strong>AIへの指示を出す前に、何を指示すべきかを自分の頭で考える時間</strong>があるかどうかで、その日の生産性と疲労度が変わります。</p>
+
+      <hr>
+
+      <h2>4. AIの「待ち時間」を休息に変える</h2>
+
+      <p>AIエージェントに作業を依頼した後、結果が返ってくるまでの数分間。この「待ち時間」をどう使うかが、Workload Creepの分岐点になります。</p>
+
+      <p>多くの人は、この隙間を<strong>「別のAIへの指示出し」で埋めてしまいます</strong>。その結果、複数のAI出力が同時に返ってきて、レビュー負荷が一気に跳ね上がる。</p>
+
+      <h3>実践のコツ</h3>
+
+      <ul>
+        <li>AIの待ち時間に<strong>別のAIタスクを投入しない</strong>（少なくとも意識的に判断する）</li>
+        <li>代わりに、窓の外を見る、水を飲む、軽いストレッチをする</li>
+        <li>どうしても待ち時間を活用したい場合は、<strong>AIを使わない軽作業</strong>（メモ整理、メール返信など）に充てる</li>
+      </ul>
+
+      <p>UC BerkeleyのRanganathan准教授は、組織レベルで「意図的な休止（intentional pauses）」を制度化することを提言しています。個人レベルでも、<strong>「何もしない数分間」を意図的に作る</strong>ことが認知資源の回復に効果的です。</p>
+
+      <hr>
+
+      <h2>5. 「量」ではなく「質」で自分を評価する</h2>
+
+      <p>AIを使えば使うほど、アウトプットの量は増えます。しかし、<a href="./ai-workslop-bottleneck.html">workslopの記事</a>でも触れたように、量が増えても質が伴わなければ意味がありません。</p>
+
+      <p>Workload Creepの根底には、<strong>「AIを使えばもっとできるはず」「もっとやらなければ」というプレッシャー</strong>があります。このプレッシャーに対抗するには、評価の軸を意識的に変える必要があります。</p>
+
+      <h3>実践のコツ</h3>
+
+      <ul>
+        <li>1日の終わりに「今日いくつタスクを完了したか」ではなく「今日最も価値のあるアウトプットは何か」を振り返る</li>
+        <li>AIに出力させる量を意識的に制限する（「10案出して」→「最も有力な1案を出して」）</li>
+        <li>「AIを使って速く終わった」ことを成果ではなく手段として捉える</li>
+      </ul>
+
+      <p>BCGは、組織レベルでも<strong>「活動量（volume）から影響度（impact）へ」</strong>評価指標を転換することを推奨しています。速さや量ではなく、最終的な成果の質で評価する文化が、Workload Creepの抑止力になります。</p>
+
+      <hr>
+
+      <h2>6. 週1回「AIなし作業日」を設ける</h2>
+
+      <p>筋肉にレストデーが必要なように、脳にもAIからの「レストデー」が必要です。</p>
+
+      <p>HBRの研究チームは、チームの中で<strong>週に1人がAIを使わずに作業を準備する輪番制</strong>を提案しています。これにより、「人間だけの思考」がどういうものかをチーム全体で定期的に再確認でき、AIの出力に対する集団的な判断力が鈍るのを防げるとしています。</p>
+
+      <h3>実践のコツ</h3>
+
+      <ul>
+        <li>個人なら、週に<strong>半日〜1日</strong>を「AIなしで仕事をする日」に設定する</li>
+        <li>この日は企画、設計、振り返りなど<strong>深い思考が必要な作業</strong>に充てる</li>
+        <li>AIなしで作業した結果と、AI使用時の結果を比較してみる</li>
+        <li><a href="./ai-critical-thinking.html">クリティカルシンキングの記事</a>で述べた「批判的直感」を鍛える機会にもなる</li>
+      </ul>
+
+      <p>AIを手放すことへの不安を感じるかもしれません。しかし、定期的にAIなしで作業することは、<strong>自分自身の思考力のベースラインを維持する</strong>ための投資です。</p>
+
+      <hr>
+
+      <h2>7. ワークフローを設計してから、AIを導入する</h2>
+
+      <p>最も重要で、最も見落とされがちなポイントです。</p>
+
+      <p>BCGの研究チームが最も強調していたのは、<strong>「AIの問題は個人のコーピングでは解決できない。ワークフローの設計レベルで対処する必要がある」</strong>という点です。</p>
+
+      <p>多くの場合、AIは既存のワークフローの上に「追加」されます。しかし、それでは人間の認知負荷が増えるだけです。AIを導入する前に、<strong>ワークフロー全体を再設計する</strong>必要があります。</p>
+
+      <h3>設計のポイント</h3>
+
+      <ul>
+        <li><strong>AIに任せるタスク</strong>と<strong>人間が判断するタスク</strong>を明確に分ける</li>
+        <li>AIの出力が返ってくる<strong>タイミングを制御する</strong>（全てが同時に返ってこないようにする）</li>
+        <li>1日の中で<strong>「AI監視の時間帯」と「深い思考の時間帯」</strong>を分離する</li>
+        <li>「AIができるから」という理由だけで新しいタスクを引き受けない</li>
+      </ul>
+
+      <p>これは個人でも組織でも同じです。<strong>「AIに何をさせるか」ではなく「人間の認知負荷をどう設計するか」</strong>を起点に考えることが、持続可能なAI活用の鍵になります。</p>
+
+      <hr>
+
+      <h2>まとめ: AIと長く付き合うために</h2>
+
+      <p>7つの実践法を紹介しましたが、全てを一度に始める必要はありません。むしろ、<strong>1つだけ選んで今日から試してみる</strong>ことをお勧めします。</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>実践法</th>
+            <th>すぐにできる最初の一歩</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. AI同時使用数の制限</td>
+            <td>今日の午後、AIツール3つ以下で仕事してみる</td>
+          </tr>
+          <tr>
+            <td>2. フォーカスウィンドウ</td>
+            <td>明日のカレンダーに90分の「集中時間」を入れる</td>
+          </tr>
+          <tr>
+            <td>3. 朝のノースクリーン</td>
+            <td>明朝、起床後30分はスマホを触らない</td>
+          </tr>
+          <tr>
+            <td>4. 待ち時間の休息化</td>
+            <td>次にAIの結果を待つ間、席を立つ</td>
+          </tr>
+          <tr>
+            <td>5. 質の評価</td>
+            <td>今日の終わりに「最も価値ある成果」を1つ書き出す</td>
+          </tr>
+          <tr>
+            <td>6. AIなし作業日</td>
+            <td>今週のどこかで半日、AIを使わずに仕事する</td>
+          </tr>
+          <tr>
+            <td>7. ワークフロー設計</td>
+            <td>現在のAI使用パターンを紙に書き出してみる</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>AIは私たちの仕事を大きく変える力を持っています。しかし、その力を長く活用するためには、<strong>自分自身の脳を守る仕組み</strong>が不可欠です。</p>
+
+      <p>AIと人間の関係は、まだ始まったばかりです。「使いこなす」だけでなく、「健やかに付き合う」方法を一緒に探っていきましょう。</p>
+
+      <!-- CTA Banner -->
+      <div class="article-cta">
+        <h3 class="article-cta__title">まずは「問題」を知ることから</h3>
+        <p class="article-cta__desc">AI Brain FryとWorkload Creepの実態を、最新の研究データとともに解説しています。</p>
+        <a class="btn btn--primary" href="./ai-brain-fry-workload-creep.html">第1回: AI Brain FryとWorkload Creep</a>
+      </div>
+
+    </div>
+
+    <section class="article-sources">
+      <h2>出典・参考</h2>
+      <ul class="sources-list">
+        <li><a href="https://hbr.org/2026/03/when-using-ai-leads-to-brain-fry" target="_blank" rel="noopener noreferrer">When Using AI Leads to "Brain Fry" — Harvard Business Review（2026年3月）</a></li>
+        <li><a href="https://hbr.org/tip/2026/03/manage-ai-induced-brain-fry-on-your-team" target="_blank" rel="noopener noreferrer">Manage AI-Induced "Brain Fry" on Your Team — Harvard Business Review（2026年3月）</a></li>
+        <li><a href="https://hbr.org/2026/02/ai-doesnt-reduce-work-it-intensifies-it" target="_blank" rel="noopener noreferrer">AI Doesn't Reduce Work — It Intensifies It — Harvard Business Review（2026年2月）</a></li>
+        <li><a href="https://fortune.com/2026/03/10/ai-brain-fry-workplace-productivity-bcg-study/" target="_blank" rel="noopener noreferrer">'AI brain fry' is real — and it's making workers more exhausted — Fortune（2026年3月）</a></li>
+        <li><a href="https://www.keymyhome.com/news/digital-detox-in-2026-why-mindful-tech-use-is-becoming-a-lifestyle-choice-1" target="_blank" rel="noopener noreferrer">Digital Detox in 2026: Why Mindful Tech Use Is Becoming a Lifestyle Choice — KeyMyHome（2026年）</a></li>
+        <li><a href="https://themindsjournal.com/news/mental-health-trends-highlight-ai-burnout/" target="_blank" rel="noopener noreferrer">Mental Health Trends in 2026 Spotlight AI, Burnout, and Digital Boundaries — The Mind's Journal（2026年）</a></li>
+        <li><a href="https://rp.kddi-research.jp/atelier/column/archives/5443" target="_blank" rel="noopener noreferrer">生成AIに依存すると脳活動が低下したまま戻らない — KDDI総合研究所</a></li>
+      </ul>
+    </section>
+
+    <div class="article__faq">
+      <h2>よくある質問</h2>
+      <details open>
+        <summary>AIを使いながら脳を守るにはどうすればいいですか？</summary>
+        <p>同時に使用するAIツールを3つ以下に制限する、90分のフォーカスウィンドウを確保してAI通知をオフにする、朝の30〜60分はスクリーンに触れない、AIの待ち時間を次のタスク投入に使わず休息に充てるなどの実践が効果的です。個人の意志力だけに頼らず、ワークフローの設計レベルで認知負荷を管理することが重要です。</p>
+      </details>
+      <details>
+        <summary>AI疲れを感じたらまず何をすべきですか？</summary>
+        <p>まず物理的にコンピュータから離れることが有効です。BCGの研究でも、AI Brain Fryを感じた労働者が物理的にPCから離れることを余儀なくされるケースが報告されています。5〜10分の短い散歩や、窓の外を眺めるだけでも認知資源の回復に効果があります。その上で、自分のAIツール使用パターンを見直し、同時監視数の制限やフォーカスウィンドウの設定など、構造的な対策を取り入れましょう。</p>
+      </details>
+      <details>
+        <summary>AIを使わない時間を作ると生産性は下がりませんか？</summary>
+        <p>短期的にはアウトプット量が減る可能性がありますが、中長期的には生産性が向上するという研究結果が出ています。BCGの調査では、AIツールを適切に制限した場合にバーンアウトが15%低減し、重大エラーも減少しました。「量の生産性」ではなく「質の生産性」に評価軸を移すことが、持続可能なAI活用の鍵です。</p>
+      </details>
+    </div>
+
+    <div class="author-box">
+      <div class="author-box__avatar">N</div>
+      <div>
+        <div class="author-box__name">Naoki</div>
+        <div class="author-box__role">iOSアプリ個人開発者・DoubleHub作者</div>
+        <p class="author-box__bio">
+          西日本在住。Swift を中心に AI×習慣化×自己理解をテーマとしたアプリを開発。TrainNote、Book Compass、DoubleHub の作者。
+        </p>
+        <a class="author-box__link" href="../about.html">著者プロフィールを見る →</a>
+      </div>
+    </div>
+
+    <div class="related-articles">
+      <h2 class="related-articles__title">関連記事</h2>
+      <div class="related-articles__grid">
+        <a class="related-card" href="./ai-brain-fry-workload-creep.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">第1回: 「AI Brain Fry」と「Workload Creep」——AIと働く人を蝕む2つの新しい疲労</span>
+        </a>
+        <a class="related-card" href="./ai-cognitive-offloading.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">複数AIエージェントと働く時代に、人間の脳はどう変わっているのか</span>
+        </a>
+        <a class="related-card" href="./ai-critical-thinking.html">
+          <span class="related-card__cluster">AI情報</span>
+          <span class="related-card__title">AIに考えさせる時代に、人間のクリティカルシンキングはどうなるか</span>
+        </a>
+      </div>
+    </div>
+
+  </article>
+</main>
+
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
