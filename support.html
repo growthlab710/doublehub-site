@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="./favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="manifest" href="./manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サポート・お問い合わせ | DoubleHub</title>
+<meta name="description" content="DoubleHub・TrainNote・Book Compass に関するお問い合わせやサポート情報をご案内します。">
+<meta property="og:title" content="サポート・お問い合わせ | DoubleHub">
+<meta property="og:description" content="DoubleHub・TrainNote・Book Compass に関するお問い合わせやサポート情報をご案内します。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://doublehub.jp/support.html">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="サポート・お問い合わせ | DoubleHub">
+<meta name="twitter:description" content="DoubleHub・TrainNote・Book Compass に関するお問い合わせやサポート情報をご案内します。">
+
+<link rel="stylesheet" href="./styles.css">
+<style>
+  .support-hero {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--space-16) var(--space-5) var(--space-10);
+    text-align: center;
+  }
+
+  .support-hero__label {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+  }
+
+  .support-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    line-height: 1.3;
+    color: var(--color-text);
+    margin: 0 0 var(--space-4);
+  }
+
+  .support-hero__desc {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .support-form {
+    max-width: 720px;
+    margin: 0 auto var(--space-16);
+    padding: 0 var(--space-5);
+  }
+
+  .support-form__card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8) var(--space-6);
+  }
+
+  .support-form__group {
+    margin-bottom: var(--space-6);
+  }
+
+  .support-form__group:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .support-form__label {
+    display: block;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+  }
+
+  .support-form__hint {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+  }
+
+  .support-form__select,
+  .support-form__input,
+  .support-form__textarea {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--color-text);
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .support-form__select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%236B6B6B' stroke-width='1.5'%3E%3Cpath d='M3 5l3 3 3-3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-4) center;
+    padding-right: var(--space-10);
+    cursor: pointer;
+  }
+
+  [data-theme="dark"] .support-form__select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%238A8A8A' stroke-width='1.5'%3E%3Cpath d='M3 5l3 3 3-3'/%3E%3C/svg%3E");
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .support-form__select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%238A8A8A' stroke-width='1.5'%3E%3Cpath d='M3 5l3 3 3-3'/%3E%3C/svg%3E");
+    }
+  }
+
+  .support-form__textarea {
+    min-height: 140px;
+    resize: vertical;
+    font-family: inherit;
+  }
+
+  .support-form__select:focus,
+  .support-form__input:focus,
+  .support-form__textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-soft);
+  }
+
+  .support-form__actions {
+    margin-top: var(--space-8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .support-form__submit {
+    width: 100%;
+    padding: var(--space-4) var(--space-6);
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-inverse);
+    background: var(--color-primary);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .support-form__submit:hover {
+    background: var(--color-primary-hover);
+  }
+
+  .support-form__note {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    text-align: center;
+  }
+
+  .support-info {
+    max-width: 720px;
+    margin: 0 auto var(--space-16);
+    padding: 0 var(--space-5);
+  }
+
+  .support-info__title {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--space-3);
+  }
+
+  .support-info__list {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--color-text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.9;
+  }
+
+  .support-info__links {
+    margin-top: var(--space-6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+  }
+
+  .support-info__links a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 0.9375rem;
+  }
+
+  .support-info__links a:hover {
+    text-decoration: underline;
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJW7K08F6F');
+</script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="./index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="./images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="./trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="./bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="./index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./blog/index.html">ブログ</a>
+      <a class="nav__link" href="./about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="support-hero">
+    <span class="support-hero__label">Support</span>
+    <h1 class="support-hero__title">サポート・お問い合わせ</h1>
+    <p class="support-hero__desc">
+      DoubleHub、TrainNote、Book Compass に関するご質問・不具合の報告・ご要望などを受け付けています。<br>
+      下記のフォームから内容を選んで送信してください。
+    </p>
+  </section>
+
+  <!-- Form -->
+  <section class="support-form">
+    <form class="support-form__card" id="support-form" novalidate>
+      <div class="support-form__group">
+        <label class="support-form__label" for="support-service">お問い合わせ対象</label>
+        <select class="support-form__select" id="support-service" required>
+          <option value="DoubleHub">DoubleHub</option>
+          <option value="TrainNote">TrainNote</option>
+          <option value="Book Compass">Book Compass</option>
+          <option value="その他">その他 / 全般</option>
+        </select>
+      </div>
+
+      <div class="support-form__group">
+        <label class="support-form__label" for="support-category">お問い合わせ種別</label>
+        <select class="support-form__select" id="support-category" required>
+          <option value="不具合の報告">不具合の報告</option>
+          <option value="機能のご要望">機能のご要望</option>
+          <option value="使い方のご質問">使い方のご質問</option>
+          <option value="サブスクリプション・お支払い">サブスクリプション・お支払い</option>
+          <option value="アカウント・データについて">アカウント・データについて</option>
+          <option value="その他">その他</option>
+        </select>
+      </div>
+
+      <div class="support-form__group">
+        <label class="support-form__label" for="support-device">ご利用の端末（任意）</label>
+        <span class="support-form__hint">例: iPhone 16, iPad Air</span>
+        <input class="support-form__input" type="text" id="support-device" placeholder="（例）iPhone 16">
+      </div>
+
+      <div class="support-form__group">
+        <label class="support-form__label" for="support-os">iOS バージョン（任意）</label>
+        <span class="support-form__hint">「設定 › 一般 › 情報」で確認できます</span>
+        <input class="support-form__input" type="text" id="support-os" placeholder="（例）iOS 19.2">
+      </div>
+
+      <div class="support-form__group">
+        <label class="support-form__label" for="support-app-version">アプリのバージョン（任意）</label>
+        <span class="support-form__hint">アプリの設定画面で確認できます</span>
+        <input class="support-form__input" type="text" id="support-app-version" placeholder="（例）1.0.0">
+      </div>
+
+      <div class="support-form__group">
+        <label class="support-form__label" for="support-detail">お問い合わせ内容</label>
+        <textarea class="support-form__textarea" id="support-detail" placeholder="発生した状況や、ご質問の内容をできるだけ具体的にお書きください。" required></textarea>
+      </div>
+
+      <!-- ハニーポット（ボット対策：人間には見えない／ボットが入力すると送信をブロック） -->
+      <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+        <label for="support-website">Website</label>
+        <input type="text" id="support-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="support-form__actions">
+        <button class="support-form__submit" type="submit">メールアプリで送信する</button>
+        <p class="support-form__note">送信ボタンを押すと、ご利用のメールアプリが起動し、入力内容が本文に自動で反映されます。通常、2営業日以内にご返信いたします。</p>
+      </div>
+    </form>
+  </section>
+
+  <!-- Info -->
+  <section class="support-info">
+    <h2 class="support-info__title">よくお寄せいただく確認事項</h2>
+    <ul class="support-info__list">
+      <li>アプリが起動しない／クラッシュする場合は、一度アプリを終了して再起動をお試しください。</li>
+      <li>サブスクリプションの解約は、iPhone の「設定」→「Apple ID」→「サブスクリプション」から行えます。</li>
+      <li>データの同期に問題がある場合は、ネットワーク接続をご確認ください。</li>
+    </ul>
+    <div class="support-info__links">
+      <a href="./privacy.html">プライバシーポリシー</a>
+      <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">利用規約（Apple標準EULA）</a>
+      <a href="./index.html">トップへ戻る</a>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="./images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="./trainnote.html">TrainNote</a>
+    <a href="./bookcompass.html">Book Compass</a>
+    <a href="./blog/index.html">ブログ</a>
+    <a href="./about.html">著者について</a>
+    <a href="./privacy.html">プライバシーポリシー</a>
+    <a href="./support.html">サポート</a>
+  </div>
+</footer>
+
+<script src="./script.js"></script>
+<script>
+  // ボットによるスクレイピングを防ぐため、メールアドレスを JS で組み立てる
+  (function () {
+    const mailUser = 'growthlab116710';
+    const mailDomain = 'gmail.com';
+    const mailAddress = mailUser + '@' + mailDomain;
+
+    const form = document.getElementById('support-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // ハニーポット：ボットは hidden フィールドに値を入れることが多いので、入っていたら送信中止
+      const honeypot = document.getElementById('support-website');
+      if (honeypot && honeypot.value.trim() !== '') {
+        return;
+      }
+
+      const service = document.getElementById('support-service').value || 'その他';
+      const category = document.getElementById('support-category').value || 'お問い合わせ';
+      const device = document.getElementById('support-device').value.trim();
+      const os = document.getElementById('support-os').value.trim();
+      const appVersion = document.getElementById('support-app-version').value.trim();
+      const detail = document.getElementById('support-detail').value.trim();
+
+      if (detail === '') {
+        alert('お問い合わせ内容をご入力ください。');
+        return;
+      }
+
+      const subject = '[' + service + '] ' + category;
+      const bodyLines = [
+        '※ この行より下にお問い合わせ内容をご記入ください。',
+        '',
+        '【お問い合わせ内容】',
+        detail,
+        '',
+        '--- ご利用環境 ---',
+        '対象サービス: ' + service,
+        'お問い合わせ種別: ' + category,
+        'ご利用端末: ' + (device || '（未記入）'),
+        'iOS バージョン: ' + (os || '（未記入）'),
+        'アプリのバージョン: ' + (appVersion || '（未記入）'),
+        ''
+      ];
+      const body = bodyLines.join('\n');
+
+      const mailto = 'mailto:' + mailAddress
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(body);
+
+      window.location.href = mailto;
+    });
+  })();
+</script>
+</body>
+</html>
