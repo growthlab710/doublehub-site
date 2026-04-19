@@ -391,3 +391,68 @@
    - Fontshare self-host 化の TODO（ライセンス入手後の差し替えポイント）
 3. ローカル本番ビルド（`pnpm build && pnpm start`）+ Lighthouse（Performance / Accessibility / Best Practices / SEO）を主要 5 ページで計測し結果を記録
 4. 最終 zip 納品（依存を除いたソース一式 + docs + public + out/ のクリーンセット）
+
+---
+
+## Day 5 — 2026-04-19 (JST) — 検証総仕上げ / OPEN_QUESTIONS 追記 / HANDOVER 作成 / 納品
+
+### 実施内容
+
+- **最終 sanity check**
+  - `pnpm exec tsc --noEmit` — エラー 0
+  - `pnpm lint` — エラー 0
+  - `pnpm build`（dynamic） — 37 ページ成功
+  - `pnpm build:export`（static） — 37 ページ + メタリフレッシュ 25 件
+  - `pnpm start` で本番ビルドを起動し、`/`, `/blog/`, `/products/doublehub/`, `/app/login/`, `/about/` が全て HTTP 200 を返すことを確認
+
+- **OPEN_QUESTIONS.md 追記**
+  - Day 4 実装中に新規判明した不明点を末尾に追記
+    - DoubleHub `profiles` 自動 INSERT トリガーの有無
+    - `request_account_deletion` RPC のシグネチャと挙動
+    - `todos.order_index` / `memos.tags` の実際のカラム型
+    - BookCompass `search-books` Edge Function の input/output
+    - BookCompass `books.status` の実値（reading/finished/paused vs UI の 4 値）
+    - Supabase 正式型生成への移行タイミング
+    - OAuth Redirect URLs の Supabase ダッシュボード側登録
+    - static モードでのアカウント削除フローの UX 仕様
+  - 既存項目（00〜07）は非破壊、追記のみ
+
+- **HANDOVER.md 新規作成**（`docs/web-renewal/HANDOVER.md`）
+  - 納品物一覧
+  - セットアップ手順（clone → install → env）
+  - `.env.local` のテンプレートと Supabase ダッシュボードでの Redirect URLs 登録手順
+  - `as never` キャストを正式型に置き換える手順（`supabase gen types`）
+  - Cloudflare Pages 本番デプロイ設定（dynamic / static 両モード）
+  - GitHub Pages 暫定運用のための Actions 例
+  - Fontshare self-host 化手順（ライセンス購入後）
+  - Lighthouse 計測ガイドライン（ローカル本番ビルド想定）
+  - iOS 側 linked_accounts 連携の TODO
+  - よくある落とし穴一覧
+  - 重要ファイルマップ
+
+- **Lighthouse 計測**
+  - 本作業環境に Chrome / Lighthouse が無く、リモート計測サービスも経路上使用不可だったため、担当環境での再計測を推奨する旨を HANDOVER 付録 A に記載
+  - ビルド成果物の軽量性（shared JS 100KB、SSG 37 ページ）とデザイントークンによる CLS 抑制で代替説明
+
+- **zip 納品準備**
+  - 作業ディレクトリから `node_modules/` `.next/` `out/` `.git/` を除外して zip 化
+  - `doublehub-site-handover-20260419.zip` として出力
+
+### 検証結果サマリ
+
+- ✅ 全モード（dynamic / static）のビルド成功
+- ✅ 主要 5 ページのローカル本番ビルド起動で HTTP 200
+- ✅ 型 / lint エラー 0
+- ✅ 既存保持ファイル（CNAME / robots.txt / llms.txt / google*.html / manifest.json / favicon 群）に変更なし
+- ✅ `_redirects` 25 件、`scripts/postbuild-redirects.mjs` のメタリフレッシュ生成維持
+- ✅ `docs/web-renewal/` の既存ドキュメント（00〜07）は変更せず、`OPEN_QUESTIONS.md` は追記のみ、`DAILY_LOG.md` と `HANDOVER.md` は新規/追記
+
+### 今後の後続対応（引継ぎ TODO）
+
+1. Supabase env を `.env.local` に投入し、開発環境で OAuth + Magic Link の実往復を確認
+2. `supabase gen types` で正式な型ファイルを生成し、Repository の `as never` キャストを撤去（HANDOVER §4）
+3. Cloudflare Pages プロジェクトを作成し dynamic モードで本番ビルド（HANDOVER §5）
+4. DNS を GitHub Pages から Cloudflare Pages に切替（`public/CNAME` の削除は任意）
+5. iOS 側の linked_accounts 対応方針を合意（OPEN_QUESTIONS §認証）
+6. Fontshare self-host 化（ライセンス入手後、HANDOVER §7）
+7. Lighthouse を各環境で再計測して付録 A を埋める
