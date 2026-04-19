@@ -36,6 +36,7 @@
 | 4 | [04-data-layer.md](./04-data-layer.md) | Supabase スキーマ、認証フロー、linked_accounts、Web API クライアント設計 |
 | 5 | [05-conventions.md](./05-conventions.md) | コーディング規約、ディレクトリ構造、制約、禁止事項 |
 | 6 | [06-tasks.md](./06-tasks.md) | タスク分解、5 日間の推奨スケジュール、完了条件 |
+| 7 | [07-delivery-and-handover.md](./07-delivery-and-handover.md) | **必読**: 納品方法、HANDOVER.md に書くべき内容、依頼者への引き継ぎ手順 |
 
 ## 既存資産の場所
 
@@ -44,6 +45,14 @@
   - 現在のホスティング: GitHub Pages（`doublehub.jp`）
 - **既存 iOS アプリ（参照のみ、変更禁止）**: リポジトリルート `/` 配下
 - **既存 Supabase スキーマ SQL**: `docs/supabase/`（リポジトリルート下）
+
+## 本プロジェクトの運用前提（必読）
+
+- **5 日エージェントはクラウド環境で動作**する。依頼者のローカル環境にはアクセスできない
+- **作業の受け渡しはフォルダ丸ごと**の形式。依頼者が既存 `site/doublehub-site/` を渡し、エージェントは成果物フォルダを返す
+- **依頼者は手作業でファイル置き換え**する。エージェントは置き換えが事故らないよう `HANDOVER.md` に詳細な手順を記載すること
+- **親リポジトリ（`../` 以上）の iOS アプリコードにはアクセスできない**。ドキュメント中の iOS リポ相対パスは参考情報扱い
+- 詳細は [07-delivery-and-handover.md](./07-delivery-and-handover.md) を参照
 
 ## 作業完了の目安
 
