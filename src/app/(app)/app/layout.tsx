@@ -1,23 +1,17 @@
 /**
- * Web アプリエリア用レイアウト（placeholder）。
- * Day 3 で AppShell（サイドバー + ヘッダー）・認証ガード・Supabase セッション取得を実装する。
+ * `/app/` 以下の共通ラッパー。
  *
- * 現状は最低限の中身のみ。dynamic モードのときはここでサーバーサイド認証ガードを行う予定。
+ * ログイン画面とダッシュボード系で UI が大きく違うため、ここでは
+ * 認証ガード / AppShell を当てず、各子ルート (`(authed)` / `login`) に
+ * 任せる。
+ *
+ * - `/app/login/`    : 公開（未認証向け）
+ * - `/app/(authed)/*`: 認証必須。`(authed)/layout.tsx` でガード。
  */
-import Link from 'next/link';
-
-export default function AppLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex min-h-dvh flex-col bg-bg text-text">
-      <header className="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur-md">
-        <div className="container-wide flex h-16 items-center justify-between">
-          <Link href="/app/" className="font-display text-base font-semibold">
-            DoubleHub Dashboard
-          </Link>
-          <span className="text-xs text-text-faint">Web アプリ骨格 v0.1 (Day 3 で本実装)</span>
-        </div>
-      </header>
-      <main className="flex-1">{children}</main>
-    </div>
-  );
+export default function AppLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <>{children}</>;
 }

@@ -207,3 +207,90 @@
    - Edge Function `search-books` 経由で BookCompass の書籍検索（楽天 API 使用禁止）
 4. `/app/login/` 認証ページ本実装（Magic link / Apple / Google）
 5. 認証ガード: dynamic モード（middleware）+ static モード（クライアント redirect）のデュアル対応
+
+---
+
+## Day 3 — 2026-04-19 (JST) — UI プリミティブ / AppShell / Supabase / 認証ガード
+
+### 実施内容
+
+- **UI プリミティブ追加（12 コンポーネント）**
+  - 入力系: `Input`, `Label`, `Textarea`
+  - 表示系: `Badge`（cva variants: default/outline/warm/success/muted）, `Skeleton`, `Separator`, `Avatar`（Radix）
+  - オーバーレイ: `Dialog`, `DropdownMenu`, `Tooltip`, `Tabs`（いずれも Radix UI ベース）
+  - 通知: `Toaster`（`sonner` + `next-themes` 連動）
+  - 全て CSS 変数トークンに統合され、既存 `Button` / `Card` / `Container` / `Section` と一貫性を保つ
+  - 追加依存: `@radix-ui/react-avatar`, `@radix-ui/react-separator`（他 Radix パッケージは Day 1 時点で導入済み）
+
+- **環境変数アクセサ `src/lib/env.ts`**
+  - `hostingMode` （`'static' | 'dynamic'`）、`isDynamicHosting` / `isStaticHosting` をエクスポート
+  - `supabaseConfig` で3 プロジェクト分の URL / anon を安全に取得（未設定のときは `ok: false` を返し例外無しで処理を判定可能に）
+
+- **Supabase 型定義と3 プロジェクトクライアント**
+  - `src/lib/supabase/types-doublehub.ts` — `DoubleHubProfile`, `Todo`, `Memo`, `ExternalSourceAccount` + `Database` 型スタブ
+  - `src/lib/supabase/types-bookcompass.ts` — `Book`, `Mutter`, `ChatSession`, `ChatMessage`, `ChatInsight`, `ChatSearchIntent`, `ChatDailyUsage`, `BookMetadataCache`, `Profile`
+  - `src/lib/supabase/types-trainnote.ts` — v1 最小限（AI Coach ログはイベントソースにメモ書き）
+  - `src/lib/supabase/client.ts` — ブラウザ側ファクトリ
+    - `getBrowserDoubleHub()`：`storageKey: 'sb-doublehub-auth'`、`detectSessionInUrl: true`（OAuth コールバックはここで受ける）
+    - `getBrowserBookCompass()`：`storageKey: 'sb-bookcompass-auth'`、`detectSessionInUrl: false`（DoubleHub とぶつからないように）
+    - `getBrowserTrainNote()`：`persistSession: false`（v1 は読みも実質不要、auth なし）
+  - `src/lib/supabase/server.ts` — `createServerClient` + `cookies()` （Next.js 15 で `cookies()` が Promise を返すため `await` を加えた）
+  - `src/lib/supabase/clients.ts` — 集約エクスポート。`getServerUser()` を認証ガード用に提供
+  - service_role key は一切扱わない
+
+- **AppShell レイアウト**
+  - `src/components/app/AppNav.ts` — サイドバー項目定義（ダッシュボード / DoubleHub / BookCompass / TrainNote（準備中） / 設定）
+  - `AppSidebar.tsx` — 新設。デスクトップは側面固定、モバイルは Dialog 内で Sheet 風に開く。アクティブ判定 / 準備中バッジ対応
+  - `AppHeader.tsx` — ハンバーガー / アバター付きユーザーメニュー / ログアウト
+  - `AppShell.tsx` — サイドバー + ヘッダー + コンテンツの 3 カラム構成
+
+- **認証ガード（dynamic / static 両モード）**
+  - route group を切り直し、`src/app/(app)/app/(authed)/` 配下に ダッシュボード / doublehub / bookcompass / trainnote / settings を移動
+  - `/app/layout.tsx` は素通し、`/app/(authed)/layout.tsx` でモード分岐してガード適用
+  - dynamic モード：`DynamicAuthGate`（Server Component）→ `getServerUser()` で未認証なら `/app/login/` に redirect。Supabase env 未設定時もログイン画面へ
+  - static モード：`StaticAuthGate`（Client Component）→ `onAuthStateChange` + `getUser()` でクライアント redirect。`useEffect` でセッション同期
+  - どちらも `AppShell` を内包し、`user` 情報を `AppHeader` へ流す。Server→Client に関数を children として渡さないパターンに統一
+  - `export const dynamic` は静的リテラルしか受け付けないため、指定をやめ `cookies()` 呼び出しによる自動動的化に任せる（static export とも両立）
+
+- **`/app/login/` 本実装**
+  - `LoginForm.tsx`（クライアント）
+    - Apple / Google は `signInWithOAuth({ provider, options: { redirectTo: ${origin}/app/ } })`
+    - Email は `signInWithOtp`（マジックリンク。パスワード不要）
+    - エラー / 成功メッセージを日本語で表示。`role="alert"` / `role="status"` 付与
+  - ページ自体はサーバコンポーネント。`isDynamicHosting && supabaseConfig.doublehub.ok` のときのみフォーム表示、それ以外は「準備中」画面
+  - ログアウト: `AppHeader` のドロップダウンから。static モードでは単に `/app/login/` へ `router.push`、dynamic モードでは `supabase.auth.signOut()` 後に router.refresh
+
+- **ダッシュボード / 各プロダクト画面**
+  - `/app/`（ダッシュボード）は `appNavItems` を 3 カードで並べたハブ画面。各カードに「Day 4 で内容を実装」のプレースホルダー
+  - `/app/doublehub/` / `/app/bookcompass/` / `/app/settings/` は Day 4 用 placeholder
+  - `/app/trainnote/` は v1 の方針どおり Coming Soon（イラスト + LP への CTA）
+
+### 検証結果
+
+- ✅ `pnpm exec tsc --noEmit` — エラー 0
+- ✅ `pnpm lint` — エラー 0 / 警告 0
+- ✅ `pnpm build`（static デフォルト） — 37 ページ生成成功
+- ✅ `NEXT_PUBLIC_HOSTING_MODE=dynamic pnpm build` — 37 ページ生成成功
+- ✅ `pnpm build:export` — 37 ページ + メタリフレッシュ 25 件
+- ✅ `pnpm start` でローカル配信、Playwright で以下を確認
+  - `/app/login/` → Supabase env 未設定（開発時）により「準備中」として表示
+  - `/app/` → 未認証でクライアント側ガードが発火して `/app/login/` に redirect
+- ✅ 既存ページ（LP / プロダクト LP / ブログ / about / privacy）に回帰なし
+- ✅ 保持対象ファイル（CNAME / robots.txt / llms.txt / google*.html / manifest.json / favicon 群）と `_redirects` に変更なし
+
+### Day 3 の判断記録
+
+- **route group 再編**: 最初 `RequireAuth` を render prop として AuthedLayout で使ったが、Server Component から Client Component に関数 children を渡すと build 時に例外が出るため、2 ガードとも AppShell を内包する構成に統一した。また route group を `(authed)` で区切り、ログイン画面と権限をキレインに分離。
+- **Next.js 15 `cookies()` の Promise 化**: `createServerClient` で `await cookies()` に対応し、`getServerDoubleHub()` / `getServerUser()` を async 関数化。
+- **static export と `dynamic` 指定の矛盾**: 環境変数で `force-dynamic` / `auto` を切り替えるのは Next.js の制約で不可だったため、`dynamic` 指定を除去。dynamic モードでは `cookies()` 呼び出しで自動に動的レンダリング対象となるため実害なし。
+- **`storageKey` 分離**: DoubleHub と BookCompass は独立した auth を持つため3 プロジェクトの client を同一ページで同時に使っても session が混乗しないよう cookie/localStorage の key 名を完全に分離。TrainNote は auth を持たないため `persistSession: false`。
+- **Edge Function 経由の書籍検索**: BookCompass 用の書籍検索は、Repository 層実装（Day 4）で Supabase `functions.invoke('search-books', ...)` を呼ぶ予定。楽天 API は一切使わない。
+- **絵文字アイコン使用の理由**: サイドバー項目の `icon` は一旦絵文字で持つ。将来的に lucide-react または product 固有アイコンに差し替える余地を持たせるため（Day 4～5 で置き換えを検討する TODO）。
+
+### 次アクション (Day 4 開始時)
+
+1. Repository 層実装（DoubleHub: todos / memos、BookCompass: books / mutters / chat_sessions）
+2. ダッシュボードウィジェット（今日の ToDo / 最新メモ / BookCompass 本棚 / TrainNote お知らせ）
+3. `/app/doublehub/` 本実装（ToDo CRUD / メモ / 完了タスク行動ログ表示）
+4. `/app/bookcompass/` 本実装（連携フロー / 本棚 / 検索は Edge Function 経由）
+5. `/app/settings/` 本実装（プロフィール / external_source_accounts 連携 / アカウント削除）
