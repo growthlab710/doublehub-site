@@ -167,3 +167,30 @@
 ```
 
 回答済みになったら `[ ]` → `[x]` に変え、回答内容を下にインデントで残す。
+
+---
+
+## 🆕 Day 4 実装中に新規判明した不明点（2026-04-19 追記）
+
+### データ層
+
+- [ ] **DoubleHub 本体 `profiles` テーブルに `auth.users` 作成時の自動 INSERT トリガーがあるか**: 現状の ProfileCard 実装はユーザーが「保存」ボタンを押した瞬間に upsert する（`onConflict: 'id'`）。トリガーがあるなら `insert` を試みず `update` でも良い。ユーザーアカウント初回ログイン時の挙動を env 投入後に動作確認して確定したい
+- [ ] **`request_account_deletion` RPC のシグネチャと挙動**: Settings 画面にプレースホルダ UI を置いているが、関数が存在するか / 引数は `Args: Record<string, never>` で良いか / 成功時に自動的に `auth.signOut()` されるか、未確定。Day 5 以降で実動作確認して UI を完成させる必要がある
+- [ ] **DoubleHub `todos` の `order_index` 設計**: 新規 Todo 作成時に `null` で insert しているが、ドラッグ並び替え UI を将来足す際に `order_index` の型（`bigint` / `numeric`）と空き番運用（間隔 1024 で挿入等）が必要
+- [ ] **DoubleHub `memos` の `tags` カラム**: `text[]` 想定で実装しているが、実際のスキーマが `jsonb` / `text` カンマ区切りの可能性。env 投入後に `information_schema.columns` で確認して必要なら型を合わせる
+
+### BookCompass 連携
+
+- [ ] **`search-books` Edge Function の input/output 仕様**: 現在は `{ q: query }` を渡して `{ books?, items?, results?: any[] }` を受ける楽観的実装。BookCompass 本家の signature（引数名、ページング、エラーコード）を確認したい
+- [ ] **BookCompass の `books.status` カラム値**: UI で `reading / want / done / dropped` の 4 値を想定したが、スキーマでは `reading / finished / paused` の 3 値（OPEN_QUESTIONS §データ層参照）。UI フィルタの文言を揃えるか、DoubleHub Web 側で独自ラベルに写像するかを要決定
+- [ ] **BookCompass の「本棚の書誌メタ」取得順序**: `books.cover_url` が空の場合に `book_metadata_cache` を結合する必要があるかを確認。現状は `books` 単体 SELECT のみ
+- [ ] **匿名サインイン / メール OTP / Apple の優先順位**: BookCompass は 3 方式を持つが、Web の連携フローでは現在 Email OTP のみ。Apple Sign In を Web でも揃えるかどうか
+
+### TypeScript / 型生成
+
+- [ ] **Supabase 正式型生成への移行タイミング**: 現状は Day 4 の回避策として Repository 層で書き込み時に `as never` キャスト。`supabase gen types typescript --project-id <ref> --schema public` で生成した型に差し替えれば完全型化できる。env 投入（= project ref 確定）後、HANDOVER 手順の一環として置き換えたい
+
+### 認証 / UX
+
+- [ ] **`/app/login/` の OAuth リダイレクト先**: `redirectTo: ${origin}/app/` で AppShell に戻す設計だが、Supabase ダッシュボード側で Redirect URLs に `https://doublehub.jp/app/*` を登録する必要がある（env 投入時のチェックリストに追加）
+- [ ] **static モードでのアカウント削除フロー**: static ビルド（GitHub Pages）は Server action 不可。Account deletion は Edge Function 経由で叩く形になるが、Cloudflare Pages に移行するまでは「dynamic モード時のみ動作、static 時は非活性」という UX 仕様を明示する必要がある
