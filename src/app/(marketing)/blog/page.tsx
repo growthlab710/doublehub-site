@@ -29,14 +29,20 @@ export default function BlogIndex() {
               className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
             >
               <div className="flex flex-wrap gap-1.5">
-                {post.tags.slice(0, 3).map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary"
-                  >
-                    {t}
+                {post.category ? (
+                  <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary">
+                    {post.category}
                   </span>
-                ))}
+                ) : (
+                  post.tags.slice(0, 3).map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary"
+                    >
+                      {t}
+                    </span>
+                  ))
+                )}
               </div>
               <h2 className="mt-4 font-display text-lg font-semibold leading-snug group-hover:text-primary">
                 {post.title}
@@ -58,9 +64,6 @@ export default function BlogIndex() {
           ))}
         </div>
 
-        <p className="mt-12 text-sm text-text-faint">
-          ※ Day 2 で各記事本文を MDX 化し、個別記事ページを完全実装予定。
-        </p>
       </Container>
     </Section>
   );

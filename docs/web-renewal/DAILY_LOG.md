@@ -106,3 +106,104 @@
 2. `/about/` `/privacy/` の旧本文を完全移植（今は要約のみ）
 3. `public/images/` の巨大画像を WebP/AVIF 変換（`DoubleHub-Concept.png` 4.7MB → 目標 < 200KB）
 4. 追加テスト: Cloudflare Pages の `_redirects` が期待通り動くか（別ステップで動作確認）
+
+---
+
+## Day 2 — 2026-04-19 (JST) — ブログ MDX 移行 + 固定ページ本文移植 + 画像最適化
+
+### 実施内容
+
+- **ブログ 20 記事を MDX 化**
+  - `scripts/migrate-blog-to-mdx.mjs` で `legacy/blog/*.html` → `content/blog/*.mdx` 変換
+    - Turndown で HTML → Markdown
+    - frontmatter（title, description, publishedAt, updatedAt, category, slug, readingTime）を JSON-LD/meta から抽出
+    - `.article__content` 本文、`.article-sources` 出典セクション、`.article__faq` FAQ の三部構成を Markdown 化
+    - 内部リンク（`./foo.html`、`./foo.html#anchor`、`../index.html` 等）を `/blog/foo/` 形式に書き換え
+    - 画像パス（`../images/`）を `/images/` に書き換え
+    - CTA セクションやauthor-box は除去
+  - 結果: 19 本の MDX ファイル（index.html を除いた全記事）を `content/blog/` に配置
+  - 元記事にタグ（keywords）が入っていないため tags は空、代わりに `category`（クラスタラベル）を表示に利用
+
+- **MDX/Markdown レンダラー実装**
+  - 最初は `next-mdx-remote/rsc` を試したが、Next.js 15 + React 18 の組み合わせで "React Element from older version" エラーが発生
+  - より堅牢な `unified` + `remark-parse` + `remark-gfm` + `remark-rehype` + `rehype-raw` + `rehype-slug` + `rehype-autolink-headings` + `rehype-stringify` パイプラインに切替
+  - `src/lib/content/markdown.ts` — サーバ側で Markdown を HTML 文字列にコンパイル
+  - `src/components/marketing/MDXRenderer.tsx` — async Server Component、`dangerouslySetInnerHTML` で描画
+  - `<img>` に自動で `loading="lazy"` / `decoding="async"` を付与する簡易 rehype プラグイン
+  - 見出しに slug + wrap anchor を自動付与（パーマリンク運用可）
+
+- **prose スタイルとデザイントークン統合**
+  - `@tailwindcss/typography` を追加
+  - `src/styles/globals.css` に `.prose` 変数オーバーライドを追加し、サイトの CSS 変数（text, primary, border, divider, surface, surface-2）に完全紐付け
+  - 見出しフォントは `--font-display`、本文は `--font-body`
+  - `blockquote` / `code` / `pre` / `img` も DoubleHub のトークンに統一
+
+- **blog.ts を MDX ファイル読込方式に刷新**
+  - `readdirSync(CONTENT_DIR)` で MDX を列挙し、`gray-matter` で frontmatter をパース
+  - `BlogPost` インターフェースに `content`（本文 Markdown）と `category` / `updatedAt` / `series` を追加
+  - 既存の `getAllPosts` / `getLatestPosts` / `getPostBySlug` / `getAllSlugs` 互換を維持
+
+- **個別記事ページ `/blog/[slug]/` 本実装**
+  - `MDXRenderer` で本文をレンダリング
+  - タイトル、説明、公開日、更新日、読了時間、カテゴリバッジを表示
+  - 関連記事セクション（同カテゴリ優先で 3 件）
+  - OGP `publishedTime` / `modifiedTime` 対応
+  - `dynamicParams = false` で不明 slug は 404
+
+- **ブログ一覧・ティーザーのメタデータ対応**
+  - `/blog/` 一覧ページと `BlogTeaser` コンポーネントを `category` 優先表示に変更
+  - タグが無くてもカテゴリバッジが表示されるフォールバック
+
+- **`/about/` 本文完全移植**
+  - `legacy/about.html` から Naoki プロフィール + 3 プロダクト紹介 + 設計思想 + ブログ紹介を完全移植
+  - 3 プロダクトカード（TrainNote / Book Compass / DoubleHub）は個別 LP へのリンクカードに刷新
+  - 「開発中」バッジを DoubleHub に付与
+
+- **`/privacy/` 本文完全移植**
+  - `legacy/privacy.html` の Ver.1.1.0（ヘルスケア連携 + カレンダー双方向同期対応）を完全移植
+  - 8 セクション構成を維持（取得情報 / 利用目的 / 保存先と外部送信 / 第三者提供 / ユーザー管理 / 安全管理 / 改定 / お問い合わせ）
+  - App Store Connect プライバシー URL として到達可能な状態を保証
+  - 最終更新日: 2026-04-18
+
+- **画像最適化**
+  - `scripts/optimize-images.mjs`（sharp ベース）で `public/images/*.{png,jpg}` を一括圧縮
+  - 各画像の WebP 版（品質 80、effort 5）を併存
+  - 900KB を超える元ファイルは mozjpeg / palette PNG で再圧縮して上書き
+  - 最大幅 1600px にリサイズ（retina 相当）
+  - 主要な改善:
+    - `DoubleHub-Concept.png` 4617KB → 593KB（87% 削減） / webp 41KB
+    - `trainnote-peak.jpg` 2064KB → 219KB（89% 削減） / webp 133KB
+    - `trainnote-coaches-list.jpg` 1498KB → 200KB（87% 削減） / webp 138KB
+    - `doublehub-task.jpg` 1042KB → 142KB（86% 削減） / webp 82KB
+  - 合計: 15.84 MB → 9.75 MB（元ファイル + webp 合計）、元ファイルだけなら 6.6MB 程度に削減
+
+- **sitemap 改善**
+  - 各ブログ記事の `lastModified` に `updatedAt || publishedAt` を反映
+
+### 検証結果
+
+- ✅ `pnpm typecheck` — エラー 0
+- ✅ `pnpm lint` — エラー 0
+- ✅ `pnpm build`（dynamic） — 33 ページ、うち blog は 19 記事全 SSG 成功
+- ✅ `pnpm build:export`（static） — 33 ページ + メタリフレッシュ 25 件出力
+- ✅ `pnpm start` でローカル配信、Playwright で 5 ページ（top / blog 一覧 / blog 記事 / about / privacy）をスクリーンショット確認、デザイン破綻なし
+- ✅ ブログ個別記事のレンダリング: 見出し階層、本文、引用、箇条書き、内部リンク、出典セクション、FAQ、関連記事、すべて正しく表示
+- ✅ 既存保持ファイル（CNAME, robots.txt, llms.txt, google*.html, manifest.json, favicon 群）に変更なし
+- ✅ `_redirects` 25 件、`scripts/postbuild-redirects.mjs` によるメタリフレッシュも維持
+
+### Day 2 の判断記録
+
+- **MDX レンダリング方式**: `next-mdx-remote` は React バージョン不整合で RSC 互換性が不安定だったため、`unified`/`remark`/`rehype` によるビルド時 HTML 化に変更。JSX コンポーネントを本文に埋める要件がない（全て Markdown 文法で表現可能）ため、この方式が最もシンプルで堅牢。
+- **タグ表示**: 元記事にタグデータ（keywords）が存在しないため、`category`（クラスタラベル）を優先表示。今後タグを追加するなら frontmatter の `tags:` に記述するだけで自動反映される設計。
+- **画像配信**: WebP 版を同ディレクトリに配置したが、コンポーネント側で `<picture>` 切替を行うのは Day 5 の余力次第。next/image は runtime に sharp が必要なため static export では無効（`images.unoptimized = true`）。
+
+### 次アクション (Day 3 開始時)
+
+1. UI プリミティブの追加: Input / Select / Tabs / Dialog / Tooltip（Radix ベース）
+2. AppShell レイアウト実装（`/app/` 配下、サイドバー + ヘッダー + トースト）
+3. Supabase クライアント 3 プロジェクト分を作成
+   - `src/lib/supabase/doublehub.ts`, `bookcompass.ts`, `trainnote.ts`
+   - storageKey を `sb-doublehub-auth` / `sb-bookcompass-auth` / `sb-trainnote-auth` に分離
+   - Edge Function `search-books` 経由で BookCompass の書籍検索（楽天 API 使用禁止）
+4. `/app/login/` 認証ページ本実装（Magic link / Apple / Google）
+5. 認証ガード: dynamic モード（middleware）+ static モード（クライアント redirect）のデュアル対応

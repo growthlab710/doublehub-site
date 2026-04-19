@@ -34,14 +34,20 @@ export function BlogTeaser() {
               className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
             >
               <div className="flex flex-wrap gap-1.5">
-                {post.tags.slice(0, 2).map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary"
-                  >
-                    {t}
+                {post.category ? (
+                  <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary">
+                    {post.category}
                   </span>
-                ))}
+                ) : (
+                  post.tags.slice(0, 2).map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary"
+                    >
+                      {t}
+                    </span>
+                  ))
+                )}
               </div>
               <h3 className="mt-4 font-display text-lg font-semibold leading-snug group-hover:text-primary">
                 {post.title}
