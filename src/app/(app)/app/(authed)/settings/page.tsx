@@ -1,12 +1,16 @@
+import { ProfileCard } from './_components/ProfileCard';
+import { LinkedAccountsCard } from './_components/LinkedAccountsCard';
+
 export const metadata = {
   title: '設定',
   robots: { index: false },
 };
 
 /**
- * /app/settings/ プレースホルダ。
- * Day 4 でプロフィール / 連携 (external_source_accounts) / サブスクリプション
- * / データエクスポート / アカウント削除を実装する。
+ * /app/settings/
+ * - プロフィール編集
+ * - 連携アカウント一覧 / 解除
+ * - （Day 5 以降）アカウント削除 / データエクスポート
  */
 export default function AppSettingsPage() {
   return (
@@ -14,12 +18,20 @@ export default function AppSettingsPage() {
       <header>
         <h1 className="font-display text-2xl font-semibold">設定</h1>
         <p className="mt-2 text-sm text-text-muted">
-          プロフィール / 連携アカウント / アカウント削除などを管理します。
+          プロフィールと連携アカウントを管理します。
         </p>
       </header>
-      <div className="rounded-xl border border-border bg-surface p-6 text-sm text-text-muted">
-        Day 4 で実装予定: プロフィール編集 / BookCompass 連携 / アカウント削除。
-      </div>
+      <ProfileCard />
+      <LinkedAccountsCard />
+      <section className="rounded-xl border border-dashed border-border bg-surface p-6 text-sm text-text-muted">
+        <h2 className="font-display text-base font-semibold text-text">
+          アカウント削除
+        </h2>
+        <p className="mt-2">
+          アカウント削除機能は Day 5 以降でサーバ側 Route Handler を
+          追加して実装します。現時点ではサポートからの依頼となります。
+        </p>
+      </section>
     </div>
   );
 }

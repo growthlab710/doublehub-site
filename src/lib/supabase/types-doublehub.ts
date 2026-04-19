@@ -71,32 +71,46 @@ export interface Database {
         Row: DoubleHubProfile;
         Insert: Partial<DoubleHubProfile> & { id: string };
         Update: Partial<DoubleHubProfile>;
+        Relationships: [];
       };
       todos: {
         Row: Todo;
         Insert: Omit<Todo, 'id' | 'created_at' | 'updated_at'> &
           Partial<Pick<Todo, 'id' | 'created_at' | 'updated_at'>>;
         Update: Partial<Todo>;
+        Relationships: [];
       };
       memos: {
         Row: Memo;
         Insert: Omit<Memo, 'id' | 'created_at' | 'updated_at'> &
           Partial<Pick<Memo, 'id' | 'created_at' | 'updated_at'>>;
         Update: Partial<Memo>;
+        Relationships: [];
       };
       external_source_accounts: {
         Row: ExternalSourceAccount;
         Insert: Omit<ExternalSourceAccount, 'id' | 'created_at' | 'updated_at'> &
           Partial<Pick<ExternalSourceAccount, 'id' | 'created_at' | 'updated_at'>>;
         Update: Partial<ExternalSourceAccount>;
+        Relationships: [];
       };
     };
     Views: Record<string, never>;
     Functions: {
-      soft_delete_todo: { Args: { todo_id: string }; Returns: void };
-      soft_delete_memo: { Args: { memo_id: string }; Returns: void };
-      request_account_deletion: { Args: Record<string, never>; Returns: void };
+      soft_delete_todo: {
+        Args: { todo_id: string };
+        Returns: void;
+      };
+      soft_delete_memo: {
+        Args: { memo_id: string };
+        Returns: void;
+      };
+      request_account_deletion: {
+        Args: Record<string, never>;
+        Returns: void;
+      };
     };
     Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 }

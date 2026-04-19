@@ -294,3 +294,100 @@
 3. `/app/doublehub/` 本実装（ToDo CRUD / メモ / 完了タスク行動ログ表示）
 4. `/app/bookcompass/` 本実装（連携フロー / 本棚 / 検索は Edge Function 経由）
 5. `/app/settings/` 本実装（プロフィール / external_source_accounts 連携 / アカウント削除）
+
+---
+
+## Day 4 — 2026-04-19 (JST) — Repository 層 / DoubleHub・BookCompass・設定画面 / ダッシュボード
+
+### 実施内容
+
+- **Repository 層（`src/lib/repositories/`）**
+  - `todos.ts`
+    - `listTodos({ filter, limit })` — `active` / `done` / `all` フィルタ、`deleted_at IS NULL`、`order_index ASC nullsLast` → `created_at DESC` ソート
+    - `createTodo({ title, note?, due_date? })` — `user_id = auth.uid()` を RLS で強制（ペイロードは DoubleHub の現行スキーマに合わせて構築）
+    - `toggleTodo(id, done)` — `is_done` と `completed_at` を原子的に更新
+    - `updateTodo(id, patch)` — `title / note / due_date / order_index` を partial 更新
+    - `softDeleteTodo(id)` — `deleted_at` にタイムスタンプを設定（物理削除せず）
+  - `memos.ts`
+    - `listMemos / createMemo / updateMemo / softDeleteMemo` — `tags: string[] | null` に対応、`deleted_at` で論理削除
+  - `books.ts`
+    - `listBooks({ status?, limit })` — BookCompass プロジェクトを直叩き（`getBrowserBookCompass()`）
+    - `listMuttersForBook(bookId)` — 本ごとの独白 / ハイライト取得
+    - `searchBooksViaEdge(query)` — Supabase Edge Function `search-books` を invoke（NDL / openBD の結果を Edge で統合する想定）。楽天 API は呼び出さない
+  - `external-sources.ts`（プロバイダ非依存連携）
+    - `listExternalSources / findExternalSource / upsertExternalSource / revokeExternalSource`
+    - `upsert` は `onConflict: 'user_id,source_type'` で `(user_id, source_type)` 一意性を利用
+
+- **DoubleHub 画面（`/app/doublehub/`）**
+  - `page.tsx` — `TodoSection` と `MemoSection` を md 以上で 2 カラム
+  - `TodoSection.tsx`
+    - active / done / all の Tabs フィルタ
+    - 新規作成フォーム（タイトル + 期限日、楽観的更新）
+    - 各行でチェックボックス切替 / 論理削除
+    - Supabase env が未設定のときは「準備中」表示で自動フェイルソフト
+  - `MemoSection.tsx`
+    - タイトル任意 + 本文必須 の簡易フォーム
+    - 一覧は `updated_at DESC`
+    - 削除ボタンで softDelete
+    - env 未設定時もフェイルソフト
+
+- **BookCompass 画面（`/app/bookcompass/`）**
+  - `page.tsx` — 初回は「連携が必要」、連携後は本棚を表示
+  - `BookCompassLinkCard.tsx`
+    - BookCompass 独自 Supabase にマジックリンク送信（`storageKey: sb-bookcompass-auth` で DoubleHub auth とぶつからない）
+    - `onAuthStateChange` で session 検出 → `external_source_accounts` に upsert（`source_type='bookcompass'`）
+    - 連携解除時は revoke + BookCompass 側 `signOut()`
+  - `BookShelf.tsx`
+    - status フィルタ（reading / want / done / dropped / all）
+    - カード表示（タイトル / 著者 / ステータスバッジ / レーティングバッジ）
+    - 件数 0 のときは空状態テキスト
+
+- **設定画面（`/app/settings/`）**
+  - `page.tsx` — ProfileCard + LinkedAccountsCard + アカウント削除プレースホルダ（`request_account_deletion` 関数は将来接続）
+  - `ProfileCard.tsx` — `profiles` テーブルに upsert（id, display_name, email）。email は Supabase Auth のユーザー情報から自動取得
+  - `LinkedAccountsCard.tsx` — external_source_accounts を一覧表示して revoke 可能
+  - account deletion は「後続セッション担当」ラベルで UI だけ用意（Supabase RPC 未接続）
+
+- **ダッシュボード強化（`/app/`）**
+  - `DashboardWidgets.tsx` — 未完了 Todo（最大 5 件）+ 最新 Memo（最大 3 件）を 2 カラムで表示
+  - ハブカード（3 プロダクトへのショートカット）は継続
+  - env 未設定のときは「準備中」ウィジェットでフェイルソフト
+
+- **TypeScript 型互換性の修正**
+  - Supabase v2.45 の型推論で、手書き Database 型スタブだと `insert / update / upsert` の引数が `never` に解決されてしまう問題が発覚
+  - 原因: postgrest-js 側の内部型ガードが追加フィールドを要求するため、簡易 Database スタブではマッチしない
+  - 対応:
+    1. Database 型に `Relationships: []` と `CompositeTypes: Record<string, never>` を追加（将来の `supabase gen types` 移行時に差分を減らす）
+    2. 書き込みパスでは `as never` キャストで型を緩和（読み取り型は `Database` を信用）。読み書きペイロードは TypeScript の通常チェックでガードした上でキャストするため、ランタイム安全性は担保
+  - `src/lib/repositories/todos.ts` / `memos.ts` / `external-sources.ts`、`settings/_components/ProfileCard.tsx` に適用
+  - HANDOVER の TODO: `supabase gen types typescript --project-id <ref>` で正式な生成型に置き換え、`as never` を削除する
+
+### 検証結果
+
+- ✅ `pnpm exec tsc --noEmit` — エラー 0
+- ✅ `pnpm lint` — エラー 0 / 警告 0
+- ✅ `pnpm build`（dynamic） — 37 ページ生成成功
+- ✅ `pnpm build:export`（static） — 37 ページ + メタリフレッシュ 25 件出力
+- ✅ 既存公開エリア（LP / ブログ 20 記事 / about / privacy 等）に回帰なし
+- ✅ 保持対象ファイル（CNAME / robots.txt / llms.txt / google*.html / manifest.json / favicon 群）と `_redirects` に変更なし
+- ✅ `out/app/` 配下に doublehub / bookcompass / settings / trainnote / login 全て生成
+
+### Day 4 の判断記録
+
+- **Insert/Update 型のキャスト方針**: 正式な型生成（`supabase gen types`）は HANDOVER 後にプロジェクト ref を使って実施する前提のため、v1 では `as never` キャストで回避。Repository 層のペイロード型は TypeScript の明示的な型注釈で担保されており、書き込みの safety は確保されている。
+- **env 未設定時のフェイルソフト**: すべての Repository 呼び出し箇所で、Supabase env 未設定 → 「準備中」表示に分岐。これにより最初のデプロイ（env 未投入状態）でも 500 エラーを起こさず、UI の到達可能性が確保される。
+- **BookCompass 独自 auth**: DoubleHub auth と BookCompass auth が同一ブラウザで併存するため、`storageKey` / `detectSessionInUrl` の組み合わせを明確に分離。BookCompass 側で OAuth コールバックを受け取らないよう `detectSessionInUrl: false`。
+- **account deletion**: Supabase 側に `request_account_deletion` 関数が存在する前提で UI だけ用意。実接続は HANDOVER で env 投入後に動作確認する想定。
+- **画像・アイコン**: 書棚カードやタスク行はテキスト主体で、絵文字・lucide-react で構成。独自アイコン化は後続タスク扱い。
+
+### 次アクション (Day 5 開始時)
+
+1. OPEN_QUESTIONS.md に Day 4 で発生した追加の不明点（Edge Function 仕様、`request_account_deletion` 関数シグネチャ、profiles トリガーの有無など）を追記
+2. HANDOVER.md を新規作成：
+   - env 投入手順（`.env.local` の埋め方、3 プロジェクトの ref/anon の取得先）
+   - Supabase 生成型の更新手順（`as never` キャスト撤去への置き換えガイド）
+   - Cloudflare Pages 本番デプロイ手順（static モードで build、`_redirects` 活用）
+   - DNS 切替の注意点（CNAME `doublehub.jp` と GitHub Pages メタリフレッシュの両立）
+   - Fontshare self-host 化の TODO（ライセンス入手後の差し替えポイント）
+3. ローカル本番ビルド（`pnpm build && pnpm start`）+ Lighthouse（Performance / Accessibility / Best Practices / SEO）を主要 5 ページで計測し結果を記録
+4. 最終 zip 納品（依存を除いたソース一式 + docs + public + out/ のクリーンセット）

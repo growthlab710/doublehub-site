@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { appNavItems } from '@/components/app/AppNav';
 import { Badge } from '@/components/ui/Badge';
+import { DashboardWidgets } from './_components/DashboardWidgets';
 
 export const metadata = {
   title: 'ダッシュボード',
@@ -9,8 +10,8 @@ export const metadata = {
 
 /**
  * /app/ ダッシュボード。
- * Day 4 で各ウィジェット（今日の ToDo / 最新メモ / BookCompass 本棚 /
- * TrainNote お知らせ）を差し込む。
+ * - 「未完了の ToDo」「最新のメモ」のクイック表示
+ * - 各プロダクトへのハブカード
  */
 export default function AppDashboardPage() {
   const widgets = appNavItems.filter((n) => n.href !== '/app/');
@@ -26,40 +27,42 @@ export default function AppDashboardPage() {
         </p>
       </header>
 
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {widgets.map((w) => (
-          <Link
-            key={w.href}
-            href={w.href}
-            className="group flex flex-col gap-3 rounded-xl border border-border bg-surface p-5 transition-colors hover:border-primary/40 hover:bg-surface-2"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl" aria-hidden>
-                {w.icon}
-              </span>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <h2 className="truncate font-display text-base font-semibold">
-                    {w.label}
-                  </h2>
-                  {w.comingSoon && (
-                    <Badge variant="outline" className="text-[10px]">
-                      準備中
-                    </Badge>
+      <DashboardWidgets />
+
+      <section>
+        <h2 className="font-display text-lg font-semibold">プロダクト</h2>
+        <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {widgets.map((w) => (
+            <Link
+              key={w.href}
+              href={w.href}
+              className="group flex flex-col gap-3 rounded-xl border border-border bg-surface p-5 transition-colors hover:border-primary/40 hover:bg-surface-2"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-2xl" aria-hidden>
+                  {w.icon}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="truncate font-display text-base font-semibold">
+                      {w.label}
+                    </h3>
+                    {w.comingSoon && (
+                      <Badge variant="outline" className="text-[10px]">
+                        準備中
+                      </Badge>
+                    )}
+                  </div>
+                  {w.description && (
+                    <p className="truncate text-xs text-text-muted">
+                      {w.description}
+                    </p>
                   )}
                 </div>
-                {w.description && (
-                  <p className="truncate text-xs text-text-muted">
-                    {w.description}
-                  </p>
-                )}
               </div>
-            </div>
-            <div className="rounded-lg border border-dashed border-border bg-bg/40 p-3 text-xs text-text-faint">
-              Day 4 で中身を実装します。
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </div>
       </section>
     </div>
   );
