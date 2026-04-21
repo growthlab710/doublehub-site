@@ -1,8 +1,27 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { isDynamicHosting, supabaseConfig } from '@/lib/env';
 import { LoginForm } from './_components/LoginForm';
+
+function LoginFormFallback() {
+  return (
+    <div
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      className="space-y-3"
+    >
+      <div className="h-10 w-full animate-pulse rounded-lg bg-surface-2" />
+      <div className="h-px w-full bg-border" />
+      <div className="h-4 w-24 animate-pulse rounded bg-surface-2" />
+      <div className="h-10 w-full animate-pulse rounded-lg bg-surface-2" />
+      <div className="h-10 w-full animate-pulse rounded-lg bg-surface-2" />
+      <span className="sr-only">読み込み中…</span>
+    </div>
+  );
+}
 
 export const metadata = {
   title: 'ログイン',
@@ -42,7 +61,9 @@ export default function LoginPage() {
 
           <div className="mt-8 rounded-xl border border-border bg-surface p-6 shadow-sm">
             {canSignIn ? (
-              <LoginForm />
+              <Suspense fallback={<LoginFormFallback />}>
+                <LoginForm />
+              </Suspense>
             ) : (
               <div className="space-y-4 text-center">
                 <div className="text-3xl" aria-hidden>
