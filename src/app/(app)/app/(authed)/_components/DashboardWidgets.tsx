@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
 import { supabaseConfig } from '@/lib/env';
+import { formatDueDateJST } from '@/lib/format';
 import type { Todo, Memo } from '@/lib/supabase/types-doublehub';
 import { listTodos } from '@/lib/repositories/todos';
 import { listMemos } from '@/lib/repositories/memos';
@@ -74,9 +75,9 @@ export function DashboardWidgets() {
                 className="flex items-center gap-2 rounded-lg border border-border bg-bg/40 px-3 py-2 text-sm"
               >
                 <span className="truncate flex-1">{t.title}</span>
-                {t.due_date && (
+                {formatDueDateJST(t.due_date) && (
                   <Badge variant="outline" className="text-[10px]">
-                    {t.due_date}
+                    {formatDueDateJST(t.due_date)}
                   </Badge>
                 )}
               </li>

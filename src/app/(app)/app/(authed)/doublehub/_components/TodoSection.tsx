@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/Input';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
+import { formatDueDateJST } from '@/lib/format';
 import { supabaseConfig } from '@/lib/env';
 import type { Todo } from '@/lib/supabase/types-doublehub';
 import {
@@ -177,9 +178,9 @@ export function TodoSection() {
                   >
                     {t.title}
                   </span>
-                  {t.due_date && (
+                  {formatDueDateJST(t.due_date) && (
                     <Badge variant="outline" className="text-[10px]">
-                      期限 {t.due_date}
+                      期限 {formatDueDateJST(t.due_date)}
                     </Badge>
                   )}
                 </div>

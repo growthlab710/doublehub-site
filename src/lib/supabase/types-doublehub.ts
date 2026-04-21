@@ -104,12 +104,12 @@ export interface Database {
     };
     Views: Record<string, never>;
     Functions: {
-      soft_delete_todo: {
-        Args: { todo_id: string };
+      soft_delete_own_todo: {
+        Args: { target_todo_id: string };
         Returns: void;
       };
-      soft_delete_memo: {
-        Args: { memo_id: string };
+      soft_delete_own_memo: {
+        Args: { target_memo_id: string };
         Returns: void;
       };
       request_account_deletion: {

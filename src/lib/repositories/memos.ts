@@ -64,6 +64,9 @@ export async function softDeleteMemo(id: string): Promise<void> {
   // RLS は deleted_at への直接 UPDATE を許可しないため、iOS と同じ RPC を経由する。
   // Supabase v2 の型推論が自前の Database スタブから Functions の Args を拾えず
   // never に解決されるので、既存の insert/update 同様に as never でキャストする。
-  const { error } = await supabase.rpc('soft_delete_memo', { memo_id: id } as never);
+  const { error } = await supabase.rpc(
+    'soft_delete_own_memo',
+    { target_memo_id: id } as never
+  );
   if (error) throw error;
 }
