@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
@@ -7,6 +8,16 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { products } from '@/lib/site/config';
 import { cn } from '@/lib/utils';
+
+/**
+ * スラッグ → リッチアイコン画像のマッピング。
+ * 画像は全プロダクトに対応するまでここに限定。将来的に config.ts に移す計画。
+ */
+const productIconMap: Record<string, string> = {
+  trainnote: '/images/trainnote-icon-rich.png',
+  bookcompass: '/images/bookcompass-icon-rich.png',
+  doublehub: '/images/doublehub-icon-rich.png',
+};
 
 export function ProductCards() {
   return (
@@ -44,8 +55,20 @@ export function ProductCards() {
                 )}
               >
                 <div className="flex items-start justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent-product/10 text-2xl">
-                    {p.icon}
+                  <div className="relative h-20 w-20 overflow-hidden rounded-2xl ring-1 ring-border/60">
+                    {productIconMap[p.slug] ? (
+                      <Image
+                        src={productIconMap[p.slug]}
+                        alt={`${p.name} のシンボル`}
+                        fill
+                        sizes="80px"
+                        className="object-cover transition duration-500 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center bg-accent-product/10 text-2xl">
+                        {p.icon}
+                      </div>
+                    )}
                   </div>
                   <ArrowUpRight className="h-5 w-5 text-text-faint transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-product" />
                 </div>

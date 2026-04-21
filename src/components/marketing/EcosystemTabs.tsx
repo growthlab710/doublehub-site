@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
 import { Container } from '@/components/ui/Container';
 
@@ -25,8 +26,9 @@ type InsightPanel = {
   title: string;
   inputs: string[];
   understands: string[];
-  visual: 'screenshots' | 'abstract-todo' | 'abstract-finance' | 'abstract-health';
+  visual: 'screenshots' | 'abstract-todo' | 'image-finance' | 'image-health';
   screenshots?: { src: string; alt: string }[];
+  imageSrc?: string;
 };
 
 const panels: InsightPanel[] = [
@@ -75,6 +77,19 @@ const panels: InsightPanel[] = [
     visual: 'abstract-todo',
   },
   {
+    id: 'health',
+    name: '健康・ヘルスケア',
+    status: 'current',
+    statusLabel: 'Current',
+    tabDesc: '睡眠時間、歩数、ワークアウト回数',
+    panelLabel: 'Input → Insight',
+    title: 'ヘルスケア連携で、努力の成果を生活リズムと読める。',
+    inputs: ['睡眠時間 (Apple Health 等から連携)', '1 日の歩数・活動量', '1 日のワークアウト回数'],
+    understands: ['頑張れる日と休むべき日の違い', '睡眠不足が行動に与える影響', '行動提案の適切な強度'],
+    visual: 'image-health',
+    imageSrc: '/images/health-visual.png',
+  },
+  {
     id: 'finance',
     name: '家計アプリ',
     status: 'future',
@@ -84,19 +99,8 @@ const panels: InsightPanel[] = [
     title: '家計データは「満足度の高い配分」を考える材料になる。',
     inputs: ['固定費と変動費の流れ', '自己投資、娯楽、浪費のバランス', '満足度に対する費用対効果'],
     understands: ['削るべき出費より、活かすべき支出', '自己投資の効きやすい領域', '我慢に寄らない満足度の高い選択'],
-    visual: 'abstract-finance',
-  },
-  {
-    id: 'health',
-    name: '健康・ヘルスケア',
-    status: 'future',
-    statusLabel: 'Future',
-    tabDesc: '睡眠、歩数、生活リズム',
-    panelLabel: 'Future Input',
-    title: '健康データで、努力の成果を生活リズムと読める。',
-    inputs: ['睡眠、歩数、心身の回復具合', '忙しい時期の生活の乱れ', '気分とコンディションの相関'],
-    understands: ['頑張れる日と休むべき日の違い', '無理が続くサイン', '行動提案の適切な強度'],
-    visual: 'abstract-health',
+    visual: 'image-finance',
+    imageSrc: '/images/finance-visual.png',
   },
 ];
 
@@ -119,64 +123,31 @@ function AbstractTodo() {
   );
 }
 
-function AbstractFinance() {
-  return (
-    <svg viewBox="0 0 200 160" fill="none" className="h-full w-full">
-      <rect x="10" y="120" width="30" height="30" rx="4" className="fill-accent-warm/30" />
-      <rect x="50" y="80" width="30" height="70" rx="4" className="fill-accent-warm/40" />
-      <rect x="90" y="50" width="30" height="100" rx="4" className="fill-accent-warm/50" />
-      <rect x="130" y="30" width="30" height="120" rx="4" className="fill-primary/40" />
-      <rect x="170" y="10" width="20" height="140" rx="4" className="fill-primary/50" />
-      <line x1="10" y1="155" x2="195" y2="155" className="stroke-border" strokeWidth="1" />
-    </svg>
-  );
-}
-
-function AbstractHealth() {
-  return (
-    <svg viewBox="0 0 200 160" fill="none" className="h-full w-full">
-      <path
-        d="M10 100 Q30 60, 50 80 T90 70 T130 90 T170 50 T195 60"
-        className="stroke-primary/60"
-        strokeWidth="2"
-        fill="none"
-      />
-      <path
-        d="M10 120 Q30 100, 50 110 T90 105 T130 115 T170 95 T195 100"
-        className="stroke-accent-warm/60"
-        strokeWidth="2"
-        fill="none"
-      />
-      <circle cx="50" cy="80" r="4" className="fill-primary" />
-      <circle cx="130" cy="90" r="4" className="fill-primary" />
-      <circle cx="90" cy="105" r="4" className="fill-accent-warm" />
-    </svg>
-  );
-}
 
 function AbstractVisual({
   kind,
   label,
 }: {
-  kind: 'abstract-todo' | 'abstract-finance' | 'abstract-health';
+  kind: 'abstract-todo';
   label: string;
 }) {
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border border-border bg-surface-2/50 p-8">
       <div className="aspect-[5/4] w-full max-w-md">
         {kind === 'abstract-todo' && <AbstractTodo />}
-        {kind === 'abstract-finance' && <AbstractFinance />}
-        {kind === 'abstract-health' && <AbstractHealth />}
       </div>
       <span className="mt-4 text-sm text-text-muted">{label}</span>
     </div>
   );
 }
 
+const imageAltMap: Record<string, string> = {
+  health: '健康・ヘルスケアを象徴する抽象ビジュアル',
+  finance: '家計バランスを象徴する抽象ビジュアル（構想中）',
+};
+
 const abstractLabels: Record<string, string> = {
   doublehub: 'ToDo・予定・対話をひとつに',
-  finance: '収支バランスの可視化（構想中）',
-  health: '生活リズムの可視化（構想中）',
 };
 
 export function EcosystemTabs() {
@@ -200,7 +171,10 @@ export function EcosystemTabs() {
           </h2>
           <p className="mt-4 text-text-muted">
             相棒の理解を深めるための入口。ひとつから始めて、つなげるほどあなたへの理解が増していく。
-            気になるサービスを選ぶと、DoubleHub が受け取る情報が切り替わります。
+          </p>
+          <p className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1 text-xs font-medium text-primary">
+            <ChevronRight className="h-3 w-3" />
+            下のサービスをタップして切り替えてみてください
           </p>
         </motion.div>
 
@@ -217,7 +191,7 @@ export function EcosystemTabs() {
                 <TabsTrigger
                   key={p.id}
                   value={p.id}
-                  className="flex flex-1 min-w-[150px] flex-col items-start gap-2 whitespace-normal rounded-xl border border-border bg-surface p-4 text-left data-[state=active]:border-primary/40 data-[state=active]:bg-primary/5 data-[state=active]:shadow-md"
+                  className="group relative flex flex-1 min-w-[150px] cursor-pointer flex-col items-start gap-2 whitespace-normal rounded-xl border border-border bg-surface p-4 pr-8 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md data-[state=active]:border-primary data-[state=active]:bg-primary/5 data-[state=active]:shadow-lg data-[state=active]:ring-2 data-[state=active]:ring-primary/20"
                 >
                   <span
                     className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusStyles[p.status]}`}
@@ -226,6 +200,7 @@ export function EcosystemTabs() {
                   </span>
                   <span className="font-display text-sm font-semibold text-text">{p.name}</span>
                   <span className="text-xs leading-relaxed text-text-muted">{p.tabDesc}</span>
+                  <ChevronRight className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-faint transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-primary group-data-[state=active]:rotate-90 group-data-[state=active]:text-primary" />
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -287,9 +262,21 @@ export function EcosystemTabs() {
                           </div>
                         ))}
                       </div>
+                    ) : p.visual === 'image-health' || p.visual === 'image-finance' ? (
+                      p.imageSrc && (
+                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-border bg-surface-2">
+                          <Image
+                            src={p.imageSrc}
+                            alt={imageAltMap[p.id] ?? p.name}
+                            fill
+                            sizes="(min-width: 768px) 720px, 100vw"
+                            className="object-cover"
+                          />
+                        </div>
+                      )
                     ) : (
                       <AbstractVisual
-                        kind={p.visual as 'abstract-todo' | 'abstract-finance' | 'abstract-health'}
+                        kind={p.visual as 'abstract-todo'}
                         label={abstractLabels[p.id]}
                       />
                     )}
