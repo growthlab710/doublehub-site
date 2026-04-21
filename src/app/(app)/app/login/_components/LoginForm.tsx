@@ -26,8 +26,8 @@ export function LoginForm() {
 
   const redirectTo =
     typeof window !== 'undefined'
-      ? `${window.location.origin}/app/`
-      : '/app/';
+      ? `${window.location.origin}/app/auth/callback`
+      : '/app/auth/callback';
 
   async function handleOAuth(provider: 'apple' | 'google') {
     setError(null);
