@@ -194,3 +194,36 @@
 
 - [ ] **`/app/login/` の OAuth リダイレクト先**: `redirectTo: ${origin}/app/` で AppShell に戻す設計だが、Supabase ダッシュボード側で Redirect URLs に `https://doublehub.jp/app/*` を登録する必要がある（env 投入時のチェックリストに追加）
 - [ ] **static モードでのアカウント削除フロー**: static ビルド（GitHub Pages）は Server action 不可。Account deletion は Edge Function 経由で叩く形になるが、Cloudflare Pages に移行するまでは「dynamic モード時のみ動作、static 時は非活性」という UX 仕様を明示する必要がある
+
+---
+
+## 🆕 Day 5 以降 env 投入後の実運用対応で判明した不明点（2026-04-21 追記）
+
+### Phase 2: category（プライベート/仕事）タブの Web 対応方針
+
+- [ ] **todos.category / memos.category の Web フィルタ UI**: iOS は `private` / `work` 等で既に対応済み、実スキーマにも `category text NOT NULL DEFAULT 'private'` が存在。Web 側は現状フィルタ無しで全件表示。タブ or セレクタを追加して iOS と UX 整合を取るべきか、追加するなら表示ラベル（「プライベート」「仕事」等）と並び、デフォルト選択（直近使った category を覚えるか毎回全件か）を決めたい
+
+### Phase 2: Web 用 Apple OAuth プロバイダ設定
+
+- [ ] **Supabase ダッシュボード側の Apple プロバイダ設定**: Services ID / Team ID / Key ID / `.p8` 秘密鍵の登録状況を確認し、未登録なら設定する。登録済みなら iOS 側の Sign in with Apple と同じ App ID を **Primary App ID** として指定してあるか確認（`sub` 一致の前提）
+- [ ] **Apple Developer Console の Services ID の Return URLs**: `https://<doublehub-ref>.supabase.co/auth/v1/callback` を登録。ローカル開発用にも `http://localhost:3000/app/auth/callback` を Supabase 側 Redirect URLs に追加
+- [ ] **Web と iOS の Sign in with Apple 設定整合性**: `capabilities` の "Sign in with Apple" が有効な同一 App ID / Services ID 上で設定されているか、iOS 側の Bundle ID と Services ID の Primary App ID が一致しているかを実機で検証
+
+### Phase 2: iOS と Web で同一ユーザーの user_id 統一方針
+
+- [ ] **linkIdentity か Apple Sign In 必須化か**: 現状 iOS は匿名サインイン → 任意で Apple 連携、Web は Magic Link で別ユーザーとして作成という状況。方針案:
+    - 案 A: iOS 側で `auth.linkIdentity` を使って匿名ユーザーに Apple ID を後付け紐付け。Web でも Apple Sign In するか Magic Link で同じメールから紐付けると `auth.users.id` が一致する
+    - 案 B: iOS 側で Apple Sign In を必須化（匿名ユーザー廃止）。Web も Apple ログイン必須化
+    - どちらを採用するかで iOS 側の実装変更範囲が大きく変わる。計画側と合意したい
+- [ ] **Magic Link での同一 user_id 保証**: Apple Sign In を使わず Magic Link のみで iOS のメールと一致させた場合、Supabase が自動的に同じ `auth.users.id` を使うのか、新規作成するのかの挙動確認
+
+### Phase 2: `supabase gen types` を CI に組み込み
+
+- [ ] **`src/types/supabase.ts`（または generated ファイル）を自動生成する CI 設定**: ローカルで `pnpm exec supabase gen types typescript --project-id <ref> > ...` を実行すれば型は手に入るが、スキーマ変更時に自動追随するには GitHub Actions 等で `supabase gen types` を走らせて PR を作る仕組みが欲しい。DoubleHub / BookCompass / TrainNote の 3 プロジェクト分それぞれに対応
+- [ ] **`as never` キャスト撤去の段取り**: 正式型に切り替え後、Repository 層とコンポーネントの書き込みパスから一律 `as never` を外す。手順は HANDOVER §4.4 / 付録 A.4
+
+### Cloudflare Pages: 動的モード vs 静的 export の採用判断
+
+- [ ] **動的モード採用時の adapter**: 認証ガードをサーバー側で走らせるなら dynamic モード + `@cloudflare/next-on-pages` adapter が現状の定石。Cloudflare Pages Functions のリクエスト課金 / Cold Start / Workers 互換性（Node API 差分）の確認が必要
+- [ ] **静的 export + クライアント認証ガードの採用**: GitHub Pages でも動き、料金面で有利だが Server Component 認証ガード（`DynamicAuthGate`）が無効化される。セッション検証は全てクライアント側で走るため、未認証ユーザーも一旦 HTML を受け取ってから redirect になる（UX は許容範囲）
+- [ ] **`trailingSlash: true` との互換性**: `/app/auth/callback` → `/app/auth/callback/` の 308 リダイレクトが入るため、Supabase Redirect URLs にどちらを登録すべきか / Cloudflare Pages 側の挙動と矛盾しないかを検証

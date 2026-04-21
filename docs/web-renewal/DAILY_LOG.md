@@ -456,3 +456,143 @@
 5. iOS 側の linked_accounts 対応方針を合意（OPEN_QUESTIONS §認証）
 6. Fontshare self-host 化（ライセンス入手後、HANDOVER §7）
 7. Lighthouse を各環境で再計測して付録 A を埋める
+
+---
+
+## Day 5 以降 — 2026-04-21 (JST) — env 投入後の実運用対応（Web 単体での CRUD 疎通まで）
+
+HANDOVER 後に env を投入してローカル dev で実動作確認したところ、iOS
+実スキーマ・RLS・PKCE フローとの差分が複数発覚したため、Web 側を実運用可能な
+状態まで追い込んだ。iOS スキーマ / RLS / RPC / Supabase 設定は触らず、
+すべて Web 側のコードを実体に合わせる方針で対応。
+
+### 実施内容（時系列・commit 単位）
+
+- **env バグ修正** (`1873443`, `fix(env)`)
+  - `src/lib/env.ts` で `process.env[urlKey]` の動的ブラケット記法を使っていたため、
+    Next.js のビルド時 `NEXT_PUBLIC_*` 置換（**静的プロパティアクセス限定**）が
+    効かず、クライアントバンドルで `supabaseConfig.*.ok` が常に `false`
+    → ログインボタン押下で「Supabase URL 未設定」エラー
+  - `process.env.NEXT_PUBLIC_SUPABASE_DOUBLEHUB_URL` 等の静的参照に書き換え
+  - 副次: `src/app/api/env-debug/route.ts`（env 診断用）を一時追加
+
+- **Magic Link / OAuth PKCE コールバック実装** (`c83400e`, `feat(auth)`)
+  - Supabase のメールリンクは `token=pkce_...` 形式で返ってくる PKCE フロー
+  - `createBrowserClient` は v0.5 以降デフォルトで `flowType: 'pkce'`
+  - `detectSessionInUrl: true` は `#access_token=...` の implicit 用で、
+    PKCE の `?code=` には効かない
+  - `src/app/(app)/app/auth/callback/route.ts` を新規追加:
+    - `?code=` を受け取り `getServerDoubleHub().auth.exchangeCodeForSession(code)` で
+      セッション確立 → cookie に書き込み
+    - 成功時は `?next=/app/...`（`/app/` 配下のみ許可、open-redirect 防止）か
+      `/app/` にリダイレクト
+    - 失敗時は `?error=missing_code|auth_callback_failed|auth_callback_exception`
+      付きで `/app/login/` に戻す
+  - `LoginForm.tsx` の `redirectTo` / `emailRedirectTo` を `/app/auth/callback` に変更
+  - 役目を終えた `src/app/api/env-debug/route.ts` は削除
+
+- **iOS 実スキーマへの追従** (`2ff5383`, `fix(schema)`)
+  - Todo 読込で `{"code":"42703","message":"column todos.is_done does not exist"}`
+    が発生。SQL で実スキーマを確認したところ、Web 側の手書き型定義と
+    カラム名・構造が多数ズレていた
+  - **todos**: `is_done` → `is_completed`、`order_index` → `position`
+    (double precision)、`note` カラム削除。
+    追加: `due_local_date`, `is_all_day`, `category`, `source`,
+    `eventkit_identifier`, `parent_id`, `reflect_to_calendar`,
+    `calendar_event_id`
+  - **memos**: `body` → `content`、`title` / `tags` カラム削除。
+    追加: `category`, `position`
+  - **profiles**: `email` カラム削除（実スキーマに存在しない）。
+    `ProfileCard` の表示は `auth.user.email` 由来に変更
+  - **external_source_accounts**: `external_project_key` (nullable) を型に追加
+  - 影響ファイル: `types-doublehub.ts`、`todos.ts`、`memos.ts`、
+    `TodoSection.tsx`、`MemoSection.tsx`（タイトル入力 UI 削除）、
+    `DashboardWidgets.tsx`、`ProfileCard.tsx`
+
+- **論理削除を RPC 経由に** (`9d556dc` → `9672569`, `fix(repositories)` / `fix`)
+  - Web から削除すると `{"code":"42501","message":"new row violates row-level
+    security policy for table \"todos\""}` が発生
+  - 原因: RLS の WITH CHECK が `deleted_at` への直接 UPDATE を許可していない。
+    iOS アプリは SECURITY DEFINER RPC で書き込んでいる
+  - 最初の試行（`9d556dc`）で `soft_delete_todo({ todo_id })` と
+    `soft_delete_memo({ memo_id })` を呼ぶ形に変更したが、実関数名は
+    `soft_delete_own_todo(target_todo_id uuid)` / `soft_delete_own_memo(target_memo_id uuid)`
+    で PGRST202 で再度失敗
+  - 正しいシグネチャに修正（`9672569`）して決着。Functions 型定義も実体に
+    揃える
+  - 同コミットで `formatDueDateJST` を `src/lib/format.ts` に追加。
+    `due_date` (timestamptz / UTC) が `2026-04-25T14:00:00.000Z` のような
+    生 ISO で表示されていたのを、`Intl.DateTimeFormat` + `formatToParts` で
+    「4月25日 23:00」形式の JST 表示に（iOS 表記と揃える）。
+    `TodoSection.tsx` と `DashboardWidgets.tsx` の期日バッジに適用
+
+- **UI 整理** (`4d043bd`, `chore(ui)`)
+  - Web 単体では「既存 iOS ユーザーのダッシュボード閲覧・操作のみ」で、
+    新規登録は iOS 側で完結する方針を反映
+  - `LoginForm.tsx`: Google ログインボタンを削除（iOS で未採用のため Web
+    でも出さない）。`handleOAuth` / `loading` state の型から `'google'` を除去。
+    フォーム下に「新規アカウント登録は iOS アプリからお願いします」を追加
+  - `login/page.tsx`: Coming Soon 時の文言と doc コメントから Google を除去
+  - `bookcompass/page.tsx`: TrainNote と同じトーンの Coming Soon 画面に差し替え
+    （iOS が匿名認証のみで Apple Sign In UI 未公開。Web からの
+    プロバイダ非依存連携は技術的に成立しない）。旧 `BookCompassLinkCard` /
+    `BookShelf` は `_components/` に残して将来復活用にアーカイブ
+  - `AppNav.ts`: BookCompass を `comingSoon: true` / description "準備中" に
+    変更。サイドバー・ダッシュボードに「準備中」バッジが自動で付与される
+
+- **BookCompass Coming Soon の詳細リンク** (`01a07b8`, `fix(bookcompass)`)
+  - 「BookCompass の詳細を見る」で `/products/bookcompass/` に同一タブ遷移
+    すると `(marketing)` レイアウトの公開サイト用ヘッダーに「ログイン」
+    リンクが表示され、セッション切れと誤解される UX 問題
+  - Link に `target="_blank"` と `rel="noopener noreferrer"` を追加。
+    元タブの `(app)` レイアウトコンテキストを保持。`(marketing)` レイアウト
+    自体は触らないのでサイト全体への副作用なし
+
+### 検証結果（ローカル dev）
+
+- ✅ `pnpm typecheck` — エラー 0
+- ✅ `pnpm dev` のコンパイル — エラー 0
+- ✅ Magic Link ログイン → `/app/auth/callback/?code=...` → `/app/` 到達
+- ✅ Todo CRUD（作成・`is_completed` トグル・`soft_delete_own_todo` での論理削除）
+- ✅ Memo CRUD（作成・`soft_delete_own_memo` での論理削除）
+- ✅ 期日 JST 表示（「4月25日 23:00」形式）
+- ✅ `/app/login/` Google ボタン無し / Apple ボタン残存 / 新規登録案内表示
+- ✅ `/app/bookcompass/` Coming Soon 画面、AppNav に「準備中」バッジ
+- ✅ BookCompass 詳細リンクが新しいタブで開く
+
+### 既知の課題（次セッション最優先）
+
+- ❌ `pnpm build`（本番ビルド）が失敗中:
+  `Error occurred prerendering page "/app/login"` /
+  `useSearchParams() should be wrapped in a suspense boundary`
+  - 発生箇所: `src/app/(app)/app/login/_components/LoginForm.tsx` の
+    `useSearchParams()`
+  - 最小修正: `src/app/(app)/app/login/page.tsx` で `<LoginForm />` を
+    `<Suspense fallback={...}>` でラップ
+
+### Day 5 以降の判断記録
+
+- **Supabase スキーマ / RLS / RPC は触らない**: iOS 本番データと同じ
+  スキーマを Web でも使う方針。コード側の命名（`is_done`, `order_index`,
+  `body`, 直接 UPDATE 削除）は iOS を知らずに書かれていたためズレていた。
+  実体に揃える一方通行で対応
+- **RPC の `as never` キャスト**: Supabase v2 クライアントが自前の
+  `Database` スタブから `Functions` の `Args` を拾えず `never` に解決される
+  ため、既存の `insert` / `update` と同じ `as never` キャストで回避
+- **JST フォーマット**: `ja-JP` ロケールのデフォルトは `4/25 23:00`（スラッシュ
+  区切り）で iOS の「4月25日 23:00」とズレる。`formatToParts()` で分解して
+  「M月D日 HH:mm」に組み立てることで iOS 表記と完全に揃える
+- **BookCompass 詳細リンク**: `(marketing)` レイアウト自体を書き換えると
+  公開サイト全体の挙動に影響するため、`target="_blank"` のピンポイント対応で
+  副作用なく解決
+- **git 管理の切替**: 旧作業フォルダ `~/Desktop/doublehub-web/` は zip 展開
+  由来で git 未接続だったため、本対応の初回に `feature/nextjs-renewal` を
+  別フォルダに clone (`~/Desktop/doublehub-web-git/`) し、差分を移植してから
+  push する形で正規の git フローに戻した。以降 Day 5 追加対応はすべて
+  clone 側で直接コミット
+
+### 次アクション（次セッション開始時）
+
+1. **`useSearchParams` Suspense 境界対応**（最優先。`pnpm build` を通すため）
+2. Cloudflare Pages デプロイ準備（`@cloudflare/next-on-pages` adapter 選定等）
+3. Phase 2 保留事項の優先度付け（OPEN_QUESTIONS.md 新規追記分を参照）
