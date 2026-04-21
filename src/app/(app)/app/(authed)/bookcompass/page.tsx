@@ -37,7 +37,16 @@ export default function AppBookCompassPage() {
           ご利用をお願いします。
         </p>
         <Button asChild className="mt-5" size="sm">
-          <Link href="/products/bookcompass/">BookCompass の詳細を見る</Link>
+          {/* (marketing) レイアウトに遷移すると公開サイト用ヘッダーの
+              「ログイン」リンクが出てセッション切れと誤解されるため、
+              元タブのアプリコンテキストを維持する目的で新しいタブで開く。 */}
+          <Link
+            href="/products/bookcompass/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            BookCompass の詳細を見る
+          </Link>
         </Button>
       </div>
     </div>
