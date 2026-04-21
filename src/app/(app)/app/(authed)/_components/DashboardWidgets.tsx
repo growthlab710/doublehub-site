@@ -112,10 +112,9 @@ export function DashboardWidgets() {
                 key={m.id}
                 className="rounded-lg border border-border bg-bg/40 px-3 py-2"
               >
-                {m.title && (
-                  <p className="truncate text-sm font-medium">{m.title}</p>
-                )}
-                <p className="line-clamp-2 text-xs text-text-muted">{m.body}</p>
+                <p className="line-clamp-2 text-xs text-text-muted">
+                  {m.content}
+                </p>
               </li>
             ))
           )}

@@ -23,9 +23,7 @@ export async function listMemos({ limit = 100 }: ListMemosOptions = {}): Promise
 }
 
 export async function createMemo(input: {
-  title?: string | null;
-  body: string;
-  tags?: string[] | null;
+  content: string;
 }): Promise<Memo> {
   const supabase = getBrowserDoubleHub();
   const { data: user } = await supabase.auth.getUser();
@@ -33,9 +31,7 @@ export async function createMemo(input: {
 
   const payload = {
     user_id: user.user.id,
-    title: input.title ?? null,
-    body: input.body,
-    tags: input.tags ?? null,
+    content: input.content,
     deleted_at: null,
   };
   const { data, error } = await supabase
@@ -50,7 +46,7 @@ export async function createMemo(input: {
 
 export async function updateMemo(
   id: string,
-  patch: Partial<Pick<Memo, 'title' | 'body' | 'tags'>>
+  patch: Partial<Pick<Memo, 'content'>>
 ): Promise<Memo> {
   const supabase = getBrowserDoubleHub();
   const { data, error } = await supabase

@@ -10,6 +10,7 @@ import type { DoubleHubProfile } from '@/lib/supabase/types-doublehub';
 
 export function ProfileCard() {
   const [profile, setProfile] = useState<DoubleHubProfile | null>(null);
+  const [authEmail, setAuthEmail] = useState<string | null>(null);
   const [displayName, setDisplayName] = useState('');
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
@@ -29,6 +30,7 @@ export function ProfileCard() {
       const { data: userData } = await supabase.auth.getUser();
       const user = userData.user;
       if (!user) throw new Error('ログインが必要です');
+      setAuthEmail(user.email ?? null);
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -63,7 +65,6 @@ export function ProfileCard() {
       const payload = {
         id: user.id,
         display_name: displayName.trim() || null,
-        email: user.email ?? null,
       };
       const { data, error } = await supabase
         .from('profiles')
@@ -120,7 +121,7 @@ export function ProfileCard() {
             />
           </div>
           <div className="text-xs text-text-faint">
-            メールアドレス: {profile?.email ?? '—'} / プラン:{' '}
+            メールアドレス: {authEmail ?? '—'} / プラン:{' '}
             {profile?.subscription_tier ?? 'free'}
           </div>
           <div>

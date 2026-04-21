@@ -14,7 +14,6 @@ export interface DoubleHubProfile {
   display_name: string | null;
   timezone: string;
   subscription_tier: SubscriptionTier;
-  email: string | null;
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
@@ -24,22 +23,29 @@ export interface Todo {
   id: string;
   user_id: string;
   title: string;
-  note: string | null;
-  due_date: string | null;
-  is_done: boolean;
+  is_completed: boolean;
   completed_at: string | null;
+  due_date: string | null;
+  due_local_date: string | null;
+  is_all_day: boolean;
+  category: string;
+  source: string;
+  eventkit_identifier: string | null;
+  position: number | null;
+  parent_id: string | null;
   deleted_at: string | null; // 論理削除
-  order_index: number | null;
   created_at: string;
   updated_at: string;
+  reflect_to_calendar: boolean;
+  calendar_event_id: string | null;
 }
 
 export interface Memo {
   id: string;
   user_id: string;
-  title: string | null;
-  body: string;
-  tags: string[] | null;
+  content: string;
+  category: string;
+  position: number | null;
   deleted_at: string | null; // 論理削除
   created_at: string;
   updated_at: string;
@@ -53,6 +59,7 @@ export interface ExternalSourceAccount {
   id: string;
   user_id: string;
   source_type: ExternalSourceType;
+  external_project_key: string | null;
   external_user_key: string;
   link_status: LinkStatus;
   metadata: Record<string, unknown> | null;

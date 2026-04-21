@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { supabaseConfig } from '@/lib/env';
@@ -30,8 +29,7 @@ function formatDate(iso: string) {
 export function MemoSection() {
   const [items, setItems] = useState<Memo[]>([]);
   const [loading, setLoading] = useState(true);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const [content, setContent] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -59,16 +57,12 @@ export function MemoSection() {
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!body.trim()) return;
+    if (!content.trim()) return;
     setBusy(true);
     setError(null);
     try {
-      await createMemo({
-        title: title.trim() || null,
-        body: body.trim(),
-      });
-      setTitle('');
-      setBody('');
+      await createMemo({ content: content.trim() });
+      setContent('');
       await refresh();
     } catch (e) {
       setError(e instanceof Error ? e.message : '追加に失敗しました');
@@ -101,21 +95,15 @@ export function MemoSection() {
 
       {envOk ? (
         <form onSubmit={handleAdd} className="mt-4 space-y-2">
-          <Input
-            placeholder="タイトル（任意）"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            disabled={busy}
-          />
           <Textarea
             placeholder="本文を入力…"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
             disabled={busy}
             rows={3}
           />
           <div className="flex justify-end">
-            <Button type="submit" size="sm" disabled={busy || !body.trim()}>
+            <Button type="submit" size="sm" disabled={busy || !content.trim()}>
               保存
             </Button>
           </div>
@@ -150,11 +138,8 @@ export function MemoSection() {
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
-                  {m.title && (
-                    <h3 className="truncate font-medium">{m.title}</h3>
-                  )}
-                  <p className="mt-1 whitespace-pre-wrap break-words text-sm text-text-muted">
-                    {m.body}
+                  <p className="whitespace-pre-wrap break-words text-sm text-text-muted">
+                    {m.content}
                   </p>
                   <p className="mt-2 text-[10px] text-text-faint">
                     {formatDate(m.updated_at)}

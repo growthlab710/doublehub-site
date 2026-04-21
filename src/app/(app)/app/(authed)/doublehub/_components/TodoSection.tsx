@@ -66,7 +66,7 @@ export function TodoSection() {
   const handleToggle = async (id: string, done: boolean) => {
     // 楽観的更新
     setItems((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, is_done: done } : t))
+      prev.map((t) => (t.id === id ? { ...t, is_completed: done } : t))
     );
     try {
       await toggleTodo(id, done);
@@ -157,22 +157,22 @@ export function TodoSection() {
               key={t.id}
               className={cn(
                 'group flex items-start gap-3 rounded-lg border border-border bg-bg/40 px-3 py-2.5',
-                t.is_done && 'opacity-60'
+                t.is_completed && 'opacity-60'
               )}
             >
               <input
                 type="checkbox"
                 className="mt-1 h-4 w-4 shrink-0 accent-primary"
-                checked={t.is_done}
+                checked={t.is_completed}
                 onChange={(e) => handleToggle(t.id, e.target.checked)}
-                aria-label={`${t.title} を${t.is_done ? '未完了に' : '完了に'}する`}
+                aria-label={`${t.title} を${t.is_completed ? '未完了に' : '完了に'}する`}
               />
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <span
                     className={cn(
                       'truncate text-sm font-medium',
-                      t.is_done && 'line-through'
+                      t.is_completed && 'line-through'
                     )}
                   >
                     {t.title}
@@ -183,11 +183,6 @@ export function TodoSection() {
                     </Badge>
                   )}
                 </div>
-                {t.note && (
-                  <p className="mt-0.5 truncate text-xs text-text-muted">
-                    {t.note}
-                  </p>
-                )}
               </div>
               <button
                 type="button"

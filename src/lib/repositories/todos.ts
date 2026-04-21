@@ -22,12 +22,12 @@ export async function listTodos({ filter = 'active', limit = 100 }: ListTodosOpt
     .from('todos')
     .select('*')
     .is('deleted_at', null)
-    .order('order_index', { ascending: true, nullsFirst: false })
+    .order('position', { ascending: true, nullsFirst: false })
     .order('created_at', { ascending: false })
     .limit(limit);
 
-  if (filter === 'active') query = query.eq('is_done', false);
-  if (filter === 'done') query = query.eq('is_done', true);
+  if (filter === 'active') query = query.eq('is_completed', false);
+  if (filter === 'done') query = query.eq('is_completed', true);
 
   const { data, error } = await query;
   if (error) throw error;
@@ -36,7 +36,6 @@ export async function listTodos({ filter = 'active', limit = 100 }: ListTodosOpt
 
 export async function createTodo(input: {
   title: string;
-  note?: string | null;
   due_date?: string | null;
 }): Promise<Todo> {
   const supabase = getBrowserDoubleHub();
@@ -46,12 +45,11 @@ export async function createTodo(input: {
   const payload = {
     user_id: user.user.id,
     title: input.title.trim(),
-    note: input.note ?? null,
     due_date: input.due_date ?? null,
-    is_done: false,
+    is_completed: false,
     completed_at: null,
     deleted_at: null,
-    order_index: null,
+    position: null,
   };
 
   const { data, error } = await supabase
@@ -68,7 +66,7 @@ export async function createTodo(input: {
 export async function toggleTodo(id: string, done: boolean): Promise<Todo> {
   const supabase = getBrowserDoubleHub();
   const patch = {
-    is_done: done,
+    is_completed: done,
     completed_at: done ? new Date().toISOString() : null,
   };
   const { data, error } = await supabase
@@ -83,7 +81,7 @@ export async function toggleTodo(id: string, done: boolean): Promise<Todo> {
 
 export async function updateTodo(
   id: string,
-  patch: Partial<Pick<Todo, 'title' | 'note' | 'due_date' | 'order_index'>>
+  patch: Partial<Pick<Todo, 'title' | 'due_date' | 'position'>>
 ): Promise<Todo> {
   const supabase = getBrowserDoubleHub();
   const { data, error } = await supabase
