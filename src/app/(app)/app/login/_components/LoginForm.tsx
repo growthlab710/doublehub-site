@@ -8,11 +8,12 @@ import { Button } from '@/components/ui/Button';
 import { getBrowserDoubleHub } from '@/lib/supabase/client';
 
 /**
- * Apple / Google OAuth + Email マジックリンクのログインフォーム。
+ * Apple OAuth + Email マジックリンクのログインフォーム。
  *
  * - OAuth は `signInWithOAuth` で Supabase が提供するコールバックに飛ばす。
- *   redirectTo には `${origin}/app/` を指定。
+ *   redirectTo には `${origin}/app/auth/callback` を指定。
  * - Email はマジックリンク（パスワード不要）。OTP 機能は Day 4 以降で追加検討。
+ * - Google は iOS アプリで採用していないため Web でも出さない。
  *
  * エラーメッセージは日本語。サービスキーは一切扱わない。
  */
@@ -20,7 +21,7 @@ export function LoginForm() {
   const router = useRouter();
   const sp = useSearchParams();
   const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState<null | 'apple' | 'google' | 'email'>(null);
+  const [loading, setLoading] = useState<null | 'apple' | 'email'>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -29,7 +30,7 @@ export function LoginForm() {
       ? `${window.location.origin}/app/auth/callback`
       : '/app/auth/callback';
 
-  async function handleOAuth(provider: 'apple' | 'google') {
+  async function handleOAuth(provider: 'apple') {
     setError(null);
     setMessage(null);
     setLoading(provider);
@@ -96,15 +97,6 @@ export function LoginForm() {
         >
           {loading === 'apple' ? 'Apple で続行中…' : ' Apple で続行'}
         </Button>
-        <Button
-          type="button"
-          variant="secondary"
-          className="w-full justify-center"
-          onClick={() => handleOAuth('google')}
-          disabled={loading !== null}
-        >
-          {loading === 'google' ? 'Google で続行中…' : 'Google で続行'}
-        </Button>
       </div>
 
       <div className="relative">
@@ -157,6 +149,10 @@ export function LoginForm() {
           {error}
         </div>
       )}
+
+      <p className="text-center text-xs text-text-faint">
+        新規アカウント登録は iOS アプリからお願いします。
+      </p>
     </div>
   );
 }

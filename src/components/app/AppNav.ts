@@ -29,7 +29,8 @@ export const appNavItems: AppNavItem[] = [
     href: '/app/bookcompass/',
     label: 'BookCompass',
     icon: '📚',
-    description: '読書記録（連携済み）',
+    description: '準備中',
+    comingSoon: true,
   },
   {
     href: '/app/trainnote/',

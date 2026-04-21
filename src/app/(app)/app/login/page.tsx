@@ -12,8 +12,11 @@ export const metadata = {
 
 /**
  * /app/login/
- * - dynamic モード + Supabase env あり : Apple / Google / Email の本ログイン
+ * - dynamic モード + Supabase env あり : Apple / Email の本ログイン
  * - そうでないとき                      : Coming Soon 表示
+ *
+ * 新規アカウント登録は iOS 側で完結する前提。Google ログインは iOS で
+ * 採用していないため Web でも提供しない。
  */
 export default function LoginPage() {
   const canSignIn = isDynamicHosting && supabaseConfig.doublehub.ok;
@@ -51,7 +54,7 @@ export default function LoginPage() {
                   </h2>
                   <p className="mt-2 text-sm text-text-muted">
                     現在のホスティング環境では Web 版ログインが無効化されています。
-                    本番環境が整い次第、Apple / Google / Email のいずれかでログイン
+                    本番環境が整い次第、Apple / Email のいずれかでログイン
                     できるようになります。
                   </p>
                 </div>
