@@ -354,16 +354,27 @@ export default function TrainNotePage() {
               Plans
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-              まずは無料で、はじめよう。
+              まずは 30 日間、無料で試せる。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              基本機能はすべて無料。AI Coach Plus にアップグレードすると、5名の専門コーチによるフルサポートが解放されます。
+              すべての基本機能を 30 日間無料で体験。その後は「買い切り 800 円」または「月額 480 円のサブスクリプション（初回 2 ヶ月 50% OFF）」から選べます。
             </p>
           </div>
-          <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
+          <div className="mx-auto mt-14 grid max-w-6xl gap-6 md:grid-cols-3">
             <div className="rounded-2xl border border-border bg-surface p-8 shadow-sm">
-              <h3 className="font-display text-lg font-bold">無料プラン</h3>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                Free Trial
+              </p>
+              <h3 className="mt-2 font-display text-lg font-bold">30 日間無料体験</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="font-display text-4xl font-bold tracking-[-0.03em]">¥0
+                </span>
+                <span className="text-sm text-text-muted">／ 30 日間</span>
+              </div>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                <li className="flex items-start gap-2">
+                  <Check /> すべての基本機能を 30 日間フルに体験
+                </li>
                 <li className="flex items-start gap-2">
                   <Check /> トレーニング記録（セット・レップ・重量）
                 </li>
@@ -377,37 +388,83 @@ export default function TrainNotePage() {
                   <Check /> ウィークリー/マンスリーレビュー
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> メインコーチの基本提案を閲覧
+                  <Check /> 30 日経過後は有料プランを選択
                 </li>
               </ul>
             </div>
+
+            {/* 買い切り（おすすめ） */}
             <div className="relative rounded-2xl border-2 border-accent-product bg-surface p-8 shadow-lg">
               <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-accent-product px-4 py-1 text-xs font-bold text-white">
-                初回利用割引あり
+                おすすめ・追加課金なし
               </span>
-              <h3 className="font-display text-lg font-bold">AI Coach Plus</h3>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                One-time Purchase
+              </p>
+              <h3 className="mt-2 font-display text-lg font-bold">買い切りプラン</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="font-display text-4xl font-bold tracking-[-0.03em]">¥800
+                </span>
+                <span className="text-sm text-text-muted">／ 買い切り</span>
+              </div>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
-                  <Check /> 無料プランの全機能
+                  <Check /> 一度の支払いでずっと使える
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 5名の専門コーチのフル提案
+                  <Check /> 5 名の専門 AI コーチのフル提案
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> チャットで深掘り相談
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 栄養・回復・計画・心理まで6領域カバー
+                  <Check /> 栄養・回復・計画・心理まで 6 領域カバー
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 190以上の論文に基づく根拠あるアドバイス
+                  <Check /> 190 以上の論文に基づく根拠あるアドバイス
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 月額・年額の継続課金なし
                 </li>
               </ul>
-              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
-                料金の詳細はアプリ内でご確認ください。
+            </div>
+
+            {/* サブスクリプション */}
+            <div className="rounded-2xl border border-border bg-surface p-8 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                Subscription
               </p>
+              <h3 className="mt-2 font-display text-lg font-bold">月額サブスクリプション</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="font-display text-4xl font-bold tracking-[-0.03em]">¥480
+                </span>
+                <span className="text-sm text-text-muted">／ 月</span>
+              </div>
+              <div className="mt-2 inline-flex items-center rounded-full bg-accent-product/10 px-2.5 py-1 text-[0.7rem] font-semibold text-accent-product">
+                初回 2 ヶ月 50% OFF
+              </div>
+              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                <li className="flex items-start gap-2">
+                  <Check /> 月額 ¥480、最初の 2 ヶ月は ¥240
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 買い切りプランと同等の全機能
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 5 名の専門 AI コーチのフル提案
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> まず小さく始めたい方に
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> いつでも解約可能
+                </li>
+              </ul>
             </div>
           </div>
+          <p className="mx-auto mt-8 max-w-3xl text-center text-xs text-text-faint">
+            ※ 価格は執筆時点のものです。最新の料金や課金サイクルは App Store 上の表示をご確認ください。
+          </p>
         </Container>
       </Section>
 
