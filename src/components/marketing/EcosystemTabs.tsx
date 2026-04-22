@@ -104,6 +104,16 @@ const panels: InsightPanel[] = [
   },
 ];
 
+/**
+ * タブボタンに表示する各プロダクトの公式アイコン。
+ * 定義された panel のみアイコンを表示し、未定義はバッジのみにフォールバック。
+ */
+const panelIconMap: Record<string, string> = {
+  trainnote: '/images/trainnote-app-icon.jpg',
+  bookcompass: '/images/bookcompass-app-icon.jpg',
+  doublehub: '/images/doublehub-icon.jpg',
+};
+
 const statusStyles: Record<TabStatus, string> = {
   current: 'bg-primary/10 text-primary border-primary/30',
   coming: 'bg-accent-warm/10 text-accent-warm border-accent-warm/30',
@@ -193,11 +203,24 @@ export function EcosystemTabs() {
                   value={p.id}
                   className="group relative flex flex-1 min-w-[150px] cursor-pointer flex-col items-start gap-2 whitespace-normal rounded-xl border border-border bg-surface p-4 pr-8 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md data-[state=active]:border-primary data-[state=active]:bg-primary/5 data-[state=active]:shadow-lg data-[state=active]:ring-2 data-[state=active]:ring-primary/20"
                 >
-                  <span
-                    className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusStyles[p.status]}`}
-                  >
-                    {p.statusLabel}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {panelIconMap[p.id] && (
+                      <div className="relative h-7 w-7 shrink-0 overflow-hidden rounded-lg ring-1 ring-border/70">
+                        <Image
+                          src={panelIconMap[p.id]}
+                          alt=""
+                          fill
+                          sizes="28px"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    <span
+                      className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusStyles[p.status]}`}
+                    >
+                      {p.statusLabel}
+                    </span>
+                  </div>
                   <span className="font-display text-sm font-semibold text-text">{p.name}</span>
                   <span className="text-xs leading-relaxed text-text-muted">{p.tabDesc}</span>
                   <ChevronRight className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-faint transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-primary group-data-[state=active]:rotate-90 group-data-[state=active]:text-primary" />

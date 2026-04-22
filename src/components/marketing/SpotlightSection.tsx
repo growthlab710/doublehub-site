@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/Button';
 
 type Spotlight = {
   badge: string;
+  iconSrc: string;
   titleLines: string[];
   desc: string;
   href: string;
@@ -27,6 +28,7 @@ type Spotlight = {
 const spotlights: Spotlight[] = [
   {
     badge: 'TrainNote',
+    iconSrc: '/images/trainnote-app-icon.jpg',
     titleLines: ['5人の専門AIコーチが、', 'あなたの筋トレを変える。'],
     desc:
       '190以上の科学論文を参照する5名のAIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。DoubleHub につながると、継続パターンがさらに深い洞察に変わります。',
@@ -39,6 +41,7 @@ const spotlights: Spotlight[] = [
   },
   {
     badge: 'Book Compass',
+    iconSrc: '/images/bookcompass-app-icon.jpg',
     titleLines: ['読書記録ではなく、', '思考の流れを残す地図。'],
     desc:
       '読んだ本、残したメモ、繰り返し考えるテーマから、価値観の移り変わりを可視化。DoubleHub に接続すると「何を大事にしているか」が輪郭を持ちはじめます。',
@@ -88,9 +91,18 @@ export function SpotlightSection() {
               }`}
             >
               <div className={s.reverse ? 'md:order-2' : ''}>
-                <span className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-text-muted">
-                  {s.badge}
-                </span>
+                <div className="inline-flex items-center gap-2">
+                  <Image
+                    src={s.iconSrc}
+                    alt={`${s.badge} アプリアイコン`}
+                    width={40}
+                    height={40}
+                    className="h-8 w-8 rounded-lg border border-border object-cover shadow-sm"
+                  />
+                  <span className="inline-flex items-center rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-text-muted">
+                    {s.badge}
+                  </span>
+                </div>
                 <h3 className="mt-4 font-display text-[clamp(1.35rem,1rem+1.4vw,2rem)] font-semibold leading-[1.25] tracking-[-0.02em]">
                   {s.titleLines.map((line) => (
                     <span key={line} className="block">

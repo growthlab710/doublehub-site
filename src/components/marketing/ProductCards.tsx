@@ -14,9 +14,9 @@ import { cn } from '@/lib/utils';
  * 画像は全プロダクトに対応するまでここに限定。将来的に config.ts に移す計画。
  */
 const productIconMap: Record<string, string> = {
-  trainnote: '/images/trainnote-icon-rich.png',
-  bookcompass: '/images/bookcompass-icon-rich.png',
-  doublehub: '/images/doublehub-icon-rich.png',
+  trainnote: '/images/trainnote-app-icon.jpg',
+  bookcompass: '/images/bookcompass-app-icon.jpg',
+  doublehub: '/images/doublehub-icon.jpg',
 };
 
 export function ProductCards() {
