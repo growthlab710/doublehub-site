@@ -87,7 +87,7 @@ const panels: InsightPanel[] = [
     inputs: ['睡眠時間 (Apple Health 等から連携)', '1 日の歩数・活動量', '1 日のワークアウト回数'],
     understands: ['頑張れる日と休むべき日の違い', '睡眠不足が行動に与える影響', '行動提案の適切な強度'],
     visual: 'image-health',
-    imageSrc: '/images/health-visual.png',
+    imageSrc: '/images/health-benefit-diagram.png',
   },
   {
     id: 'finance',
@@ -100,7 +100,7 @@ const panels: InsightPanel[] = [
     inputs: ['固定費と変動費の流れ', '自己投資、娯楽、浪費のバランス', '満足度に対する費用対効果'],
     understands: ['削るべき出費より、活かすべき支出', '自己投資の効きやすい領域', '我慢に寄らない満足度の高い選択'],
     visual: 'image-finance',
-    imageSrc: '/images/finance-visual.png',
+    imageSrc: '/images/finance-benefit-diagram.png',
   },
 ];
 

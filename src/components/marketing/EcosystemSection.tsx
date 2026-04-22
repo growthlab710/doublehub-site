@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 
@@ -47,6 +48,34 @@ export function EcosystemSection() {
               <p className="mt-3 text-sm leading-relaxed text-text-muted">{pillar.body}</p>
             </div>
           ))}
+        </div>
+
+        {/* 3 原則の統合図 —— 中心に「あなた」、3 原則が円で取り囲む */}
+        <div className="mt-10 rounded-2xl border border-border bg-surface p-6 shadow-sm md:mt-12 md:p-10">
+          <div className="grid items-center gap-6 md:grid-cols-[1fr_auto_1fr] md:gap-10">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-accent-warm">
+                Three Principles, One Self
+              </p>
+              <p className="mt-3 font-display text-lg font-semibold leading-snug md:text-xl">
+                3 つの原則は、真ん中の「あなた」を支えるためにある。
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-text-muted md:text-[15px]">
+                データの主権、過去の蓄積、サービスの独立性。
+                この 3 つが揃うことで、初めて「自分を整えるプラットフォーム」が成り立ちます。
+              </p>
+            </div>
+            <div className="hidden h-20 w-px bg-divider md:block" aria-hidden />
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-surface-2">
+              <Image
+                src="/images/ecosystem-principles-diagram.png"
+                alt="中心に「あなた」、周囲を3つの原則（データの主権・過去の蓄積・独立性）が囲む図"
+                fill
+                sizes="(max-width: 768px) 100vw, 48vw"
+                className="object-contain"
+              />
+            </div>
+          </div>
         </div>
       </Container>
     </Section>

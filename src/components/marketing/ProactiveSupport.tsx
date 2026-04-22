@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Sparkles } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 
@@ -38,8 +39,8 @@ const messages: ProactiveMessage[] = [
     theme: '行動提案',
     title: '今日は、軽めに動く日かもしれません',
     message:
-      'TrainNote の回復度が3日連続で低め。明日が本番の予定だから、今日は散歩10分か軽いストレッチに切り替えよう。',
-    insight: 'TrainNote × 予定 × 過去のコンディションから最適な強度を提案。',
+      'トレーニングの回復度が3日連続で低め。明日が本番の予定だから、今日は散歩10分か軽いストレッチに切り替えよう。',
+    insight: 'トレーニング記録 × 予定 × 過去のコンディションから最適な強度を提案。',
   },
 ];
 
@@ -89,10 +90,16 @@ export function ProactiveSupport() {
               }}
               className="flex gap-4 md:gap-5"
             >
-              {/* アバター */}
+              {/* アバター: DoubleHub ロゴ */}
               <div className="flex-shrink-0">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent-warm text-lg font-semibold text-white shadow-md md:h-14 md:w-14">
-                  <span aria-hidden>🪞</span>
+                <div className="relative h-12 w-12 overflow-hidden rounded-full shadow-md ring-1 ring-border md:h-14 md:w-14">
+                  <Image
+                    src="/images/doublehub-icon.jpg"
+                    alt="DoubleHub"
+                    fill
+                    sizes="56px"
+                    className="object-cover"
+                  />
                 </div>
                 <p className="mt-1.5 text-center text-[10px] font-medium text-text-faint">
                   Double
