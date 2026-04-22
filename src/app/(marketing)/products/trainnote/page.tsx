@@ -357,7 +357,7 @@ export default function TrainNotePage() {
               まずは 30 日間、無料で試せる。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              買い切りプランの全機能を、最初の 30 日間は無料で試すことができます。その後は買い切り 800 円で長く使うか、AI コーチとチャットまで使える月額 480 円のサブスクリプションを選べます。
+              基本機能は「買い切り 800 円」がベースで、最初の 30 日間は無料で試せます。AI コーチとチャットを使いたい場合は、買い切りに加えて月額 480 円のサブスクリプション（初回 2 ヶ月 50% OFF）を併用します。
             </p>
           </div>
           <div className="mx-auto mt-14 grid max-w-6xl gap-6 md:grid-cols-3">
@@ -433,16 +433,19 @@ export default function TrainNotePage() {
               </p>
             </div>
 
-            {/* サブスクリプション（おすすめ） */}
+            {/* サブスクリプション（買い切りに追加） */}
             <div className="relative rounded-2xl border-2 border-accent-product bg-surface p-8 shadow-lg">
               <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-accent-product px-4 py-1 text-xs font-bold text-white">
-                AI コーチ付き・おすすめ
+                AI コーチアドオン
               </span>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
                 Subscription
               </p>
-              <h3 className="mt-2 font-display text-lg font-bold">月額サブスクリプション</h3>
-              <div className="mt-4 flex items-baseline gap-1">
+              <h3 className="mt-2 font-display text-lg font-bold">AI コーチプラン</h3>
+              <div className="mt-4 flex items-baseline flex-wrap gap-x-2">
+                <span className="text-sm text-text-muted">買い切り ¥800 +</span>
+              </div>
+              <div className="mt-1 flex items-baseline gap-1">
                 <span className="font-display text-4xl font-bold tracking-[-0.03em]">¥480
                 </span>
                 <span className="text-sm text-text-muted">／ 月</span>
@@ -451,12 +454,9 @@ export default function TrainNotePage() {
                 初回 2 ヶ月 50% OFF（¥240 / 月）
               </div>
               <p className="mt-3 text-xs text-text-muted">
-                買い切りの全機能 + 5 名の AI コーチ・チャット
+                買い切りに加えて、AI コーチ・チャットを利用
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
-                <li className="flex items-start gap-2">
-                  <Check /> 買い切りプランの全機能を含む
-                </li>
                 <li className="flex items-start gap-2">
                   <Check /> <strong className="font-semibold text-text">5 名の専門 AI コーチ</strong>によるサポート
                 </li>
@@ -474,12 +474,12 @@ export default function TrainNotePage() {
                 </li>
               </ul>
               <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
-                AI コーチ機能はこのプランだけでご利用いただけます。
+                ※ このプランは買い切りプラン（¥800）に追加するサブスクリプションです。AI コーチのみの単独利用はできません。
               </p>
             </div>
           </div>
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs text-text-faint">
-            ※ 価格は執筆時点のものです。最新の料金や課金サイクルは App Store 上の表示をご確認ください。
+            ※ TrainNote の基本機能は買い切りプラン（¥800）がベースとなります。AI コーチプランはその上に重ねてご利用いただく追加オプションで、AI コーチ機能だけを単独で購入することはできません。価格は執筆時点のもので、最新の料金や課金サイクルは App Store 上の表示をご確認ください。
           </p>
         </Container>
       </Section>
