@@ -1,85 +1,469 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ProductHero } from '@/components/marketing/ProductHero';
-import { FeatureGrid } from '@/components/marketing/FeatureGrid';
-import { CtaSection } from '@/components/marketing/CtaSection';
+import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
-import { siteConfig } from '@/lib/site/config';
 
 export const metadata: Metadata = {
-  title: 'TrainNote — 鍛えるを、記録する',
+  title: 'TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える',
   description:
-    'シンプルなトレーニング記録アプリ。部位別のヒートマップで、継続と成長を可視化。',
+    '190以上の科学論文を参照する5人の専門AIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。iOS専用の筋トレ記録×AIコーチングアプリ。',
   alternates: { canonical: '/products/trainnote/' },
+  openGraph: {
+    title: 'TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える',
+    description:
+      '190以上の科学論文を参照する5人の専門AIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。',
+    url: 'https://doublehub.jp/products/trainnote/',
+    type: 'website',
+    siteName: 'DoubleHub',
+    locale: 'ja_JP',
+    images: [{ url: '/images/og-default.jpg', width: 1200, height: 630 }],
+  },
 };
+
+const appStoreUrl =
+  'https://apps.apple.com/us/app/trainnote/id6759539755?itscg=30200&itsct=apps_box_artwork&mttnsubad=6759539755';
+const appStoreBadge =
+  'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
+
+const stats = [
+  { number: '190+', label: '参照する科学論文・エビデンス' },
+  { number: '5名', label: '専属のAIコーチ' },
+  { number: '6領域', label: 'トレーニング / 栄養 / 休養 / 研究 / 計画 / 心理' },
+];
+
+const coaches = [
+  {
+    icon: '🎯',
+    name: 'パーソナル メインコーチ',
+    tag: 'MAIN',
+    desc:
+      '今日の提案と調整。種目・重量・フォームの具体的なアクションまで、あなたの記録をもとに毎日アドバイス。',
+  },
+  {
+    icon: '📋',
+    name: 'プランコーチ',
+    desc:
+      '週間・月間の組み立て。部位分け、頻度設計、長期的なプログレッションを設計。',
+  },
+  {
+    icon: '🥗',
+    name: '栄養・回復コーチ',
+    desc:
+      '食事・睡眠・回復のアドバイス。トレーニングに合わせた栄養と回復の最適化。',
+  },
+  {
+    icon: '🔥',
+    name: 'モチベーションコーチ',
+    desc:
+      '継続と成長の確認。心理面の伴走で、やる気が落ちたときも前に進める。',
+  },
+  {
+    icon: '📚',
+    name: '知識スペシャリストコーチ',
+    desc:
+      '信頼できるエビデンス。190以上の科学論文を参照し、実践に結びつける。',
+  },
+];
 
 const features = [
   {
-    icon: '💪',
-    title: 'シンプルなワークアウト記録',
+    label: 'Muscle Status & PEAK',
+    title: '部位ごとの回復状態が一目でわかる。',
     body:
-      '重量 × 回数 × セット数をさっと記録。迷うところが少なく、習慣にしやすい設計です。',
+      '胸・背中・脚・肩・腕・腹筋の6部位をリアルタイムに追跡。前回からの経過日数をもとに、十分に回復した部位には PEAK バッジが表示。次に鍛えるべき部位が直感的にわかります。',
   },
   {
-    icon: '🗓️',
-    title: '部位別カレンダーヒートマップ',
+    label: 'Smart Logging',
+    title: '前回の重量を見ながら、迷わず記録。',
     body:
-      '胸 / 背中 / 脚 / 肩 / 腕 / 腹筋 / 有酸素。どの部位を、いつ、どれだけ鍛えたかが一目で分かる。',
+      '前回データを常に確認しながら記録できるから、成長の実感がすぐ得られます。両手ダンベルの合計計算や、自重負荷割合の設定にも対応。実態に近い正確な記録が残せます。',
   },
   {
-    icon: '🤖',
-    title: 'AI コーチが継続をサポート',
+    label: 'Calendar & History',
+    title: 'カレンダーで流れを見る。過去にも遡れる。',
     body:
-      '会話ベースで「今日は何をしようか」を決められる AI コーチ。負荷の偏りや休養の提案も。',
+      'カレンダー表示で部位ごとのトレーニング頻度と回復サイクルを可視化。日付カードをタップすれば過去の日付に遡って記録を入力・確認できます。',
   },
   {
-    icon: '📈',
-    title: 'ピークと成長の自動集計',
+    label: 'Review & Graph',
+    title: 'ウィークリー/マンスリーで成長を実感。',
     body:
-      '種目別のピーク重量、1 週間の総負荷、部位別の回数など、成長の指標を自動で可視化。',
+      'ホーム画面からチップを切り替えるだけで、今週と今月のレビューを即確認。ボリューム推移と変化率のグラフで、トレーニングの成長を直感的に把握できます。',
   },
+];
+
+const screenshots = [
+  { src: '/images/trainnote-peak.jpg', alt: 'ホーム画面 — PEAK バッジとAI Coach', caption: 'ホーム — PEAK と AI コーチ' },
+  { src: '/images/trainnote-training.jpg', alt: 'トレーニング記録画面', caption: '記録 — セット・レップ・重量' },
+  { src: '/images/trainnote-coach-detail.jpg', alt: 'AI Coach 詳細画面', caption: 'AI Coach — 提案と根拠' },
+  { src: '/images/trainnote-coaches-list.jpg', alt: '5名のAIコーチ一覧', caption: 'AI Coach — 5名の専門コーチ' },
+  { src: '/images/trainnote-coach-chat.png', alt: 'AI Coach チャット画面', caption: 'チャット — 深掘り相談' },
+  { src: '/images/trainnote-calendar.jpg', alt: 'カレンダー画面', caption: 'カレンダー — 継続の可視化' },
+  { src: '/images/trainnote-graph.jpg', alt: 'グラフ画面', caption: 'グラフ — 重量・ボリューム推移' },
 ];
 
 export default function TrainNotePage() {
   return (
     <div className="theme-trainnote">
-      <ProductHero
-        productName="TrainNote"
-        tagline="鍛えるを、記録する。"
-        description="シンプルなトレーニング記録アプリ。部位別のヒートマップで、継続と成長を可視化。"
-        heroImage="/images/trainnote-calendar.jpg"
-        appStoreUrl={siteConfig.social.appStoreTrainNote}
-        badgeLabel="iOS 版配信中 · Web 版 Coming Soon"
-      />
-
-      {/* Web 対応に関する注意 */}
-      <Section spacing="sm">
-        <Container width="default">
-          <div className="rounded-2xl border border-accent-warm/30 bg-accent-warm/5 p-6">
-            <h2 className="font-display text-lg font-semibold text-accent-warm">
-              Web 版の対応について
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-text-muted">
-              TrainNote の Web 版は <strong>近日公開</strong> 予定です。
-              現在のトレーニングデータは iOS 端末内の SwiftData に安全に保管されており、
-              クラウド同期が整い次第、Web でも閲覧・記録ができるようになります。
-              まずは iOS アプリからご体験ください。
+      {/* ========== 1. Hero ========== */}
+      <Container width="wide" className="relative pt-16 pb-14 md:pt-24 md:pb-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+        >
+          <div className="absolute left-[-5%] top-[-10%] h-[480px] w-[480px] rounded-full bg-accent-product/15 blur-[120px]" />
+        </div>
+        <div className="mx-auto grid max-w-content-wide items-center gap-12 md:grid-cols-[1fr_0.9fr]">
+          <div>
+            <div className="inline-flex items-center gap-2">
+              <Image
+                src="/images/trainnote-app-icon.jpg"
+                alt="TrainNote アプリアイコン"
+                width={44}
+                height={44}
+                className="h-10 w-10 rounded-lg border border-border object-cover shadow-sm"
+              />
+              <span className="inline-flex items-center rounded-full border border-accent-product/30 bg-accent-product/10 px-3 py-1 text-xs font-semibold text-accent-product">
+                TrainNote
+              </span>
+            </div>
+            <h1 className="mt-5 font-display text-[clamp(1.75rem,1rem+2.8vw,3rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
+              5人の専門AIコーチが、
+              <br />
+              あなたの筋トレを変える。
+            </h1>
+            <p className="mt-5 max-w-lg text-text-muted">
+              筋トレ記録とAIコーチングが一体化した iOS アプリ。190以上の科学論文をもとに、あなたの記録・傾向に合わせた個別提案を届けます。
             </p>
-            <div className="mt-4">
-              <Button asChild size="sm" variant="product">
-                <Link href={siteConfig.social.appStoreTrainNote} target="_blank">
-                  App Store で TrainNote を見る
-                </Link>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href={appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex transition-transform hover:scale-[1.02]"
+                aria-label="App Store で TrainNote をダウンロード"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={appStoreBadge}
+                  alt="App Storeでダウンロード"
+                  style={{ height: 44, objectFit: 'contain' }}
+                />
+              </a>
+              <Button asChild size="lg" variant="secondary">
+                <Link href="#features">機能を見る</Link>
               </Button>
+            </div>
+          </div>
+
+          <div className="relative mx-auto w-full max-w-md">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
+              <Image
+                src="/images/trainnote-peak.jpg"
+                alt="TrainNote ホーム画面 — PEAK バッジと AI Coach"
+                fill
+                className="object-cover"
+                sizes="(min-width: 768px) 420px, 100vw"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      </Container>
+
+      {/* ========== 2. Stats Bar ========== */}
+      <Section spacing="sm">
+        <Container width="wide">
+          <div className="grid gap-4 md:grid-cols-3">
+            {stats.map((s) => (
+              <div
+                key={s.label}
+                className="rounded-2xl border border-border bg-surface p-6 text-center shadow-sm"
+              >
+                <div className="font-display text-3xl font-bold tracking-[-0.03em] text-accent-product md:text-4xl">
+                  {s.number}
+                </div>
+                <div className="mt-2 text-sm text-text-muted">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 3. AI Coach Plus ========== */}
+      <Section spacing="md" surface="alt" id="ai-coach">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              AI Coach Plus
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              専属の5名が、あなただけのチームに。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              それぞれ異なる専門領域を持つAIコーチが、あなたのトレーニング履歴と目標に合わせて連携。定型のアドバイスではなく、今のあなたに最適な提案を届けます。
+            </p>
+          </div>
+
+          <div className="mt-12 grid items-start gap-10 lg:grid-cols-2">
+            <div className="flex flex-col gap-3">
+              {coaches.map((c) => (
+                <div
+                  key={c.name}
+                  className="flex items-start gap-4 rounded-2xl border border-border bg-surface p-5 transition hover:border-accent-product/60 hover:shadow-md"
+                >
+                  <div className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-lg bg-accent-product/10 text-xl">
+                    {c.icon}
+                  </div>
+                  <div>
+                    <div className="font-display text-sm font-bold">
+                      {c.name}
+                      {c.tag && (
+                        <span className="ml-2 inline-block rounded-full bg-accent-product/10 px-1.5 py-[1px] text-[0.625rem] font-semibold uppercase tracking-wider text-accent-product">
+                          {c.tag}
+                        </span>
+                      )}
+                    </div>
+                    <div className="mt-1 text-xs leading-relaxed text-text-muted">
+                      {c.desc}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mx-auto w-full max-w-sm">
+              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
+                <Image
+                  src="/images/trainnote-coaches-list.jpg"
+                  alt="5名のAIコーチ一覧"
+                  width={800}
+                  height={1400}
+                  className="h-auto w-full rounded-[1.5rem]"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Chat Showcase */}
+          <div className="mt-14 grid items-center gap-10 rounded-3xl border border-border bg-surface p-8 md:grid-cols-2 md:p-10">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+                Chat
+              </p>
+              <h3 className="mt-3 font-display text-[clamp(1.35rem,1rem+1.2vw,1.75rem)] font-semibold leading-[1.25] tracking-[-0.02em]">
+                提案で終わらない。
+                <br />
+                チャットで深掘りできる。
+              </h3>
+              <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+                「なぜこの種目？」「重量を変えるべき？」「来週のプランは？」
+                <br />
+                気になったことをその場でコーチに相談。提案の理由から次のアクションまで、会話で整理できます。
+              </p>
+            </div>
+            <div className="mx-auto w-full max-w-xs">
+              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface-2 p-3 shadow-lg">
+                <Image
+                  src="/images/trainnote-coach-chat.png"
+                  alt="AIコーチとのチャット画面"
+                  width={800}
+                  height={1400}
+                  className="h-auto w-full rounded-[1.5rem]"
+                />
+              </div>
             </div>
           </div>
         </Container>
       </Section>
 
-      <FeatureGrid title="TrainNote の特徴" features={features} />
-      <CtaSection />
+      {/* ========== 4. Core Features ========== */}
+      <Section spacing="md" id="features">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Features
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              記録も、振り返りも、直感的に。
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {features.map((f) => (
+              <article
+                key={f.title}
+                className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-accent-product/40 hover:shadow-md"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                  {f.label}
+                </p>
+                <h3 className="mt-3 font-display text-lg font-semibold leading-[1.3] tracking-[-0.01em]">
+                  {f.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                  {f.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 5. App Screenshots ========== */}
+      <Section spacing="md" surface="alt">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              App Screenshots
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              TrainNote の主な画面。
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {screenshots.map((s) => (
+              <figure
+                key={s.src}
+                className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm"
+              >
+                <div className="relative aspect-[9/16] overflow-hidden bg-surface-2">
+                  <Image
+                    src={s.src}
+                    alt={s.alt}
+                    fill
+                    className="object-contain"
+                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
+                  />
+                </div>
+                <figcaption className="px-4 py-3 text-xs text-text-muted">
+                  {s.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 6. Plans ========== */}
+      <Section spacing="md" id="plans">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Plans
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              まずは無料で、はじめよう。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              基本機能はすべて無料。AI Coach Plus にアップグレードすると、5名の専門コーチによるフルサポートが解放されます。
+            </p>
+          </div>
+          <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-surface p-8 shadow-sm">
+              <h3 className="font-display text-lg font-bold">無料プラン</h3>
+              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                <li className="flex items-start gap-2">
+                  <Check /> トレーニング記録（セット・レップ・重量）
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> Muscle Status & PEAK バッジ
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> カレンダー・グラフ表示
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> ウィークリー/マンスリーレビュー
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> メインコーチの基本提案を閲覧
+                </li>
+              </ul>
+            </div>
+            <div className="relative rounded-2xl border-2 border-accent-product bg-surface p-8 shadow-lg">
+              <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-accent-product px-4 py-1 text-xs font-bold text-white">
+                初回利用割引あり
+              </span>
+              <h3 className="font-display text-lg font-bold">AI Coach Plus</h3>
+              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                <li className="flex items-start gap-2">
+                  <Check /> 無料プランの全機能
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 5名の専門コーチのフル提案
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> チャットで深掘り相談
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 栄養・回復・計画・心理まで6領域カバー
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 190以上の論文に基づく根拠あるアドバイス
+                </li>
+              </ul>
+              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
+                料金の詳細はアプリ内でご確認ください。
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 7. Final CTA ========== */}
+      <Section spacing="md" surface="alt">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.25rem)] font-bold leading-[1.25] tracking-[-0.02em]">
+              記録するだけの筋トレは、もう終わりにしよう。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              AIコーチと一緒に、あなたのトレーニングを次のレベルへ。
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex transition-transform hover:scale-[1.02]"
+                aria-label="App Store で TrainNote をダウンロード"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={appStoreBadge}
+                  alt="App Storeでダウンロード"
+                  style={{ height: 44, objectFit: 'contain' }}
+                />
+              </a>
+              <Button asChild size="lg" variant="secondary">
+                <Link href="/#ecosystem">DoubleHub 全体構想を見る</Link>
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </Section>
     </div>
+  );
+}
+
+function Check() {
+  return (
+    <span
+      aria-hidden
+      className="mt-[0.25rem] grid h-4 w-4 flex-shrink-0 place-items-center rounded-full bg-accent-product/15"
+    >
+      <svg
+        width="10"
+        height="10"
+        viewBox="0 0 12 12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        className="text-accent-product"
+      >
+        <path d="M2.5 6l2.5 2.5 4.5-5" />
+      </svg>
+    </span>
   );
 }
