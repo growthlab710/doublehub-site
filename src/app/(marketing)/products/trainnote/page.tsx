@@ -357,7 +357,7 @@ export default function TrainNotePage() {
               まずは 30 日間、無料で試せる。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              すべての基本機能を 30 日間無料で体験。その後は「買い切り 800 円」または「月額 480 円のサブスクリプション（初回 2 ヶ月 50% OFF）」から選べます。
+              どのプランでも使える機能は全部同じ。まずは 30 日間、すべての機能を無料で体験できます。その後は「買い切り 800 円」または「月額 480 円のサブスクリプション（初回 2 ヶ月 50% OFF）」から支払い方式を選べます。
             </p>
           </div>
           <div className="mx-auto mt-14 grid max-w-6xl gap-6 md:grid-cols-3">
@@ -373,24 +373,21 @@ export default function TrainNotePage() {
               </div>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
-                  <Check /> すべての基本機能を 30 日間フルに体験
+                  <Check /> 全機能を 30 日間無料で利用
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> トレーニング記録（セット・レップ・重量）
+                  <Check /> トレーニング記録 / PEAK / グラフ
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> Muscle Status & PEAK バッジ
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> カレンダー・グラフ表示
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> ウィークリー/マンスリーレビュー
+                  <Check /> 5 名の AI コーチ・チャットもすべて使える
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 30 日経過後は有料プランを選択
                 </li>
               </ul>
+              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
+                アプリインストール後、最初に自動で有効になる体験期間です。
+              </p>
             </div>
 
             {/* 買い切り（おすすめ） */}
@@ -412,21 +409,18 @@ export default function TrainNotePage() {
                   <Check /> 一度の支払いでずっと使える
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 5 名の専門 AI コーチのフル提案
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> チャットで深掘り相談
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 栄養・回復・計画・心理まで 6 領域カバー
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 190 以上の論文に基づく根拠あるアドバイス
+                  <Check /> 全機能（5 名の AI コーチ・チャット・6 領域カバー）
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 月額・年額の継続課金なし
                 </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 長く使うほどお得（約 1.7 ヶ月分のサブ価格）
+                </li>
               </ul>
+              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
+                一度購入すれば、それ以上の追加課金はありません。
+              </p>
             </div>
 
             {/* サブスクリプション */}
@@ -445,13 +439,10 @@ export default function TrainNotePage() {
               </div>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
-                  <Check /> 月額 ¥480、最初の 2 ヶ月は ¥240
+                  <Check /> 最初の 2 ヶ月は半額の ¥240 / 月
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 買い切りプランと同等の全機能
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 5 名の専門 AI コーチのフル提案
+                  <Check /> 全機能（5 名の AI コーチ・チャット・6 領域カバー）
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> まず小さく始めたい方に
@@ -460,10 +451,13 @@ export default function TrainNotePage() {
                   <Check /> いつでも解約可能
                 </li>
               </ul>
+              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
+                機能は買い切りプランと全く同じです。
+              </p>
             </div>
           </div>
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs text-text-faint">
-            ※ 価格は執筆時点のものです。最新の料金や課金サイクルは App Store 上の表示をご確認ください。
+            ※ すべてのプランで使える機能は同じです。価格は執筆時点のもので、最新の料金や課金サイクルは App Store 上の表示をご確認ください。
           </p>
         </Container>
       </Section>
