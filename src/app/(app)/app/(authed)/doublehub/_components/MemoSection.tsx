@@ -1,20 +1,15 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Textarea } from '@/components/ui/Textarea';
-import { Skeleton } from '@/components/ui/Skeleton';
 import { supabaseConfig } from '@/lib/env';
 import type { Memo, MemoCategory } from '@/lib/supabase/types-doublehub';
 import {
   DEFAULT_CATEGORY,
   CATEGORY_LABEL,
 } from '@/lib/supabase/types-doublehub';
-import {
-  listMemos,
-  createMemo,
-  softDeleteMemo,
-} from '@/lib/repositories/memos';
+import { createMemo, softDeleteMemo } from '@/lib/repositories/memos';
 
 function formatDate(iso: string) {
   try {
@@ -31,51 +26,24 @@ function formatDate(iso: string) {
 }
 
 interface MemoSectionProps {
-  /** 表示対象カテゴリ（親の CategoryTabs から渡される）。 */
+  /** 現在選択中のカテゴリ。 */
   category?: MemoCategory;
-  /** カテゴリごとの件数を親に通知するコールバック。 */
-  onCountChange?: (counts: Partial<Record<MemoCategory, number>>) => void;
+  /** 親から払い下げられた「このカテゴリ分の」メモ一覧。 */
+  items: Memo[];
+  /** データが変わったときに親へ再取得を依頼するコールバック。 */
+  onChanged?: () => void | Promise<void>;
 }
 
 export function MemoSection({
   category = DEFAULT_CATEGORY,
-  onCountChange,
-}: MemoSectionProps = {}) {
-  const [items, setItems] = useState<Memo[]>([]);
-  const [loading, setLoading] = useState(true);
+  items,
+  onChanged,
+}: MemoSectionProps) {
   const [content, setContent] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const envOk = supabaseConfig.doublehub.ok;
-
-  const refresh = useCallback(async () => {
-    if (!envOk) {
-      setLoading(false);
-      return;
-    }
-    setError(null);
-    try {
-      const data = await listMemos({ category, limit: 50 });
-      setItems(data);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : '取得に失敗しました');
-    } finally {
-      setLoading(false);
-    }
-  }, [envOk, category]);
-
-  useEffect(() => {
-    void refresh();
-  }, [refresh]);
-
-  // タブのチップ表示用に、現在カテゴリの件数を親に通知する。
-  useEffect(() => {
-    if (!onCountChange) return;
-    onCountChange({ [category]: items.length } as Partial<
-      Record<MemoCategory, number>
-    >);
-  }, [items.length, category, onCountChange]);
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,7 +54,7 @@ export function MemoSection({
       // 作成時は現在選択中のカテゴリで保存する。
       await createMemo({ content: content.trim(), category });
       setContent('');
-      await refresh();
+      await onChanged?.();
     } catch (e) {
       setError(e instanceof Error ? e.message : '追加に失敗しました');
     } finally {
@@ -95,12 +63,11 @@ export function MemoSection({
   };
 
   const handleDelete = async (id: string) => {
-    setItems((prev) => prev.filter((m) => m.id !== id));
     try {
       await softDeleteMemo(id);
+      await onChanged?.();
     } catch (e) {
       setError(e instanceof Error ? e.message : '削除に失敗しました');
-      await refresh();
     }
   };
 
@@ -110,10 +77,12 @@ export function MemoSection({
       className="rounded-xl border border-border bg-surface p-5"
     >
       <div className="flex items-center justify-between">
-        <h2 id="memo-heading" className="font-display text-lg font-semibold">
-          メモ
-        </h2>
-        <span className="text-xs text-text-faint">{items.length} 件</span>
+        <div className="flex items-center gap-2">
+          <h2 id="memo-heading" className="font-display text-lg font-semibold">
+            メモ
+          </h2>
+          <span className="text-xs text-text-faint">{items.length} 件</span>
+        </div>
       </div>
 
       {envOk ? (
@@ -147,9 +116,7 @@ export function MemoSection({
       )}
 
       <ul className="mt-4 space-y-2">
-        {loading ? (
-          [0, 1].map((i) => <Skeleton key={i} className="h-20 w-full" />)
-        ) : items.length === 0 ? (
+        {items.length === 0 ? (
           <li className="rounded-lg border border-dashed border-border bg-bg/40 p-4 text-center text-sm text-text-muted">
             {CATEGORY_LABEL[category]}のメモはまだありません
           </li>

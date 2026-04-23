@@ -1,9 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Skeleton } from '@/components/ui/Skeleton';
 import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
 import { formatDueDateJST } from '@/lib/format';
@@ -14,7 +13,6 @@ import {
   CATEGORY_LABEL,
 } from '@/lib/supabase/types-doublehub';
 import {
-  listTodos,
   createTodo,
   toggleTodo,
   softDeleteTodo,
@@ -23,60 +21,38 @@ import {
 type Filter = 'active' | 'done' | 'all';
 
 interface TodoSectionProps {
-  /** 表示対象カテゴリ（親の CategoryTabs から渡される）。 */
+  /** 現在選択中のカテゴリ。 */
   category?: TodoCategory;
-  /**
-   * カテゴリごとの未完了件数を親に通知するコールバック。
-   * タブ右肩のチップ表示に使う。
-   */
-  onCountChange?: (counts: Partial<Record<TodoCategory, number>>) => void;
+  /** 親から払い下げられた「このカテゴリ分の」ToDo 一覧（完了/未完了の両方を含む）。 */
+  items: Todo[];
+  /** データが変わったときに親へ再取得を依頼するコールバック。 */
+  onChanged?: () => void | Promise<void>;
 }
 
 export function TodoSection({
   category = DEFAULT_CATEGORY,
-  onCountChange,
-}: TodoSectionProps = {}) {
-  const [items, setItems] = useState<Todo[]>([]);
+  items,
+  onChanged,
+}: TodoSectionProps) {
   const [filter, setFilter] = useState<Filter>('active');
-  const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const envOk = supabaseConfig.doublehub.ok;
 
-  const refresh = useCallback(async () => {
-    if (!envOk) {
-      setLoading(false);
-      return;
-    }
-    setError(null);
-    try {
-      const data = await listTodos({ filter, category, limit: 200 });
-      setItems(data);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : '取得に失敗しました');
-    } finally {
-      setLoading(false);
-    }
-  }, [envOk, filter, category]);
+  // 表示用に filter を適用。親から降ってくる items は既にカテゴリ絞り込み済み。
+  const displayed = useMemo(() => {
+    if (filter === 'active') return items.filter((t) => !t.is_completed);
+    if (filter === 'done') return items.filter((t) => t.is_completed);
+    return items;
+  }, [items, filter]);
 
-  useEffect(() => {
-    void refresh();
-  }, [refresh]);
-
-  // タブのチップ表示用に「カテゴリ別の未完了件数」を親に通知する。
-  // 現在選択しているカテゴリ分のみ正確に分かるので、その数字だけ更新する
-  // （もう一方は親側で以前の値が保持されたままになる）。
-  useEffect(() => {
-    if (!onCountChange) return;
-    // 現在フィルタに関わらず未完了件数を出したいので、active のときだけ即時、
-    // それ以外の場合はフィルタ結果から undone をカウントしてフォールバック。
-    const uncompleted = items.filter((t) => !t.is_completed).length;
-    onCountChange({ [category]: uncompleted } as Partial<
-      Record<TodoCategory, number>
-    >);
-  }, [items, category, onCountChange]);
+  // ヘッダーのチップに出す件数（未完了件数）。
+  const activeCount = useMemo(
+    () => items.filter((t) => !t.is_completed).length,
+    [items]
+  );
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,7 +63,7 @@ export function TodoSection({
       // 作成時は現在選択中のカテゴリで保存。iOS と齟齬が出ないようにする。
       await createTodo({ title: title.trim(), category });
       setTitle('');
-      await refresh();
+      await onChanged?.();
     } catch (e) {
       setError(e instanceof Error ? e.message : '追加に失敗しました');
     } finally {
@@ -96,26 +72,20 @@ export function TodoSection({
   };
 
   const handleToggle = async (id: string, done: boolean) => {
-    // 楽観的更新
-    setItems((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, is_completed: done } : t))
-    );
     try {
       await toggleTodo(id, done);
-      await refresh();
+      await onChanged?.();
     } catch (e) {
       setError(e instanceof Error ? e.message : '更新に失敗しました');
-      await refresh();
     }
   };
 
   const handleDelete = async (id: string) => {
-    setItems((prev) => prev.filter((t) => t.id !== id));
     try {
       await softDeleteTodo(id);
+      await onChanged?.();
     } catch (e) {
       setError(e instanceof Error ? e.message : '削除に失敗しました');
-      await refresh();
     }
   };
 
@@ -125,9 +95,12 @@ export function TodoSection({
       className="rounded-xl border border-border bg-surface p-5"
     >
       <div className="flex items-center justify-between gap-2">
-        <h2 id="todo-heading" className="font-display text-lg font-semibold">
-          ToDo
-        </h2>
+        <div className="flex items-center gap-2">
+          <h2 id="todo-heading" className="font-display text-lg font-semibold">
+            ToDo
+          </h2>
+          <span className="text-xs text-text-faint">{activeCount} 件</span>
+        </div>
         <div className="flex items-center gap-1 rounded-lg border border-border p-1 text-xs">
           {(['active', 'done', 'all'] as Filter[]).map((f) => (
             <button
@@ -175,16 +148,14 @@ export function TodoSection({
       )}
 
       <ul className="mt-4 space-y-2">
-        {loading ? (
-          [0, 1, 2].map((i) => <Skeleton key={i} className="h-10 w-full" />)
-        ) : items.length === 0 ? (
+        {displayed.length === 0 ? (
           <li className="rounded-lg border border-dashed border-border bg-bg/40 p-4 text-center text-sm text-text-muted">
             {filter === 'done'
               ? '完了した ToDo はまだありません'
               : `${CATEGORY_LABEL[category]}の ToDo はまだありません`}
           </li>
         ) : (
-          items.map((t) => (
+          displayed.map((t) => (
             <li
               key={t.id}
               className={cn(
