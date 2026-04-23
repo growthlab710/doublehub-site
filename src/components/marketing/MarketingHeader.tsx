@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Menu, X, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
@@ -19,6 +19,22 @@ export function MarketingHeader() {
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const loginEnabled = isDynamicMode();
+
+  // Products ドロップダウンの開閉を少し遅延して、ボタン→メニュー間を
+  // マウスが細かく出入りしたときに繰り返し閉じないようにする。
+  // 120ms ほどの grace period が一般的に快適。
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const openProducts = () => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
+    setProductsOpen(true);
+  };
+  const scheduleCloseProducts = () => {
+    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    closeTimerRef.current = setTimeout(() => setProductsOpen(false), 150);
+  };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-bg/80 backdrop-blur-md">
@@ -48,8 +64,10 @@ export function MarketingHeader() {
           {/* Products dropdown */}
           <div
             className="relative"
-            onMouseEnter={() => setProductsOpen(true)}
-            onMouseLeave={() => setProductsOpen(false)}
+            onMouseEnter={openProducts}
+            onMouseLeave={scheduleCloseProducts}
+            onFocus={openProducts}
+            onBlur={scheduleCloseProducts}
           >
             <button
               className="flex items-center gap-1 rounded-full px-3 py-2 text-sm text-text-muted transition hover:bg-surface-2 hover:text-text"
@@ -60,26 +78,30 @@ export function MarketingHeader() {
               Products <span className="text-[0.625rem]">▾</span>
             </button>
             {productsOpen && (
+              // top-full + pt-2 で 「ボタン ↔ メニュー間」をホバー可能な領域にし、
+              // マウスがそこを通っても閉じないようにする。
               <div
                 role="menu"
-                className="absolute left-0 top-full mt-1 w-64 overflow-hidden rounded-xl border border-border bg-surface shadow-lg"
+                className="absolute left-0 top-full w-72 pt-2"
+                onMouseEnter={openProducts}
+                onMouseLeave={scheduleCloseProducts}
               >
-                {products.map((p) => (
-                  <Link
-                    key={p.slug}
-                    href={p.href}
-                    role="menuitem"
-                    className="flex items-start gap-3 px-4 py-3 transition hover:bg-surface-2"
-                  >
-                    <span className="text-xl" aria-hidden>
-                      {p.icon}
-                    </span>
-                    <div>
-                      <div className="text-sm font-medium text-text">{p.name}</div>
-                      <div className="text-xs text-text-muted">{p.tagline}</div>
-                    </div>
-                  </Link>
-                ))}
+                <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-lg">
+                  {products.map((p) => (
+                    <Link
+                      key={p.slug}
+                      href={p.href}
+                      role="menuitem"
+                      className="flex items-start gap-3 px-4 py-3 transition hover:bg-surface-2"
+                    >
+                      <ProductMenuIcon product={p} size={32} />
+                      <div>
+                        <div className="text-sm font-medium text-text">{p.name}</div>
+                        <div className="text-xs text-text-muted">{p.tagline}</div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -144,7 +166,7 @@ export function MarketingHeader() {
               className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-text transition hover:bg-surface-2"
               onClick={() => setOpen(false)}
             >
-              <span aria-hidden>{p.icon}</span>
+              <ProductMenuIcon product={p} size={24} />
               <span>{p.name}</span>
             </Link>
           ))}
@@ -171,5 +193,44 @@ export function MarketingHeader() {
         </nav>
       </div>
     </header>
+  );
+}
+
+/**
+ * Products ドロップダウン / モバイルメニュー共通のアイコン描画。
+ * - `appIcon`（画像パス）があれば squircle 風のアプリアイコン
+ * - 無ければ従来の絵文字を表示
+ */
+function ProductMenuIcon({
+  product,
+  size,
+}: {
+  product: (typeof products)[number];
+  size: number;
+}) {
+  const appIcon = 'appIcon' in product ? product.appIcon : undefined;
+
+  if (appIcon) {
+    return (
+      <span
+        className="relative flex shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-surface-2"
+        style={{ width: size, height: size }}
+        aria-hidden
+      >
+        <Image
+          src={appIcon}
+          alt=""
+          width={size}
+          height={size}
+          className="h-full w-full object-cover"
+        />
+      </span>
+    );
+  }
+
+  return (
+    <span className="text-xl" aria-hidden>
+      {product.icon}
+    </span>
   );
 }

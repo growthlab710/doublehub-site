@@ -32,6 +32,7 @@ export const products = [
     href: '/products/doublehub/',
     accentClass: 'theme-doublehub',
     icon: '🧠',
+    appIcon: '/images/doublehub-icon.jpg',
     features: [
       'ToDo とメモが一体化',
       '完了タスクが行動ログになる',
@@ -48,6 +49,7 @@ export const products = [
     href: '/products/bookcompass/',
     accentClass: 'theme-bookcompass',
     icon: '📘',
+    appIcon: '/images/bookcompass-app-icon.jpg',
     features: [
       'ISBN / タイトルで本を登録',
       'Mutter で短文感想を残す',
@@ -64,6 +66,7 @@ export const products = [
     href: '/products/trainnote/',
     accentClass: 'theme-trainnote',
     icon: '💪',
+    appIcon: '/images/trainnote-app-icon.jpg',
     features: [
       'シンプルなワークアウト記録',
       '部位別カレンダーヒートマップ',
