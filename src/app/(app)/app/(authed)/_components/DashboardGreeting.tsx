@@ -16,12 +16,15 @@ import { getBrowserDoubleHub } from '@/lib/supabase/client';
 export function DashboardGreeting() {
   const [name, setName] = useState<string | null>(null);
   const [today, setToday] = useState<string>(() => formatTodayJST(new Date()));
+  const [greeting, setGreeting] = useState<string>(() => getJapaneseGreeting());
 
   const envOk = supabaseConfig.doublehub.ok;
 
   useEffect(() => {
     // 端末のタイムゾーンが JST でない場合も考慮し、マウント時点で再計算。
+    // また SSR 時はサーバー側 TZ で初期値が計算されてしまうため、ここで上書きする。
     setToday(formatTodayJST(new Date()));
+    setGreeting(getJapaneseGreeting());
   }, []);
 
   useEffect(() => {
@@ -68,8 +71,6 @@ export function DashboardGreeting() {
     };
   }, [envOk]);
 
-  const greeting = getJapaneseGreeting();
-
   return (
     <header className="animate-fade-in">
       <p className="text-xs font-medium uppercase tracking-[0.16em] text-text-faint">
@@ -104,13 +105,16 @@ function formatTodayJST(date: Date): string {
 
 function getJapaneseGreeting(): string {
   // JST の時刻帯で挨拶を切り替える。端末 TZ が違っても日本向け挨拶を維持。
-  const jstHour = Number(
-    new Intl.DateTimeFormat('ja-JP', {
-      timeZone: 'Asia/Tokyo',
-      hour: '2-digit',
-      hour12: false,
-    }).format(new Date())
-  );
+  // Intl.DateTimeFormat の hour12:false は深夜 0 時台を "24" として返す環境があるため、
+  // 文字列の数値パースで丸める。
+  const hourStr = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Tokyo',
+    hour: 'numeric',
+    hour12: false,
+  }).format(new Date());
+  const parsed = Number.parseInt(hourStr, 10);
+  const jstHour = Number.isFinite(parsed) ? parsed % 24 : 12;
+
   if (jstHour >= 5 && jstHour < 11) return 'おはようございます';
   if (jstHour >= 11 && jstHour < 18) return 'こんにちは';
   return 'こんばんは';
