@@ -47,7 +47,9 @@ const partners = [
     role: '読書フレンド',
     tagline: '気軽に感想を話す相手',
     body: '読書の感想を気軽にシェアできる友達のような存在。気軽に話すだけで、自分がどこに惹かれたのかが見えてきて、読書がもっと楽しくなります。',
-    accent: 'from-[#60a5fa] to-[#3b82f6]',
+    accent: 'from-[#fca5a5] to-[#f59e0b]',
+    icon: '/images/bookcompass-partner-buddy.jpg',
+    iconBg: 'bg-[#fde4cf]',
   },
   {
     key: 'mentor',
@@ -55,7 +57,9 @@ const partners = [
     role: '博識な教授',
     tagline: '読書の質を高める',
     body: '本の背景や読み方のコツを教えてくれる博識なアドバイザー。一冊から受け取れる学びと、記憶への定着が深まります。',
-    accent: 'from-[#f59e0b] to-[#d97706]',
+    accent: 'from-[#93c5fd] to-[#60a5fa]',
+    icon: '/images/bookcompass-partner-mentor.jpg',
+    iconBg: 'bg-[#dbeafe]',
   },
   {
     key: 'coach',
@@ -63,7 +67,9 @@ const partners = [
     role: '壁打ち深掘り',
     tagline: '問いかけで思考を拓く',
     body: '問いかけで思考を深め、新たな視点を拓いてくれるコーチ。自分の考えが整理され、新しい視点と次の一歩が見えてきます。',
-    accent: 'from-[#a78bfa] to-[#7c3aed]',
+    accent: 'from-[#86efac] to-[#4ade80]',
+    icon: '/images/bookcompass-partner-coach.jpg',
+    iconBg: 'bg-[#dcfce7]',
   },
 ];
 
@@ -208,6 +214,7 @@ export default function BookCompassPage() {
                 alt="Book Compass ナレッジマップ画面"
                 fill
                 className="object-cover"
+                style={{ objectPosition: 'center 18%' }}
                 sizes="(min-width: 768px) 420px, 100vw"
                 priority
               />
@@ -276,13 +283,24 @@ export default function BookCompassPage() {
                   aria-hidden
                   className={`pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-gradient-to-br ${p.accent} opacity-20 blur-2xl`}
                 />
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                <div
+                  className={`relative mx-auto flex h-28 w-28 items-center justify-center overflow-hidden rounded-2xl ${p.iconBg}`}
+                >
+                  <Image
+                    src={p.icon}
+                    alt={`${p.name} のアイコン`}
+                    fill
+                    className="object-cover"
+                    sizes="112px"
+                  />
+                </div>
+                <p className="mt-5 text-center text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
                   {p.role}
                 </p>
-                <h3 className="mt-3 font-display text-xl font-semibold leading-[1.3] tracking-[-0.01em]">
+                <h3 className="mt-2 text-center font-display text-xl font-semibold leading-[1.3] tracking-[-0.01em]">
                   {p.name}
                 </h3>
-                <p className="mt-1 text-sm font-medium text-text">{p.tagline}</p>
+                <p className="mt-1 text-center text-sm font-medium text-text">{p.tagline}</p>
                 <p className="mt-4 text-sm leading-relaxed text-text-muted">
                   {p.body}
                 </p>
