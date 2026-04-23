@@ -9,6 +9,19 @@
 
 export type SubscriptionTier = 'free' | 'light' | 'standard' | 'premium';
 
+/**
+ * DoubleHub 内で ToDo / メモを分類する「タブ」。
+ * iOS 側と同じ日本語文字列をそのまま DB (`category` カラム) に保存する。
+ */
+export type TodoCategory = 'プライベート' | '仕事';
+export type MemoCategory = 'プライベート' | '仕事';
+
+export const TODO_CATEGORIES: TodoCategory[] = ['プライベート', '仕事'];
+export const MEMO_CATEGORIES: MemoCategory[] = ['プライベート', '仕事'];
+
+/** デフォルトで開くタブ（iOS のデフォルトに合わせる）。 */
+export const DEFAULT_CATEGORY: TodoCategory = 'プライベート';
+
 export interface DoubleHubProfile {
   id: string;
   display_name: string | null;
@@ -28,7 +41,7 @@ export interface Todo {
   due_date: string | null;
   due_local_date: string | null;
   is_all_day: boolean;
-  category: string;
+  category: TodoCategory | string;
   source: string;
   eventkit_identifier: string | null;
   position: number | null;
@@ -44,7 +57,7 @@ export interface Memo {
   id: string;
   user_id: string;
   content: string;
-  category: string;
+  category: MemoCategory | string;
   position: number | null;
   deleted_at: string | null; // 論理削除
   created_at: string;

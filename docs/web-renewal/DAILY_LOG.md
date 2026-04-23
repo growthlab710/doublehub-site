@@ -1064,3 +1064,71 @@ Next.js 版は SEO 周りが既に整備済みで**追加作業不要**。
 2. `https://doublehub.jp/sitemap.xml` を再送信
 3. 未登録ページ（特に blog の 5 件）を 1 件ずつ「インデックス登録をリクエスト」
 4. 1〜2 週間様子を見て、canonical 警告が解消するかモニタリング
+
+## Day 10 — 2026-04-23 (JST) — ログイン後ダッシュボードのブラッシュアップ（第1弾）
+
+### 背景
+
+BookCompass マーケページはほぼ完成したため、次はログイン後のアプリ内 UI に着手。
+ユーザー確認で「iOS アプリでは DoubleHub の ToDo / メモが『プライベート』『仕事』の
+タブで分かれている」と判明。Web 版は `category` カラム自体は型に存在するものの、
+取得・作成時に一切扱っていなかったため、DB 仕様は合っているが UI が未整備な状態。
+
+カテゴリ対応の土台を整えつつ、まずダッシュボード `/app/` を刷新した。
+
+### 変更内容
+
+#### カテゴリ対応インフラ整備
+
+- `src/lib/supabase/types-doublehub.ts`
+  - `TodoCategory` / `MemoCategory` 型を追加（値は日本語の `'プライベート' | '仕事'`、iOS と合わせる）
+  - `TODO_CATEGORIES` / `MEMO_CATEGORIES` 定数、`DEFAULT_CATEGORY` エクスポート
+  - `Todo.category` / `Memo.category` を `string` → `TodoCategory | string` などに精緻化（未知文字列は互換で許容）
+- `src/lib/repositories/todos.ts`
+  - `listTodos` に `category: TodoCategory | 'all'` 引数を追加（`'all'` or 未指定で全カテゴリ混在）
+  - `createTodo` に `category?: TodoCategory` を追加。未指定時は `DEFAULT_CATEGORY`（プライベート）を書き込む
+- `src/lib/repositories/memos.ts`
+  - 同様に `listMemos` / `createMemo` へ category 対応を追加
+
+#### 共通コンポーネント
+
+- `src/components/app/CategoryBadge.tsx`（新規）
+  - ドット+ラベルの `<CategoryBadge>` と、行頭インジケータ用の `getCategoryDotClass`
+  - プライベート = primary (teal) / 仕事 = accent-warm (orange) で色分け
+  - 未知カテゴリは muted フォールバック
+
+#### ダッシュボード刷新
+
+- `src/app/(app)/app/(authed)/_components/DashboardGreeting.tsx`（新規）
+  - 「2026年4月23日（木）」形式の日付（JST 固定）
+  - 時間帯別挨拶（おはよう / こんにちは / こんばんは、JST 時刻で判定）
+  - 表示名は profiles.display_name → user_metadata.* → email ローカル部 の優先順で解決
+  - プライマリカラーで名前をハイライト
+- `src/app/(app)/app/(authed)/_components/DashboardWidgets.tsx`（全面書き換え）
+  - 2カラム → **3カラム（md:2 / xl:3）** 構成
+    1. 未完了 ToDo（カテゴリドット + CategoryBadge + 期限Badge）
+    2. 最新メモ（2行クランプ + CategoryBadge）
+    3. BookCompass 本棚プレビュー（連携済みなら直近読書中 最大4冊 / 未連携なら設定誘導 CTA）
+  - `SummaryCard` 内部コンポーネントに統一（上端のプロダクトカラーグラデ線、件数チップ、hover:shadow-md）
+  - 件数は list を再取得して計測（簡易、将来 count クエリ化）
+- `src/app/(app)/app/(authed)/page.tsx`
+  - ヘッダー `<h1>` を `DashboardGreeting` に置換
+  - プロダクトハブカードを `ProductHubCard` に分離、アイコンを背景色付き 40px タイルに
+  - 上端にプロダクトカラーのグラデライン（primary / BC amber / TN cyan / neutral）
+  - hover で `-translate-y-0.5` + shadow-md で浮き上がり
+  - 「開く →」ラベルを足してクリック誘導を明示化
+
+### 検証
+
+- `pnpm build` 成功（37 ページ SSG、エラーなし、型エラーなし）
+- カテゴリ対応の書き込みは iOS と同じ日本語値 `'プライベート'` を保存するため、Supabase 側スキーマ変更は不要
+
+### 次アクション（次セッション以降）
+
+1. `/app/doublehub/` ページに上部切替タブ（プライベート / 仕事）を導入、ToDo / メモを連動させる
+   - 選択状態は `localStorage` に保存、既定は `プライベート`
+   - ToDo 追加時も現在のタブの category で作成
+2. ToDo 作成フォームに期限 quick chip（今日 / 明日 / 週末 / 日付指定）を追加
+3. AppSidebar アクティブ状態強化、AppHeader にパンくず & クイック追加
+4. BookCompass / TrainNote の Coming Soon ページにプロダクトテーマを適用
+5. 設定ページのプランバッジ & 連携タイル化、ログイン画面のブランド強化

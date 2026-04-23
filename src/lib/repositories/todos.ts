@@ -7,16 +7,27 @@
 'use client';
 
 import { getBrowserDoubleHub } from '@/lib/supabase/client';
-import type { Todo } from '@/lib/supabase/types-doublehub';
+import type { Todo, TodoCategory } from '@/lib/supabase/types-doublehub';
+import { DEFAULT_CATEGORY } from '@/lib/supabase/types-doublehub';
 
 type ActiveFilter = 'active' | 'done' | 'all';
 
 export interface ListTodosOptions {
   filter?: ActiveFilter;
+  /**
+   * iOS 側と同じ「タブ」を Web でも表現する。
+   * - TodoCategory 文字列を渡すと該当タブのみ
+   * - 'all' / 未指定 は全カテゴリを混ぜて返す（ダッシュボード用途）
+   */
+  category?: TodoCategory | 'all';
   limit?: number;
 }
 
-export async function listTodos({ filter = 'active', limit = 100 }: ListTodosOptions = {}): Promise<Todo[]> {
+export async function listTodos({
+  filter = 'active',
+  category = 'all',
+  limit = 100,
+}: ListTodosOptions = {}): Promise<Todo[]> {
   const supabase = getBrowserDoubleHub();
   let query = supabase
     .from('todos')
@@ -28,6 +39,7 @@ export async function listTodos({ filter = 'active', limit = 100 }: ListTodosOpt
 
   if (filter === 'active') query = query.eq('is_completed', false);
   if (filter === 'done') query = query.eq('is_completed', true);
+  if (category !== 'all') query = query.eq('category', category);
 
   const { data, error } = await query;
   if (error) throw error;
@@ -37,6 +49,7 @@ export async function listTodos({ filter = 'active', limit = 100 }: ListTodosOpt
 export async function createTodo(input: {
   title: string;
   due_date?: string | null;
+  category?: TodoCategory;
 }): Promise<Todo> {
   const supabase = getBrowserDoubleHub();
   const { data: user } = await supabase.auth.getUser();
@@ -50,6 +63,8 @@ export async function createTodo(input: {
     completed_at: null,
     deleted_at: null,
     position: null,
+    // iOS 側と同じ日本語文字列をそのまま保存する。
+    category: input.category ?? DEFAULT_CATEGORY,
   };
 
   const { data, error } = await supabase

@@ -4,26 +4,40 @@
 'use client';
 
 import { getBrowserDoubleHub } from '@/lib/supabase/client';
-import type { Memo } from '@/lib/supabase/types-doublehub';
+import type { Memo, MemoCategory } from '@/lib/supabase/types-doublehub';
+import { DEFAULT_CATEGORY } from '@/lib/supabase/types-doublehub';
 
 export interface ListMemosOptions {
+  /**
+   * iOS 側と同じ「タブ」を Web でも表現する。
+   * - MemoCategory 文字列を渡すと該当タブのみ
+   * - 'all' / 未指定 は全カテゴリを混ぜて返す（ダッシュボード用途）
+   */
+  category?: MemoCategory | 'all';
   limit?: number;
 }
 
-export async function listMemos({ limit = 100 }: ListMemosOptions = {}): Promise<Memo[]> {
+export async function listMemos({
+  category = 'all',
+  limit = 100,
+}: ListMemosOptions = {}): Promise<Memo[]> {
   const supabase = getBrowserDoubleHub();
-  const { data, error } = await supabase
+  let query = supabase
     .from('memos')
     .select('*')
     .is('deleted_at', null)
     .order('updated_at', { ascending: false })
     .limit(limit);
+  if (category !== 'all') query = query.eq('category', category);
+
+  const { data, error } = await query;
   if (error) throw error;
   return (data ?? []) as Memo[];
 }
 
 export async function createMemo(input: {
   content: string;
+  category?: MemoCategory;
 }): Promise<Memo> {
   const supabase = getBrowserDoubleHub();
   const { data: user } = await supabase.auth.getUser();
@@ -33,6 +47,8 @@ export async function createMemo(input: {
     user_id: user.user.id,
     content: input.content,
     deleted_at: null,
+    // iOS 側と同じ日本語文字列をそのまま保存する。
+    category: input.category ?? DEFAULT_CATEGORY,
   };
   const { data, error } = await supabase
     .from('memos')
