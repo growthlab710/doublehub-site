@@ -1,0 +1,35 @@
+# Cloudflare Pages 用 301 リダイレクトルール
+# （GitHub Pages は postbuild-redirects.mjs がメタリフレッシュを配置）
+
+# プロダクト LP
+/bookcompass.html      /products/bookcompass/      301
+/trainnote.html        /products/trainnote/        301
+
+# 固定ページ
+/about.html            /about/                     301
+/support.html          /support/                   301
+/privacy.html          /privacy/                   301
+
+# Blog
+/blog/index.html       /blog/                      301
+
+# Blog 個別記事（20 記事）
+/blog/ai-brain-fry-workload-creep.html        /blog/ai-brain-fry-workload-creep/        301
+/blog/ai-coding-agent-comparison-2026.html    /blog/ai-coding-agent-comparison-2026/    301
+/blog/ai-cognitive-offloading.html            /blog/ai-cognitive-offloading/            301
+/blog/ai-critical-thinking.html               /blog/ai-critical-thinking/               301
+/blog/ai-habit-guide.html                     /blog/ai-habit-guide/                     301
+/blog/ai-healthy-work-guide.html              /blog/ai-healthy-work-guide/              301
+/blog/ai-self-understanding-data.html         /blog/ai-self-understanding-data/         301
+/blog/ai-trainer-vs-human.html                /blog/ai-trainer-vs-human/                301
+/blog/ai-workslop-bottleneck.html             /blog/ai-workslop-bottleneck/             301
+/blog/claude-code-auto-mode.html              /blog/claude-code-auto-mode/              301
+/blog/fitness-ai-record.html                  /blog/fitness-ai-record/                  301
+/blog/gemini-api-spend-cap-april-2026.html    /blog/gemini-api-spend-cap-april-2026/    301
+/blog/gemini-chat-import.html                 /blog/gemini-chat-import/                 301
+/blog/indie-dev-ai-implementation.html        /blog/indie-dev-ai-implementation/        301
+/blog/lifedata-self-understanding.html        /blog/lifedata-self-understanding/        301
+/blog/llm-benchmark-guide-advanced.html       /blog/llm-benchmark-guide-advanced/       301
+/blog/llm-benchmark-guide-basics.html         /blog/llm-benchmark-guide-basics/         301
+/blog/perplexity-computer-guide.html          /blog/perplexity-computer-guide/          301
+/blog/reading-ai-habit.html                   /blog/reading-ai-habit/                   301

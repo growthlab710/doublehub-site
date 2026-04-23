@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="../favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.json">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ブログ — AI×習慣化・ライフデータ管理・個人開発の実践知 | DoubleHub</title>
+<meta name="description" content="AI×習慣化、ライフデータ管理、個人開発の実践知。最新のAIニュースや活用情報も発信。DoubleHub開発者 Naoki による一次情報と実践知。">
+<meta property="og:title" content="ブログ — AI×習慣化・ライフデータ管理・個人開発の実践知 | DoubleHub">
+<meta property="og:description" content="AI×習慣化、ライフデータ管理、個人開発の実践知。最新のAIニュースや活用情報も発信しています。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://doublehub.jp/blog/">
+<meta property="og:site_name" content="DoubleHub">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="https://doublehub.jp/images/og-default.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ブログ — AI×習慣化・ライフデータ管理・個人開発の実践知 | DoubleHub">
+<meta name="twitter:description" content="AI×習慣化、ライフデータ管理、個人開発の実践知。最新のAIニュースや活用情報も発信しています。">
+<link rel="canonical" href="https://doublehub.jp/blog/">
+<link rel="stylesheet" href="../styles.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJW7K08F6F');
+</script>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a class="brand" href="../index.html" aria-label="DoubleHub ホーム">
+      <img class="brand__logo" src="../images/doublehub-icon.jpg" alt="DoubleHub" />
+      <span class="brand__text">
+        <strong class="brand__name">DoubleHub</strong>
+      </span>
+    </a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">メニュー</button>
+    <nav class="nav" id="nav" aria-label="メインメニュー">
+      <div class="nav__dropdown">
+        <button class="nav__link nav__dropdown-trigger" type="button" aria-expanded="false" aria-haspopup="true">
+          プロダクト
+          <svg class="nav__dropdown-arrow" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+        <div class="nav__dropdown-menu" role="menu">
+          <a class="nav__dropdown-item" href="../trainnote.html" role="menuitem">
+            <span class="nav__dropdown-item-name">TrainNote</span>
+            <span class="nav__dropdown-item-desc">筋トレ記録 × AIコーチ</span>
+          </a>
+          <a class="nav__dropdown-item" href="../bookcompass.html" role="menuitem">
+            <span class="nav__dropdown-item-name">Book Compass</span>
+            <span class="nav__dropdown-item-desc">読書記録 × AI整理</span>
+          </a>
+          <a class="nav__dropdown-item nav__dropdown-item--coming" href="../index.html#ecosystem" role="menuitem">
+            <span class="nav__dropdown-item-name">DoubleHub<span class="nav__coming-badge">開発中</span></span>
+            <span class="nav__dropdown-item-desc">データ横断AI秘書</span>
+          </a>
+        </div>
+      </div>
+      <a class="nav__link" href="./index.html">ブログ</a>
+      <a class="nav__link" href="../about.html">著者</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="テーマ切り替え">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+  <div class="blog-hero">
+    <h1 class="blog-hero__title">ブログ</h1>
+    <p class="blog-hero__desc">
+      AI×習慣化、ライフデータ管理、個人開発の実践知。最新のAIニュースや活用情報も発信しています。
+    </p>
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="blog-tabs" role="tablist" aria-label="記事カテゴリー">
+    <button class="blog-tab blog-tab--active" role="tab" aria-selected="true" data-filter="all">すべて</button>
+    <button class="blog-tab" role="tab" aria-selected="false" data-filter="blog">ブログ</button>
+    <button class="blog-tab" role="tab" aria-selected="false" data-filter="ai-news">AIニュース</button>
+    <button class="blog-tab" role="tab" aria-selected="false" data-filter="ai-info">AI情報</button>
+  </div>
+
+  <div class="blog-grid" id="blog-grid">
+
+    <!-- AI Info: AI Healthy Work Guide -->
+    <a class="blog-card" href="./ai-healthy-work-guide.html" data-category="ai-info">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--info">AI情報</span>
+        <h2 class="blog-card__title">AI時代に脳を守る——「AI疲れ」を防ぐ実践セルフマネジメント術</h2>
+        <p class="blog-card__excerpt">
+          AI Brain FryやWorkload Creepから脳を守るための7つの実践法。同時使用制限、フォーカスウィンドウ、ノースクリーン習慣など、研究に基づく具体的なセルフマネジメント術を紹介。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.04.13</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI Info: AI Brain Fry & Workload Creep -->
+    <a class="blog-card" href="./ai-brain-fry-workload-creep.html" data-category="ai-info">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--info">AI情報</span>
+        <h2 class="blog-card__title">「AI Brain Fry」と「Workload Creep」——AIと働く人を蝕む2つの新しい疲労</h2>
+        <p class="blog-card__excerpt">
+          AIツールの使いすぎで脳が焼ける「AI Brain Fry」と、仕事量が静かに膨張する「Workload Creep」。BCG・UC Berkeleyの最新研究データから、2つの新しい疲労の正体と自己チェック法を解説。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.04.13</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI Info: Workslop & Bottleneck -->
+    <a class="blog-card" href="./ai-workslop-bottleneck.html" data-category="ai-info">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--info">AI情報</span>
+        <h2 class="blog-card__title">AIが速すぎて、人間のレビューが詰まる——workslopとボトルネックの時代</h2>
+        <p class="blog-card__excerpt">
+          AIが量産する微妙なアウトプット「workslop」が年間900万ドルの生産性損失を生んでいる。人間がボトルネックになる構造と、そこから抜け出すための3つの工夫。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.04.04</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI Info: Critical Thinking -->
+    <a class="blog-card" href="./ai-critical-thinking.html" data-category="ai-info">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--info">AI情報</span>
+        <h2 class="blog-card__title">AIに考えさせる時代に、人間のクリティカルシンキングはどうなるか</h2>
+        <p class="blog-card__excerpt">
+          AIで成績は上がるが学力は下がる——衝撃の実験結果と、深く考える力を「退化」ではなく「強化」に転じさせる3つの工夫。CHI 2025・MIT Media Labの最新研究を交えて解説。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.04.04</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI Info: Cognitive Offloading -->
+    <a class="blog-card" href="./ai-cognitive-offloading.html" data-category="ai-info">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--info">AI情報</span>
+        <h2 class="blog-card__title">複数AIエージェントと働く時代に、人間の脳はどう変わっているのか</h2>
+        <p class="blog-card__excerpt">
+          記憶の外部化から思考の外部化へ。認知的オフロードの研究をもとに、脳のCPUが「思考」から「モニタリングと統合」にシフトしている構造変化を考察する。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.04.04</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI Info: LLM Benchmark Advanced -->
+    <a class="blog-card" href="./llm-benchmark-guide-advanced.html" data-category="ai-info">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--info">AI情報</span>
+        <h2 class="blog-card__title">LLMベンチマーク上級編——飽和・汚染・エージェント時代の新評価軸</h2>
+        <p class="blog-card__excerpt">
+          ベンチマークの飽和・データ汚染・Goodhartの法則とは何か。SuperGLUEからSWE-bench・ARC-AGIへ至る歴史的変遷と、エージェント時代の新評価軸を深掘りする。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.04.03</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI Info: LLM Benchmark Basics -->
+    <a class="blog-card" href="./llm-benchmark-guide-basics.html" data-category="ai-info">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--info">AI情報</span>
+        <h2 class="blog-card__title">LLMベンチマーク入門——AIモデルの「成績表」を読む基礎知識</h2>
+        <p class="blog-card__excerpt">
+          ChatGPT・Claude・Geminiのスコアを比較するベンチマークとは何か。MMLU・HumanEval・GSM8K・SWE-benchなど6カテゴリの評価指標と読み方を初心者向けに解説。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.04.03</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI News: Gemini API Spend Cap -->
+    <a class="blog-card" href="./gemini-api-spend-cap-april-2026.html" data-category="ai-news">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--news">AIニュース</span>
+        <h2 class="blog-card__title">Gemini API、4月から課金上限が強制適用へ——突然の利用停止を防ぐために今すぐやること</h2>
+        <p class="blog-card__excerpt">
+          2026年4月1日からスペンドキャップが強制適用。上限到達でアカウント全体のAPIが翌月まで停止するリスクがある。Tier別の上限額と、今すぐやるべき5つの対策を解説。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.04.01</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI News: Gemini Chat Import -->
+    <a class="blog-card" href="./gemini-chat-import.html" data-category="ai-news">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--news">AIニュース</span>
+        <h2 class="blog-card__title">Google Gemini、ChatGPTとClaudeからチャット履歴のインポートが可能に</h2>
+        <p class="blog-card__excerpt">
+          GoogleがGeminiにChatGPTとClaudeからのチャット履歴・メモリインポート機能を公開。AIデータポータビリティ競争の背景と、ユーザーにとっての意味を解説。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.29</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI Info: AI Coding Agent Comparison -->
+    <a class="blog-card" href="./ai-coding-agent-comparison-2026.html" data-category="ai-info">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--info">AI情報</span>
+        <h2 class="blog-card__title">AIコーディングエージェント比較2026——Claude Code, Cursor, GitHub Copilot, Devinの選び方</h2>
+        <p class="blog-card__excerpt">
+          2026年の主要AIコーディングエージェント4ツールを比較。特徴・料金・向いている開発スタイルを個人開発者の視点で解説。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.29</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Blog: AI Self Understanding Data -->
+    <a class="blog-card" href="./ai-self-understanding-data.html" data-category="blog">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--pillar">ブログ</span>
+        <h2 class="blog-card__title">AIに「自分を理解してもらう」ために必要なデータとは——チャット履歴だけでは足りない理由</h2>
+        <p class="blog-card__excerpt">
+          AIに自分を本当に理解してもらうにはどんなデータが必要か。チャット履歴の限界と、行動データ・感情データ・習慣データの重要性を考察。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.29</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI News: Claude Code Auto Mode -->
+    <a class="blog-card" href="./claude-code-auto-mode.html" data-category="ai-news">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--news">AIニュース</span>
+        <h2 class="blog-card__title">Claude Code「Auto Mode」登場——AIが自分で安全なアクションを判断する時代に</h2>
+        <p class="blog-card__excerpt">
+          Anthropicが2026年3月にリリースしたClaude Codeの新機能「Auto Mode」。開発者の日常ワークフローがどう変わるのか、個人開発者の視点から解説する。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.26</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- AI Info: Perplexity Computer -->
+    <a class="blog-card" href="./perplexity-computer-guide.html" data-category="ai-info">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--info">AI情報</span>
+        <h2 class="blog-card__title">Perplexity Computerとは何か——「AIが別のAIに仕事を振る」時代の到来</h2>
+        <p class="blog-card__excerpt">
+          2026年2月に発表されたPerplexity Computer。19のAIモデルを協調させ、複雑なワークフローを自動実行する仕組みを、個人開発者の視点でわかりやすく解説する。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.26</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Pillar 1 -->
+    <a class="blog-card" href="./ai-habit-guide.html" data-category="blog">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--pillar">Pillar — AI×習慣化</span>
+        <h2 class="blog-card__title">AIを活用した習慣化の完全ガイド2026</h2>
+        <p class="blog-card__excerpt">
+          AIアプリで本当に習慣化できるのか。結論から言うと、できる。ただし「AIに任せれば勝手に続く」わけではない。本記事では、AIが習慣化をどう支援するか、具体的な活用法から注意点まで包括的に解説する。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.25</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Pillar 2 -->
+    <a class="blog-card" href="./lifedata-self-understanding.html" data-category="blog">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--pillar">Pillar — ライフデータ×自己理解</span>
+        <h2 class="blog-card__title">ライフデータで自分を知る——複数アプリのデータをつなぎ合わせると何が見えるか</h2>
+        <p class="blog-card__excerpt">
+          筋トレ、読書、タスク管理。バラバラだった記録をつなぎ合わせると、自分でも気づかなかった傾向が見えてくる。ライフデータ管理の考え方と、データ横断で得られるインサイトを実体験から解説する。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.25</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Pillar 3 -->
+    <a class="blog-card" href="./indie-dev-ai-implementation.html" data-category="blog">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster blog-card__cluster--pillar">Pillar — 個人開発×AI</span>
+        <h2 class="blog-card__title">個人開発でAI機能を実装する方法——SwiftでAIアプリを作った全記録</h2>
+        <p class="blog-card__excerpt">
+          個人開発者がAI機能をiOSアプリに組み込むには何が必要か。TrainNote の AI Coach と Book Compass の AI 読書整理を実装した経験から、技術選定・設計・コスト管理まで全工程を振り返る。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.25</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Cluster 1 -->
+    <a class="blog-card" href="./fitness-ai-record.html" data-category="blog">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster">AI×習慣化</span>
+        <h2 class="blog-card__title">筋トレの習慣化にAIアプリが効く理由——続けられる人が使っている仕組み</h2>
+        <p class="blog-card__excerpt">
+          筋トレが続かない原因は意志力ではなく「仕組み」にある。AIがトレーニング記録から最適な提案を返すことで、継続率がどう変わるかを開発者目線で検証する。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.25</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Cluster 2 -->
+    <a class="blog-card" href="./reading-ai-habit.html" data-category="blog">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster">ライフデータ×自己理解</span>
+        <h2 class="blog-card__title">読書習慣をAIで記録すると何が変わる？——知識吸収効率を最大化する方法</h2>
+        <p class="blog-card__excerpt">
+          読書は好きなのに、読んだ内容が時間とともに薄れていく。その課題をAI整理で解決する方法と、Book Compass を開発して見えてきた読書体験の変化を共有する。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.25</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Cluster 3 -->
+    <a class="blog-card" href="./ai-trainer-vs-human.html" data-category="blog">
+      <div class="blog-card__body">
+        <span class="blog-card__cluster">個人開発×AI</span>
+        <h2 class="blog-card__title">AIパーソナルトレーナーとヒトのトレーナーの違いを開発者が比較してみた</h2>
+        <p class="blog-card__excerpt">
+          AIコーチは人間のトレーナーを代替できるのか。TrainNote の AI Coach を設計・実装した立場から、両者の強み・限界・使い分けを本音で比較する。
+        </p>
+        <div class="blog-card__meta">
+          <span class="blog-card__author-avatar">N</span>
+          <span>Naoki</span>
+          <span>2026.03.25</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer container">
+  <div>
+    <div class="footer__brand"><img src="../images/doublehub-icon.jpg" alt="DoubleHub" class="footer__logo">DoubleHub</div>
+    <p class="footer__company">GrowthLab</p>
+    <p class="footer__desc">あなたを理解した、もう一人の自分を育てるためのハブ。</p>
+    <p class="footer__copy">&copy; 2026 GrowthLab. All rights reserved.</p>
+  </div>
+  <div class="footer__links">
+    <a href="../trainnote.html">TrainNote</a>
+    <a href="../bookcompass.html">Book Compass</a>
+    <a href="./index.html">ブログ</a>
+    <a href="../about.html">著者について</a>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+<script>
+// Blog category filter
+(function() {
+  const tabs = document.querySelectorAll('.blog-tab');
+  const cards = document.querySelectorAll('.blog-card[data-category]');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const filter = tab.dataset.filter;
+
+      // Update active tab
+      tabs.forEach(t => {
+        t.classList.remove('blog-tab--active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('blog-tab--active');
+      tab.setAttribute('aria-selected', 'true');
+
+      // Filter cards
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
