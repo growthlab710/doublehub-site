@@ -593,8 +593,206 @@ export default function BookCompassPage() {
         </Container>
       </Section>
 
-      {/* ========== 9. Final CTA ========== */}
-      <Section spacing="md">
+      {/* ========== 9. Plans ========== */}
+      <Section spacing="md" id="plans">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Plans
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              まずは無料で、読書を整理する。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              無料でも本の登録・呟き・AIチャット（生涯30回）まで体験できます。がっつり使いたい方は Compass Pro へ。初回登録は最初の 3 ヶ月が ¥480 / 月でお試しいただけます。
+            </p>
+          </div>
+          <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
+            {/* 無料 */}
+            <div className="rounded-2xl border border-border bg-surface p-8 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                Free
+              </p>
+              <h3 className="mt-2 font-display text-lg font-bold">無料プラン</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="font-display text-4xl font-bold tracking-[-0.03em]">¥0</span>
+              </div>
+              <p className="mt-3 text-xs text-text-muted">
+                基本機能と AI チャットを生涯 30 回まで体験
+              </p>
+              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                <li className="flex items-start gap-2">
+                  <Check /> 本の登録は無制限
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 呟き（読書メモ） 10 件 / 日
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> レーダーチャートは無制限
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 特性分析・読書サマリーは 10 冊まで
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> AI チャット 生涯 30 回まで
+                </li>
+              </ul>
+              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
+                ※ 無料の 30 回はリセットなしの生涯枠です。消費しきると過去チャットの閲覧のみになります。
+              </p>
+            </div>
+
+            {/* Compass Pro */}
+            <div className="relative rounded-2xl border-2 border-accent-product bg-surface p-8 shadow-lg">
+              <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-accent-product px-4 py-1 text-xs font-bold text-white">
+                おすすめ
+              </span>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                Subscription
+              </p>
+              <h3 className="mt-2 font-display text-lg font-bold">Compass Pro</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="font-display text-4xl font-bold tracking-[-0.03em]">¥880</span>
+                <span className="text-sm text-text-muted">／ 月（税込）</span>
+              </div>
+              <div className="mt-2 inline-flex items-center rounded-full bg-accent-product/10 px-2.5 py-1 text-[0.7rem] font-semibold text-accent-product">
+                初回登録は最初の 3 ヶ月 ¥480 / 月
+              </div>
+              <p className="mt-3 text-xs text-text-muted">
+                読書記録を根拠にした AI 対話を毎日
+              </p>
+              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                <li className="flex items-start gap-2">
+                  <Check /> <strong className="font-semibold text-text">AI チャット 30 件 / 日</strong>で読書を深掘り
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 呟きの日次上限を 30 件 / 日に拡張
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 全ての本の特性分析・読書サマリーを閲覧
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> Push 型レコメンドの更新頻度 UP
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> いつでも解約可能・過去の記録は残る
+                </li>
+              </ul>
+              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
+                ※ 初回 3 ヶ月割引は Apple の仕様により生涯 1 回限り。過去に解約・再登録された場合は割引対象外となります。
+              </p>
+            </div>
+          </div>
+
+          {/* 機能比較テーブル */}
+          <div className="mx-auto mt-16 max-w-4xl">
+            <h3 className="text-center font-display text-lg font-semibold">
+              機能比較
+            </h3>
+            <div className="mt-6 overflow-x-auto rounded-2xl border border-border bg-surface shadow-sm">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-divider bg-surface-2">
+                    <th className="px-4 py-3 text-left font-semibold text-text">機能</th>
+                    <th className="px-4 py-3 text-center font-semibold text-text-muted">無料</th>
+                    <th className="px-4 py-3 text-center font-semibold text-accent-product">
+                      Compass Pro
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="[&>tr]:border-b [&>tr]:border-divider [&>tr:last-child]:border-0">
+                  <tr>
+                    <td className="px-4 py-3 text-text">本の登録</td>
+                    <td className="px-4 py-3 text-center text-text-muted">無制限</td>
+                    <td className="px-4 py-3 text-center text-text">無制限</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">呟き（読書メモ）</td>
+                    <td className="px-4 py-3 text-center text-text-muted">10 件 / 日</td>
+                    <td className="px-4 py-3 text-center text-text">30 件 / 日</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">レーダーチャート（知的ポジション）</td>
+                    <td className="px-4 py-3 text-center text-text-muted">無制限</td>
+                    <td className="px-4 py-3 text-center text-text">無制限</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">特性分析の閲覧</td>
+                    <td className="px-4 py-3 text-center text-text-muted">10 冊まで</td>
+                    <td className="px-4 py-3 text-center text-text">無制限</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">読書サマリー</td>
+                    <td className="px-4 py-3 text-center text-text-muted">10 冊まで</td>
+                    <td className="px-4 py-3 text-center text-text">無制限</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">Push 型レコメンド（探す）</td>
+                    <td className="px-4 py-3 text-center text-text-muted">閲覧可（更新 週 1）</td>
+                    <td className="px-4 py-3 text-center text-text">更新頻度 UP</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">AI チャット</td>
+                    <td className="px-4 py-3 text-center text-text-muted">生涯 30 回まで</td>
+                    <td className="px-4 py-3 text-center text-text">30 件 / 日</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">AI チャットの参照範囲</td>
+                    <td className="px-4 py-3 text-center text-text-muted">全冊 + 本をまたいだ接続</td>
+                    <td className="px-4 py-3 text-center text-text">全冊 + 本をまたいだ接続</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">過去チャットの閲覧</td>
+                    <td className="px-4 py-3 text-center text-text-muted">無制限</td>
+                    <td className="px-4 py-3 text-center text-text">無制限</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ul className="mt-6 space-y-2 text-xs text-text-muted">
+              <li className="flex items-start gap-2">
+                <Check /> AI チャットが参照する読書記録の深さは無料と Compass Pro で共通。回数だけが異なります。
+              </li>
+              <li className="flex items-start gap-2">
+                <Check /> Compass Pro を解約された場合も、過去のチャット・記録は引き続き閲覧できます。
+              </li>
+            </ul>
+          </div>
+
+          {/* サブスクリプションについて */}
+          <div className="mx-auto mt-12 max-w-4xl rounded-2xl border border-border bg-surface-2 p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
+              サブスクリプションについて
+            </p>
+            <dl className="mt-4 grid gap-3 text-sm text-text-muted sm:grid-cols-2">
+              <div>
+                <dt className="font-semibold text-text">名称</dt>
+                <dd className="mt-1">Compass Pro</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-text">期間</dt>
+                <dd className="mt-1">1 ヶ月（自動更新）</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-text">価格</dt>
+                <dd className="mt-1">¥880 / 月（税込）・初回登録は最初の 3 ヶ月 ¥480 / 月</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-text">自動更新・解約</dt>
+                <dd className="mt-1">
+                  期間終了の 24 時間以上前に解約しない限り自動的に更新されます。解約は iOS の「設定 ＞ Apple ID ＞ サブスクリプション」からいつでも可能です。
+                </dd>
+              </div>
+            </dl>
+            <p className="mt-4 text-xs text-text-faint">
+              年額プランは初回リリースでは未提供です（今後追加予定）。価格は執筆時点のもので、最新の料金は App Store 上の表示をご確認ください。
+            </p>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 10. Final CTA ========== */}
+      <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.25rem)] font-bold leading-[1.25] tracking-[-0.02em]">
