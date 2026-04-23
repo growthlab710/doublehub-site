@@ -6,14 +6,14 @@ import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
-  title: 'Book Compass — 読んだ本が、思考の地図になる | DoubleHub',
+  title: 'Book Compass — 読書が、知識マップになる | DoubleHub',
   description:
-    'Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。',
+    'Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。3人の読書パートナーと一緒に、読書の学びを深めます。',
   alternates: { canonical: '/products/bookcompass/' },
   openGraph: {
-    title: 'Book Compass — 読んだ本が、思考の地図になる | DoubleHub',
+    title: 'Book Compass — 読書が、知識マップになる | DoubleHub',
     description:
-      'Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。',
+      'Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。3人の読書パートナーと一緒に、読書の学びを深めます。',
     url: 'https://doublehub.jp/products/bookcompass/',
     type: 'website',
     siteName: 'DoubleHub',
@@ -28,32 +28,100 @@ const appStoreBadge =
   'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
 
 const screenshots = [
-  { src: '/images/bookcompass-map.jpg', alt: 'ナレッジ・コンパス — 領域マップ', caption: 'ナレッジ・コンパス — 読書の広がり' },
-  { src: '/images/bookcompass-axis.jpg', alt: '偏りの見取り図', caption: '偏りの見取り図 — 傾向バランス' },
-  { src: '/images/bookcompass-detail.jpg', alt: '本の詳細画面', caption: '本棚 — ステータスと知的ポジション' },
-  { src: '/images/bookcompass-summary.jpg', alt: '読書サマリー', caption: '読書サマリー — AI による整理' },
-  { src: '/images/bookcompass-notes.jpg', alt: '呟きメモ一覧', caption: '呟き — 読書中の気づき' },
-  { src: '/images/bookcompass-explore.jpg', alt: '探す画面', caption: '探す — AI が理由つきで提案' },
+  { src: '/images/bookcompass-screen-01.jpg', alt: 'ナレッジ・コンパス — 知識マップと称号', caption: 'ナレッジ・コンパス — 知識の広がりと深さ' },
+  { src: '/images/bookcompass-screen-05.jpg', alt: '知的ポジション TRAIT MAP / AXIS VIEW', caption: '知的ポジション — TRAIT MAP / AXIS VIEW' },
+  { src: '/images/bookcompass-screen-10.jpg', alt: '3人の読書パートナー', caption: '3人の読書パートナー' },
+  { src: '/images/bookcompass-screen-06.jpg', alt: 'AIチャット THINK WITH BOOKS', caption: 'AIチャット — THINK WITH BOOKS' },
+  { src: '/images/bookcompass-screen-03.jpg', alt: 'ひと言つぶやき一覧', caption: 'ひと言つぶやき — 気楽な非公開メモ' },
+  { src: '/images/bookcompass-screen-04.jpg', alt: '読書サマリー 4セクション', caption: '読書サマリー — AIが4つの視点で整理' },
+  { src: '/images/bookcompass-screen-02.jpg', alt: 'つぶやきをAIが自動要約', caption: 'つぶやきをAIが自動要約' },
+  { src: '/images/bookcompass-screen-07.jpg', alt: '探す — 深める・広げる', caption: '探す — 深める / 広げる の2軸提案' },
+  { src: '/images/bookcompass-screen-08.jpg', alt: 'シェア機能', caption: 'シェア — AIサマリー・冊数ログカード' },
+  { src: '/images/bookcompass-screen-09.jpg', alt: 'ライブラリ 本棚', caption: 'ライブラリ — ステータス別の本棚' },
+];
+
+const partners = [
+  {
+    key: 'buddy',
+    name: 'ブックバディ',
+    role: '読書フレンド',
+    tagline: '気軽に感想を話す相手',
+    body: '読書の感想を気軽にシェアできる友達のような存在。気軽に話すだけで、自分がどこに惹かれたのかが見えてきて、読書がもっと楽しくなります。',
+    accent: 'from-[#60a5fa] to-[#3b82f6]',
+  },
+  {
+    key: 'mentor',
+    name: '読書メンター',
+    role: '博識な教授',
+    tagline: '読書の質を高める',
+    body: '本の背景や読み方のコツを教えてくれる博識なアドバイザー。一冊から受け取れる学びと、記憶への定着が深まります。',
+    accent: 'from-[#f59e0b] to-[#d97706]',
+  },
+  {
+    key: 'coach',
+    name: '思考コーチ',
+    role: '壁打ち深掘り',
+    tagline: '問いかけで思考を拓く',
+    body: '問いかけで思考を深め、新たな視点を拓いてくれるコーチ。自分の考えが整理され、新しい視点と次の一歩が見えてきます。',
+    accent: 'from-[#a78bfa] to-[#7c3aed]',
+  },
 ];
 
 const features = [
   {
     label: 'Knowledge Compass',
-    title: '読書の広がりが地図になる。',
+    title: '読書の広がりが、知識マップになる。',
     body:
-      '思想・哲学、社会・ビジネス、文学、科学など領域ごとの読書バランスを可視化。気になる領域をタップすると、傾向バランスを軸で見られます。',
+      '思想・哲学、社会・ビジネス、文学、科学、歴史など、領域ごとの読書バランスを可視化。さらに「Lv.6 本に問いかける人」のような称号で、読書の"深さ"の成長も感じられるようにしています。どの領域をどこまで掘り下げてきたかが、一枚のマップで見渡せます。',
+  },
+  {
+    label: 'Trait Map / Axis View',
+    title: '読書中の"感じ方"が、知的ポジションになる。',
+    body:
+      '本の中で共感した部分や違和感を覚えた部分を手がかりに、あなたの思考傾向を複数の軸で可視化。個人努力↔環境設計、理論↔実践、感情↔論理 など、言語化しにくい"立ち位置"を見える化します。',
+  },
+  {
+    label: 'ひと言つぶやき',
+    title: '長い感想はいらない。ひと言でOK。',
+    body:
+      '気になった一文、感じたこと、ふと浮かんだ問い。それを"ひと言"残すだけで十分です。非公開メモだから人目を気にせず気楽に書けて、読書が続きます。',
   },
   {
     label: 'AI Reading Summary',
-    title: '読んだ記録をAIが整理し、あとから意味のある形にする。',
+    title: 'つぶやきをAIが、意味のある形にまとめる。',
     body:
-      '読書中のつぶやきを保存するだけでなく、AIが「印象の要約」「繰り返し出ているテーマ」「行動につながった示唆」「未整理の論点」に整理。後から見返したとき、自分の思考の流れが追いやすい状態に。',
+      '保存したつぶやきをAIが「印象の要約」「繰り返し出ているテーマ」「行動につながった示唆」「未整理の論点」の4つに整理。後から見返したとき、一冊の中で何を受け取ったかがはっきり残ります。',
   },
   {
-    label: 'Book Recommendation',
-    title: '次に読む本を、"理由つき"で提案する。',
+    label: 'Explore',
+    title: '次の一冊を、"深める / 広げる"の2軸で提案。',
     body:
-      '過去の呟きや読書傾向をもとに、「深める」と「広げる」の2軸で次の一冊を提案。なぜこの本が自分に合うのか、納得できる理由が見えるレコメンド。',
+      '読書傾向とつぶやきをもとに、AIが「今のテーマを深める本」と「視野を広げる本」を理由つきで提案。楽天ブックス連携でそのまま購入ページへ進めます。',
+  },
+  {
+    label: 'Share & Library',
+    title: '本棚とシェアで、知識が自分のものになる。',
+    body:
+      '本棚は「すべて / お気に入り / 読みたい / 読書中 / 読了」でステータス管理。AIサマリーカードや冊数ログカードで、読書の積み重ねを仲間とシェアすることもできます。',
+  },
+];
+
+const summarySections = [
+  {
+    title: '印象の要約',
+    desc: 'この本を読んで、何が一番心に残ったか。つぶやきから印象の核を抽出します。',
+  },
+  {
+    title: '繰り返し出ているテーマ',
+    desc: '複数のつぶやきに共通して現れた関心やキーワードを、テーマとしてまとめます。',
+  },
+  {
+    title: '行動につながった示唆',
+    desc: '読書から生まれた「次にやってみよう」「こう変えよう」という具体的な示唆を拾います。',
+  },
+  {
+    title: '未整理の論点',
+    desc: 'まだ答えが出ていない問い、違和感、宿題として残したいポイントを"未整理のまま"残します。',
   },
 ];
 
@@ -105,12 +173,12 @@ export default function BookCompassPage() {
               </span>
             </div>
             <h1 className="mt-5 font-display text-[clamp(1.75rem,1rem+2.8vw,3rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
-              読んだ本が、
+              読書が、
               <br />
-              思考の地図になっていく。
+              知識マップになっていく。
             </h1>
             <p className="mt-5 max-w-lg text-text-muted">
-              Book Compass は、読書記録を整理しながら、関心や価値観の変化を可視化するサービスです。DoubleHub につながると、その地図は「何を大事にしているか」の輪郭になります。
+              Book Compass は、読書記録を整理しながら、関心や価値観の変化を可視化するサービスです。3人の読書パートナーと一緒に学びを深め、DoubleHub につながると、その地図は「何を大事にしているか」の輪郭になります。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
@@ -136,7 +204,7 @@ export default function BookCompassPage() {
           <div className="relative mx-auto w-full max-w-md">
             <div className="relative aspect-[3/4] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
               <Image
-                src="/images/bookcompass-map.jpg"
+                src="/images/bookcompass-screen-01.jpg"
                 alt="Book Compass ナレッジマップ画面"
                 fill
                 className="object-cover"
@@ -159,7 +227,7 @@ export default function BookCompassPage() {
               Book Compass の主な画面。
             </h2>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {screenshots.map((s) => (
               <figure
                 key={s.src}
@@ -171,7 +239,7 @@ export default function BookCompassPage() {
                     alt={s.alt}
                     fill
                     className="object-contain"
-                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 45vw, 90vw"
+                    sizes="(min-width: 1280px) 220px, (min-width: 1024px) 300px, (min-width: 640px) 45vw, 90vw"
                   />
                 </div>
                 <figcaption className="px-4 py-3 text-xs text-text-muted">
@@ -183,8 +251,53 @@ export default function BookCompassPage() {
         </Container>
       </Section>
 
-      {/* ========== 3. What Book Compass Does ========== */}
+      {/* ========== 3. 3人の読書パートナー ========== */}
       <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Reading Partners
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              あなた専属の、3人の読書パートナー。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              役割の違う3人のAIが、あなたの読書に寄りそいます。気軽に感想を話したいとき、深く掘り下げたいとき、問いで考えを整理したいとき。目的に合わせてパートナーを選べます。
+            </p>
+          </div>
+
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+            {partners.map((p) => (
+              <article
+                key={p.key}
+                className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-accent-product/40 hover:shadow-md"
+              >
+                <div
+                  aria-hidden
+                  className={`pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-gradient-to-br ${p.accent} opacity-20 blur-2xl`}
+                />
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                  {p.role}
+                </p>
+                <h3 className="mt-3 font-display text-xl font-semibold leading-[1.3] tracking-[-0.01em]">
+                  {p.name}
+                </h3>
+                <p className="mt-1 text-sm font-medium text-text">{p.tagline}</p>
+                <p className="mt-4 text-sm leading-relaxed text-text-muted">
+                  {p.body}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-text-muted">
+            3人のパートナーとの対話に加えて、自由に質問できる「フリーチャット」、これまでの会話を振り返れる「過去のチャット」も利用できます。
+          </p>
+        </Container>
+      </Section>
+
+      {/* ========== 4. Features ========== */}
+      <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
@@ -194,7 +307,7 @@ export default function BookCompassPage() {
               Book Compass でできること。
             </h2>
           </div>
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {features.map((f) => (
               <article
                 key={f.title}
@@ -211,16 +324,74 @@ export default function BookCompassPage() {
                 </p>
               </article>
             ))}
+          </div>
+        </Container>
+      </Section>
 
-            {/* What Double Learns (リスト付きカード) */}
-            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-accent-product/40 hover:shadow-md md:col-span-2">
+      {/* ========== 5. 読書サマリーの中身 ========== */}
+      <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Reading Summary
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              読書サマリーは、4つの視点で構成される。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              つぶやきをただ並べるのではなく、AIが4つの切り口で整理します。後から見返したとき、その一冊から何を受け取ったのかがはっきり残る形を目指しています。
+            </p>
+          </div>
+
+          <div className="mx-auto mt-12 grid max-w-5xl items-center gap-10 md:grid-cols-[0.9fr_1.1fr]">
+            <div className="relative mx-auto w-full max-w-sm">
+              <div className="relative aspect-[9/16] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-lg">
+                <Image
+                  src="/images/bookcompass-screen-04.jpg"
+                  alt="読書サマリー 4セクション"
+                  fill
+                  className="object-contain"
+                  sizes="(min-width: 768px) 360px, 90vw"
+                />
+              </div>
+            </div>
+
+            <ol className="grid gap-4">
+              {summarySections.map((s, i) => (
+                <li
+                  key={s.title}
+                  className="rounded-2xl border border-border bg-surface p-5 shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full bg-accent-product/15 text-xs font-semibold text-accent-product">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <h3 className="font-display text-base font-semibold tracking-[-0.01em]">
+                      {s.title}
+                    </h3>
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                    {s.desc}
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 6. What Double Learns ========== */}
+      <Section spacing="md" surface="alt">
+        <Container width="wide">
+          <div className="mx-auto max-w-4xl">
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm md:p-8">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
                 What Double Learns
               </p>
-              <h3 className="mt-3 font-display text-lg font-semibold leading-[1.3] tracking-[-0.01em]">
+              <h3 className="mt-3 font-display text-xl font-semibold leading-[1.3] tracking-[-0.01em] md:text-2xl">
                 ダブルが理解するのは、読了冊数ではなく思考の方向。
               </h3>
-              <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+              <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                 {learns.map((t) => (
                   <li
                     key={t}
@@ -235,12 +406,12 @@ export default function BookCompassPage() {
         </Container>
       </Section>
 
-      {/* ========== 4. AI Chat ========== */}
-      <Section spacing="md" surface="alt">
+      {/* ========== 7. AI Chat ========== */}
+      <Section spacing="md">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-              AI Chat
+              Think With Books
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
               本について、もう一人の自分と対話する。
@@ -248,7 +419,7 @@ export default function BookCompassPage() {
           </div>
           <div className="mx-auto mt-10 grid max-w-5xl gap-6 md:grid-cols-2">
             <p className="text-sm leading-relaxed text-text-muted md:text-base">
-              Book Compass のチャットは「何でも答えてくれるAI先生」ではありません。あなたの読書記録を根拠にして、一緒に整理する読書パートナーです。上から教え込まない、それっぽいことを断定しない。自分の読書記録を起点に、考えを深める壁打ち相手。
+              Book Compass のチャットは「何でも答えてくれるAI先生」ではありません。あなたの読書記録を根拠にして、3人のパートナーと一緒に整理する読書パートナーです。上から教え込まない、それっぽいことを断定しない。自分の読書記録を起点に、考えを深める壁打ち相手。
             </p>
             <p className="text-sm leading-relaxed text-text-muted md:text-base">
               「あなたが以前こういうことを気にしていたから、今回もここが引っかかっているのかもしれない」「この本で残った問いは、前に読んだ別の本の気づきとつながるかもしれない」そういうふうに返せることを目指しています。
@@ -257,8 +428,8 @@ export default function BookCompassPage() {
         </Container>
       </Section>
 
-      {/* ========== 5. Flow Into DoubleHub ========== */}
-      <Section spacing="md">
+      {/* ========== 8. Flow Into DoubleHub ========== */}
+      <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
@@ -286,8 +457,8 @@ export default function BookCompassPage() {
         </Container>
       </Section>
 
-      {/* ========== 6. Final CTA ========== */}
-      <Section spacing="md" surface="alt">
+      {/* ========== 9. Final CTA ========== */}
+      <Section spacing="md">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.25rem)] font-bold leading-[1.25] tracking-[-0.02em]">
