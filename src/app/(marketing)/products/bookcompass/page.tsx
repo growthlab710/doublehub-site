@@ -214,7 +214,7 @@ export default function BookCompassPage() {
                 alt="Book Compass ナレッジマップ画面"
                 fill
                 className="object-cover"
-                style={{ objectPosition: 'center 18%' }}
+                style={{ objectPosition: 'center 82%' }}
                 sizes="(min-width: 768px) 420px, 100vw"
                 priority
               />
