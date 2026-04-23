@@ -40,6 +40,31 @@ const nextConfig = {
     // Framer Motion 等のバンドル最適化
     optimizePackageImports: ['lucide-react', 'framer-motion'],
   },
+  // SEO / セキュリティヘッダー（static export 時は Vercel/CDN 側で設定するため skip）
+  ...(isExport
+    ? {}
+    : {
+        async headers() {
+          return [
+            {
+              source: '/(.*)',
+              headers: [
+                { key: 'X-Content-Type-Options', value: 'nosniff' },
+                { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+                { key: 'X-XSS-Protection', value: '1; mode=block' },
+                {
+                  key: 'Referrer-Policy',
+                  value: 'strict-origin-when-cross-origin',
+                },
+                {
+                  key: 'Permissions-Policy',
+                  value: 'camera=(), microphone=(), geolocation=()',
+                },
+              ],
+            },
+          ];
+        },
+      }),
 };
 
 module.exports = nextConfig;
