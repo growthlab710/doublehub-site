@@ -53,7 +53,10 @@ interface CategoryStyle {
 }
 
 function getCategoryStyle(category: CategoryLike | null | undefined): CategoryStyle {
-  switch (category) {
+  // DB には英語キーで保存されるが、将来的に日本語文字列が混ざる可能性も想定して両方マッチ。
+  const key = typeof category === 'string' ? category.toLowerCase() : category;
+  switch (key) {
+    case 'private':
     case 'プライベート':
       return {
         label: 'プライベート',
@@ -61,6 +64,7 @@ function getCategoryStyle(category: CategoryLike | null | undefined): CategorySt
         chip: 'border-primary/20 bg-primary-soft text-primary',
         dot: 'bg-primary',
       };
+    case 'work':
     case '仕事':
       return {
         label: '仕事',
@@ -70,7 +74,7 @@ function getCategoryStyle(category: CategoryLike | null | undefined): CategorySt
       };
     default:
       return {
-        label: category || '未分類',
+        label: (typeof category === 'string' && category) || '未分類',
         chip: 'border-border bg-surface-2 text-text-muted',
         dot: 'bg-text-faint',
       };

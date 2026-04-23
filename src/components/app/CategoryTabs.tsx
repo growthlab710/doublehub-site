@@ -2,7 +2,10 @@
 
 import { cn } from '@/lib/utils';
 import type { TodoCategory } from '@/lib/supabase/types-doublehub';
-import { TODO_CATEGORIES } from '@/lib/supabase/types-doublehub';
+import {
+  TODO_CATEGORIES,
+  CATEGORY_LABEL,
+} from '@/lib/supabase/types-doublehub';
 
 interface CategoryTabsProps {
   value: TodoCategory;
@@ -51,7 +54,7 @@ export function CategoryTabs({
               tone
             )}
           >
-            <span>{category}</span>
+            <span>{CATEGORY_LABEL[category]}</span>
             {typeof count === 'number' && (
               <span
                 className={cn(
@@ -78,9 +81,9 @@ function getToneClasses(category: TodoCategory, active: boolean): string {
   }
   // アクティブ時だけカテゴリ色で塗る。非アクティブは中立トーンに統一。
   switch (category) {
-    case 'プライベート':
+    case 'private':
       return 'bg-primary text-white shadow-sm';
-    case '仕事':
+    case 'work':
       return 'bg-accent-warm text-white shadow-sm';
     default:
       return 'bg-surface-2 text-text';

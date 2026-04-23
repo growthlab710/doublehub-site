@@ -9,7 +9,10 @@ import { cn } from '@/lib/utils';
 import { formatDueDateJST } from '@/lib/format';
 import { supabaseConfig } from '@/lib/env';
 import type { Todo, TodoCategory } from '@/lib/supabase/types-doublehub';
-import { DEFAULT_CATEGORY } from '@/lib/supabase/types-doublehub';
+import {
+  DEFAULT_CATEGORY,
+  CATEGORY_LABEL,
+} from '@/lib/supabase/types-doublehub';
 import {
   listTodos,
   createTodo,
@@ -147,7 +150,7 @@ export function TodoSection({
       {envOk ? (
         <form onSubmit={handleAdd} className="mt-4 flex gap-2">
           <Input
-            placeholder={`新しい ToDo を追加（${category}）`}
+            placeholder={`新しい ToDo を追加（${CATEGORY_LABEL[category]}）`}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             disabled={busy}
@@ -178,7 +181,7 @@ export function TodoSection({
           <li className="rounded-lg border border-dashed border-border bg-bg/40 p-4 text-center text-sm text-text-muted">
             {filter === 'done'
               ? '完了した ToDo はまだありません'
-              : `${category}の ToDo はまだありません`}
+              : `${CATEGORY_LABEL[category]}の ToDo はまだありません`}
           </li>
         ) : (
           items.map((t) => (

@@ -6,7 +6,10 @@ import { Textarea } from '@/components/ui/Textarea';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { supabaseConfig } from '@/lib/env';
 import type { Memo, MemoCategory } from '@/lib/supabase/types-doublehub';
-import { DEFAULT_CATEGORY } from '@/lib/supabase/types-doublehub';
+import {
+  DEFAULT_CATEGORY,
+  CATEGORY_LABEL,
+} from '@/lib/supabase/types-doublehub';
 import {
   listMemos,
   createMemo,
@@ -116,7 +119,7 @@ export function MemoSection({
       {envOk ? (
         <form onSubmit={handleAdd} className="mt-4 space-y-2">
           <Textarea
-            placeholder={`本文を入力…（${category}）`}
+            placeholder={`本文を入力…（${CATEGORY_LABEL[category]}）`}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             disabled={busy}
@@ -148,7 +151,7 @@ export function MemoSection({
           [0, 1].map((i) => <Skeleton key={i} className="h-20 w-full" />)
         ) : items.length === 0 ? (
           <li className="rounded-lg border border-dashed border-border bg-bg/40 p-4 text-center text-sm text-text-muted">
-            {category}のメモはまだありません
+            {CATEGORY_LABEL[category]}のメモはまだありません
           </li>
         ) : (
           items.map((m) => (

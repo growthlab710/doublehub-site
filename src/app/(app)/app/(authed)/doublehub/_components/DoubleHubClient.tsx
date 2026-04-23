@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { CategoryTabs } from '@/components/app/CategoryTabs';
 import { useCategoryTab } from '@/lib/hooks/useCategoryTab';
 import type { TodoCategory } from '@/lib/supabase/types-doublehub';
+import { CATEGORY_LABEL } from '@/lib/supabase/types-doublehub';
 import { TodoSection } from './TodoSection';
 import { MemoSection } from './MemoSection';
 
@@ -22,9 +23,9 @@ export function DoubleHubClient() {
 
   // タブ側に出す合計件数（未完了 ToDo + メモ）。
   const counts: Partial<Record<TodoCategory, number>> = {
-    プライベート:
-      (todoCounts['プライベート'] ?? 0) + (memoCounts['プライベート'] ?? 0),
-    仕事: (todoCounts['仕事'] ?? 0) + (memoCounts['仕事'] ?? 0),
+    private:
+      (todoCounts.private ?? 0) + (memoCounts.private ?? 0),
+    work: (todoCounts.work ?? 0) + (memoCounts.work ?? 0),
   };
 
   return (
@@ -42,7 +43,7 @@ export function DoubleHubClient() {
       <div
         id={`panel-${category}`}
         role="tabpanel"
-        aria-label={`${category} のタスクとメモ`}
+        aria-label={`${CATEGORY_LABEL[category]} のタスクとメモ`}
         className="grid gap-6 lg:grid-cols-2"
       >
         <TodoSection category={category} onCountChange={setTodoCounts} />

@@ -114,9 +114,12 @@ function matchCategory(
   // デフォルトタブだけ、未分類レコードを吸収する。
   if (selected === DEFAULT_CATEGORY) {
     if (normalized === '') return true;
-    const known: string[] = ['プライベート', '仕事'];
-    if (!known.includes(normalized)) return true;
+    // 日本語旧ラベルや大文字表記など未知値はいったん private に寄せる。
+    const known = new Set(['private', 'work']);
+    if (!known.has(normalized.toLowerCase())) return true;
   }
+  // 大文字小文字表記揺れを吸収。
+  if (normalized.toLowerCase() === selected) return true;
   return false;
 }
 

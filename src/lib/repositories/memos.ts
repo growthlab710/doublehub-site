@@ -61,9 +61,10 @@ function matchMemoCategory(
   if (normalized === selected) return true;
   if (selected === DEFAULT_CATEGORY) {
     if (normalized === '') return true;
-    const known: string[] = ['プライベート', '仕事'];
-    if (!known.includes(normalized)) return true;
+    const known = new Set(['private', 'work']);
+    if (!known.has(normalized.toLowerCase())) return true;
   }
+  if (normalized.toLowerCase() === selected) return true;
   return false;
 }
 

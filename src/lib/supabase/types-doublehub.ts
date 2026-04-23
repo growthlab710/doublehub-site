@@ -11,16 +11,24 @@ export type SubscriptionTier = 'free' | 'light' | 'standard' | 'premium';
 
 /**
  * DoubleHub 内で ToDo / メモを分類する「タブ」。
- * iOS 側と同じ日本語文字列をそのまま DB (`category` カラム) に保存する。
+ *
+ * DB (`category` カラム) には iOS 側と同じ 英語小文字のキー `'private'` / `'work'` を
+ * 保存する。UI に表示する場合は `CATEGORY_LABEL` で日本語ラベルに変換する。
  */
-export type TodoCategory = 'プライベート' | '仕事';
-export type MemoCategory = 'プライベート' | '仕事';
+export type TodoCategory = 'private' | 'work';
+export type MemoCategory = 'private' | 'work';
 
-export const TODO_CATEGORIES: TodoCategory[] = ['プライベート', '仕事'];
-export const MEMO_CATEGORIES: MemoCategory[] = ['プライベート', '仕事'];
+export const TODO_CATEGORIES: TodoCategory[] = ['private', 'work'];
+export const MEMO_CATEGORIES: MemoCategory[] = ['private', 'work'];
 
 /** デフォルトで開くタブ（iOS のデフォルトに合わせる）。 */
-export const DEFAULT_CATEGORY: TodoCategory = 'プライベート';
+export const DEFAULT_CATEGORY: TodoCategory = 'private';
+
+/** UI に出す日本語ラベル。 */
+export const CATEGORY_LABEL: Record<TodoCategory, string> = {
+  private: 'プライベート',
+  work: '仕事',
+};
 
 export interface DoubleHubProfile {
   id: string;

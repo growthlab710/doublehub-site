@@ -23,8 +23,9 @@ export function useCategoryTab(
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(key);
-      if (stored && isTodoCategory(stored)) {
-        setCategory(stored);
+      if (stored) {
+        const coerced = coerceStoredCategory(stored);
+        if (coerced) setCategory(coerced);
       }
     } catch {
       // localStorage 非許可環境（プライベートブラウズ等）では初期値のまま。
@@ -48,4 +49,13 @@ export function useCategoryTab(
 
 function isTodoCategory(value: string): value is TodoCategory {
   return (TODO_CATEGORIES as string[]).includes(value);
+}
+
+// 日本語時代の旧値が localStorage に残っている可能性を考慮し、
+// 文字列の種類ごとに安全に変換する。実際の利用は `useCategoryTab` 内のがあって OK。
+export function coerceStoredCategory(stored: string): TodoCategory | null {
+  if (isTodoCategory(stored)) return stored;
+  if (stored === 'プライベート') return 'private';
+  if (stored === '仕事') return 'work';
+  return null;
 }
