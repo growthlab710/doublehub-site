@@ -8,7 +8,8 @@ import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
 import { formatDueDateJST } from '@/lib/format';
 import { supabaseConfig } from '@/lib/env';
-import type { Todo } from '@/lib/supabase/types-doublehub';
+import type { Todo, TodoCategory } from '@/lib/supabase/types-doublehub';
+import { DEFAULT_CATEGORY } from '@/lib/supabase/types-doublehub';
 import {
   listTodos,
   createTodo,
@@ -18,7 +19,20 @@ import {
 
 type Filter = 'active' | 'done' | 'all';
 
-export function TodoSection() {
+interface TodoSectionProps {
+  /** 表示対象カテゴリ（親の CategoryTabs から渡される）。 */
+  category?: TodoCategory;
+  /**
+   * カテゴリごとの未完了件数を親に通知するコールバック。
+   * タブ右肩のチップ表示に使う。
+   */
+  onCountChange?: (counts: Partial<Record<TodoCategory, number>>) => void;
+}
+
+export function TodoSection({
+  category = DEFAULT_CATEGORY,
+  onCountChange,
+}: TodoSectionProps = {}) {
   const [items, setItems] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<Filter>('active');
   const [loading, setLoading] = useState(true);
@@ -35,18 +49,31 @@ export function TodoSection() {
     }
     setError(null);
     try {
-      const data = await listTodos({ filter, limit: 200 });
+      const data = await listTodos({ filter, category, limit: 200 });
       setItems(data);
     } catch (e) {
       setError(e instanceof Error ? e.message : '取得に失敗しました');
     } finally {
       setLoading(false);
     }
-  }, [envOk, filter]);
+  }, [envOk, filter, category]);
 
   useEffect(() => {
     void refresh();
   }, [refresh]);
+
+  // タブのチップ表示用に「カテゴリ別の未完了件数」を親に通知する。
+  // 現在選択しているカテゴリ分のみ正確に分かるので、その数字だけ更新する
+  // （もう一方は親側で以前の値が保持されたままになる）。
+  useEffect(() => {
+    if (!onCountChange) return;
+    // 現在フィルタに関わらず未完了件数を出したいので、active のときだけ即時、
+    // それ以外の場合はフィルタ結果から undone をカウントしてフォールバック。
+    const uncompleted = items.filter((t) => !t.is_completed).length;
+    onCountChange({ [category]: uncompleted } as Partial<
+      Record<TodoCategory, number>
+    >);
+  }, [items, category, onCountChange]);
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,7 +81,8 @@ export function TodoSection() {
     setBusy(true);
     setError(null);
     try {
-      await createTodo({ title: title.trim() });
+      // 作成時は現在選択中のカテゴリで保存。iOS と齟齬が出ないようにする。
+      await createTodo({ title: title.trim(), category });
       setTitle('');
       await refresh();
     } catch (e) {
@@ -119,7 +147,7 @@ export function TodoSection() {
       {envOk ? (
         <form onSubmit={handleAdd} className="mt-4 flex gap-2">
           <Input
-            placeholder="新しい ToDo を追加"
+            placeholder={`新しい ToDo を追加（${category}）`}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             disabled={busy}
@@ -150,7 +178,7 @@ export function TodoSection() {
           <li className="rounded-lg border border-dashed border-border bg-bg/40 p-4 text-center text-sm text-text-muted">
             {filter === 'done'
               ? '完了した ToDo はまだありません'
-              : '表示する ToDo がありません'}
+              : `${category}の ToDo はまだありません`}
           </li>
         ) : (
           items.map((t) => (

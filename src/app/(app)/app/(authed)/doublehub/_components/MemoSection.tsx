@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/Button';
 import { Textarea } from '@/components/ui/Textarea';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { supabaseConfig } from '@/lib/env';
-import type { Memo } from '@/lib/supabase/types-doublehub';
+import type { Memo, MemoCategory } from '@/lib/supabase/types-doublehub';
+import { DEFAULT_CATEGORY } from '@/lib/supabase/types-doublehub';
 import {
   listMemos,
   createMemo,
@@ -26,7 +27,17 @@ function formatDate(iso: string) {
   }
 }
 
-export function MemoSection() {
+interface MemoSectionProps {
+  /** 表示対象カテゴリ（親の CategoryTabs から渡される）。 */
+  category?: MemoCategory;
+  /** カテゴリごとの件数を親に通知するコールバック。 */
+  onCountChange?: (counts: Partial<Record<MemoCategory, number>>) => void;
+}
+
+export function MemoSection({
+  category = DEFAULT_CATEGORY,
+  onCountChange,
+}: MemoSectionProps = {}) {
   const [items, setItems] = useState<Memo[]>([]);
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState('');
@@ -42,18 +53,26 @@ export function MemoSection() {
     }
     setError(null);
     try {
-      const data = await listMemos({ limit: 50 });
+      const data = await listMemos({ category, limit: 50 });
       setItems(data);
     } catch (e) {
       setError(e instanceof Error ? e.message : '取得に失敗しました');
     } finally {
       setLoading(false);
     }
-  }, [envOk]);
+  }, [envOk, category]);
 
   useEffect(() => {
     void refresh();
   }, [refresh]);
+
+  // タブのチップ表示用に、現在カテゴリの件数を親に通知する。
+  useEffect(() => {
+    if (!onCountChange) return;
+    onCountChange({ [category]: items.length } as Partial<
+      Record<MemoCategory, number>
+    >);
+  }, [items.length, category, onCountChange]);
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,7 +80,8 @@ export function MemoSection() {
     setBusy(true);
     setError(null);
     try {
-      await createMemo({ content: content.trim() });
+      // 作成時は現在選択中のカテゴリで保存する。
+      await createMemo({ content: content.trim(), category });
       setContent('');
       await refresh();
     } catch (e) {
@@ -96,7 +116,7 @@ export function MemoSection() {
       {envOk ? (
         <form onSubmit={handleAdd} className="mt-4 space-y-2">
           <Textarea
-            placeholder="本文を入力…"
+            placeholder={`本文を入力…（${category}）`}
             value={content}
             onChange={(e) => setContent(e.target.value)}
             disabled={busy}
@@ -128,7 +148,7 @@ export function MemoSection() {
           [0, 1].map((i) => <Skeleton key={i} className="h-20 w-full" />)
         ) : items.length === 0 ? (
           <li className="rounded-lg border border-dashed border-border bg-bg/40 p-4 text-center text-sm text-text-muted">
-            メモがまだありません
+            {category}のメモはまだありません
           </li>
         ) : (
           items.map((m) => (

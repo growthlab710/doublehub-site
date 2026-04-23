@@ -1,5 +1,4 @@
-import { TodoSection } from './_components/TodoSection';
-import { MemoSection } from './_components/MemoSection';
+import { DoubleHubClient } from './_components/DoubleHubClient';
 
 export const metadata = {
   title: 'DoubleHub',
@@ -8,21 +7,9 @@ export const metadata = {
 
 /**
  * /app/doublehub/
- * ToDo とメモを横並びに表示（モバイルは縦）。
+ * ToDo とメモを「プライベート / 仕事」タブで切り替えて表示（iOS と同じ構造）。
+ * 実装はすべて client コンポーネントに委譲。
  */
 export default function AppDoubleHubPage() {
-  return (
-    <div className="space-y-6">
-      <header>
-        <h1 className="font-display text-2xl font-semibold">DoubleHub</h1>
-        <p className="mt-2 text-sm text-text-muted">
-          タスクとメモを一体化して管理します。完了した ToDo も行動ログとして残ります。
-        </p>
-      </header>
-      <div className="grid gap-6 lg:grid-cols-2">
-        <TodoSection />
-        <MemoSection />
-      </div>
-    </div>
-  );
+  return <DoubleHubClient />;
 }
