@@ -452,27 +452,13 @@ export default function BookCompassPage() {
             </p>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-5xl items-center gap-10 md:grid-cols-[0.85fr_1.15fr]">
-            {/* 左カラム: 実際のチャット画面 */}
-            <div className="relative mx-auto w-full max-w-sm">
-              <div className="relative aspect-[9/16] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-lg">
-                <Image
-                  src="/images/bookcompass-screen-06.jpg"
-                  alt="Think With Books チャット画面"
-                  fill
-                  className="object-contain"
-                  sizes="(min-width: 768px) 360px, 90vw"
-                />
-              </div>
-            </div>
-
-            {/* 右カラム: 対比 + 擬似チャット */}
+          <div className="mx-auto mt-12 max-w-3xl">
             <div className="space-y-6">
               {/* 対比ボックス */}
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="rounded-2xl border border-border bg-surface-2 p-5">
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
-                    こういうAIではない
+                    理解不足のAI
                   </p>
                   <ul className="mt-3 space-y-2 text-sm text-text-muted">
                     <li className="flex items-start gap-2">
@@ -507,7 +493,7 @@ export default function BookCompassPage() {
               {/* 擬似チャット */}
               <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-                  返ってくる、こんな言葉
+                  Book Compass からの応答例
                 </p>
                 <div className="mt-4 space-y-3">
                   <div className="flex items-start gap-3">
@@ -518,7 +504,7 @@ export default function BookCompassPage() {
                       AI
                     </span>
                     <div className="relative max-w-[90%] rounded-2xl rounded-tl-sm bg-surface-2 px-4 py-3 text-sm leading-[1.7] text-text">
-                      あなたが以前こういうことを気にしていたから、今回もここが引っかかっているのかもしれませんね。
+                      前に読んだ本でも同じようなテーマに関心を持たれていましたね。今回のモヤモヤも、その延長線上にあるのかもしれません。
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -529,13 +515,10 @@ export default function BookCompassPage() {
                       AI
                     </span>
                     <div className="relative max-w-[90%] rounded-2xl rounded-tl-sm bg-surface-2 px-4 py-3 text-sm leading-[1.7] text-text">
-                      この本で残った問いは、前に読んだ別の本の気づきとつながるかもしれません。
+                      この本で残った問いは、以前読まれた別の本の気づきとつなげて考えてみると、新しい発見があるかもしれません。
                     </div>
                   </div>
                 </div>
-                <p className="mt-4 text-xs text-text-muted">
-                  そういうふうに返せることを、Book Compass は目指しています。
-                </p>
               </div>
             </div>
           </div>
