@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 
@@ -8,7 +9,28 @@ export const metadata = {
 };
 
 const APP_STORE_URL =
-  'https://apps.apple.com/us/app/trainnote/id6759539755';
+  'https://apps.apple.com/us/app/trainnote/id6759539755?itscg=30200&itsct=apps_box_artwork&mttnsubad=6759539755';
+const APP_STORE_BADGE =
+  'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
+
+const HERO_SCREEN = '/images/trainnote-peak.jpg';
+const HIGHLIGHT_SCREENS = [
+  {
+    src: '/images/trainnote-training.jpg',
+    alt: 'トレーニング記録画面',
+    caption: '記録',
+  },
+  {
+    src: '/images/trainnote-coaches-list.jpg',
+    alt: '5名のAIコーチ一覧',
+    caption: 'AI コーチ',
+  },
+  {
+    src: '/images/trainnote-graph.jpg',
+    alt: 'グラフ画面',
+    caption: 'グラフ',
+  },
+];
 
 const PLANNED_FEATURES = [
   {
@@ -31,10 +53,9 @@ const PLANNED_FEATURES = [
 /**
  * /app/trainnote/ — Web 版は Coming Soon。
  *
- * UI 的には `theme-trainnote` スコープを当てることで、`accent-product`
- * トークンが TrainNote のブランドカラー（シアン）に差し替わる。CTA や
- * 装飾にそのトークンを用いて「いまは TrainNote ページにいる」という
- * 視覚的コンテキストを与える。
+ * UI 的には `theme-trainnote` スコープで `accent-product` トークンを
+ * TrainNote のブランドカラー（シアン）に切り替え、マーケティングページと同じ
+ * アプリアイコン・スクリーンショット・App Store バッジを使って統一感を出す。
  */
 export default function AppTrainNotePage() {
   return (
@@ -57,7 +78,7 @@ export default function AppTrainNotePage() {
 
       <section
         aria-labelledby="tn-hero-title"
-        className="relative overflow-hidden rounded-2xl border border-border bg-surface p-8"
+        className="relative overflow-hidden rounded-2xl border border-border bg-surface p-6 md:p-8"
       >
         <div
           aria-hidden
@@ -77,21 +98,30 @@ export default function AppTrainNotePage() {
             opacity: 0.1,
           }}
         />
-        <div className="relative grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
+        <div className="relative grid items-center gap-8 md:grid-cols-[1.1fr_0.9fr]">
           <div className="flex flex-col justify-center">
-            <div
-              className="inline-flex h-12 w-12 items-center justify-center rounded-xl text-2xl"
-              style={{
-                background: 'var(--color-accent-product)',
-                color: 'var(--color-accent-product-fg)',
-              }}
-              aria-hidden
-            >
-              🏋️
+            <div className="inline-flex items-center gap-2">
+              <Image
+                src="/images/trainnote-app-icon.jpg"
+                alt="TrainNote アプリアイコン"
+                width={44}
+                height={44}
+                className="h-10 w-10 rounded-lg border border-border object-cover shadow-sm"
+              />
+              <span
+                className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-accent-product"
+                style={{
+                  borderWidth: 1,
+                  borderColor: 'var(--color-accent-product)',
+                  backgroundColor: 'transparent',
+                }}
+              >
+                TrainNote
+              </span>
             </div>
             <h2
               id="tn-hero-title"
-              className="mt-4 font-display text-xl font-semibold"
+              className="mt-4 font-display text-xl font-semibold leading-snug md:text-2xl"
             >
               強くなる過程を、AI と一緒に。
             </h2>
@@ -99,24 +129,21 @@ export default function AppTrainNotePage() {
               TrainNote はセット数・重量・調子を手早く記録する筋トレアプリです。
               Web 版では AI コーチとの対話や進捗グラフをブラウザから利用できるようにします。
             </p>
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <Button
-                asChild
-                size="sm"
-                className="border-0"
-                style={{
-                  background: 'var(--color-accent-product)',
-                  color: 'var(--color-accent-product-fg)',
-                }}
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex transition-transform hover:scale-[1.02]"
+                aria-label="App Store で TrainNote をダウンロード"
               >
-                <Link
-                  href={APP_STORE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  App Store で入手
-                </Link>
-              </Button>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={APP_STORE_BADGE}
+                  alt="App Store でダウンロード"
+                  style={{ height: 40, objectFit: 'contain' }}
+                />
+              </a>
               <Button asChild size="sm" variant="secondary">
                 <Link
                   href="/products/trainnote/"
@@ -129,63 +156,51 @@ export default function AppTrainNotePage() {
             </div>
           </div>
 
-          {/* モックスクリーン（CSS のみ） */}
-          <div className="relative hidden md:block">
-            <div
-              className="mx-auto aspect-[9/16] w-44 rounded-[28px] border border-border bg-bg p-2 shadow-lg"
-              aria-hidden
-            >
-              <div className="h-full w-full overflow-hidden rounded-[22px] bg-surface-2">
-                <div
-                  className="flex h-14 items-center gap-2 px-3 text-xs font-semibold"
-                  style={{
-                    background: 'var(--color-accent-product)',
-                    color: 'var(--color-accent-product-fg)',
-                  }}
-                >
-                  <span>🏋️</span>
-                  <span>TrainNote</span>
-                </div>
-                <div className="space-y-2 p-3">
-                  {/* ダミーのグラフ */}
-                  <div className="flex h-20 items-end gap-1 rounded-md bg-bg p-2">
-                    {[0.35, 0.5, 0.45, 0.7, 0.6, 0.85, 0.95].map((h, i) => (
-                      <div
-                        key={i}
-                        className="flex-1 rounded-sm"
-                        style={{
-                          height: `${h * 100}%`,
-                          background: 'var(--color-accent-product)',
-                        }}
-                      />
-                    ))}
-                  </div>
-                  {[0.9, 0.7, 0.8].map((w, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-2 rounded-md bg-bg p-2"
-                    >
-                      <div
-                        className="h-6 w-6 rounded-full"
-                        style={{
-                          background: 'var(--color-accent-product)',
-                          opacity: 0.75,
-                        }}
-                      />
-                      <div className="flex-1 space-y-1">
-                        <div
-                          className="h-2 rounded bg-text-muted/30"
-                          style={{ width: `${w * 100}%` }}
-                        />
-                        <div className="h-1.5 w-1/3 rounded bg-text-muted/20" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* 実機スクリーンショット */}
+          <div className="relative mx-auto w-full max-w-[280px]">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-border bg-surface-2 shadow-lg">
+              <Image
+                src={HERO_SCREEN}
+                alt="TrainNote ホーム画面 — PEAK バッジと AI Coach"
+                fill
+                className="object-cover"
+                sizes="(min-width: 768px) 280px, 70vw"
+                priority
+              />
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ハイライトスクリーン 3 枚 */}
+      <section
+        aria-labelledby="tn-screens-title"
+        className="rounded-xl border border-border bg-surface p-6"
+      >
+        <h2
+          id="tn-screens-title"
+          className="font-display text-base font-semibold"
+        >
+          主な画面
+        </h2>
+        <ul className="mt-4 grid gap-4 sm:grid-cols-3">
+          {HIGHLIGHT_SCREENS.map((s) => (
+            <li key={s.src} className="space-y-2">
+              <div className="relative aspect-[9/16] overflow-hidden rounded-xl border border-border bg-bg">
+                <Image
+                  src={s.src}
+                  alt={s.alt}
+                  fill
+                  className="object-contain"
+                  sizes="(min-width: 1024px) 240px, (min-width: 640px) 33vw, 70vw"
+                />
+              </div>
+              <p className="text-center text-xs text-text-muted">
+                {s.caption}
+              </p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section

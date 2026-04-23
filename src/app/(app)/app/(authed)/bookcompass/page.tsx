@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 
@@ -7,8 +8,31 @@ export const metadata = {
   robots: { index: false },
 };
 
+// マーケティング（/products/bookcompass/）で使っている公式アセットを
+// そのまま流用する。アイコン・スクショ・App Store バッジは public/images/ 配下。
 const APP_STORE_URL =
-  'https://apps.apple.com/us/app/bookcompass-%E8%AA%AD%E6%9B%B8%E7%9F%A5%E8%AD%98%E3%83%9E%E3%83%83%E3%83%97/id6760604663';
+  'https://apps.apple.com/us/app/bookcompass-%E8%AA%AD%E6%9B%B8%E7%9F%A5%E8%AD%98%E3%83%9E%E3%83%83%E3%83%97/id6760604663?itscg=30200&itsct=apps_box_badge&mttnsubad=6760604663';
+const APP_STORE_BADGE =
+  'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
+
+const HERO_SCREEN = '/images/bookcompass-hero.jpg';
+const HIGHLIGHT_SCREENS = [
+  {
+    src: '/images/bookcompass-screen-01.jpg',
+    alt: 'ナレッジ・コンパス — 知識マップと称号',
+    caption: 'ナレッジ・コンパス',
+  },
+  {
+    src: '/images/bookcompass-screen-05.jpg',
+    alt: '知的ポジション TRAIT MAP / AXIS VIEW',
+    caption: '知的ポジション',
+  },
+  {
+    src: '/images/bookcompass-screen-10.jpg',
+    alt: '3人の読書パートナー',
+    caption: '読書パートナー',
+  },
+];
 
 const PLANNED_FEATURES = [
   {
@@ -31,14 +55,9 @@ const PLANNED_FEATURES = [
 /**
  * /app/bookcompass/ — Web 連携は Coming Soon。
  *
- * iOS 側が匿名認証のみで Apple Sign In UI を未公開のため、Web からの
- * プロバイダ非依存連携（`external_source_accounts` への書き込み）が
- * 現時点で技術的に成立しない。iOS 側の Apple Sign In 公開後に復活予定。
- *
- * UI 的には `theme-bookcompass` スコープを当てることで、`accent-product`
- * トークンが BookCompass のブランドカラーに差し替わる。CTA や装飾に
- * そのトークンを用いることで「いまは BookCompass ページにいる」という
- * 視覚的コンテキストを与える。
+ * UI 的には `theme-bookcompass` スコープで `accent-product` トークンを
+ * BookCompass のブランドカラーに切り替え、マーケティングページと同じ
+ * アプリアイコン・スクリーンショット・App Store バッジを使って統一感を出す。
  */
 export default function AppBookCompassPage() {
   return (
@@ -59,11 +78,10 @@ export default function AppBookCompassPage() {
         </p>
       </header>
 
-      {/* ヒーローカード。`bg-accent-product/8` などの opacity modifier は
-          CSS 変数ベースだと効かないため、ソフトレイヤーは半透明の overlay で擬似的に作る。 */}
+      {/* ヒーロー。アイコン + タイトル + 説明 + CTA を左、実機スクショを右に配置。 */}
       <section
         aria-labelledby="bc-hero-title"
-        className="relative overflow-hidden rounded-2xl border border-border bg-surface p-8"
+        className="relative overflow-hidden rounded-2xl border border-border bg-surface p-6 md:p-8"
       >
         <div
           aria-hidden
@@ -83,21 +101,30 @@ export default function AppBookCompassPage() {
             opacity: 0.1,
           }}
         />
-        <div className="relative grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
+        <div className="relative grid items-center gap-8 md:grid-cols-[1.1fr_0.9fr]">
           <div className="flex flex-col justify-center">
-            <div
-              className="inline-flex h-12 w-12 items-center justify-center rounded-xl text-2xl"
-              style={{
-                background: 'var(--color-accent-product)',
-                color: 'var(--color-accent-product-fg)',
-              }}
-              aria-hidden
-            >
-              📚
+            <div className="inline-flex items-center gap-2">
+              <Image
+                src="/images/bookcompass-app-icon.jpg"
+                alt="BookCompass アプリアイコン"
+                width={44}
+                height={44}
+                className="h-10 w-10 rounded-lg border border-border object-cover shadow-sm"
+              />
+              <span
+                className="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold text-accent-product"
+                style={{
+                  borderWidth: 1,
+                  borderColor: 'var(--color-accent-product)',
+                  backgroundColor: 'transparent',
+                }}
+              >
+                BookCompass
+              </span>
             </div>
             <h2
               id="bc-hero-title"
-              className="mt-4 font-display text-xl font-semibold"
+              className="mt-4 font-display text-xl font-semibold leading-snug md:text-2xl"
             >
               あなたの本棚を、Web からも。
             </h2>
@@ -106,27 +133,24 @@ export default function AppBookCompassPage() {
               読書記録アプリです。Web 連携では、iOS で記録した本棚を
               ブラウザからも閲覧・共有できるようにします。
             </p>
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <Button
-                asChild
-                size="sm"
-                className="border-0"
-                style={{
-                  background: 'var(--color-accent-product)',
-                  color: 'var(--color-accent-product-fg)',
-                }}
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <a
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex transition-transform hover:scale-[1.02]"
+                aria-label="App Store で BookCompass をダウンロード"
               >
-                <Link
-                  href={APP_STORE_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  App Store で入手
-                </Link>
-              </Button>
+                {/* マーケと同じ Apple 提供の動的バッジ画像を使用。
+                    外部ホストの画像は next/image では事前設定が必要なので、通常の img で。
+                    eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={APP_STORE_BADGE}
+                  alt="App Store でダウンロード"
+                  style={{ height: 40, objectFit: 'contain' }}
+                />
+              </a>
               <Button asChild size="sm" variant="secondary">
-                {/* (marketing) レイアウトのヘッダーに載る「ログイン」リンクが
-                    セッション切れと誤解される懸念から、新タブで開く。 */}
                 <Link
                   href="/products/bookcompass/"
                   target="_blank"
@@ -138,50 +162,51 @@ export default function AppBookCompassPage() {
             </div>
           </div>
 
-          {/* モックスクリーン（CSS のみ） */}
-          <div className="relative hidden md:block">
-            <div
-              className="mx-auto aspect-[9/16] w-44 rounded-[28px] border border-border bg-bg p-2 shadow-lg"
-              aria-hidden
-            >
-              <div className="h-full w-full overflow-hidden rounded-[22px] bg-surface-2">
-                <div
-                  className="flex h-14 items-center gap-2 px-3 text-xs font-semibold"
-                  style={{
-                    background: 'var(--color-accent-product)',
-                    color: 'var(--color-accent-product-fg)',
-                  }}
-                >
-                  <span>📚</span>
-                  <span>BookCompass</span>
-                </div>
-                <div className="space-y-2 p-3">
-                  {[0.9, 0.7, 0.85, 0.6].map((w, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-2 rounded-md bg-bg p-2"
-                    >
-                      <div
-                        className="h-10 w-7 rounded-sm"
-                        style={{
-                          background: 'var(--color-accent-product)',
-                          opacity: 0.75,
-                        }}
-                      />
-                      <div className="flex-1 space-y-1.5">
-                        <div
-                          className="h-2 rounded bg-text-muted/30"
-                          style={{ width: `${w * 100}%` }}
-                        />
-                        <div className="h-1.5 w-1/2 rounded bg-text-muted/20" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* 実機スクリーンショット */}
+          <div className="relative mx-auto w-full max-w-[280px]">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-2xl">
+              <Image
+                src={HERO_SCREEN}
+                alt="BookCompass ナレッジ・コンパス画面"
+                fill
+                className="object-contain"
+                sizes="(min-width: 768px) 280px, 70vw"
+                priority
+              />
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ハイライトスクリーン 3 枚 */}
+      <section
+        aria-labelledby="bc-screens-title"
+        className="rounded-xl border border-border bg-surface p-6"
+      >
+        <h2
+          id="bc-screens-title"
+          className="font-display text-base font-semibold"
+        >
+          主な画面
+        </h2>
+        <ul className="mt-4 grid gap-4 sm:grid-cols-3">
+          {HIGHLIGHT_SCREENS.map((s) => (
+            <li key={s.src} className="space-y-2">
+              <div className="relative aspect-[9/16] overflow-hidden rounded-xl border border-border bg-bg">
+                <Image
+                  src={s.src}
+                  alt={s.alt}
+                  fill
+                  className="object-contain"
+                  sizes="(min-width: 1024px) 240px, (min-width: 640px) 33vw, 70vw"
+                />
+              </div>
+              <p className="text-center text-xs text-text-muted">
+                {s.caption}
+              </p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* 計画中機能 */}
