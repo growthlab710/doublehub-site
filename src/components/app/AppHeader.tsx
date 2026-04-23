@@ -2,9 +2,10 @@
 
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
+import { matchAppNav } from './AppNav';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -37,6 +38,8 @@ interface AppHeaderProps {
 export function AppHeader({ user }: AppHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const currentNav = matchAppNav(pathname);
 
   const handleSignOut = useCallback(async () => {
     if (!isDynamicHosting) {
@@ -96,7 +99,43 @@ export function AppHeader({ user }: AppHeaderProps) {
         DoubleHub
       </Link>
 
+      {/* パンくず（desktop のみ）。現在のセクション名を明示して
+          「どこにいるか」をサイドバーのアクティブ表示と二重化する。 */}
+      {currentNav && (
+        <nav
+          aria-label="パンくず"
+          className="hidden items-center gap-2 text-sm text-text-muted md:flex"
+        >
+          <Link
+            href="/app/"
+            className="hover:text-text transition-colors"
+          >
+            ホーム
+          </Link>
+          {currentNav.href !== '/app/' && (
+            <>
+              <span aria-hidden className="text-text-faint">/</span>
+              <span className="font-medium text-text" aria-current="page">
+                {currentNav.label}
+              </span>
+            </>
+          )}
+        </nav>
+      )}
+
       <div className="ml-auto flex items-center gap-2">
+        {/* クイック追加ボタン（desktop）。どのページからでも
+            DoubleHub のタスク追加へ即移動できるようにする。 */}
+        <Button
+          asChild
+          size="sm"
+          variant="secondary"
+          className="hidden md:inline-flex"
+        >
+          <Link href="/app/doublehub/" aria-label="新しい ToDo を追加">
+            <span aria-hidden className="mr-1">+</span>新規
+          </Link>
+        </Button>
         {user ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

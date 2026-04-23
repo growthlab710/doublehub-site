@@ -1239,3 +1239,45 @@ iOS アプリに合わせて、ToDo の期限を手早く設定できる quick c
 2. BookCompass / TrainNote Coming Soon ページのプロダクトテーマ化
 3. 設定 / ログイン画面のブランド強化
 4. 確認完了後、Vercel Preview を static モードに戻す
+
+---
+
+## 2026-04-23 (Thu) — Sidebar/Header ブラッシュアップ
+
+### 概要
+
+Web アプリのナビ周りを視認性重視で磨き込む。サイドバーにプロダクト別の
+アクセントバー＋色付きアイコンチップを導入し、ヘッダーにパンくずと
+クイック追加ボタンを追加した。
+
+### 変更内容
+
+- **AppNav.ts**
+  - `AppNavItem` に `accent` フィールド（`'primary' | 'bookcompass' | 'trainnote' | 'neutral'`）追加
+  - `matchAppNav(pathname)` を新規エクスポート。長いパス優先でマッチするため、
+    `/app/doublehub` が `/app/` ダッシュボード判定に誤マッチする問題を解消
+
+- **AppSidebar.tsx**
+  - `SidebarItem` コンポーネントを分離
+  - アクティブ項目に
+    - 左端のアクセントバー（プロダクト色、高さ 24px）
+    - アイコン部分の色付きチップ（`bg-primary/10 text-primary` など）
+    - テキストのアクセントカラー
+  - アクセントは `accentClasses()` で静的クラス名にマップ（Tailwind JIT 対応）
+  - BookCompass=amber、TrainNote=cyan、DoubleHub=primary、その他=neutral
+
+- **AppHeader.tsx**
+  - `usePathname` + `matchAppNav` で現在セクションを判定
+  - デスクトップにパンくず（`ホーム / <セクション名>`）を左寄せで表示
+  - 右側に「+ 新規」クイック追加ボタン（`/app/doublehub/` へ遷移）を追加
+  - モバイルはハンバーガーメニュー + タイトルのまま
+
+### 検証
+
+- `pnpm build` 成功（37 ページ、型エラーなし）
+
+### 次アクション
+
+1. BookCompass / TrainNote Coming Soon ページのプロダクトテーマ化
+2. 設定・ログイン画面のブランド強化
+3. 確認完了後 Vercel Preview を static モードに戻す
