@@ -238,11 +238,16 @@ export default function BookCompassPage() {
               Book Compass の主な画面。
             </h2>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {/* スマホ: 横スクロールカルーセル / sm以上: グリッド */}
+          {/* スマホ時は Container の px-4 を相殺して画面端までスクロール領域を廣げ、内側 padding でカードを中心にスナップ */}
+          <div
+            className="-mx-4 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 sm:mt-12 sm:grid sm:snap-none sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 [&::-webkit-scrollbar]:hidden"
+            aria-label="Book Compass の画面ギャラリー"
+          >
             {screenshots.map((s) => (
               <figure
                 key={s.src}
-                className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm"
+                className="flex-shrink-0 basis-[78%] snap-center overflow-hidden rounded-2xl border border-border bg-surface shadow-sm sm:flex-shrink sm:basis-auto sm:snap-align-none"
               >
                 <div className="relative aspect-[9/16] overflow-hidden bg-surface-2">
                   <Image
@@ -250,7 +255,7 @@ export default function BookCompassPage() {
                     alt={s.alt}
                     fill
                     className="object-contain"
-                    sizes="(min-width: 1280px) 220px, (min-width: 1024px) 300px, (min-width: 640px) 45vw, 90vw"
+                    sizes="(min-width: 1280px) 220px, (min-width: 1024px) 300px, (min-width: 640px) 45vw, 78vw"
                   />
                 </div>
                 <figcaption className="px-4 py-3 text-xs text-text-muted">
@@ -258,6 +263,40 @@ export default function BookCompassPage() {
                 </figcaption>
               </figure>
             ))}
+          </div>
+
+          {/* スマホのみ表示: 横スクロールヒント */}
+          <div
+            className="mt-4 flex items-center justify-center gap-2 text-xs text-text-muted sm:hidden"
+            aria-hidden="true"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="animate-pulse"
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            <span>スワイプして {screenshots.length} 枚の画面を見る</span>
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="animate-pulse"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
           </div>
         </Container>
       </Section>
