@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { supabaseConfig } from '@/lib/env';
 import { getBrowserDoubleHub } from '@/lib/supabase/client';
 
@@ -17,6 +18,7 @@ export function DashboardGreeting() {
   const [name, setName] = useState<string | null>(null);
   const [today, setToday] = useState<string>(() => formatTodayJST(new Date()));
   const [greeting, setGreeting] = useState<string>(() => getJapaneseGreeting());
+  const [resolvingName, setResolvingName] = useState(true);
 
   const envOk = supabaseConfig.doublehub.ok;
 
@@ -28,7 +30,10 @@ export function DashboardGreeting() {
   }, []);
 
   useEffect(() => {
-    if (!envOk) return;
+    if (!envOk) {
+      setResolvingName(false);
+      return;
+    }
     let mounted = true;
     void (async () => {
       try {
@@ -64,6 +69,8 @@ export function DashboardGreeting() {
         if (mounted) setName(resolved);
       } catch {
         // 未ログインなどは親の AuthGate 側で救済されるはずなので無視。
+      } finally {
+        if (mounted) setResolvingName(false);
       }
     })();
     return () => {
@@ -76,11 +83,19 @@ export function DashboardGreeting() {
       <p className="text-xs font-medium uppercase tracking-[0.16em] text-text-faint">
         {today}
       </p>
-      <h1 className="mt-2 font-display text-2xl font-semibold md:text-3xl">
-        {greeting}
+      <h1 className="mt-2 flex flex-wrap items-center gap-x-1 font-display text-2xl font-semibold md:text-3xl">
+        <span>{greeting}</span>
         {name ? (
           <>
-            、<span className="text-primary">{name}</span> さん
+            <span>、</span>
+            <span className="text-primary">{name}</span>
+            <span>さん</span>
+          </>
+        ) : resolvingName ? (
+          <>
+            <span>、</span>
+            <Skeleton className="inline-block h-6 w-24 align-middle md:h-7" />
+            <span>さん</span>
           </>
         ) : null}
       </h1>

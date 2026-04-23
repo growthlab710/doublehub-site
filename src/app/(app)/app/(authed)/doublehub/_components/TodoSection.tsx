@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { cn } from '@/lib/utils';
 import { formatDueDateJST } from '@/lib/format';
 import {
@@ -37,12 +38,15 @@ interface TodoSectionProps {
   items: Todo[];
   /** データが変わったときに親へ再取得を依頼するコールバック。 */
   onChanged?: () => void | Promise<void>;
+  /** 親の初回ロード中か。true の間は空状態ではなく Skeleton を表示する。 */
+  loading?: boolean;
 }
 
 export function TodoSection({
   category = DEFAULT_CATEGORY,
   items,
   onChanged,
+  loading = false,
 }: TodoSectionProps) {
   const [filter, setFilter] = useState<Filter>('active');
   const [title, setTitle] = useState('');
@@ -140,7 +144,23 @@ export function TodoSection({
           <h2 id="todo-heading" className="font-display text-lg font-semibold">
             ToDo
           </h2>
-          <span className="text-xs text-text-faint">{activeCount} 件</span>
+          {loading ? (
+            <Skeleton className="h-3.5 w-10" />
+          ) : (
+            <span className="text-xs text-text-faint">{activeCount} 件</span>
+          )}
+          {loading && (
+            <span
+              className="inline-flex items-center gap-1 text-[10px] font-medium text-text-faint"
+              aria-live="polite"
+            >
+              <span
+                className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary"
+                aria-hidden
+              />
+              読込中
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-1 rounded-lg border border-border p-1 text-xs">
           {(['active', 'done', 'all'] as Filter[]).map((f) => (
@@ -201,7 +221,15 @@ export function TodoSection({
       )}
 
       <ul className="mt-4 space-y-2">
-        {displayed.length === 0 ? (
+        {loading ? (
+          <>
+            {[0, 1, 2].map((i) => (
+              <li key={i}>
+                <Skeleton className="h-12 w-full" />
+              </li>
+            ))}
+          </>
+        ) : displayed.length === 0 ? (
           <li className="rounded-lg border border-dashed border-border bg-bg/40 p-4 text-center text-sm text-text-muted">
             {filter === 'done'
               ? '完了した ToDo はまだありません'

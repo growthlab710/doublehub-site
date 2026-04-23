@@ -34,11 +34,16 @@ export function DoubleHubClient() {
   // 全件を親で保持し、タブごとの件数集計はここで行う。
   const [todos, setTodos] = useState<Todo[]>([]);
   const [memos, setMemos] = useState<Memo[]>([]);
+  // 初回ロード中かどうか。true の間は子セクションで Skeleton を出す。
+  const [initialLoading, setInitialLoading] = useState(true);
 
   const envOk = supabaseConfig.doublehub.ok;
 
   const refresh = useCallback(async () => {
-    if (!envOk) return;
+    if (!envOk) {
+      setInitialLoading(false);
+      return;
+    }
     try {
       const [t, m] = await Promise.all([
         // ToDo は完了も含め全件取得（セクション側のフィルタ UI のため）。
@@ -50,6 +55,8 @@ export function DoubleHubClient() {
       setMemos(m);
     } catch {
       // 子セクション側でのエラーハンドリングと重複しないよう、親側では黙殺。
+    } finally {
+      setInitialLoading(false);
     }
   }, [envOk]);
 
@@ -97,7 +104,7 @@ export function DoubleHubClient() {
         <CategoryTabs
           value={category}
           onChange={setCategory}
-          counts={countsByCategory}
+          counts={initialLoading ? undefined : countsByCategory}
         />
       </header>
 
@@ -111,11 +118,13 @@ export function DoubleHubClient() {
           category={category}
           items={currentTodos}
           onChanged={refresh}
+          loading={initialLoading}
         />
         <MemoSection
           category={category}
           items={currentMemos}
           onChanged={refresh}
+          loading={initialLoading}
         />
       </div>
     </div>

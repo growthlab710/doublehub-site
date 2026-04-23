@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/Button';
+import { Skeleton } from '@/components/ui/Skeleton';
 import { Textarea } from '@/components/ui/Textarea';
 import { supabaseConfig } from '@/lib/env';
 import type { Memo, MemoCategory } from '@/lib/supabase/types-doublehub';
@@ -32,12 +33,15 @@ interface MemoSectionProps {
   items: Memo[];
   /** データが変わったときに親へ再取得を依頼するコールバック。 */
   onChanged?: () => void | Promise<void>;
+  /** 親の初回ロード中か。true の間は空状態ではなく Skeleton を表示する。 */
+  loading?: boolean;
 }
 
 export function MemoSection({
   category = DEFAULT_CATEGORY,
   items,
   onChanged,
+  loading = false,
 }: MemoSectionProps) {
   const [content, setContent] = useState('');
   const [busy, setBusy] = useState(false);
@@ -81,7 +85,23 @@ export function MemoSection({
           <h2 id="memo-heading" className="font-display text-lg font-semibold">
             メモ
           </h2>
-          <span className="text-xs text-text-faint">{items.length} 件</span>
+          {loading ? (
+            <Skeleton className="h-3.5 w-10" />
+          ) : (
+            <span className="text-xs text-text-faint">{items.length} 件</span>
+          )}
+          {loading && (
+            <span
+              className="inline-flex items-center gap-1 text-[10px] font-medium text-text-faint"
+              aria-live="polite"
+            >
+              <span
+                className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary"
+                aria-hidden
+              />
+              読込中
+            </span>
+          )}
         </div>
       </div>
 
@@ -116,7 +136,15 @@ export function MemoSection({
       )}
 
       <ul className="mt-4 space-y-2">
-        {items.length === 0 ? (
+        {loading ? (
+          <>
+            {[0, 1].map((i) => (
+              <li key={i}>
+                <Skeleton className="h-20 w-full" />
+              </li>
+            ))}
+          </>
+        ) : items.length === 0 ? (
           <li className="rounded-lg border border-dashed border-border bg-bg/40 p-4 text-center text-sm text-text-muted">
             {CATEGORY_LABEL[category]}のメモはまだありません
           </li>

@@ -123,6 +123,7 @@ export function DashboardWidgets() {
         count={totalTodos}
         countLabel="件"
         iconEmoji="✅"
+        loading={loading}
       >
         {!envOk ? (
           <EmptyState text="Supabase 環境変数が未設定です。" />
@@ -173,6 +174,7 @@ export function DashboardWidgets() {
         count={totalMemos}
         countLabel="件"
         iconEmoji="📝"
+        loading={loading}
       >
         {!envOk ? (
           <EmptyState text="Supabase 環境変数が未設定です。" />
@@ -216,6 +218,7 @@ export function DashboardWidgets() {
         }
         iconEmoji="📚"
         accent="bookcompass"
+        loading={loading}
       >
         {!envOk ? (
           <EmptyState text="Supabase 環境変数が未設定です。" />
@@ -296,6 +299,7 @@ function SummaryCard({
   countLabel,
   iconEmoji,
   accent,
+  loading,
 }: {
   heading: string;
   href: string;
@@ -306,6 +310,8 @@ function SummaryCard({
   iconEmoji?: string;
   /** 上部アクセントバーの配色。省略時は primary。 */
   accent?: 'primary' | 'bookcompass' | 'trainnote';
+  /** true の間は件数バッジを Skeleton に置き換え、ヘッダーに「読込中」ドットを表示。 */
+  loading?: boolean;
 }) {
   const accentClass =
     accent === 'bookcompass'
@@ -332,10 +338,27 @@ function SummaryCard({
             </span>
           )}
           <h2 className="font-display text-base font-semibold">{heading}</h2>
-          {typeof count === 'number' && count > 0 && (
-            <span className="rounded-full bg-surface-2 px-1.5 py-0.5 text-[10px] font-semibold text-text-muted">
-              {count}
-              {countLabel ?? ''}
+          {loading ? (
+            <Skeleton className="h-4 w-8" />
+          ) : (
+            typeof count === 'number' &&
+            count > 0 && (
+              <span className="rounded-full bg-surface-2 px-1.5 py-0.5 text-[10px] font-semibold text-text-muted">
+                {count}
+                {countLabel ?? ''}
+              </span>
+            )
+          )}
+          {loading && (
+            <span
+              className="inline-flex items-center gap-1 text-[10px] font-medium text-text-faint"
+              aria-live="polite"
+            >
+              <span
+                className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary"
+                aria-hidden
+              />
+              読込中
             </span>
           )}
           <Link
