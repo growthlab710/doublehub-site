@@ -208,13 +208,12 @@ export default function BookCompassPage() {
           </div>
 
           <div className="relative mx-auto w-full max-w-md">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-3xl">
               <Image
-                src="/images/bookcompass-screen-01.jpg"
-                alt="Book Compass ナレッジマップ画面"
+                src="/images/bookcompass-hero.jpg"
+                alt="Book Compass ナレッジ・コンパス画面"
                 fill
-                className="object-cover"
-                style={{ objectPosition: 'center 82%' }}
+                className="object-contain"
                 sizes="(min-width: 768px) 420px, 100vw"
                 priority
               />
