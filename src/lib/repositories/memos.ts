@@ -28,10 +28,36 @@ export async function listMemos({
     .is('deleted_at', null)
     .order('updated_at', { ascending: false })
     .limit(limit);
-  if (category !== 'all') query = query.eq('category', category);
+  // デフォルトタブ（プライベート）に NULL/空文字のレコードを寄せる。
+  if (category !== 'all') {
+    if (category === DEFAULT_CATEGORY) {
+      query = query.or(
+        `category.eq.${category},category.is.null,category.eq.`
+      );
+    } else {
+      query = query.eq('category', category);
+    }
+  }
 
   const { data, error } = await query;
   if (error) throw error;
+
+  // 開発時の一時デバッグ（確認後に削除）。
+  if (typeof window !== 'undefined') {
+    const rows = (data ?? []) as Memo[];
+    const dist = new Map<string, number>();
+    for (const r of rows) {
+      const k = r.category === null || r.category === undefined ? '(null)' : JSON.stringify(r.category);
+      dist.set(k, (dist.get(k) ?? 0) + 1);
+    }
+    // eslint-disable-next-line no-console
+    console.debug('[DoubleHub] memos listed', {
+      requested: { category, limit },
+      count: rows.length,
+      categoryDistribution: Object.fromEntries(dist),
+    });
+  }
+
   return (data ?? []) as Memo[];
 }
 

@@ -39,10 +39,38 @@ export async function listTodos({
 
   if (filter === 'active') query = query.eq('is_completed', false);
   if (filter === 'done') query = query.eq('is_completed', true);
-  if (category !== 'all') query = query.eq('category', category);
+  // カテゴリ絞り込みは、デフォルトタブ（プライベート）側に NULL/空文字を寄せる。
+  // iOS 初期リリース時の古いデータや、SQL 上のデフォルトが NULL なレコードを欲落させないため。
+  if (category !== 'all') {
+    if (category === DEFAULT_CATEGORY) {
+      query = query.or(
+        `category.eq.${category},category.is.null,category.eq.`
+      );
+    } else {
+      query = query.eq('category', category);
+    }
+  }
 
   const { data, error } = await query;
   if (error) throw error;
+
+  // 開発時の一時デバッグ：実際の category 値分布をさっと見る。
+  // （確認が終わったら削除してください）
+  if (typeof window !== 'undefined') {
+    const rows = (data ?? []) as Todo[];
+    const dist = new Map<string, number>();
+    for (const r of rows) {
+      const k = r.category === null || r.category === undefined ? '(null)' : JSON.stringify(r.category);
+      dist.set(k, (dist.get(k) ?? 0) + 1);
+    }
+    // eslint-disable-next-line no-console
+    console.debug('[DoubleHub] todos listed', {
+      requested: { filter, category, limit },
+      count: rows.length,
+      categoryDistribution: Object.fromEntries(dist),
+    });
+  }
+
   return (data ?? []) as Todo[];
 }
 
