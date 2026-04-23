@@ -37,11 +37,6 @@ const features = [
       '歩きながら、手を離せない時も、声でメモ。iOS Speech Framework を活用した正確な書き起こし。',
   },
   {
-    icon: '🔁',
-    title: 'iCloud 同期',
-    body: 'デバイス間でシームレスに同期。どこで書いても、すぐ参照できます。',
-  },
-  {
     icon: '🧩',
     title: '他プロダクトと連携',
     body:
