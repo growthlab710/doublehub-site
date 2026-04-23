@@ -6,7 +6,13 @@
 export interface AppNavItem {
   href: string;
   label: string;
-  icon: string; // emoji / 将来的に lucide などへ
+  /**
+   * 絵文字もしくは `/images/...` で始まるアプリアイコン画像のパス。
+   * サイドバー側で `/` 始まりかどうかで描画を分ける。
+   */
+  icon: string;
+  /** 絵文字フォールバック（icon が画像パスのときに利用）。 */
+  iconFallback?: string;
   description?: string;
   /** Coming Soon 表示（TrainNote など） */
   comingSoon?: boolean;
@@ -28,14 +34,17 @@ export const appNavItems: AppNavItem[] = [
   {
     href: '/app/doublehub/',
     label: 'DoubleHub',
-    icon: '🧠',
+    // マーケティングと揃えてアプリアイコンを使用。
+    icon: '/images/doublehub-icon.jpg',
+    iconFallback: '🧠',
     description: 'ToDo とメモ',
     accent: 'primary',
   },
   {
     href: '/app/bookcompass/',
     label: 'BookCompass',
-    icon: '📚',
+    icon: '/images/bookcompass-app-icon.jpg',
+    iconFallback: '📚',
     description: '準備中',
     comingSoon: true,
     accent: 'bookcompass',
@@ -43,7 +52,8 @@ export const appNavItems: AppNavItem[] = [
   {
     href: '/app/trainnote/',
     label: 'TrainNote',
-    icon: '🏋️',
+    icon: '/images/trainnote-app-icon.jpg',
+    iconFallback: '🏋️',
     description: '準備中',
     comingSoon: true,
     accent: 'trainnote',

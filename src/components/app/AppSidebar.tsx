@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { appNavItems, matchAppNav, type AppNavItem } from './AppNav';
@@ -104,15 +105,7 @@ function SidebarItem({ item, isActive, onNavigate }: SidebarItemProps) {
           isActive ? cn('opacity-100', accent.bar) : 'opacity-0'
         )}
       />
-      <span
-        className={cn(
-          'flex h-6 w-6 items-center justify-center rounded-md text-base leading-none transition-colors',
-          isActive ? accent.iconBg : 'text-text-muted'
-        )}
-        aria-hidden
-      >
-        {item.icon}
-      </span>
+      <NavIcon item={item} isActive={isActive} accentIconBg={accent.iconBg} />
       <span className="flex-1 truncate">{item.label}</span>
       {item.comingSoon && (
         <Badge variant="outline" className="shrink-0 text-[10px]">
@@ -129,6 +122,52 @@ function SidebarItem({ item, isActive, onNavigate }: SidebarItemProps) {
  * Tailwind の JIT が検出できるよう、可能性のあるクラス名を静的文字列として
  * 返す（動的補間は使わない）。
  */
+// ---------------------------------------------------------------------------
+// アイコン描画。絵文字とアプリアイコン画像の両方に対応。
+// ---------------------------------------------------------------------------
+
+interface NavIconProps {
+  item: AppNavItem;
+  isActive: boolean;
+  accentIconBg: string;
+}
+
+function NavIcon({ item, isActive, accentIconBg }: NavIconProps) {
+  const isImage = item.icon.startsWith('/');
+
+  if (isImage) {
+    // アプリアイコン画像。角は「app-icon squircle」近い見た目にするため
+    // rounded-md ～rounded-lg ぐらいに押さえ、サイズは絵文字時と揃える（20x20）。
+    return (
+      <span
+        aria-hidden
+        className="relative flex h-6 w-6 shrink-0 items-center justify-center overflow-hidden rounded-md border border-border bg-surface-2"
+      >
+        <Image
+          src={item.icon}
+          alt=""
+          width={24}
+          height={24}
+          className="h-full w-full object-cover"
+        />
+      </span>
+    );
+  }
+
+  // 絵文字は従来通りアクティブ時に色付きチップ、他は faint に。
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        'flex h-6 w-6 items-center justify-center rounded-md text-base leading-none transition-colors',
+        isActive ? accentIconBg : 'text-text-muted'
+      )}
+    >
+      {item.icon}
+    </span>
+  );
+}
+
 function accentClasses(accent: NonNullable<AppNavItem['accent']>): {
   bar: string;
   activeText: string;
