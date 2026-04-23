@@ -22,29 +22,20 @@ export async function listMemos({
   limit = 100,
 }: ListMemosOptions = {}): Promise<Memo[]> {
   const supabase = getBrowserDoubleHub();
-  let query = supabase
+  const query = supabase
     .from('memos')
     .select('*')
     .is('deleted_at', null)
     .order('updated_at', { ascending: false })
     .limit(limit);
-  // デフォルトタブ（プライベート）に NULL/空文字のレコードを寄せる。
-  if (category !== 'all') {
-    if (category === DEFAULT_CATEGORY) {
-      query = query.or(
-        `category.eq.${category},category.is.null,category.eq.`
-      );
-    } else {
-      query = query.eq('category', category);
-    }
-  }
+  // todos と同じ理由で、カテゴリフィルタはクライアント側で行う。
 
   const { data, error } = await query;
   if (error) throw error;
+  const rows = (data ?? []) as Memo[];
 
   // 開発時の一時デバッグ（確認後に削除）。
   if (typeof window !== 'undefined') {
-    const rows = (data ?? []) as Memo[];
     const dist = new Map<string, number>();
     for (const r of rows) {
       const k = r.category === null || r.category === undefined ? '(null)' : JSON.stringify(r.category);
@@ -53,12 +44,27 @@ export async function listMemos({
     // eslint-disable-next-line no-console
     console.debug('[DoubleHub] memos listed', {
       requested: { category, limit },
-      count: rows.length,
+      rowsBeforeCategoryFilter: rows.length,
       categoryDistribution: Object.fromEntries(dist),
     });
   }
 
-  return (data ?? []) as Memo[];
+  if (category === 'all') return rows;
+  return rows.filter((r) => matchMemoCategory(r.category, category));
+}
+
+function matchMemoCategory(
+  rowCategory: string | null | undefined,
+  selected: MemoCategory
+): boolean {
+  const normalized = (rowCategory ?? '').trim();
+  if (normalized === selected) return true;
+  if (selected === DEFAULT_CATEGORY) {
+    if (normalized === '') return true;
+    const known: string[] = ['プライベート', '仕事'];
+    if (!known.includes(normalized)) return true;
+  }
+  return false;
 }
 
 export async function createMemo(input: {
