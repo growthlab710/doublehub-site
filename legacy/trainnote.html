@@ -20,6 +20,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える">
 <meta name="twitter:description" content="190以上の科学論文を参照する5人の専門AIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。">
+<link rel="canonical" href="https://doublehub.jp/trainnote.html">
 <link rel="stylesheet" href="./styles.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJW7K08F6F"></script>
@@ -146,8 +147,10 @@
 /* Plan Comparison */
 .tn-plans {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: var(--space-4);
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .tn-plan {
@@ -181,7 +184,62 @@
   font-family: var(--font-display);
   font-size: var(--text-lg);
   font-weight: 700;
+  margin-bottom: var(--space-3);
+}
+
+.tn-plan__eyebrow {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+
+.tn-plan__price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  margin-bottom: var(--space-1);
+}
+
+.tn-plan__price-amount {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.tn-plan__price-unit {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.tn-plan__price-prefix {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+}
+
+.tn-plan__discount {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-full);
+  margin: var(--space-2) 0 var(--space-1);
+}
+
+.tn-plan__desc {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
   margin-bottom: var(--space-4);
+  line-height: 1.6;
 }
 
 .tn-plan__features {
@@ -278,6 +336,13 @@
   }
   .tn-chat-showcase {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1024px) {
+  .tn-plans {
+    grid-template-columns: 1fr;
+    max-width: 480px;
   }
 }
 
@@ -540,35 +605,75 @@
   <section class="section container" id="plans">
     <div class="section__header section__header--center fade-in">
       <span class="section__label">Plans</span>
-      <h2 class="section__title">まずは無料で、はじめよう。</h2>
+      <h2 class="section__title">まずは 30 日間、無料で試せる。</h2>
       <p class="section__subtitle">
-        基本機能はすべて無料。AI Coach Plus にアップグレードすると、5名の専門コーチによるフルサポートが解放されます。
+        基本機能は「買い切り 800 円」がベースで、最初の 30 日間は無料で試せます。AI コーチとチャットを使いたい場合は、買い切りに加えて月額 480 円のサブスクリプション（初回 2 ヶ月 50% OFF）を併用します。
       </p>
     </div>
     <div class="tn-plans fade-in">
+      <!-- 30 日間無料体験 -->
       <div class="tn-plan">
-        <h3 class="tn-plan__name">無料プラン</h3>
+        <span class="tn-plan__eyebrow">Free Trial</span>
+        <h3 class="tn-plan__name">30 日間無料体験</h3>
+        <div class="tn-plan__price">
+          <span class="tn-plan__price-amount">¥0</span>
+          <span class="tn-plan__price-unit">／ 30 日間</span>
+        </div>
+        <p class="tn-plan__desc">買い切りプランの内容をまるごと無料体験</p>
         <ul class="tn-plan__features">
-          <li>トレーニング記録（セット・レップ・重量）</li>
-          <li>Muscle Status & PEAK バッジ</li>
-          <li>カレンダー・グラフ表示</li>
-          <li>ウィークリー/マンスリーレビュー</li>
-          <li>メインコーチの基本提案を閲覧</li>
+          <li>トレーニングの記録・編集</li>
+          <li>部位ごとの回復状況・PEAK バッジ</li>
+          <li>グラフ・ウィークリー/マンスリーレビュー</li>
+          <li>カレンダー表示・過去日の記録作成</li>
+          <li>30 日経過後は有料プランを選択</li>
         </ul>
+        <p class="tn-plan__note">※ AI コーチ・チャットは含まれません。試したい場合はサブスクリプションの初回 2 ヶ月割引をご利用ください。</p>
       </div>
-      <div class="tn-plan tn-plan--featured">
-        <span class="tn-plan__badge">初回利用割引あり</span>
-        <h3 class="tn-plan__name">AI Coach Plus</h3>
+
+      <!-- 買い切りプラン -->
+      <div class="tn-plan">
+        <span class="tn-plan__eyebrow">One-time Purchase</span>
+        <h3 class="tn-plan__name">買い切りプラン</h3>
+        <div class="tn-plan__price">
+          <span class="tn-plan__price-amount">¥800</span>
+          <span class="tn-plan__price-unit">／ 買い切り</span>
+        </div>
+        <p class="tn-plan__desc">一度の支払いで、記録・分析機能をずっと</p>
         <ul class="tn-plan__features">
-          <li>無料プランの全機能</li>
-          <li>5名の専門コーチのフル提案</li>
-          <li>チャットで深掘り相談</li>
-          <li>栄養・回復・計画・心理まで6領域カバー</li>
-          <li>190以上の論文に基づく根拠あるアドバイス</li>
+          <li>トレーニングの記録・編集</li>
+          <li>部位ごとの回復状況・PEAK バッジ</li>
+          <li>グラフ・ウィークリー/マンスリーレビュー</li>
+          <li>カレンダー表示・過去日の記録作成</li>
+          <li>月額・年額の継続課金なし</li>
         </ul>
-        <p class="tn-plan__note">料金の詳細はアプリ内でご確認ください。</p>
+        <p class="tn-plan__note">※ AI コーチ・チャットは含まれません。必要な場合はサブスクリプションプランをご選択ください。</p>
+      </div>
+
+      <!-- AI コーチプラン（買い切りに追加） -->
+      <div class="tn-plan tn-plan--featured">
+        <span class="tn-plan__badge">AI コーチアドオン</span>
+        <span class="tn-plan__eyebrow">Subscription</span>
+        <h3 class="tn-plan__name">AI コーチプラン</h3>
+        <span class="tn-plan__price-prefix">買い切り ¥800 +</span>
+        <div class="tn-plan__price">
+          <span class="tn-plan__price-amount">¥480</span>
+          <span class="tn-plan__price-unit">／ 月</span>
+        </div>
+        <span class="tn-plan__discount">初回 2 ヶ月 50% OFF（¥240 / 月）</span>
+        <p class="tn-plan__desc">買い切りに加えて、AI コーチ・チャットを利用</p>
+        <ul class="tn-plan__features">
+          <li><strong>5 名の専門 AI コーチ</strong>によるサポート</li>
+          <li>チャットで深掘り相談</li>
+          <li>6 領域（記録・栄養・回復・計画・心理・知識）に対応</li>
+          <li>190 以上の論文に基づくアドバイス</li>
+          <li>いつでも解約可能</li>
+        </ul>
+        <p class="tn-plan__note">※ このプランは買い切りプラン（¥800）に追加するサブスクリプションです。AI コーチのみの単独利用はできません。</p>
       </div>
     </div>
+    <p style="max-width: 800px; margin: var(--space-8) auto 0; text-align: center; font-size: var(--text-xs); color: var(--color-text-faint); line-height: 1.6;">
+      ※ TrainNote の基本機能は買い切りプラン（¥800）がベースとなります。AI コーチプランはその上に重ねてご利用いただく追加オプションで、AI コーチ機能だけを単独で購入することはできません。価格は執筆時点のもので、最新の料金や課金サイクルは App Store 上の表示をご確認ください。
+    </p>
   </section>
 
   <!-- ====== 7. Final CTA ====== -->
