@@ -3,9 +3,16 @@
 import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
 import { formatDueDateJST } from '@/lib/format';
+import {
+  addDaysJST,
+  endOfDayJstIso,
+  getDueStatus,
+  nextSundayJST,
+  todayLocalDateJST,
+  type DueStatus,
+} from '@/lib/dueDate';
 import { supabaseConfig } from '@/lib/env';
 import type { Todo, TodoCategory } from '@/lib/supabase/types-doublehub';
 import {
@@ -19,6 +26,9 @@ import {
 } from '@/lib/repositories/todos';
 
 type Filter = 'active' | 'done' | 'all';
+
+/** 追加フォームの期限クイックチップ。 */
+type DuePreset = 'none' | 'today' | 'tomorrow' | 'sunday' | 'custom';
 
 interface TodoSectionProps {
   /** 現在選択中のカテゴリ。 */
@@ -39,6 +49,10 @@ export function TodoSection({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // 追加フォームの期限選択状態。
+  const [duePreset, setDuePreset] = useState<DuePreset>('none');
+  const [customDate, setCustomDate] = useState<string>('');
+
   const envOk = supabaseConfig.doublehub.ok;
 
   // 表示用に filter を適用。親から降ってくる items は既にカテゴリ絞り込み済み。
@@ -54,15 +68,42 @@ export function TodoSection({
     [items]
   );
 
+  /** 選択中の preset/custom から `due_date`（ISO）を組み立てる。 */
+  const resolveDueIso = (): string | null => {
+    switch (duePreset) {
+      case 'today':
+        return endOfDayJstIso(todayLocalDateJST());
+      case 'tomorrow':
+        return endOfDayJstIso(addDaysJST(1));
+      case 'sunday':
+        return endOfDayJstIso(nextSundayJST());
+      case 'custom':
+        return customDate ? endOfDayJstIso(customDate) : null;
+      case 'none':
+      default:
+        return null;
+    }
+  };
+
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
+    if (duePreset === 'custom' && !customDate) {
+      setError('日付を選択してください');
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
-      // 作成時は現在選択中のカテゴリで保存。iOS と齟齬が出ないようにする。
-      await createTodo({ title: title.trim(), category });
+      // 作成時は現在選択中のカテゴリと期限で保存。iOS と齟齬が出ないようにする。
+      await createTodo({
+        title: title.trim(),
+        category,
+        due_date: resolveDueIso(),
+      });
       setTitle('');
+      setDuePreset('none');
+      setCustomDate('');
       await onChanged?.();
     } catch (e) {
       setError(e instanceof Error ? e.message : '追加に失敗しました');
@@ -121,16 +162,28 @@ export function TodoSection({
       </div>
 
       {envOk ? (
-        <form onSubmit={handleAdd} className="mt-4 flex gap-2">
-          <Input
-            placeholder={`新しい ToDo を追加（${CATEGORY_LABEL[category]}）`}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+        <form onSubmit={handleAdd} className="mt-4 space-y-2">
+          <div className="flex gap-2">
+            <Input
+              placeholder={`新しい ToDo を追加（${CATEGORY_LABEL[category]}）`}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              disabled={busy}
+            />
+            <Button type="submit" size="sm" disabled={busy || !title.trim()}>
+              追加
+            </Button>
+          </div>
+          <DuePresetChips
+            preset={duePreset}
+            customDate={customDate}
+            onPresetChange={(p) => {
+              setDuePreset(p);
+              if (p !== 'custom') setCustomDate('');
+            }}
+            onCustomDateChange={setCustomDate}
             disabled={busy}
           />
-          <Button type="submit" size="sm" disabled={busy || !title.trim()}>
-            追加
-          </Button>
         </form>
       ) : (
         <p className="mt-4 rounded-lg border border-dashed border-border bg-bg/40 p-3 text-xs text-text-faint">
@@ -156,49 +209,179 @@ export function TodoSection({
           </li>
         ) : (
           displayed.map((t) => (
-            <li
+            <TodoItem
               key={t.id}
-              className={cn(
-                'group flex items-start gap-3 rounded-lg border border-border bg-bg/40 px-3 py-2.5',
-                t.is_completed && 'opacity-60'
-              )}
-            >
-              <input
-                type="checkbox"
-                className="mt-1 h-4 w-4 shrink-0 accent-primary"
-                checked={t.is_completed}
-                onChange={(e) => handleToggle(t.id, e.target.checked)}
-                aria-label={`${t.title} を${t.is_completed ? '未完了に' : '完了に'}する`}
-              />
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span
-                    className={cn(
-                      'truncate text-sm font-medium',
-                      t.is_completed && 'line-through'
-                    )}
-                  >
-                    {t.title}
-                  </span>
-                  {formatDueDateJST(t.due_date) && (
-                    <Badge variant="outline" className="text-[10px]">
-                      期限 {formatDueDateJST(t.due_date)}
-                    </Badge>
-                  )}
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => handleDelete(t.id)}
-                className="shrink-0 rounded-md border border-transparent px-2 py-1 text-xs text-text-faint opacity-0 transition hover:border-border hover:bg-surface-2 hover:text-text group-hover:opacity-100"
-                aria-label={`${t.title} を削除`}
-              >
-                削除
-              </button>
-            </li>
+              todo={t}
+              onToggle={handleToggle}
+              onDelete={handleDelete}
+            />
           ))
         )}
       </ul>
     </section>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// 期限プリセットチップ
+// ---------------------------------------------------------------------------
+
+interface DuePresetChipsProps {
+  preset: DuePreset;
+  customDate: string;
+  onPresetChange: (p: DuePreset) => void;
+  onCustomDateChange: (date: string) => void;
+  disabled?: boolean;
+}
+
+function DuePresetChips({
+  preset,
+  customDate,
+  onPresetChange,
+  onCustomDateChange,
+  disabled,
+}: DuePresetChipsProps) {
+  // 最小日付（今日）は JST 基準で固定。past はデフォルトで弾いておく。
+  const minDate = todayLocalDateJST();
+  const chips: { key: DuePreset; label: string }[] = [
+    { key: 'none', label: 'なし' },
+    { key: 'today', label: '今日' },
+    { key: 'tomorrow', label: '明日' },
+    { key: 'sunday', label: '今週末' },
+    { key: 'custom', label: '日付指定' },
+  ];
+  return (
+    <div className="flex flex-wrap items-center gap-1.5 text-xs">
+      <span className="text-text-faint">期限:</span>
+      {chips.map(({ key, label }) => {
+        const active = preset === key;
+        return (
+          <button
+            key={key}
+            type="button"
+            disabled={disabled}
+            onClick={() => onPresetChange(key)}
+            className={cn(
+              'rounded-md border px-2 py-1 font-medium transition',
+              active
+                ? 'border-primary bg-primary/10 text-primary'
+                : 'border-border text-text-muted hover:border-border-strong hover:text-text',
+              disabled && 'cursor-not-allowed opacity-60'
+            )}
+          >
+            {label}
+          </button>
+        );
+      })}
+      {preset === 'custom' && (
+        <input
+          type="date"
+          value={customDate}
+          min={minDate}
+          onChange={(e) => onCustomDateChange(e.target.value)}
+          disabled={disabled}
+          className="rounded-md border border-border bg-bg px-2 py-1 text-xs"
+          aria-label="期限日"
+        />
+      )}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// ToDo 1 件の行。期限状態ごとに背景・テキスト色を変える（iOS 仕様に準拠）。
+// ---------------------------------------------------------------------------
+
+interface TodoItemProps {
+  todo: Todo;
+  onToggle: (id: string, done: boolean) => void;
+  onDelete: (id: string) => void;
+}
+
+function TodoItem({ todo, onToggle, onDelete }: TodoItemProps) {
+  const status: DueStatus = getDueStatus({
+    isCompleted: todo.is_completed,
+    dueDateIso: todo.due_date,
+    isAllDay: todo.is_all_day,
+  });
+
+  // 状態ごとのスタイル。いずれも tailwind.config の status tokens を使用する。
+  // CSS variable ベースのカラーは Tailwind の opacity modifier が効かないため、
+  // 背景は soft トークン（light/dark 両方で調整済み）、ボーダーは DEFAULT で指定する。
+  const card = {
+    completed: 'border-border bg-success-soft',
+    overdue: 'border-overdue bg-overdue-soft',
+    urgent: 'border-warning bg-warning-soft',
+    normal: 'border-border bg-bg/40',
+    none: 'border-border bg-bg/40',
+  }[status];
+
+  const titleClass = {
+    completed: 'text-text-faint line-through',
+    overdue: 'text-text',
+    urgent: 'text-text',
+    normal: 'text-text',
+    none: 'text-text',
+  }[status];
+
+  const dueClass = {
+    completed: 'text-text-faint',
+    overdue: 'text-overdue',
+    urgent: 'text-warning',
+    normal: 'text-primary',
+    none: 'text-text-faint',
+  }[status];
+
+  const dueIcon = {
+    completed: null,
+    overdue: '⚠',
+    urgent: '🕐',
+    normal: null,
+    none: null,
+  }[status];
+
+  const dueText = formatDueDateJST(todo.due_date);
+
+  return (
+    <li
+      className={cn(
+        'group flex items-start gap-3 rounded-lg border px-3 py-2.5 transition',
+        card
+      )}
+    >
+      <input
+        type="checkbox"
+        className="mt-1 h-4 w-4 shrink-0 accent-primary"
+        checked={todo.is_completed}
+        onChange={(e) => onToggle(todo.id, e.target.checked)}
+        aria-label={`${todo.title} を${todo.is_completed ? '未完了に' : '完了に'}する`}
+      />
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className={cn('truncate text-sm font-medium', titleClass)}>
+            {todo.title}
+          </span>
+          {dueText && (
+            <span
+              className={cn(
+                'inline-flex items-center gap-1 text-[11px] font-medium',
+                dueClass
+              )}
+            >
+              {dueIcon && <span aria-hidden>{dueIcon}</span>}
+              期限 {dueText}
+            </span>
+          )}
+        </div>
+      </div>
+      <button
+        type="button"
+        onClick={() => onDelete(todo.id)}
+        className="shrink-0 rounded-md border border-transparent px-2 py-1 text-xs text-text-faint opacity-0 transition hover:border-border hover:bg-surface-2 hover:text-text group-hover:opacity-100"
+        aria-label={`${todo.title} を削除`}
+      >
+        削除
+      </button>
+    </li>
   );
 }

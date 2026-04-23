@@ -44,6 +44,19 @@ const config: Config = {
           DEFAULT: 'var(--color-accent-warm)',
           soft: 'var(--color-accent-warm-soft)',
         },
+        // ToDo の期限状態などに使うステータストークン。iOS アプリと色の意図を整合。
+        success: {
+          DEFAULT: 'var(--color-success)',
+          soft: 'var(--color-success-soft)',
+        },
+        warning: {
+          DEFAULT: 'var(--color-warning)',
+          soft: 'var(--color-warning-soft)',
+        },
+        overdue: {
+          DEFAULT: 'var(--color-overdue)',
+          soft: 'var(--color-overdue-soft)',
+        },
         // プロダクトごとのアクセント（スコープで差し替え）
         'accent-product': 'var(--color-accent-product, var(--color-primary))',
         'accent-product-fg': 'var(--color-accent-product-fg, var(--color-text-inverse))',

@@ -51,6 +51,14 @@
   --color-accent-warm: #e8734a;
   --color-accent-warm-soft: #fef0eb;
 
+  /* Status tokens — ToDo の期限状態に使う。iOS アプリのカラートークンと整合 */
+  --color-success: #0d9488;
+  --color-success-soft: #dcfce7;
+  --color-warning: #ea580c;
+  --color-warning-soft: #fef3c7;
+  --color-overdue: #7c3aed;
+  --color-overdue-soft: #ede9fe;
+
   /* Radius */
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
@@ -113,6 +121,14 @@
   --color-primary-soft: rgba(46, 189, 189, 0.1);
   --color-accent-warm: #f09070;
   --color-accent-warm-soft: rgba(240, 144, 112, 0.1);
+
+  /* Status tokens (dark) */
+  --color-success: #34d399;
+  --color-success-soft: rgba(52, 211, 153, 0.12);
+  --color-warning: #fb923c;
+  --color-warning-soft: rgba(251, 146, 60, 0.12);
+  --color-overdue: #a78bfa;
+  --color-overdue-soft: rgba(167, 139, 250, 0.14);
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
