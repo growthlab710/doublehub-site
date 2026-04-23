@@ -1,69 +1,99 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
+import { SupportForm } from './_components/SupportForm';
 
 /**
  * /support/
  *
  * App Store Connect にサポート URL として登録済み。
  * 必ず到達可能な状態を維持する（旧 /support.html からはリダイレクト済み）。
+ *
+ * 旧 static HTML 版の「サポートフォーム」を踏襲し、
+ * ユーザーが入力した内容を `mailto:` で本文に埋めて送信できる構成にする。
  */
 export const metadata: Metadata = {
-  title: 'Support — お問い合わせとヘルプ',
-  description: 'DoubleHub / BookCompass / TrainNote に関するお問い合わせと、よくある質問。',
+  title: 'サポート・お問い合わせ',
+  description:
+    'DoubleHub・TrainNote・Book Compass に関するお問い合わせやサポート情報をご案内します。',
   alternates: { canonical: '/support/' },
 };
 
 export default function SupportPage() {
   return (
-    <Section spacing="lg">
-      <Container width="narrow">
-        <h1 className="font-display text-3xl font-semibold">Support</h1>
-        <p className="mt-6 text-text-muted">
-          DoubleHub / BookCompass / TrainNote をご利用いただきありがとうございます。
-          お問い合わせは下記よりご連絡ください。
-        </p>
-
-        <h2 className="mt-10 font-display text-xl font-semibold">お問い合わせ</h2>
-        <p className="mt-4 text-text-muted">
-          <a
-            href="mailto:support@doublehub.jp"
-            className="text-primary underline-offset-4 hover:underline"
-          >
-            support@doublehub.jp
-          </a>
-          {' '}までメールにてご連絡ください。数営業日以内にお返事いたします。
-        </p>
-
-        <h2 className="mt-10 font-display text-xl font-semibold">よくある質問（FAQ）</h2>
-        <dl className="mt-4 space-y-6">
-          <div>
-            <dt className="font-medium">iOS アプリと Web アプリでアカウントは共通ですか？</dt>
-            <dd className="mt-2 text-text-muted text-sm leading-relaxed">
-              Apple / Google / Email のいずれかの認証方式で iOS と Web の両方にサインインすれば、
-              同一アカウントとして扱われます（匿名ログインは Web では利用不可）。
-            </dd>
+    <>
+      {/* Hero */}
+      <Section spacing="lg">
+        <Container width="narrow">
+          <div className="text-center">
+            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+              Support
+            </span>
+            <h1 className="mt-3 font-display text-[clamp(1.75rem,1rem+2vw,2.5rem)] font-semibold leading-snug">
+              サポート・お問い合わせ
+            </h1>
+            <p className="mt-4 text-text-muted leading-relaxed">
+              DoubleHub、TrainNote、Book Compass に関するご質問・不具合の報告・ご要望などを
+              受け付けています。下記のフォームから内容を選んで送信してください。
+            </p>
           </div>
-          <div>
-            <dt className="font-medium">BookCompass と DoubleHub は連携できますか？</dt>
-            <dd className="mt-2 text-text-muted text-sm leading-relaxed">
-              はい。DoubleHub 側の設定から「BookCompass と連携」を実行することで、
-              BookCompass の本棚や Mutter をダッシュボードに表示できます。
-            </dd>
-          </div>
-          <div>
-            <dt className="font-medium">データを削除するには？</dt>
-            <dd className="mt-2 text-text-muted text-sm leading-relaxed">
-              設定画面の「アカウント削除」からリクエストできます。
-              削除リクエスト後、関連データはすべて削除されます（取消不可）。
-            </dd>
-          </div>
-        </dl>
+        </Container>
+      </Section>
 
-        <p className="mt-12 text-sm text-text-faint">
-          このページは App Store Connect のサポート URL として登録されているため、常に到達可能です。
-        </p>
-      </Container>
-    </Section>
+      {/* フォーム */}
+      <Section spacing="md">
+        <Container width="narrow">
+          <SupportForm />
+        </Container>
+      </Section>
+
+      {/* 補足情報 */}
+      <Section spacing="lg">
+        <Container width="narrow">
+          <h2 className="font-display text-lg font-semibold text-text">
+            よくお寄せいただく確認事項
+          </h2>
+          <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-relaxed text-text-muted">
+            <li>
+              アプリが起動しない／クラッシュする場合は、一度アプリを終了して再起動をお試しください。
+            </li>
+            <li>
+              サブスクリプションの解約は、iPhone の「設定」→「Apple ID」→「サブスクリプション」から行えます。
+            </li>
+            <li>
+              データの同期に問題がある場合は、ネットワーク接続をご確認ください。
+            </li>
+          </ul>
+
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+            <Link
+              href="/privacy/"
+              className="text-primary underline-offset-4 hover:underline"
+            >
+              プライバシーポリシー
+            </Link>
+            <a
+              href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline-offset-4 hover:underline"
+            >
+              利用規約（Apple 標準 EULA）
+            </a>
+            <Link
+              href="/"
+              className="text-primary underline-offset-4 hover:underline"
+            >
+              トップへ戻る
+            </Link>
+          </div>
+
+          <p className="mt-12 text-xs text-text-faint">
+            このページは App Store Connect のサポート URL として登録されているため、常に到達可能です。
+          </p>
+        </Container>
+      </Section>
+    </>
   );
 }
