@@ -447,14 +447,97 @@ export default function BookCompassPage() {
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
               本について、もう一人の自分と対話する。
             </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              何でも答えるAI先生ではなく、あなたの読書記録を根拠に一緒に考える読書パートナーを目指しています。
+            </p>
           </div>
-          <div className="mx-auto mt-10 grid max-w-5xl gap-6 md:grid-cols-2">
-            <p className="text-sm leading-relaxed text-text-muted md:text-base">
-              Book Compass のチャットは「何でも答えてくれるAI先生」ではありません。あなたの読書記録を根拠にして、3人のパートナーと一緒に整理する読書パートナーです。上から教え込まない、それっぽいことを断定しない。自分の読書記録を起点に、考えを深める壁打ち相手。
-            </p>
-            <p className="text-sm leading-relaxed text-text-muted md:text-base">
-              「あなたが以前こういうことを気にしていたから、今回もここが引っかかっているのかもしれない」「この本で残った問いは、前に読んだ別の本の気づきとつながるかもしれない」そういうふうに返せることを目指しています。
-            </p>
+
+          <div className="mx-auto mt-12 grid max-w-5xl items-center gap-10 md:grid-cols-[0.85fr_1.15fr]">
+            {/* 左カラム: 実際のチャット画面 */}
+            <div className="relative mx-auto w-full max-w-sm">
+              <div className="relative aspect-[9/16] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-lg">
+                <Image
+                  src="/images/bookcompass-screen-06.jpg"
+                  alt="Think With Books チャット画面"
+                  fill
+                  className="object-contain"
+                  sizes="(min-width: 768px) 360px, 90vw"
+                />
+              </div>
+            </div>
+
+            {/* 右カラム: 対比 + 擬似チャット */}
+            <div className="space-y-6">
+              {/* 対比ボックス */}
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl border border-border bg-surface-2 p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
+                    こういうAIではない
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm text-text-muted">
+                    <li className="flex items-start gap-2">
+                      <Cross /> 何でも答えてくれるAI先生
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Cross /> 上から教え込んでくる存在
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Cross /> それっぽいことを断定する存在
+                    </li>
+                  </ul>
+                </div>
+                <div className="rounded-2xl border border-accent-product/30 bg-accent-product/5 p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                    Book Compass が目指すもの
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm text-text">
+                    <li className="flex items-start gap-2">
+                      <Check /> 読書記録を根拠に答える
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check /> 一緒に整理してくれる相手
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <Check /> 考えを深める壁打ち相手
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* 擬似チャット */}
+              <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                  返ってくる、こんな言葉
+                </p>
+                <div className="mt-4 space-y-3">
+                  <div className="flex items-start gap-3">
+                    <span
+                      aria-hidden
+                      className="mt-1 grid h-7 w-7 flex-shrink-0 place-items-center rounded-full bg-accent-product/15 text-xs font-semibold text-accent-product"
+                    >
+                      AI
+                    </span>
+                    <div className="relative max-w-[90%] rounded-2xl rounded-tl-sm bg-surface-2 px-4 py-3 text-sm leading-[1.7] text-text">
+                      あなたが以前こういうことを気にしていたから、今回もここが引っかかっているのかもしれませんね。
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span
+                      aria-hidden
+                      className="mt-1 grid h-7 w-7 flex-shrink-0 place-items-center rounded-full bg-accent-product/15 text-xs font-semibold text-accent-product"
+                    >
+                      AI
+                    </span>
+                    <div className="relative max-w-[90%] rounded-2xl rounded-tl-sm bg-surface-2 px-4 py-3 text-sm leading-[1.7] text-text">
+                      この本で残った問いは、前に読んだ別の本の気づきとつながるかもしれません。
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-4 text-xs text-text-muted">
+                  そういうふうに返せることを、Book Compass は目指しています。
+                </p>
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
@@ -540,6 +623,28 @@ function Check() {
         className="text-accent-product"
       >
         <path d="M2.5 6l2.5 2.5 4.5-5" />
+      </svg>
+    </span>
+  );
+}
+
+function Cross() {
+  return (
+    <span
+      aria-hidden
+      className="mt-[0.25rem] grid h-4 w-4 flex-shrink-0 place-items-center rounded-full bg-text-muted/15"
+    >
+      <svg
+        width="8"
+        height="8"
+        viewBox="0 0 12 12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        className="text-text-muted"
+      >
+        <path d="M3 3l6 6M9 3l-6 6" />
       </svg>
     </span>
   );
