@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { ProfileCard } from './_components/ProfileCard';
 import { LinkedAccountsCard } from './_components/LinkedAccountsCard';
 
@@ -15,11 +16,20 @@ export const metadata = {
 export default function AppSettingsPage() {
   return (
     <div className="space-y-6">
-      <header>
-        <h1 className="font-display text-2xl font-semibold">設定</h1>
-        <p className="mt-2 text-sm text-text-muted">
-          プロフィールと連携アカウントを管理します。
-        </p>
+      <header className="flex items-center gap-3">
+        <Image
+          src="/images/doublehub-icon.jpg"
+          alt=""
+          width={44}
+          height={44}
+          className="h-11 w-11 rounded-xl border border-border object-cover shadow-sm"
+        />
+        <div>
+          <h1 className="font-display text-2xl font-semibold">設定</h1>
+          <p className="mt-1 text-sm text-text-muted">
+            プロフィールと連携アカウントを管理します。
+          </p>
+        </div>
       </header>
       <ProfileCard />
       <LinkedAccountsCard />
