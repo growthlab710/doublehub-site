@@ -672,9 +672,6 @@ export default function BookCompassPage() {
                   <Check /> 全ての本の特性分析・読書サマリーを閲覧
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> Push 型レコメンドの更新頻度 UP
-                </li>
-                <li className="flex items-start gap-2">
                   <Check /> いつでも解約可能・過去の記録は残る
                 </li>
               </ul>
@@ -728,8 +725,8 @@ export default function BookCompassPage() {
                   </tr>
                   <tr>
                     <td className="px-4 py-3 text-text">Push 型レコメンド（探す）</td>
-                    <td className="px-4 py-3 text-center text-text-muted">閲覧可（更新 週 1）</td>
-                    <td className="px-4 py-3 text-center text-text">更新頻度 UP</td>
+                    <td className="px-4 py-3 text-center text-text-muted">無制限</td>
+                    <td className="px-4 py-3 text-center text-text">無制限</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3 text-text">AI チャット</td>
