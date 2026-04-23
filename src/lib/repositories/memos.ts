@@ -34,21 +34,6 @@ export async function listMemos({
   if (error) throw error;
   const rows = (data ?? []) as Memo[];
 
-  // 開発時の一時デバッグ（確認後に削除）。
-  if (typeof window !== 'undefined') {
-    const dist = new Map<string, number>();
-    for (const r of rows) {
-      const k = r.category === null || r.category === undefined ? '(null)' : JSON.stringify(r.category);
-      dist.set(k, (dist.get(k) ?? 0) + 1);
-    }
-    // eslint-disable-next-line no-console
-    console.debug('[DoubleHub] memos listed', {
-      requested: { category, limit },
-      rowsBeforeCategoryFilter: rows.length,
-      categoryDistribution: Object.fromEntries(dist),
-    });
-  }
-
   if (category === 'all') return rows;
   return rows.filter((r) => matchMemoCategory(r.category, category));
 }

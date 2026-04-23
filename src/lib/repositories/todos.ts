@@ -7,7 +7,6 @@
 'use client';
 
 import { getBrowserDoubleHub } from '@/lib/supabase/client';
-import { supabaseConfig } from '@/lib/env';
 import type { Todo, TodoCategory } from '@/lib/supabase/types-doublehub';
 import { DEFAULT_CATEGORY } from '@/lib/supabase/types-doublehub';
 
@@ -30,36 +29,6 @@ export async function listTodos({
   limit = 100,
 }: ListTodosOptions = {}): Promise<Todo[]> {
   const supabase = getBrowserDoubleHub();
-
-  // 開発時の追加診断：どのユーザーで、フィルタ前の生の件数はどうなっているかを見る。
-  // （確認が終わったら削除してください）
-  if (typeof window !== 'undefined') {
-    void (async () => {
-      try {
-        const { data: u } = await supabase.auth.getUser();
-        const { count: totalAll } = await supabase
-          .from('todos')
-          .select('*', { count: 'exact', head: true });
-        const { count: totalAlive } = await supabase
-          .from('todos')
-          .select('*', { count: 'exact', head: true })
-          .is('deleted_at', null);
-        // eslint-disable-next-line no-console
-        console.debug('[DoubleHub] auth/todos diagnosis', {
-          // 接続先 Supabase プロジェクトの確認用。URL ホストの先頭英数字がプロジェクト ref。
-          supabaseUrl: supabaseConfig.doublehub.url,
-          userId: u.user?.id ?? null,
-          email: u.user?.email ?? null,
-          todosTotalAll: totalAll,
-          todosAliveNotDeleted: totalAlive,
-        });
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.debug('[DoubleHub] diagnosis error', err);
-      }
-    })();
-  }
-
   let query = supabase
     .from('todos')
     .select('*')
@@ -79,22 +48,6 @@ export async function listTodos({
   const { data, error } = await query;
   if (error) throw error;
   const rows = (data ?? []) as Todo[];
-
-  // 開発時の一時デバッグ：実際の category 値分布をさっと見る。
-  // （確認が終わったら削除してください）
-  if (typeof window !== 'undefined') {
-    const dist = new Map<string, number>();
-    for (const r of rows) {
-      const k = r.category === null || r.category === undefined ? '(null)' : JSON.stringify(r.category);
-      dist.set(k, (dist.get(k) ?? 0) + 1);
-    }
-    // eslint-disable-next-line no-console
-    console.debug('[DoubleHub] todos listed', {
-      requested: { filter, category, limit },
-      rowsBeforeCategoryFilter: rows.length,
-      categoryDistribution: Object.fromEntries(dist),
-    });
-  }
 
   if (category === 'all') return rows;
   return rows.filter((r) => matchCategory(r.category, category));
