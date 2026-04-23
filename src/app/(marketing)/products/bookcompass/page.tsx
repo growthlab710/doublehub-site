@@ -96,7 +96,7 @@ const features = [
     label: 'AI Reading Summary',
     title: 'つぶやきをAIが、意味のある形にまとめる。',
     body:
-      '保存したつぶやきをAIが「印象の要約」「繰り返し出ているテーマ」「行動につながった示唆」「未整理の論点」の4つに整理。後から見返したとき、一冊の中で何を受け取ったかがはっきり残ります。',
+      '本の要約ではなく「あなたの読み方のまとめ」をAIが作成。印象の要約・繰り返しテーマ・感情の傾向・行動につながった示唆・未整理の論点の中から、つぶやきに応じた切り口が最大5つまで自動で表示されます。',
   },
   {
     label: 'Explore',
@@ -112,24 +112,38 @@ const features = [
   },
 ];
 
-const summarySections = [
+const summaryMain = [
   {
     title: '印象の要約',
-    desc: 'この本を読んで、何が一番心に残ったか。つぶやきから印象の核を抽出します。',
+    desc: 'その本をどう受け取っているか、自分なりの読み筋のパターン。',
+    hint: '2件以上のつぶやきから傾向が見えたとき',
   },
   {
     title: '繰り返し出ているテーマ',
-    desc: '複数のつぶやきに共通して現れた関心やキーワードを、テーマとしてまとめます。',
+    desc: '複数のつぶやきに繰り返し現れた論点や問題意識。',
+    hint: '同じ論点が複数回出ているとき',
+  },
+  {
+    title: '感情の傾向',
+    desc: '驚き、不安、抵抗感、納得感など、続いている感情のパターン。',
+    hint: '感情の継続パターンがあるとき',
   },
   {
     title: '行動につながった示唆',
-    desc: '読書から生まれた「次にやってみよう」「こう変えよう」という具体的な示唆を拾います。',
+    desc: '行動意図や試してみたいこと、見方の変化。',
+    hint: '行動意図や変化が明示されているとき',
   },
   {
     title: '未整理の論点',
-    desc: 'まだ答えが出ていない問い、違和感、宿題として残したいポイントを"未整理のまま"残します。',
+    desc: '迷い、保留、引っかかりとして残っている問い。',
+    hint: '割り切れない問いが残っているとき',
   },
 ];
+
+const summaryExtra = {
+  title: '思考の断片',
+  desc: '上記5つに収まらないが、後で見返す価値のある未整理の断片を1～3件まで。',
+};
 
 const learns = [
   '最近どんなテーマに惹かれているか',
@@ -353,19 +367,19 @@ export default function BookCompassPage() {
               Reading Summary
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-              読書サマリーは、4つの視点で構成される。
+              本の要約ではなく、あなたの読み方のまとめ。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              つぶやきをただ並べるのではなく、AIが4つの切り口で整理します。後から見返したとき、その一冊から何を受け取ったのかがはっきり残る形を目指しています。
+              「この本に何が書いてあったか」ではなく、「自分がどこに引っかかり、何を持ち帰ろうとしていたか」をAIが整理します。つぶやきの内容に応じて、以下の切り口が最大5つまで表示されます。
             </p>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-5xl items-center gap-10 md:grid-cols-[0.9fr_1.1fr]">
+          <div className="mx-auto mt-12 grid max-w-5xl items-center gap-10 md:grid-cols-[0.85fr_1.15fr]">
             <div className="relative mx-auto w-full max-w-sm">
               <div className="relative aspect-[9/16] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-lg">
                 <Image
                   src="/images/bookcompass-screen-04.jpg"
-                  alt="読書サマリー 4セクション"
+                  alt="読書サマリー表示例"
                   fill
                   className="object-contain"
                   sizes="(min-width: 768px) 360px, 90vw"
@@ -373,26 +387,46 @@ export default function BookCompassPage() {
               </div>
             </div>
 
-            <ol className="grid gap-4">
-              {summarySections.map((s, i) => (
-                <li
-                  key={s.title}
-                  className="rounded-2xl border border-border bg-surface p-5 shadow-sm"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full bg-accent-product/15 text-xs font-semibold text-accent-product">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-                    <h3 className="font-display text-base font-semibold tracking-[-0.01em]">
-                      {s.title}
-                    </h3>
-                  </div>
-                  <p className="mt-3 text-sm leading-relaxed text-text-muted">
-                    {s.desc}
-                  </p>
-                </li>
-              ))}
-            </ol>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                主サマリ（最大5つ）
+              </p>
+              <ol className="mt-4 grid gap-3">
+                {summaryMain.map((s, i) => (
+                  <li
+                    key={s.title}
+                    className="rounded-2xl border border-border bg-surface p-5 shadow-sm"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full bg-accent-product/15 text-xs font-semibold text-accent-product">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <h3 className="font-display text-base font-semibold tracking-[-0.01em]">
+                        {s.title}
+                      </h3>
+                    </div>
+                    <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                      {s.desc}
+                    </p>
+                    <p className="mt-2 text-xs text-text-muted/70">
+                      表示条件：{s.hint}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+
+              <div className="mt-6 rounded-2xl border border-dashed border-accent-product/30 bg-accent-product/5 p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                  補足（表示される場合あり）
+                </p>
+                <h3 className="mt-2 font-display text-base font-semibold tracking-[-0.01em]">
+                  {summaryExtra.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                  {summaryExtra.desc}
+                </p>
+              </div>
+            </div>
           </div>
         </Container>
       </Section>
