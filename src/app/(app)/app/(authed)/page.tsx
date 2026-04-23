@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { appNavItems } from '@/components/app/AppNav';
 import { Badge } from '@/components/ui/Badge';
@@ -96,15 +97,7 @@ function ProductHubCard({
         aria-hidden
       />
       <div className="flex items-start gap-3">
-        <span
-          className={cn(
-            'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-xl',
-            accent.iconBg
-          )}
-          aria-hidden
-        >
-          {icon}
-        </span>
+        <ProductIcon icon={icon} label={label} accentBg={accent.iconBg} />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <h3 className="truncate font-display text-base font-semibold">
@@ -130,6 +123,52 @@ function ProductHubCard({
         </span>
       </div>
     </Link>
+  );
+}
+
+/**
+ * アイコン描画。AppNavItem.icon が `/images/...` パスなら next/image で
+ * アプリアイコン（squircle）として描画し、それ以外は絵文字テキストとして
+ * 従来通り表示する。サイドバーの NavIcon と同じ分岐ロジック。
+ */
+function ProductIcon({
+  icon,
+  label,
+  accentBg,
+}: {
+  icon: string;
+  label: string;
+  accentBg: string;
+}) {
+  const isImage = icon.startsWith('/');
+
+  if (isImage) {
+    return (
+      <span
+        className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-surface-2"
+        aria-hidden
+      >
+        <Image
+          src={icon}
+          alt={`${label} アプリアイコン`}
+          width={40}
+          height={40}
+          className="h-full w-full object-cover"
+        />
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className={cn(
+        'flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-xl',
+        accentBg
+      )}
+      aria-hidden
+    >
+      {icon}
+    </span>
   );
 }
 
