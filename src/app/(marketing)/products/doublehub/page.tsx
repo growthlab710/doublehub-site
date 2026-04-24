@@ -74,8 +74,8 @@ const features = [
     title: '使い続けるほど、ダブルがあなたを覚えていく。',
     body:
       '毎週火曜の送迎、水曜のジム——行動パターンを自動で学習。「覚えておいて」と言えば、明示的なメモリとして保存されます。設定画面からはダブルの理解度（カルテ）を確認・編集でき、提案には必ず「理由」がついて、ブラックボックス化しません。',
-    image: '/images/doublehub-memory.jpg',
-    imageAlt: 'DoubleHub のメモリ画面',
+    image: '/images/doublehub-understanding.jpg',
+    imageAlt: 'DoubleHub のダブルの理解度ダッシュボード画面',
   },
 ];
 
@@ -86,6 +86,8 @@ const v110Highlights = [
     title: 'ヘルスケアと結びつく「気づき」',
     body:
       '歩数・睡眠・アクティビティの傾向をダブルが受け取り、「最近寝れてないのに明日 5 件は多いと思う」のように、身体と予定を結びつけた気づきを届けます。ポジティブな健康トレンドも見逃さず、褒めてくれます。読み取り専用。書き込みは一切しません。',
+    image: '/images/doublehub-integrations.jpg',
+    imageAlt: 'DoubleHub のヘルスケア連携・カレンダー連携設定画面',
     accent: 'from-[#fca5a5] via-[#f87171] to-[#ef4444]',
   },
   {
@@ -93,13 +95,17 @@ const v110Highlights = [
     title: 'カレンダーと双方向に同期',
     body:
       '期限付き ToDo はそのまま iOS カレンダーに載って管理できます。iOS 設定で Google アカウントを追加していれば Google カレンダーにも自動反映（OAuth 不要）。予定とタスクを 1 つの時間軸で扱えます。',
+    image: '/images/doublehub-calendar.jpg',
+    imageAlt: 'DoubleHub のカレンダー画面（月間ビュー）',
     accent: 'from-[#93c5fd] via-[#60a5fa] to-[#3b82f6]',
   },
   {
-    tag: 'Home Feed',
-    title: 'ホームの「ダブルからのお知らせ」3 カテゴリ',
+    tag: 'Weekly Review',
+    title: '週次レポートで、今週の自分が見える',
     body:
-      'ホーム画面に、その時のあなたに合わせた 3 種類のお知らせが並びます。「今日」は行動のきっかけ、「気づき」は読むこと自体に価値がある発見、「話したいこと」はチャットへの誘導。タイミングに合った声がけが届きます。',
+      '完了した ToDo、期限をまたいだ件数、動きやすかった時間帯、積み上がった理解——ダブルが今週のあなたを丁寧に整理してくれます。「今週は午前に動ける流れが見えていました。」のような一言が、来週の動き方のヒントになります。',
+    image: '/images/doublehub-weekly.jpg',
+    imageAlt: 'DoubleHub の週次レポート画面',
     accent: 'from-[#86efac] via-[#4ade80] to-[#22c55e]',
   },
 ];
@@ -525,25 +531,36 @@ export default function DoubleHubPage() {
             </p>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+          <div className="mx-auto mt-14 grid max-w-5xl gap-8 md:grid-cols-3">
             {v110Highlights.map((h) => (
               <article
                 key={h.title}
-                className="group relative overflow-hidden rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-accent-product/40 hover:shadow-md"
+                className="group relative flex flex-col overflow-hidden rounded-3xl border border-border bg-surface shadow-sm transition hover:-translate-y-0.5 hover:border-accent-product/40 hover:shadow-md"
               >
-                <div
-                  aria-hidden
-                  className={`pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${h.accent} opacity-25 blur-2xl`}
-                />
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-                  {h.tag}
-                </p>
-                <h3 className="mt-3 font-display text-lg font-semibold leading-[1.3] tracking-[-0.01em]">
-                  {h.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-text-muted">
-                  {h.body}
-                </p>
+                <div className="relative aspect-[9/16] w-full overflow-hidden bg-[#0a0a0a]">
+                  <div
+                    aria-hidden
+                    className={`pointer-events-none absolute -right-10 -top-10 z-10 h-32 w-32 rounded-full bg-gradient-to-br ${h.accent} opacity-25 blur-2xl`}
+                  />
+                  <Image
+                    src={h.image}
+                    alt={h.imageAlt}
+                    fill
+                    className="object-cover object-top"
+                    sizes="(min-width: 768px) 300px, 90vw"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                    {h.tag}
+                  </p>
+                  <h3 className="mt-3 font-display text-lg font-semibold leading-[1.3] tracking-[-0.01em]">
+                    {h.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                    {h.body}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
