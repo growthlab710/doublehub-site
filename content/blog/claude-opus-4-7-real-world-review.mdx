@@ -1,0 +1,204 @@
+---
+title: "Claude Opus 4.7レビュー——ベンチマークと実使用感を1週間検証してわかったこと"
+description: "2026年4月16日リリースのClaude Opus 4.7を基本スペックから実使用感まで検証。SWE-bench 87.6%・CursorBench 70%のベンチマーク、CodeRabbit・Cursor・Devinの現場レポート、Redditの不満点まで1週間分のフィードバックを個人開発者視点でまとめました。"
+publishedAt: "2026-04-25"
+updatedAt: "2026-04-25"
+category: "AIニュース"
+slug: "claude-opus-4-7-real-world-review"
+readingTime: 12
+summary: "Claude Opus 4.7はコーディングと高解像度ビジョンで明確に進化した一方、プロンプト互換性・トークン消費増・拒否率の3点で注意が必要。新規プロジェクトは即導入、既存プロジェクトは並行テストで段階移行が推奨される。"
+tags:
+  - "Claude Opus 4.7"
+  - "Anthropic"
+  - "AIコーディング"
+  - "Claude Code"
+  - "AIエージェント"
+faq:
+  - question: "Claude Opus 4.7とは何ですか？"
+    answer: "Anthropicが2026年4月16日に一般提供を開始したフロンティアAIモデルです。ソフトウェアエンジニアリングと高解像度画像理解に特化した進化が特徴で、SWE-bench Verifiedで87.6%、CursorBenchで70%を記録しました。価格は1Mトークンあたり入力$5・出力$25でOpus 4.6と同じです。"
+  - question: "Opus 4.7はOpus 4.6から何が変わりましたか？"
+    answer: "主な変更点は4つです。(1) コーディング性能の大幅向上（CursorBench 58%→70%）、(2) 画像最大解像度が3倍（1.15MP→3.75MP）、(3) 新エフォートレベル「xhigh」とTask Budgetsベータの追加、(4) Claude CodeのAuto ModeがMaxプランで開放。トークナイザーも刷新され、同じテキストで1.0〜1.35倍のトークンを消費する可能性があります。"
+  - question: "Opus 4.6で動いていたプロンプトはOpus 4.7でそのまま使えますか？"
+    answer: "ほとんどのプロンプトは動きますが、丁寧にチューニングされたシステムプロンプトやFew-shotサンプルでは挙動が変わる可能性があります。Opus 4.7は指示をより文字通り解釈する傾向があり、Anthropic自身も再調整を推奨しています。重要なプロンプトはOpus 4.6と並行実行して比較してから移行するのが安全です。"
+  - question: "Opus 4.7とGPT-5.5はどちらを使うべきですか？"
+    answer: "用途で使い分けるのが合理的です。コーディング系ベンチマーク（SWE-bench Pro・SWE-bench Verified・CursorBench）ではOpus 4.7がリードし、エージェント系ベンチマーク（Terminal-Bench 2.0・OSWorld・GDPval）ではGPT-5.5がリードします。複雑な多ファイル編集やコードレビューはOpus 4.7、ターミナル操作や長時間の自律ワークフローはGPT-5.5が向いています。"
+  - question: "個人開発者はどのプランでOpus 4.7を使うのが最適ですか？"
+    answer: "Claude Codeが使えるProまたはMaxプランでxhighエフォートを活用するのが最適です。Maxプランに加入するとAuto Modeも開放され、長時間の自律的コーディングがさらにスムーズになります。ただし、週次の使用上限に当たりやすくなるため、Task Budgets（ベータ）で予算管理を併用するのがおすすめです。"
+---
+
+**Claude Opus 4.7の結論を先に言うと、「長時間走らせる自律的コーディング」と「高解像度の画像読み取り」は確実にアップグレードされています。** ただし、Opus 4.6向けに丁寧にチューニングしたプロンプトを抱えている人は、移行前に並行テストしたほうが無難です。
+
+2026年4月16日に[Anthropic](https://www.anthropic.com/news/claude-opus-4-7)が一般提供を開始してから約1週間、海外の技術ブログ・X（旧Twitter）・Redditには実使用レポートが一気に出揃いました。本記事では、まず基本スペックを整理したうえで、開発者コミュニティからの生の声を拾い、個人開発者がどう付き合えばよいかを考えます。
+
+---
+
+## Claude Opus 4.7とは何か——3行で理解するモデル概要
+
+Claude Opus 4.7は、Anthropicが2026年4月16日にリリースしたフロンティアAIモデルです。要点を3行で整理するとこうなります。
+
+- **位置づけ**: Opus 4.6の正統進化版、長時間のコーディングとエージェントワークフローに最適化
+- **価格**: 入力$5 / 出力$25 per 1Mトークン（Opus 4.6と同額）
+- **スペック**: コンテキストウィンドウ1M、最大出力128K、マルチモーダル対応、`xhigh`エフォート追加
+
+[Anthropic公式発表](https://www.anthropic.com/news/claude-opus-4-7)は「上級ソフトウェアエンジニアリングにおけるOpus 4.6からの明確な改善、特に最難関タスクで顕著な向上」と位置づけており、単なる小幅改修ではありません。
+
+---
+
+## ベンチマークで何が変わったのか
+
+Opus 4.7の性能向上は、主要ベンチマーク全てに反映されています。重要な数字を表で整理します。
+
+| ベンチマーク | Opus 4.6 | Opus 4.7 | 差分 |
+|---|---|---|---|
+| SWE-bench Verified | 80.8% | **87.6%** | +6.8pt |
+| SWE-bench Pro | 53.4% | **64.3%** | +10.9pt |
+| CursorBench | 58% | **70%** | +12pt |
+| XBOW 視覚精度 | 54.5% | **98.5%** | +44pt |
+| 最大画像解像度 | 1.15MP | **3.75MP** | 3.3倍 |
+
+数字を見て特に印象的なのが、視覚精度の**54.5%→98.5%**という跳ね上がりです。[NxCode](https://www.nxcode.io/resources/news/claude-opus-4-7-complete-guide-features-benchmarks-pricing-2026)が報じた通り、スクリーンショットや技術図面の読み取りが実用域に入ったとみていい数字です。
+
+---
+
+## 主な新機能4つ——開発者が日常で触れる差分
+
+ベンチマーク以外で、実務に影響する新機能を4つ紹介します。
+
+### 1. コーディング性能の底上げ
+
+SWE-bench Verifiedが87.6%という数字は、Opus 4.6もSonnet 4.6も解けなかった4タスクをOpus 4.7が突破したことを意味します。Anthropic内製の93タスクベンチマークでも解決率が13%向上。同社自身が「**低エフォートのOpus 4.7が中エフォートのOpus 4.6とほぼ同等**」と明言するレベルの底上げです。
+
+### 2. 画像読み取りが実用品質に
+
+最大入力解像度が**2,576px / 約3.75MP**へ拡大されました。さらにピクセル座標が実画像と1:1で対応するため、Computer Use系のスクリーンショット解析でスケール補正が不要になっています。
+
+### 3. `xhigh`エフォートとTask Budgets（ベータ）
+
+`high`と`max`の間に**`xhigh`**という新しいエフォートレベルが追加されました。Claude Codeではデフォルトが`xhigh`に引き上げられており、全プランで恩恵を受けられます。
+
+さらに、1回のエージェントループ全体（思考・ツール呼び出し・出力含む）でのトークン予算をモデルに伝える**Task Budgets**がパブリックベータとして使えます。ヘッダー`task-budgets-2026-03-13`を付けて出力設定に入れると、Claudeが「残り予算」をカウントダウンで意識しながらタスクを終えるように動きます。長時間エージェントでコスト暴走を抑えたい個人開発者には実務上の救いです。
+
+### 4. MaxプランでClaude CodeのAuto Modeが使える
+
+Opus 4.6時代に一部先行していた[Claude CodeのAuto Mode](/blog/claude-code-auto-mode/)が、Opus 4.7と同時にMaxプラン全体に開放されました。Claudeが「ファイル検索する／テスト実行する／検証するかどうか」を自律的に判断し、オーケストレーションの手間を減らしてくれる機能です。
+
+---
+
+## 実使用感——現場のレポートでベンチマーク通りだった部分
+
+Anthropicはローンチ告知で10社以上のパートナー企業からの声を公開していますが、興味深いのはそのトーンがかなり一貫していることです。
+
+**Cursor** は「CursorBenchで意味のあるジャンプ」「自律性と創造的な推論が特に印象的」と評価。**Cognition（Devin）** は「長時間の自律性が新しい段階に入った」「数時間にわたって一貫して動き、以前は信頼できなかった深い調査作業が可能になった」と述べ、**Rakuten** は自社ベンチマーク**Rakuten-SWE-BenchでOpus 4.6の3倍の本番タスクを解決**したと報告しています。
+
+独立系サービスの評価も似た傾向です。[CodeRabbit](https://www.coderabbit.ai/blog/claude-opus-4-7-for-ai-code-review)は実際のオープンソースPRに対する100件の評価で、Opus 4.7が**指定されていない周辺の問題まで自発的に82.8%の割合で指摘した**と報告しています。彼らはこれを「ターゲットテストというより、周辺で起きている問題にも気づく丁寧なレビュアー」と表現しており、この「タスク外の気づき」こそ現場で効く差分と言えそうです。
+
+[The Production Gap](https://boringbot.substack.com/p/claude-opus-47-results-early-benchmarks)がRedditやHacker Newsの初期ユーザーから拾った共通パターンも似ています。
+
+- マルチステップ自動化ワークフローで、**途中失敗が目に見えて減った**
+- ツール呼び出しが予想外の結果を返しても、**より優雅にリカバリする**
+- 長いコーディングセッションで、序盤の判断を忘れずに保持し続ける
+
+高解像度画像についても「詳細な図面、高DPIのデザインアセット、密度の高いPDFの処理で明らかに実用価値がある」と評判は良好です。
+
+---
+
+## 実使用感——ハマりやすいポイント3つ
+
+一方で、**全員が諸手を挙げて絶賛しているわけではありません**。いくつかの具体的な不満が繰り返し報告されています。
+
+### 1. プロンプトの互換性リグレッション
+
+The Production Gapがハイライトしているのがこれです。**Opus 4.6向けに丁寧にチューニングしたFew-shotサンプルや詳細なSystem Prompt**が、Opus 4.7では意図通り動かないケースが一定数あります。[DataCamp](https://www.datacamp.com/blog/opus-4-7-vs-gpt-5-4)も「Opus 4.7は指示を文字通り解釈する。1項目から別項目へ一般化したり、要求していないことを推論したりしない」と指摘しており、Anthropic自身がプロンプトの再調整を推奨しています。
+
+文章の「書きぶり」も少し変わりました。Anthropic公式も認めているとおり、**Opus 4.7はより直接的で、意見のはっきりした（opinionated）トーン**になっており、絵文字や「素晴らしい質問ですね！」的な導入が減っています。エージェント目的には良い変化ですが、Opus 4.6の丁寧で温かいトーンを前提に書かれた対人向けアシスタントにとってはキャリブレーションが必要です。
+
+### 2. トークン消費が増える（かもしれない）
+
+Opus 4.7はトークナイザーが刷新されており、同じテキストでも**1.0〜1.35倍のトークン数**になる可能性があります。Redditでは「Proプランで2会話しただけで週上限の15%を使った」「高解像度画像で見込み以上のトークンを食う」といった[ネガティブな報告](https://www.reddit.com/r/ClaudeAI/comments/1sn8ovi/opus_47_is_50_more_expensive_with_context/)も散見されます。
+
+ただし、Opus 4.7は同じタスクをより少ないツール呼び出しで終える傾向があるため、**タスクあたりの実効コストは使い方次第**というのが正確な結論です。Notionは「Opus 4.6の3分の1のツールエラー」と報告しており、単価ではなく「成功したタスクあたりのコスト」で評価する視点が必要になりました。
+
+### 3. 拒否（refusal）が増えたという報告
+
+Redditのsingularityスレでは、**Extended NYT Connectionsベンチで54.9%の質問を拒否**し、回答した場合もOpus 4.6の94.7%から90.9%に精度が落ちた、という[観察](https://www.reddit.com/r/singularity/comments/1snlp29/claude_opus_47_high_unexpectedly_performs/)が話題になりました。創作系の問いでも13%の拒否率。Anthropicがサイバーセキュリティ系の安全装置を組み込むために一部領域を犠牲にしたのでは、という見方がコミュニティで議論されています。無害なプロンプトで執拗に断られる場合は、言い回しを変えるかSonnet 4.6に切り替えるのが現実的です。
+
+---
+
+## Opus 4.7に乗り換えるべきか——個人開発者の判断軸
+
+ここまでの情報をまとめると、次のような判断軸になります。
+
+**すぐOpus 4.7に移行したほうがいい人**
+
+- Claude Code / Cursor / Devin / Replitなど、IDE統合で長時間タスクを走らせている人
+- ビジョン系のワークフロー（スクショ解析、デザイン→コード、PDF読み取り）を回している人
+- エージェント的な「ツール呼び出しをリカバリしながら完走する」品質を求めている人
+
+**並行テストしてから判断すべき人**
+
+- 本番運用中のアプリでSystem Promptを精密にチューニング済みの人
+- 文体や「温度感」が商品価値になっている対話アシスタントを提供している人
+- Opus 4.6の週次／月次コストを厳密に管理している人
+
+個人開発者としての実感で言うと、**新規プロジェクトはOpus 4.7始まりで問題なし、既存プロジェクトはClaude Codeで試運転して挙動を観察してから**、というステップが安全だと感じます。特にClaude Codeの`xhigh`がデフォルトになった効果は大きく、複数ファイルにまたがるリファクタでも「ゴールまで押し切る」感覚が明確に強くなりました。
+
+逆に、書きものやブレスト的な対話では、Opus 4.7の直接的なトーンを少し冷たく感じる場面もあります。その領域ではSonnet 4.6やGPT-5.5と使い分けるのが現実解です。
+
+---
+
+## GPT-5.5との関係——使い分けが合理的
+
+2026年4月23日、Opus 4.7の1週間後に[OpenAIはGPT-5.5をリリース](/blog/gpt-5-5-agentic-coding/)しました。両者は同じ週にフロンティアを更新した格好です。
+
+ざっくり言うと、**コーディング（SWE-bench系）ではOpus 4.7がリード**し、**エージェント系（Terminal-Bench、OSWorld、GDPval）ではGPT-5.5がリード**する構図です（[Lushbinary](https://lushbinary.com/blog/gpt-5-5-vs-claude-opus-4-7-comparison-benchmarks-pricing/)）。「どちらか1つ」ではなく、個人開発者はタスクごとに使い分けるのが合理的になりました。
+
+---
+
+## まとめ——Opus 4.7で変わったこと、変わらないこと
+
+- Opus 4.7はOpus 4.6の正統進化。特にコーディングと高解像度ビジョンで明確に前進
+- 公式ベンチマークだけでなく、CodeRabbitやCursor、Devinなどの現場レポートでも「長時間の自律性」と「自己検証の賢さ」が評価されている
+- ただし、プロンプト互換性・トークン消費・拒否率の3点で、Opus 4.6ユーザーが移行時に面食らう可能性がある
+- 個人開発者は、新規はOpus 4.7、既存は並行テストしながら段階移行、が現実的な選択
+
+ベンチマークの数字だけ見ていると「また更新か」で済ませがちですが、Opus 4.7は「長く走らせて信頼できるモデル」という方向に振った、実運用寄りのリリースだと感じます。
+
+---
+
+## 出典・参考
+
+- [Introducing Claude Opus 4.7 — Anthropic（2026年4月16日）](https://www.anthropic.com/news/claude-opus-4-7)
+- [What's new in Claude Opus 4.7 — Anthropic API Docs](https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-7)
+- [Claude Opus 4.7: What Changed for Coding Agents — Verdent AI（2026年4月17日）](https://www.verdent.ai/guides/what-is-claude-opus-4-7)
+- [Claude Opus 4.7 vs. GPT-5.4 — DataCamp（2026年4月17日）](https://www.datacamp.com/blog/opus-4-7-vs-gpt-5-4)
+- [What Claude Opus 4.7 means for AI code review — CodeRabbit（2026年4月16日）](https://www.coderabbit.ai/blog/claude-opus-4-7-for-ai-code-review)
+- [Claude Opus 4.7 results: early benchmarks, real-world feedback — The Production Gap（2026年4月21日）](https://boringbot.substack.com/p/claude-opus-47-results-early-benchmarks)
+- [Opus 4.7 Review — AIMLAPI（2026年4月23日）](https://aimlapi.com/blog/opus-4-7-review-features-performance-how-to-use-it-2026-guide)
+- [Claude Opus 4.7 Complete Guide — NxCode（2026年4月16日）](https://www.nxcode.io/resources/news/claude-opus-4-7-complete-guide-features-benchmarks-pricing-2026)
+- [GPT-5.5 vs Claude Opus 4.7 — Lushbinary（2026年4月23日）](https://lushbinary.com/blog/gpt-5-5-vs-claude-opus-4-7-comparison-benchmarks-pricing/)
+- [Opus 4.7 (high) unexpectedly performs significantly worse — r/singularity](https://www.reddit.com/r/singularity/comments/1snlp29/claude_opus_47_high_unexpectedly_performs/)
+- [Opus 4.7 is 50% more expensive with context regression — r/ClaudeAI](https://www.reddit.com/r/ClaudeAI/comments/1sn8ovi/opus_47_is_50_more_expensive_with_context/)
+
+---
+
+## よくある質問
+
+### Claude Opus 4.7とは何ですか？
+
+Anthropicが2026年4月16日に一般提供を開始したフロンティアAIモデルです。ソフトウェアエンジニアリングと高解像度画像理解に特化した進化が特徴で、SWE-bench Verifiedで87.6%、CursorBenchで70%を記録しました。価格は1Mトークンあたり入力$5・出力$25でOpus 4.6と同じです。
+
+### Opus 4.7はOpus 4.6から何が変わりましたか？
+
+主な変更点は4つです。(1) コーディング性能の大幅向上（CursorBench 58%→70%）、(2) 画像最大解像度が3倍（1.15MP→3.75MP）、(3) 新エフォートレベル「xhigh」とTask Budgetsベータの追加、(4) Claude CodeのAuto ModeがMaxプランで開放。トークナイザーも刷新され、同じテキストで1.0〜1.35倍のトークンを消費する可能性があります。
+
+### Opus 4.6で動いていたプロンプトはOpus 4.7でそのまま使えますか？
+
+ほとんどのプロンプトは動きますが、丁寧にチューニングされたシステムプロンプトやFew-shotサンプルでは挙動が変わる可能性があります。Opus 4.7は指示をより文字通り解釈する傾向があり、Anthropic自身も再調整を推奨しています。重要なプロンプトはOpus 4.6と並行実行して比較してから移行するのが安全です。
+
+### Opus 4.7とGPT-5.5はどちらを使うべきですか？
+
+用途で使い分けるのが合理的です。コーディング系ベンチマーク（SWE-bench Pro・SWE-bench Verified・CursorBench）ではOpus 4.7がリードし、エージェント系ベンチマーク（Terminal-Bench 2.0・OSWorld・GDPval）ではGPT-5.5がリードします。複雑な多ファイル編集やコードレビューはOpus 4.7、ターミナル操作や長時間の自律ワークフローはGPT-5.5が向いています。
+
+### 個人開発者はどのプランでOpus 4.7を使うのが最適ですか？
+
+Claude Codeが使えるProまたはMaxプランでxhighエフォートを活用するのが最適です。Maxプランに加入するとAuto Modeも開放され、長時間の自律的コーディングがさらにスムーズになります。ただし、週次の使用上限に当たりやすくなるため、Task Budgets（ベータ）で予算管理を併用するのがおすすめです。

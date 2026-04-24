@@ -6,6 +6,11 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import matter from 'gray-matter';
 
+export interface BlogFaqItem {
+  question: string;
+  answer: string;
+}
+
 export interface BlogPostMeta {
   slug: string;
   title: string;
@@ -16,6 +21,10 @@ export interface BlogPostMeta {
   tags: string[];
   series?: string;
   readingTime?: number; // 分
+  /** AIO/SEO 用: 構造化データ生成に使う FAQ 配列 */
+  faq?: BlogFaqItem[];
+  /** AIO 用: 記事の核心を1〜2文でまとめた要約（AI引用最適化） */
+  summary?: string;
 }
 
 export interface BlogPost extends BlogPostMeta {
@@ -47,6 +56,12 @@ function readAllMdxFiles(): BlogPost[] {
       tags: Array.isArray(data.tags) ? data.tags : [],
       series: data.series,
       readingTime: data.readingTime,
+      faq: Array.isArray(data.faq)
+        ? (data.faq as BlogFaqItem[]).filter(
+            (f) => f && typeof f.question === 'string' && typeof f.answer === 'string',
+          )
+        : undefined,
+      summary: typeof data.summary === 'string' ? data.summary : undefined,
       content,
     };
   });

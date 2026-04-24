@@ -1,0 +1,176 @@
+---
+title: "Gemini搭載Siriが2026年内に登場——iOS開発者が今から準備すべき4つのこと"
+description: "2026年4月23日のGoogle Cloud Next '26でThomas KurianがGemini搭載Siriの年内リリースを公に明言。Apple×Google連携の確定情報と、WWDC 2026・iOS 27に向けて個人iOS開発者が今から整えておくべきApp Intents・画面認識UI・プロンプト設計の具体策を解説します。"
+publishedAt: "2026-04-25"
+updatedAt: "2026-04-25"
+category: "AIニュース"
+slug: "siri-gemini-2026"
+readingTime: 10
+summary: "Google Cloud CEOのThomas Kurianが、Gemini技術で動く新Siriを2026年中にリリースすると公に明言。On-device／Private Cloud Compute上のGemini／公開Geminiの3層構成で、WWDC 2026（6月8日）でのプレビューと秋のiOS 27正式版リリースが有力視される。"
+tags:
+  - "Siri"
+  - "Apple Intelligence"
+  - "Gemini"
+  - "iOS 27"
+  - "WWDC 2026"
+  - "App Intents"
+  - "iOS開発"
+faq:
+  - question: "新しいSiriが使えるようになるのはいつ頃ですか？"
+    answer: "Google Cloud CEOのThomas Kurianが2026年4月23日のGoogle Cloud Next '26で「今年後半（later this year）」に新Siriが登場すると明言しました。複数の報道を総合すると、2026年6月8日のWWDC 2026で正式プレビュー、秋のiOS 27正式版で完全リリースというシナリオが最も有力です。春〜初夏のiOS 26.4系アップデートで画面認識や要約機能の一部が先行する可能性もあります。"
+  - question: "GeminiでSiriが動くと、私のプライベートな情報がGoogleに渡りますか？"
+    answer: "Appleの方針ではGoogleにデータは渡りません。AppleはPrivate Cloud Compute（PCC）上でGeminiモデルを動かす計画で、Google側にユーザーデータが流れない設計になっています。契約上も「AppleのトラフィックをGoogleの学習に使わない」と報じられています。ただし、モデルが実際にどのサーバーで動くかの詳細は完全には公開されておらず、WWDC 2026での正式発表を待つのが確実です。"
+  - question: "iOS開発者としてGemini搭載Siriに向けて最優先で準備すべきことは何ですか？"
+    answer: "App Intentsの整備が最優先です。アプリ内の主要アクションを`AppIntent`として定義し、`EntityQuery`でアプリ内データをSiriに渡せるようにしておくと、新Siri登場後に自然な連携が可能になります。次点で、画面認識に耐えるアクセシビリティ対応（accessibilityLabelの整備）と、破壊的アクションの確認ダイアログ設計の見直しをおすすめします。"
+  - question: "新SiriはGeminiの何世代目をベースにしていますか？"
+    answer: "業界報道によれば、Appleは**Gemini 3相当**のカスタム版を「蒸留（distill）」する形で使用すると伝えられています。単なるGemini APIの呼び出しではなく、Apple Foundation ModelsとしてAppleが独自調整したバリアントが動くとされています。正確なモデルサイズは公式発表されていませんが、業界報道では約1.2兆パラメータ規模とされています。"
+  - question: "既存のChatGPT連携（Apple Intelligence）はどうなりますか？"
+    answer: "Appleは「OpenAIとの既存契約に変更はない」と公式に表明しています。ChatGPTは引き続き「世界知識」を必要とする複雑なクエリの選択肢として残る見込みですが、Apple Intelligenceの中核（要約・プラン・Siriの意図理解）はGemini技術ベースのApple Foundation Modelsが担う構図になります。"
+---
+
+**Google Cloud CEOのThomas Kurianが「新しいSiriはGemini技術で動き、2026年内にリリースされる」と公の場で明言しました。** 2026年4月22〜23日に開催された[Google Cloud Next '26](https://www.macrumors.com/2026/04/22/google-gemini-powered-siri-2026/)のキーノートでの発言で、2026年1月に発表された両社のパートナーシップに具体的な時期が乗った形です。iOSアプリを個人で開発している身としても、これは「遠い業界ニュース」ではなく、自分たちのアプリに直結する話題になってきました。
+
+本記事では、公式にアナウンスされた事実をベースに、WWDC 2026とiOS開発者視点で今から何を準備しておけば良いかを整理します。
+
+---
+
+## Gemini搭載Siriで何が確定したのか——公式発言の要点
+
+Thomas KurianはGoogle Cloud Nextのオープニングキーノートで、Appleロゴを背に次のように述べました（[MacRumors](https://www.macrumors.com/2026/04/22/google-gemini-powered-siri-2026/)要約）。
+
+> 「今年初めに発表した、象徴的ブランドとの記念碑的パートナーシップ。我々はAppleの**preferred cloud provider（最優先クラウドプロバイダー）**として、**Gemini技術に基づく次世代Apple Foundation Models**の開発で協力している。これらのモデルは今後のApple Intelligence機能を支え、**より個人化されたSiriが今年後半に登場する**。」
+
+ポイントを整理するとこうなります。
+
+- 新Siriは**2026年中**にリリース（[AppleInsider](https://appleinsider.com/articles/26/04/22/google-confirms-context-aware-siri-built-from-gemini-will-debut-in-2026)も同趣旨で報道）
+- Geminiは単に「埋め込まれる」のではなく、**Apple Foundation Modelsの基盤技術**として使われる
+- Google CloudがAppleのpreferred cloud provider
+- AppleはGeminiを「蒸留（distill）」して独自化できる契約（[Gizchina](https://www.gizchina.com/apple/apple-and-google-just-made-it-official-siri-is-getting-a-gemini-brain)）
+
+---
+
+## Gemini搭載Siriの仕組み——ハイブリッド3層アーキテクチャ
+
+Apple側の開示とGoogle側の発言を合わせると、[以前から報じられている3層アーキテクチャ](https://9to5mac.com/2026/01/29/apple-confirms-gemini-powered-siri-will-use-private-cloud-compute/)に落ち着きそうです。
+
+| 層 | 処理場所 | 対応タスク |
+|---|---|---|
+| **On-device Apple Intelligence** | iPhone / Mac / iPad | タイマー、アプリ起動、簡単な要約など即応タスク |
+| **Private Cloud Compute（PCC）上のGemini** | Appleのデータセンター | 個人のコンテキストを使う複雑な処理 |
+| **公開版Gemini** | Googleインフラ | 一般的な世界知識が必要なフォールバック |
+
+Tim Cookは2026年1月のQ1決算コールで「On-deviceとPCCで動かし続け、我々の業界最高水準のプライバシーを維持する」と明言しています。iOS開発者としての重要な示唆は、**Appleのプライバシーモデルはそのまま、裏のモデルだけが強化される**ということです。
+
+---
+
+## リリーススケジュール——WWDC 2026からiOS 27までの展開
+
+業界レポートが伝える段階的な展開は、次のようなロードマップになりそうです。
+
+- **春〜初夏**: iOS 26.4系アップデートで「画面認識」「要約の精度向上」が先行展開
+- **2026年6月8〜12日**: **WWDC 2026**で次期iOS 27と新Siriが正式発表（プレビューデベロッパーベータも当日リリース見込み）
+- **秋**: iOS 27正式版で完全リリース。スタンドアロン「Siriチャットアプリ」、20回以上の往復会話、複数アプリをまたぐタスク実行が解禁
+
+MacRumorsは「Appleは2026年12月31日までに新Siriをリリースする必要がある」と指摘しており、WWDC以降は各四半期ごとに段階的に機能が展開される可能性が高いです。
+
+---
+
+## iOS開発者として今から準備すべき4つのこと
+
+ここからが個人開発者としての本題です。iOSアプリを出している／出そうとしている身として、今のうちに押さえておきたいポイントを4つにまとめます。
+
+### 1. App Intentsを今のうちに整備する
+
+新しいSiriは、これまでよりはるかに柔軟に「アプリをまたぐ多段タスク」を実行します。そこで効いてくるのが**App Intents**（iOS 16以降のShortcuts／Siri向けAPI）です。自作アプリで以下のような基本整備をしておくと、新Siri登場後に「ユーザーが声で自分のアプリを呼び出して複数ステップで使う」ワークフローに即対応できます。
+
+- 検索や記録といった主要アクションを`AppIntent`として定義
+- `EntityQuery`でアプリ内データをSiriに引き渡せる形で整える
+- `openAppWhenRun`や`continueUserActivity`の遷移を整理
+
+個人開発の家計簿アプリ、読書記録アプリ、トレーニング記録アプリ——いずれも恩恵が大きい領域です。
+
+### 2. 画面認識に耐えるUIを意識する
+
+Kurianも「**on-screen awareness**（画面認識）」を強調していますし、[アーキテクチャ解説](https://introl.com/blog/apple-google-gemini-partnership-siri-ai-infrastructure-2026)でもsummarizer / plannerという機能群がGeminiで強化されると報じられています。つまり、**新Siriは画面を読んで判断する**わけです。
+
+個人開発アプリの設計観点では、以下の整備が重要になります。
+
+- 重要な情報はテキストで可読にしておく（画像に焼き込まない）
+- アクセシビリティラベル（`accessibilityLabel`）を主要ボタンに丁寧に付ける
+- リスト項目にセマンティックな順序と構造を持たせる
+
+といった地味な整備が、結果として「SiriがこのアプリをVoice UIで上手く扱える」かを決めます。VoiceOver対応が、そのままAIエージェント対応になる時代です。
+
+### 3. ユーザー体験に「確認ワンステップ」を入れ直す
+
+新Siriは自律性が上がる分、誤爆の影響も大きくなります。Apple側のガイドライン更新はまだ出ていませんが、**購入・送信・削除などの破壊的アクションをSiri経由で叩いた場合の確認ダイアログ**は今一度見直しておく価値があります。個人開発でも、支払いや予約系の画面ではシンプルな確認ステップを噛ませるだけで、ユーザーの信頼感が大きく変わります。
+
+### 4. 自社プロンプトをGemini系の流儀でも試す
+
+Foundation ModelsのベースがGemini技術になるということは、**アプリ内で独自に組んでいるプロンプトやペルソナも、Gemini系の応答特性に引っ張られる可能性**があるということです。現在Apple Intelligence経由で何らかのテキスト生成を使っている場合、次のようなテストが有効です。
+
+- 同じプロンプトをGoogle AI StudioのGeminiで試し、応答の傾向を観察
+- Geminiが苦手とする「くどい指示の文字通り解釈」「長文要約時の独自まとめ癖」などを把握
+- アプリ内プロンプトにGemini向けの抑制指示（「列挙せず、2文で要約」等）を追加
+
+これだけで、新Siri時代にアプリ内テキスト生成の挙動が大きく崩れるリスクを減らせます。[個人開発でAI機能を実装する方法](/blog/indie-dev-ai-implementation/)も合わせて参考にしてみてください。
+
+---
+
+## まだ確定していないこと——注意すべき不確定情報
+
+浮かれ気味の報道も多いですが、明確に**「確定していない」**こともあります。
+
+- **GeminiモデルがPCC上で動くのか、Googleのサーバーで動くのか**が完全には明言されていない（MacRumorsも留保）。AppleはPCC推しですが、両社の公式発表では具体的な動作場所の表現がぶれています
+- **契約金額（報道ベースで年10億ドル規模）**や**カスタムGeminiのパラメータ数（1.2兆パラメータ）**はBloombergなどの業界報道であり、[Introlの整理](https://introl.com/blog/apple-google-gemini-partnership-siri-ai-infrastructure-2026)もこれらを「産業界の推定値」として扱っています
+- **スタンドアロンSiriアプリ「Campo」**の存在はBloombergなどが報じていますが、公式アナウンスはまだ
+- **OpenAI（ChatGPT）との既存連携の扱い**。Appleは公式に「変更なし」としていますが、実際の優先順位は不透明です
+
+公式情報の確定は、WWDC 2026（6月8日）と、その後のプレスリリースを待つ必要があります。
+
+---
+
+## まとめ——iOS開発者が今日から動くべき理由
+
+- 2026年4月23日、Google Cloud CEOのThomas KurianがGeminiで動く新Siriを今年中にリリースすることを公に明言
+- 新SiriはOn-device／PCC上のGemini／公開Geminiの3層構成。Appleのプライバシーモデルは維持される見込み
+- WWDC 2026（6月8日）でのプレビュー、iOS 27正式版での完全リリースが濃厚
+- 個人iOS開発者は、App Intents、画面認識しやすいUI、破壊的アクションの確認、Gemini特性を踏まえたプロンプト設計——この4点を先回りして整えておくと恩恵が大きい
+
+「Siriが14億台のiPhoneでGeminiに賭ける」は、Geminiにとっても過去最大の配備であり、ユーザーにとってもiOS全体の体験が変わる出来事です。個人開発の側でも、今のうちから対応の仕込みを始める価値は十分にあります。
+
+---
+
+## 出典・参考
+
+- [Google Confirms Gemini-Powered Siri Coming Later This Year — MacRumors（2026年4月22日）](https://www.macrumors.com/2026/04/22/google-gemini-powered-siri-2026/)
+- [Siri with Google Gemini smarts will come out in 2026 — AppleInsider（2026年4月22日）](https://appleinsider.com/articles/26/04/22/google-confirms-context-aware-siri-built-from-gemini-will-debut-in-2026)
+- [Google Teases Gemini-Powered Siri Upgrade in Cloud Next Event — TechTimes（2026年4月23日）](https://www.techtimes.com/articles/316083/20260423/google-teases-gemini-powered-siri-upgrade-cloud-next-event-it-coming-via-ios-27.htm)
+- [Apple and Google Just Made It Official: Siri Is Getting a Gemini Brain — Gizchina（2026年4月23日）](https://www.gizchina.com/apple/apple-and-google-just-made-it-official-siri-is-getting-a-gemini-brain)
+- [Apple confirms Gemini-powered Siri will use Private Cloud Compute — 9to5Mac（2026年1月29日）](https://9to5mac.com/2026/01/29/apple-confirms-gemini-powered-siri-will-use-private-cloud-compute/)
+- [Apple-Google Gemini Partnership: What a $1B AI Deal Means for Infrastructure — Introl（2026年1月23日）](https://introl.com/blog/apple-google-gemini-partnership-siri-ai-infrastructure-2026)
+- [iOS 27 Feature Rumors: Siri 2.0, Visual Intelligence, & WWDC26 — iDrop News（2026年4月20日）](https://www.idropnews.com/rumors/ios-27-siri-ai-update-rumors-wwdc-2026/262763/)
+
+---
+
+## よくある質問
+
+### 新しいSiriが使えるようになるのはいつ頃ですか？
+
+Google Cloud CEOのThomas Kurianが2026年4月23日のGoogle Cloud Next '26で「今年後半（later this year）」に新Siriが登場すると明言しました。複数の報道を総合すると、2026年6月8日のWWDC 2026で正式プレビュー、秋のiOS 27正式版で完全リリースというシナリオが最も有力です。春〜初夏のiOS 26.4系アップデートで画面認識や要約機能の一部が先行する可能性もあります。
+
+### GeminiでSiriが動くと、私のプライベートな情報がGoogleに渡りますか？
+
+Appleの方針ではGoogleにデータは渡りません。AppleはPrivate Cloud Compute（PCC）上でGeminiモデルを動かす計画で、Google側にユーザーデータが流れない設計になっています。契約上も「AppleのトラフィックをGoogleの学習に使わない」と報じられています。ただし、モデルが実際にどのサーバーで動くかの詳細は完全には公開されておらず、WWDC 2026での正式発表を待つのが確実です。
+
+### iOS開発者としてGemini搭載Siriに向けて最優先で準備すべきことは何ですか？
+
+App Intentsの整備が最優先です。アプリ内の主要アクションを`AppIntent`として定義し、`EntityQuery`でアプリ内データをSiriに渡せるようにしておくと、新Siri登場後に自然な連携が可能になります。次点で、画面認識に耐えるアクセシビリティ対応（accessibilityLabelの整備）と、破壊的アクションの確認ダイアログ設計の見直しをおすすめします。
+
+### 新SiriはGeminiの何世代目をベースにしていますか？
+
+業界報道によれば、AppleはGemini 3相当のカスタム版を「蒸留（distill）」する形で使用すると伝えられています。単なるGemini APIの呼び出しではなく、Apple Foundation ModelsとしてAppleが独自調整したバリアントが動くとされています。正確なモデルサイズは公式発表されていませんが、業界報道では約1.2兆パラメータ規模とされています。
+
+### 既存のChatGPT連携（Apple Intelligence）はどうなりますか？
+
+Appleは「OpenAIとの既存契約に変更はない」と公式に表明しています。ChatGPTは引き続き「世界知識」を必要とする複雑なクエリの選択肢として残る見込みですが、Apple Intelligenceの中核（要約・プラン・Siriの意図理解）はGemini技術ベースのApple Foundation Modelsが担う構図になります。
