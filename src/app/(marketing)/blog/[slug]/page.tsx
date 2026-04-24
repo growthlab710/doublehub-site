@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { MDXRenderer } from '@/components/marketing/MDXRenderer';
+import { FloatingToc } from '@/components/marketing/FloatingToc';
 import { getAllSlugs, getPostBySlug, getLatestPosts } from '@/lib/content/blog';
 
 export const dynamicParams = false;
@@ -112,6 +113,11 @@ export default async function BlogPostPage(props: {
         <article>
           <MDXRenderer source={post.content} />
         </article>
+
+        {/* Liquid Glass のフローティング目次
+            - 見出し 3 つ以上の記事でのみ表示
+            - クライアントコンポーネント（article の後ろに置いても fixed 配置となる） */}
+        <FloatingToc />
 
         {related.length > 0 && (
           <section className="mt-16 border-t border-divider pt-10">

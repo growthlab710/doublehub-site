@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
 import { Container } from '@/components/ui/Container';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 /**
  * Ecosystem Tabs セクション
@@ -171,10 +172,8 @@ export function EcosystemTabs() {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <span className="text-xs font-semibold uppercase tracking-wider text-accent-warm">
-            Ecosystem
-          </span>
-          <h2 className="mt-3 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold leading-tight">
+          <SectionEyebrow number="04" label="Ecosystem" />
+          <h2 className="mt-4 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold leading-tight">
             つながるほど、
             <br />
             理解が深まる。
@@ -201,7 +200,9 @@ export function EcosystemTabs() {
                 <TabsTrigger
                   key={p.id}
                   value={p.id}
-                  className="group relative flex flex-1 min-w-[150px] cursor-pointer flex-col items-start gap-2 whitespace-normal rounded-xl border border-border bg-surface p-4 pr-8 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md data-[state=active]:border-primary data-[state=active]:bg-primary/5 data-[state=active]:shadow-lg data-[state=active]:ring-2 data-[state=active]:ring-primary/20"
+                  /* Liquid Glass: 通常は regular / アクティブ時は primary ティントを紡へる。
+                     "タブを押す” 操作でガラスが光る演出で、AIっぽい「同規格カードの連続」を破る。 */
+                  className="liquid-glass group relative flex flex-1 min-w-[150px] cursor-pointer flex-col items-start gap-2 whitespace-normal rounded-xl border-0 p-4 pr-8 text-left transition-all duration-300 hover:-translate-y-0.5 data-[state=active]:-translate-y-0.5 data-[state=active]:bg-primary/10 data-[state=active]:ring-2 data-[state=active]:ring-primary/40"
                 >
                   <div className="flex items-center gap-2">
                     {panelIconMap[p.id] && (
@@ -230,7 +231,9 @@ export function EcosystemTabs() {
 
             {panels.map((p) => (
               <TabsContent key={p.id} value={p.id} className="mt-10">
-                <div className="rounded-2xl border border-border bg-surface p-6 shadow-sm md:p-10">
+                {/* パネルは liquid-glass-heavy で文字の読みやすさを保つ。
+                    タブとの対比で「上に浮かんだパネル」に見える */}
+                <div className="liquid-glass-heavy rounded-2xl p-6 md:p-10">
                   <p className="text-xs font-semibold uppercase tracking-wider text-accent-warm">
                     {p.panelLabel}
                   </p>

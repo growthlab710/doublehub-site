@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { X, Check } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 /**
  * Ideal セクション
@@ -30,10 +31,8 @@ export function IdealSection() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-2xl text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-            Your Partner
-          </p>
-          <h2 className="mt-3 font-display text-[clamp(1.75rem,1.1rem+2.2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+          <SectionEyebrow label="Your Partner" />
+          <h2 className="mt-4 font-display text-[clamp(1.75rem,1.1rem+2.2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
             「自分がもう一人いたら」と<br className="sm:hidden" />
             思ったことはないだろうか？
           </h2>

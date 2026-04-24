@@ -104,6 +104,27 @@
   --tn-border: rgba(255, 255, 255, 0.08);
   --tn-text-dim: rgba(255, 255, 255, 0.45);
   --tn-text-faint: rgba(255, 255, 255, 0.25);
+
+  /* ==========================================================================
+     Liquid Glass tokens
+     Apple iOS 26 の Liquid Glass material を Web で backdrop-filter ベースにエミュレート。
+     - regular: 通常のガラス（不透明寄り、本文やカードに使える程度の読みやすさ）
+     - clear:   透過強め（光源やコンテンツを透かして見せる演出用）
+     - heavy:   blur 強め（大きな面積でコンテンツから浮かせたいとき）
+     ========================================================================== */
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-bg-clear: rgba(255, 255, 255, 0.32);
+  --glass-bg-heavy: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-border-subtle: rgba(255, 255, 255, 0.55);
+  --glass-blur: 20px;
+  --glass-blur-heavy: 28px;
+  --glass-saturate: 180%;
+  /* 内側の白ハイライト + 下側のわずかな陰影で「厚みのあるガラス」を表現 */
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+  --glass-shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+  --glass-shadow-strong: 0 16px 48px rgba(15, 23, 42, 0.12);
 }
 
 [data-theme='dark'] {
@@ -134,6 +155,18 @@
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.35);
   --shadow-xl: 0 24px 60px rgba(0, 0, 0, 0.4);
+
+  /* Liquid Glass tokens (dark)
+     ダークではガラスも暗色基調。微かな白ハイライトで「面の存在」を示す */
+  --glass-bg: rgba(28, 28, 32, 0.58);
+  --glass-bg-clear: rgba(28, 28, 32, 0.28);
+  --glass-bg-heavy: rgba(28, 28, 32, 0.68);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-border-subtle: rgba(255, 255, 255, 0.08);
+  --glass-highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  --glass-highlight-bottom: inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  --glass-shadow-strong: 0 16px 48px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================================================
@@ -251,6 +284,35 @@
     color: transparent;
   }
 
+  /* DoubleHub ブランドグラデ—アプリアイコンのライム緑→エメラルド→シアン→ブルーを再現。
+     Hero のブランド名など、アイコンとの一貫性を出したい場所に限定して使う。 */
+  .gradient-text-brand {
+    background: linear-gradient(
+      135deg,
+      #7dd87f 0%,
+      #2dd4bf 38%,
+      #22d3ee 62%,
+      #3b82f6 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  [data-theme='dark'] .gradient-text-brand {
+    /* ダークでは中闓を少し明るくしてコントラストを保つ */
+    background: linear-gradient(
+      135deg,
+      #a7f3a5 0%,
+      #5eead4 38%,
+      #67e8f9 62%,
+      #60a5fa 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   /* MDX 本文（prose）をサイトのデザイントークンに紐付ける */
   .prose {
     --tw-prose-body: var(--color-text);
@@ -329,5 +391,67 @@
 
   .prose :where(.heading-anchor):hover {
     color: var(--color-primary);
+  }
+
+  /* ==========================================================================
+     Liquid Glass utility classes
+     --------------------------------------------------------------------------
+     HIG 準拠で「浮いている要素」にだけ使う想定。全面適用はしないこと。
+     ========================================================================== */
+
+  /* 標準のガラス — 本文やナビゲーションなど、最も汎用的に使える */
+  .liquid-glass {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      var(--glass-highlight-top),
+      var(--glass-highlight-bottom),
+      var(--glass-shadow);
+  }
+
+  /* 透過強め — 背後のグラデーション光源を活かしたいとき（Hero のバッジ等）*/
+  .liquid-glass-clear {
+    background-color: var(--glass-bg-clear);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid var(--glass-border-subtle);
+    box-shadow:
+      var(--glass-highlight-top),
+      0 4px 16px rgba(15, 23, 42, 0.06);
+  }
+
+  /* 不透明寄り — 文字を乗せたいカードやパネル */
+  .liquid-glass-heavy {
+    background-color: var(--glass-bg-heavy);
+    backdrop-filter: blur(var(--glass-blur-heavy)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur-heavy)) saturate(var(--glass-saturate));
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      var(--glass-highlight-top),
+      var(--glass-highlight-bottom),
+      var(--glass-shadow-strong);
+  }
+
+  /* アクセシビリティ / パフォーマンス対策
+     - backdrop-filter 非対応ブラウザ: 不透明フォールバック
+     - prefers-reduced-transparency: blur を弱める + 不透明度を上げる */
+  @supports not (backdrop-filter: blur(1px)) {
+    .liquid-glass,
+    .liquid-glass-clear,
+    .liquid-glass-heavy {
+      background-color: var(--color-surface);
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .liquid-glass,
+    .liquid-glass-clear,
+    .liquid-glass-heavy {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background-color: var(--color-surface);
+    }
   }
 }
