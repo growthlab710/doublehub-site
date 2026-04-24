@@ -1,8 +1,15 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
-import { getAllPosts } from '@/lib/content/blog';
+import {
+  getAllPosts,
+  getArchiveBuckets,
+  getCategoryCounts,
+  getSeriesGroups,
+  getTagCounts,
+} from '@/lib/content/blog';
+import { BlogExplorer } from './_components/BlogExplorer';
+import { SeriesSection } from './_components/SeriesSection';
 
 export const metadata: Metadata = {
   title: 'Blog',
@@ -12,6 +19,10 @@ export const metadata: Metadata = {
 
 export default function BlogIndex() {
   const posts = getAllPosts();
+  const categories = getCategoryCounts();
+  const tags = getTagCounts(12);
+  const archives = getArchiveBuckets();
+  const seriesGroups = getSeriesGroups();
 
   return (
     <Section spacing="lg">
@@ -21,49 +32,24 @@ export default function BlogIndex() {
           AI、自己理解、プロダクト開発について。個人開発者としての等身大の記録。
         </p>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}/`}
-              className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
-            >
-              <div className="flex flex-wrap gap-1.5">
-                {post.category ? (
-                  <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary">
-                    {post.category}
-                  </span>
-                ) : (
-                  post.tags.slice(0, 3).map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary"
-                    >
-                      {t}
-                    </span>
-                  ))
-                )}
-              </div>
-              <h2 className="mt-4 font-display text-lg font-semibold leading-snug group-hover:text-primary">
-                {post.title}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-text-muted line-clamp-3">
-                {post.description}
-              </p>
-              <div className="mt-auto flex items-center justify-between pt-6 text-xs text-text-faint">
-                <time dateTime={post.publishedAt}>
-                  {new Date(post.publishedAt).toLocaleDateString('ja-JP', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                  })}
-                </time>
-                {post.readingTime && <span>{post.readingTime} 分</span>}
-              </div>
-            </Link>
-          ))}
-        </div>
+        {/* 連載シリーズ集約 */}
+        <SeriesSection groups={seriesGroups} />
 
+        {/* カテゴリ / タグ / アーカイブによる絞り込み + 一覧 */}
+        <div className="mt-12 border-t border-border pt-8">
+          <div className="flex items-baseline justify-between gap-4">
+            <h2 className="font-display text-xl font-semibold">記事一覧</h2>
+            <p className="text-xs text-text-faint">
+              カテゴリ・タグ・公開月で絞り込めます
+            </p>
+          </div>
+          <BlogExplorer
+            posts={posts}
+            categories={categories}
+            tags={tags}
+            archives={archives}
+          />
+        </div>
       </Container>
     </Section>
   );
