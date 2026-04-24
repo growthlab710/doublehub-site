@@ -69,15 +69,20 @@ export function Hero() {
           transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
           className="relative mx-auto mt-14 max-w-4xl md:mt-20"
         >
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-surface shadow-xl md:rounded-3xl">
-            <Image
-              src="/images/DoubleHub-Concept.webp"
-              alt="DoubleHub コンセプト図：あなたの行動・習慣・思考を学習し、プロアクティブな提案と成長をもたらすAIパートナー"
-              width={1600}
-              height={900}
-              priority
-              className="h-auto w-full"
-            />
+          {/* Liquid Glass のフレーム
+              - 外側: 透き通るガラスの面。背後のグラデーション光源がハミ出しに滞留
+              - 内側: 画像をそのまま表示（視認性優先） */}
+          <div className="liquid-glass relative rounded-2xl p-1.5 md:rounded-3xl md:p-2">
+            <div className="relative overflow-hidden rounded-xl md:rounded-2xl">
+              <Image
+                src="/images/DoubleHub-Concept.webp"
+                alt="DoubleHub コンセプト図：あなたの行動・習慣・思考を学習し、プロアクティブな提案と成長をもたらすAIパートナー"
+                width={1600}
+                height={900}
+                priority
+                className="h-auto w-full"
+              />
+            </div>
           </div>
           <p className="mt-4 text-center text-xs text-text-faint">
             日々の記録や会話が集まり、あなたを理解して成長していく。
