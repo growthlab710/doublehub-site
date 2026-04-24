@@ -162,9 +162,9 @@ export function MarketingHeader() {
           ) : (
             <span
               className="hidden md:inline-flex items-center gap-1 rounded-full border border-border bg-surface px-3 py-1 text-xs text-text-muted"
-              title="Web アプリは近日公開予定"
+              title="ブラウザからログインして使える Web アプリは近日公開予定"
             >
-              Web版 準備中
+              ログインページ準備中
             </span>
           )}
 

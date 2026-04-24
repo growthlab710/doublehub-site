@@ -40,7 +40,7 @@ export function Hero() {
             世界で一番あなたのことを<br className="hidden md:inline" />
             理解してくれる存在を目指す
             <br />
-            <span className="gradient-text-primary">
+            <span className="gradient-text-brand">
               「DoubleHub（ダブルハブ）」
             </span>
           </h1>

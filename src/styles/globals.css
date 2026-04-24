@@ -284,6 +284,35 @@
     color: transparent;
   }
 
+  /* DoubleHub ブランドグラデ—アプリアイコンのライム緑→エメラルド→シアン→ブルーを再現。
+     Hero のブランド名など、アイコンとの一貫性を出したい場所に限定して使う。 */
+  .gradient-text-brand {
+    background: linear-gradient(
+      135deg,
+      #7dd87f 0%,
+      #2dd4bf 38%,
+      #22d3ee 62%,
+      #3b82f6 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  [data-theme='dark'] .gradient-text-brand {
+    /* ダークでは中闓を少し明るくしてコントラストを保つ */
+    background: linear-gradient(
+      135deg,
+      #a7f3a5 0%,
+      #5eead4 38%,
+      #67e8f9 62%,
+      #60a5fa 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
   /* MDX 本文（prose）をサイトのデザイントークンに紐付ける */
   .prose {
     --tw-prose-body: var(--color-text);
