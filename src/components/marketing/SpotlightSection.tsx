@@ -69,7 +69,7 @@ export function SpotlightSection() {
         >
           <SectionEyebrow label="Spotlight" />
           <h2 className="mt-4 font-display text-[clamp(1.75rem,1.1rem+2.2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-            サービス別の詳細。
+            サービス別の詳細
           </h2>
         </motion.div>
 

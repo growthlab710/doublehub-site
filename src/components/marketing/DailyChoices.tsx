@@ -85,12 +85,12 @@ const choices: Choice[] = [
   },
 ];
 
+// すべて「チップ」として見えるよう、既存カード背景（ほぼ白）に細かれない濃さに揃える。
 const tagStyles: Record<Choice['tagVariant'], string> = {
-  daily: 'bg-primary/10 text-primary',
-  trainnote: 'bg-[#00e5ff1f] text-[#006b7a] dark:text-[#00e5ff]',
-  bookcompass: 'bg-[#e8911a1f] text-[#a56309] dark:text-[#e8911a]',
-  cross:
-    'bg-gradient-to-r from-primary/15 to-accent-warm/15 text-text',
+  daily: 'bg-primary/20 text-primary',
+  trainnote: 'bg-[#00e5ff45] text-[#006b7a] dark:text-[#00e5ff]',
+  bookcompass: 'bg-[#e8911a45] text-[#a56309] dark:text-[#e8911a]',
+  cross: 'bg-accent-warm/20 text-accent-warm',
 };
 
 export function DailyChoices() {
@@ -141,20 +141,20 @@ export function DailyChoices() {
               <div className="mt-5 grid gap-4 md:grid-cols-2 md:gap-5">
                 {/* 一般的な AI */}
                 <div className="rounded-xl border border-border bg-surface-2 p-4 md:p-5">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-text-faint">
+                  <span className="inline-flex items-center rounded-full bg-text-faint/15 px-2.5 py-0.5 text-[11px] font-medium text-text-muted">
                     一般的な AI
                   </span>
-                  <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                  <p className="mt-3 text-sm leading-relaxed text-text-muted">
                     {c.generic}
                   </p>
                 </div>
 
                 {/* DoubleHub */}
                 <div className="relative overflow-hidden rounded-xl border border-primary/30 bg-primary-soft p-4 md:p-5">
-                  <span className="text-[10px] font-semibold uppercase tracking-wider text-primary">
+                  <span className="inline-flex items-center rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-medium text-primary">
                     DoubleHub
                   </span>
-                  <p className="mt-2 text-sm leading-relaxed text-text">
+                  <p className="mt-3 text-sm leading-relaxed text-text">
                     {c.double}
                   </p>
                 </div>
