@@ -17,7 +17,8 @@ export const siteConfig = {
   },
   social: {
     appStoreBookCompass: 'https://apps.apple.com/jp/app/bookcompass/id6741010284',
-    appStoreDoubleHub: 'https://apps.apple.com/jp/app/doublehub/id6742528013',
+    appStoreDoubleHub:
+      'https://apps.apple.com/jp/app/doublehub-ai%E6%B4%BB%E7%94%A8todo%E7%AE%A1%E7%90%86/id6761981050',
     appStoreTrainNote: 'https://apps.apple.com/jp/app/trainnote/id6745749843',
   },
 } as const;
