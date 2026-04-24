@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Menu, X, LogIn } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
@@ -14,11 +14,26 @@ import { cn, isDynamicMode } from '@/lib/utils';
  * - Desktop: 横並び + Products ドロップダウン
  * - Mobile: ハンバーガーメニュー
  * - ログインボタンは dynamic モードのみ有効
+ * - Liquid Glass: スクロール位置に応じて "浮き上がり" + ガラスマテリアルに変化
  */
 export function MarketingHeader() {
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const loginEnabled = isDynamicMode();
+
+  // スクロール 24px 以上で "浮き上がる" モードに切り替える。
+  // ヘッダーはスクロールで頻繁に再レンダリングされやすいため、
+  // passive listener と state の変化時のみ setState する方式でカクツくのを避ける。
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 24;
+      setScrolled((prev) => (prev === isScrolled ? prev : isScrolled));
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Products ドロップダウンの開閉を少し遅延して、ボタン→メニュー間を
   // マウスが細かく出入りしたときに繰り返し閉じないようにする。
@@ -37,8 +52,23 @@ export function MarketingHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-bg/80 backdrop-blur-md">
-      <div className="container-wide flex h-16 items-center justify-between gap-4">
+    <header
+      className={cn(
+        'sticky top-0 z-40 w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+        // トップ方向: 通常はごくわずかな余白。スクロール後はもう少し下に浮かせる。
+        scrolled ? 'pt-3' : 'pt-0'
+      )}
+    >
+      <div
+        className={cn(
+          'flex h-16 items-center justify-between gap-4 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
+          scrolled
+            ? // 浮くモード: ピル形 + liquid-glass + max-width 折りたたみ
+              'container-wide max-w-[min(1200px,calc(100%-2rem))] mx-auto rounded-full liquid-glass px-5'
+            : // 通常モード: 今までと同じ幅一杯 + 下罫線
+              'container-wide border-b border-border/60 bg-bg/80 backdrop-blur-md'
+        )}
+      >
         {/* Logo */}
         <Link
           href="/"
@@ -86,13 +116,13 @@ export function MarketingHeader() {
                 onMouseEnter={openProducts}
                 onMouseLeave={scheduleCloseProducts}
               >
-                <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-lg">
+                <div className="liquid-glass-heavy overflow-hidden rounded-2xl">
                   {products.map((p) => (
                     <Link
                       key={p.slug}
                       href={p.href}
                       role="menuitem"
-                      className="flex items-start gap-3 px-4 py-3 transition hover:bg-surface-2"
+                      className="flex items-start gap-3 px-4 py-3 transition hover:bg-white/30 dark:hover:bg-white/5"
                     >
                       <ProductMenuIcon product={p} size={32} />
                       <div>
