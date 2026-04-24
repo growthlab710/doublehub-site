@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 import { Button } from '@/components/ui/Button';
 import { getLatestPosts } from '@/lib/content/blog';
 
@@ -12,8 +13,8 @@ export function BlogTeaser() {
       <Container width="wide">
         <div className="flex items-end justify-between gap-6">
           <div>
-
-            <h2 className="mt-3 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold">
+            <SectionEyebrow label="Blog" align="left" />
+            <h2 className="mt-4 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold">
               最新の記事
             </h2>
           </div>

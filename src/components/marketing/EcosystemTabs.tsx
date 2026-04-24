@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
 import { Container } from '@/components/ui/Container';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 /**
  * Ecosystem Tabs セクション
@@ -171,10 +172,8 @@ export function EcosystemTabs() {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <span className="text-xs font-semibold uppercase tracking-wider text-accent-warm">
-            Ecosystem
-          </span>
-          <h2 className="mt-3 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold leading-tight">
+          <SectionEyebrow number="04" label="Ecosystem" />
+          <h2 className="mt-4 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold leading-tight">
             つながるほど、
             <br />
             理解が深まる。

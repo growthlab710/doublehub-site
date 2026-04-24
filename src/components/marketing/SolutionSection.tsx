@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 /**
  * Solution セクション
@@ -38,8 +39,8 @@ export function SolutionSection() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-2xl text-center"
         >
-
-          <h2 className="mt-3 font-display text-[clamp(1.75rem,1.1rem+2.2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+          <SectionEyebrow number="01" label="Solution" />
+          <h2 className="mt-4 font-display text-[clamp(1.75rem,1.1rem+2.2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
             DoubleHub は、<br className="sm:hidden" />
             あなたを理解することから始める。
           </h2>

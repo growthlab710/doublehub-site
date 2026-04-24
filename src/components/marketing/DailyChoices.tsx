@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 /**
  * Daily Choices セクション（軸①）
@@ -97,8 +98,8 @@ export function DailyChoices() {
     <section className="relative py-20 md:py-28">
       <Container width="wide">
         <div className="mx-auto max-w-2xl text-center">
-
-          <h2 className="mt-3 font-display text-[clamp(1.75rem,1.1rem+2.4vw,2.75rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+          <SectionEyebrow number="02" label="Daily Choices" />
+          <h2 className="mt-4 font-display text-[clamp(1.75rem,1.1rem+2.4vw,2.75rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
             日常の小さな分かれ道で、<br className="sm:hidden" />
             ちょっとスマートに。
           </h2>

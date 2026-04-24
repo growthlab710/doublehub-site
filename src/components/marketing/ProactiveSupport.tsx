@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { Sparkles } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 /**
  * Proactive Support セクション（軸②）
@@ -58,12 +59,13 @@ export function ProactiveSupport() {
 
       <Container width="wide">
         <div className="mx-auto max-w-2xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-text-muted">
+          <SectionEyebrow number="03" label="Proactive Partner" />
+          <span className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-medium text-text-muted">
             <Sparkles className="h-3.5 w-3.5 text-primary" />
             DoubleHub 本体で予定している体験
           </span>
 
-          <h2 className="mt-3 font-display text-[clamp(1.75rem,1.1rem+2.4vw,2.75rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+          <h2 className="mt-4 font-display text-[clamp(1.75rem,1.1rem+2.4vw,2.75rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
             ダブルは、<br className="sm:hidden" />
             向こうから話しかけてくる。
           </h2>

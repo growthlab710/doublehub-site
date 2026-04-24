@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 import { products } from '@/lib/site/config';
 import { cn } from '@/lib/utils';
 
@@ -24,10 +25,8 @@ export function ProductCards() {
     <Section id="products" spacing="lg">
       <Container width="wide">
         <div className="max-w-2xl">
-          <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-            Products
-          </span>
-          <h2 className="mt-3 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold leading-tight">
+          <SectionEyebrow number="05" label="Products" align="left" />
+          <h2 className="mt-4 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold leading-tight">
             3 つのプロダクトで、自分の型を見つける。
           </h2>
           <p className="mt-4 text-text-muted">

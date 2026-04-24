@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 /**
  * Problem セクション
@@ -47,7 +48,8 @@ export function ProblemSection() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-3xl"
         >
-          <h2 className="font-display text-[clamp(1.75rem,1.1rem+2.2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+          <SectionEyebrow label="Problem" align="left" />
+          <h2 className="mt-4 font-display text-[clamp(1.75rem,1.1rem+2.2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
             あなたのことをよく知っている存在じゃないと、<br className="hidden md:inline" />
             あなたにとって本当の価値につながらない。
           </h2>
