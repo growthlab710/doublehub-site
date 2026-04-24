@@ -6,6 +6,7 @@ import { Section } from '@/components/ui/Section';
 import { MDXRenderer } from '@/components/marketing/MDXRenderer';
 import { FloatingToc } from '@/components/marketing/FloatingToc';
 import { getAllSlugs, getPostBySlug, getLatestPosts } from '@/lib/content/blog';
+import { siteConfig } from '@/lib/site/config';
 
 export const dynamicParams = false;
 
@@ -22,15 +23,25 @@ export async function generateMetadata(props: {
   return {
     title: post.title,
     description: post.description,
+    keywords: post.tags.length ? [...post.tags] : undefined,
     alternates: { canonical: `/blog/${slug}/` },
     openGraph: {
       title: post.title,
       description: post.description,
       type: 'article',
+      url: `/blog/${slug}/`,
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt,
       tags: [...post.tags],
+      authors: ['Naoki'],
+      locale: 'ja_JP',
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+    },
+    other: post.category ? { 'article:section': post.category } : undefined,
   };
 }
 
@@ -51,8 +62,89 @@ export default async function BlogPostPage(props: {
     })
     .slice(0, 3);
 
+  // AIO/SEO 用の構造化データ（Article + BreadcrumbList + FAQPage）
+  const canonicalUrl = `${siteConfig.url}/blog/${post.slug}/`;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Article',
+        headline: post.title,
+        description: post.description,
+        image: `${siteConfig.url}${siteConfig.ogImage}`,
+        author: {
+          '@type': 'Person',
+          name: 'Naoki',
+          url: `${siteConfig.url}/about/`,
+          description: 'iOSアプリ個人開発者・DoubleHub作者',
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: siteConfig.name,
+          url: siteConfig.url,
+          logo: {
+            '@type': 'ImageObject',
+            url: `${siteConfig.url}/images/og-default.jpg`,
+          },
+        },
+        datePublished: post.publishedAt,
+        dateModified: post.updatedAt ?? post.publishedAt,
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonicalUrl,
+        },
+        inLanguage: 'ja-JP',
+        ...(post.category ? { articleSection: post.category } : {}),
+        ...(post.tags.length ? { keywords: post.tags.join(', ') } : {}),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${siteConfig.url}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Blog',
+            item: `${siteConfig.url}/blog/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: post.title,
+            item: canonicalUrl,
+          },
+        ],
+      },
+      ...(post.faq && post.faq.length > 0
+        ? [
+            {
+              '@type': 'FAQPage',
+              mainEntity: post.faq.map((f) => ({
+                '@type': 'Question',
+                name: f.question,
+                acceptedAnswer: {
+                  '@type': 'Answer',
+                  text: f.answer,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+
   return (
     <Section spacing="lg">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Container width="narrow">
         <Link
           href="/blog/"
