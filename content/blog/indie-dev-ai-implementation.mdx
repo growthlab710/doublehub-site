@@ -1,14 +1,16 @@
 ---
-title: "個人開発でAI機能を実装する方法——SwiftでAIアプリを作った全記録"
-description: "個人開発者がAI機能をiOSアプリに組み込むには？TrainNote AI CoachとBook Compass AI整理を実装した経験から、技術選定・設計・コスト管理まで全工程を振り返る。"
-publishedAt: "2026-03-25"
-updatedAt: "2026-03-25"
-category: "個人開発×AI"
-slug: "indie-dev-ai-implementation"
+title: 個人開発でAI機能を実装する方法——SwiftでAIアプリを作った全記録
+description: >-
+  個人開発者がAI機能をiOSアプリに組み込むには？TrainNote AI CoachとBook Compass
+  AI整理を実装した経験から、技術選定・設計・コスト管理まで全工程を振り返る。
+publishedAt: '2026-03-25'
+updatedAt: '2026-03-25'
+category: 個人開発×AI
+slug: indie-dev-ai-implementation
 readingTime: 19
 ---
 
-**結論から言えば、個人開発者でもAI機能は実装できる。**ただし、LLMに丸投げする設計ではうまくいかない。重要なのは「何をローカルで処理し、何をLLMに任せるか」の分離設計と、運用コストを制御する仕組みを最初から組み込むことだ。
+**結論から言えば、個人開発者でもAI機能は実装できる。** ただし、LLMに丸投げする設計ではうまくいかない。重要なのは「何をローカルで処理し、何をLLMに任せるか」の分離設計と、運用コストを制御する仕組みを最初から組み込むことだ。
 
 この記事では、TrainNote の AI Coach と Book Compass の AI 読書整理という2つのアプリで実際にAI機能を設計・実装した全工程を振り返る。技術選定からプロンプト管理、コスト管理、そしてDoubleHubエコシステムを見据えたデータ設計まで、個人開発者向けに実践知をまとめた。
 
