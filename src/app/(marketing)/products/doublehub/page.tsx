@@ -85,7 +85,7 @@ const v110Highlights = [
     tag: 'HealthKit',
     title: 'ヘルスケアと結びつく「気づき」',
     body:
-      '歩数・睡眠・アクティビティの傾向をダブルが受け取り、「最近寝れてないのに明日 5 件は多いと思う」のように、身体と予定を結びつけた気づきを届けます。ポジティブな健康トレンドも見逃さず、褒めてくれます。読み取り専用。書き込みは一切しません。',
+      '歩数・睡眠・アクティビティの傾向をダブルが受け取り、「最近あまり眠れていないみたいですね。明日の 5 件は少し多いかもしれません」のように、身体と予定を結びつけた気づきを届けます。ポジティブな健康トレンドも見逃さず、褒めてくれます。読み取り専用。書き込みは一切しません。',
     image: '/images/doublehub-integrations.jpg',
     imageAlt: 'DoubleHub のヘルスケア連携・カレンダー連携設定画面',
     accent: 'from-[#fca5a5] via-[#f87171] to-[#ef4444]',
@@ -167,37 +167,37 @@ const scenes = [
     time: '朝',
     title: '今日の段取りを掴む',
     body:
-      'アプリを開くと、ダブルが「昨夜寝るの遅かったね。今日 5 件入ってるけど、急ぎじゃないやつ週末に回す？」と先に言ってくれる。',
+      'アプリを開くと、ダブルが「昨夜は寝るのが遅かったみたいですね。今日 5 件入っていますが、急ぎじゃないものは週末に回してみますか？」と先に声をかけてくれます。',
   },
   {
     time: '通勤中',
     title: '思いついたことを声で投げる',
     body:
-      '「今夜燃えるゴミ出すの忘れない、あと来週の歯医者の予約取らないと」とつぶやくと、ToDo が 2 件、自動で整理される。',
+      '「今夜燃えるゴミ出すの忘れない、あと来週の歯医者の予約取らないと」とつぶやくと、ToDo が 2 件、自動で整理されます。',
   },
   {
     time: '仕事中',
     title: '優先順位に迷ったら',
     body:
-      'チャットで「今日何から手つけるべき？」と聞くと、予定・締切・過去の傾向を踏まえて「14 時に会議入ってるから、その前に資料 1 件だけ」と返ってくる。',
+      'チャットで「今日何から手をつければいいかな？」と聞くと、予定・締切・過去の傾向を踏まえて「14 時に会議が入っているので、その前に資料 1 件だけはいかがでしょうか」と返してくれます。',
   },
   {
     time: '夜',
     title: 'やさしい振り返り',
     body:
-      'ダブルから「今日はどんな 1 日だった？」とやさしく声がかかる。一言返すだけで、ダブルが今日の出来事を整理してくれる。',
+      'ダブルから「今日はどんな 1 日でしたか？」とやさしく声がかかります。一言返すだけで、ダブルが今日の出来事を整理してくれます。',
   },
   {
     time: '週末',
     title: '来週を考える',
     body:
-      '「今週もう後半だね。残ってるタスクある？」とダブルが聞いてくれる。週次ふり返りで今週のペースが分かり、来週の計画を立てやすくなる。',
+      '「今週もう後半ですね。残っているタスク、見てみませんか？」とダブルが場を作ってくれます。週次レポートで今週のペースが見えて、来週の計画が立てやすくなります。',
   },
   {
     time: '体調が揺らぐとき',
     title: '先回りの気づき',
     body:
-      '睡眠が 3 日連続で短いことをダブルが察知して、「最近寝れてないみたい。今週の予定、少し詰まりすぎかも」と気づきが届く。',
+      '睡眠が 3 日連続で短いことをダブルが察知して、「最近あまり眠れていないみたいですね。今週の予定、少し詰まっていませんか？」と気づきが届きます。',
   },
 ];
 
@@ -253,7 +253,7 @@ const faqs = [
   },
   {
     q: 'ダブルはほかの AI 秘書アプリと何が違いますか？',
-    a: 'DoubleHub のダブルは「秘書」ではなく「もう一人の自分」です。頼まれたことをやる存在ではなく、あなたの過去の入力・予定・健康状態を踏まえて、言わなくてもわかってくれる対等な対話相手を目指しています。敬語は使わず、押し付けない。「がんばれ」より「無理しないで」を先に言える存在です。',
+    a: 'DoubleHub のダブルは「秘書」ではなく「もう一人の自分」です。頼まれたことをこなす存在ではなく、あなたの過去の入力・予定・健康状態を踏まえて、言わなくてもわかってくれる対話相手を目指しています。いつもやわらかな敬語で話しかけてくれ、押し付けない。「がんばりましょう」より「無理しないでくださいね」を先に言える存在です。',
   },
   {
     q: '音声入力はオフラインでも使えますか？',
@@ -470,22 +470,22 @@ export default function DoubleHubPage() {
               「もう一人の自分」。
             </h2>
             <p className="mt-5 text-sm leading-[1.9] text-text-muted md:text-base">
-              DoubleHub が育てる「ダブル」は、頼まれたことをやる人ではなく、言わなくてもわかってくれる存在。アドバイザーではなく、対等に対話する相手。使い続けるほどあなたへの理解が深まり、良いことも悪いことも率直に言える——そんな、もう一人の自分を育てるためのアプリです。
+              DoubleHub が育てる「ダブル」は、頼まれたことをやる人ではなく、言わなくてもわかってくれる存在。踏み込みすぎないやわらかな敬語で、指図ではなく気づきを置いていく伴走者。使い続けるほどあなたへの理解が深まり、良いことも気になることも誠実に伝えてくれる——そんな、もう一人の自分を育てるためのアプリです。
             </p>
           </div>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-3">
             <ConceptCard
-              title="対等なトーン"
-              body="敬語を使わず、友人のように。「提案があります」ではなく「ちょっと気になったんだけど」。"
+              title="やわらかな敬語"
+              body="ダブルはいつも敬語で話しかけてくれます。「ちょっと気になったんですけど」のように、丁寧でもちょうどいい距離感の寄り添い方です。"
             />
             <ConceptCard
               title="押し付けない"
-              body="アドバイスではなく、気づきを置いていく。「がんばれ」より「無理しないで」を先に言える。"
+              body="アドバイスではなく、気づきを置いていく存在。「がんばりましょう」より「無理しないでくださいね」を先に言えるダブルです。"
             />
             <ConceptCard
               title="育っていく"
-              body="使い続けるほど理解が深まり、行動パターンを学習。「覚えておいて」と伝えるとメモリとして残る。"
+              body="使い続けるほど理解が深まり、行動パターンを学習。「覚えておいて」と伝えるとメモリとして残ります。"
             />
           </div>
 
@@ -508,7 +508,7 @@ export default function DoubleHubPage() {
                   ダブルのことば
                 </p>
                 <p className="mt-2 text-sm leading-[1.8] text-text">
-                  明後日のレポート、今日ちょっとやっとく？
+                  明後日のレポート、今日のうちに少し進めておきませんか？
                 </p>
               </div>
             </div>
@@ -521,7 +521,7 @@ export default function DoubleHubPage() {
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-              What’s New · Ver.1.1.0
+              What’s New
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
               ダブルが、生活の中心に。
@@ -535,19 +535,19 @@ export default function DoubleHubPage() {
             {v110Highlights.map((h) => (
               <article
                 key={h.title}
-                className="group relative flex flex-col overflow-hidden rounded-3xl border border-border bg-surface shadow-sm transition hover:-translate-y-0.5 hover:border-accent-product/40 hover:shadow-md"
+                className="relative flex flex-col overflow-hidden rounded-3xl border border-border bg-surface shadow-sm"
               >
                 <div className="relative aspect-[9/16] w-full overflow-hidden bg-[#0a0a0a]">
-                  <div
-                    aria-hidden
-                    className={`pointer-events-none absolute -right-10 -top-10 z-10 h-32 w-32 rounded-full bg-gradient-to-br ${h.accent} opacity-25 blur-2xl`}
-                  />
                   <Image
                     src={h.image}
                     alt={h.imageAlt}
                     fill
                     className="object-cover object-top"
                     sizes="(min-width: 768px) 300px, 90vw"
+                  />
+                  <div
+                    aria-hidden
+                    className={`pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${h.accent} opacity-30 blur-2xl mix-blend-screen`}
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
