@@ -38,9 +38,7 @@ export function SolutionSection() {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-2xl text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-            Solution
-          </p>
+
           <h2 className="mt-3 font-display text-[clamp(1.75rem,1.1rem+2.2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
             DoubleHub は、<br className="sm:hidden" />
             あなたを理解することから始める。

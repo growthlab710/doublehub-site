@@ -8,10 +8,16 @@ export function CtaSection() {
   return (
     <Section spacing="md">
       <Container width="default">
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-primary/10 via-surface to-accent-warm/5 p-10 md:p-14 shadow-lg">
+        {/* 外枠: ガラス面の内側にグラデーション光源を配置し、ガラス越しに滞留する演出 */}
+        <div className="liquid-glass relative overflow-hidden rounded-3xl p-10 md:p-14">
+          {/* 中に配置した光源。ガラスがそのまま blur を乗けて柔らかくだぶらせる */}
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-primary/20 blur-3xl"
+            className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/30"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-accent-warm/15"
           />
           <div className="relative max-w-2xl">
             <h2 className="font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-tight">

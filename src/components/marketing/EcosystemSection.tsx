@@ -25,9 +25,7 @@ export function EcosystemSection() {
     <Section surface="alt" spacing="lg">
       <Container width="wide">
         <div className="max-w-2xl">
-          <span className="text-xs font-semibold uppercase tracking-wider text-accent-warm">
-            Ecosystem
-          </span>
+
           <h2 className="mt-3 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold">
             ツールを集めるのではなく、自分を整える。
           </h2>

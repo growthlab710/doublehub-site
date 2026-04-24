@@ -12,9 +12,7 @@ export function BlogTeaser() {
       <Container width="wide">
         <div className="flex items-end justify-between gap-6">
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-              Blog
-            </span>
+
             <h2 className="mt-3 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold">
               最新の記事
             </h2>

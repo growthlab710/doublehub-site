@@ -62,11 +62,19 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* コンセプト画像 */}
+        {/* コンセプト画像
+            - spring に納めて "リアルな物が召定位置に落ち着く" 演出
+            - 他のセクションの ease-out 一辺倒と差別化し AIっぽい均質さを折る */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 32 }}
+          initial={{ opacity: 0, scale: 0.92, y: 48 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          transition={{
+            type: 'spring',
+            stiffness: 60,
+            damping: 16,
+            mass: 1,
+            delay: 0.25,
+          }}
           className="relative mx-auto mt-14 max-w-4xl md:mt-20"
         >
           {/* Liquid Glass のフレーム

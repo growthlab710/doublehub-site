@@ -97,9 +97,7 @@ export function DailyChoices() {
     <section className="relative py-20 md:py-28">
       <Container width="wide">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-            Daily Choices
-          </p>
+
           <h2 className="mt-3 font-display text-[clamp(1.75rem,1.1rem+2.4vw,2.75rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
             日常の小さな分かれ道で、<br className="sm:hidden" />
             ちょっとスマートに。

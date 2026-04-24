@@ -40,20 +40,30 @@ export function ProductCards() {
           {products.map((p, i) => (
             <motion.div
               key={p.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              // 左から stagger 強めでスライド。他のセクションの縦フェードと区別し、
+              // 「3カードが順に登場する」リズムをそのまま見せる。
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.7, delay: i * 0.14, ease: [0.16, 1, 0.3, 1] }}
               className={p.accentClass}
             >
               <Link
                 href={p.href}
                 className={cn(
-                  'group block h-full rounded-2xl border border-border bg-surface p-7 shadow-sm',
+                  // ベース: 通常時は従来通りの bg-surface
+                  'group relative block h-full overflow-hidden rounded-2xl border border-border bg-surface p-7 shadow-sm',
                   'transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                  // hover 時: ガラス表情とアクセントカラーの光が透ける演出
                   'hover:-translate-y-1 hover:border-accent-product/50 hover:shadow-xl'
                 )}
               >
+                {/* hover時に表し、カード背面にアクセント光源 + ガラスを浮かべる。
+                    通常時は不可視なのでリストの読みやすさは損なわない。*/}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent-product/0 opacity-0 blur-2xl transition-all duration-500 group-hover:bg-accent-product/30 group-hover:opacity-100"
+                />
                 <div className="flex items-start justify-between">
                   <div className="relative h-20 w-20 overflow-hidden rounded-2xl ring-1 ring-border/60">
                     {productIconMap[p.slug] ? (
