@@ -100,7 +100,7 @@ const panels: InsightPanel[] = [
     name: '健康・ヘルスケア',
     status: 'current',
     statusLabel: 'Current',
-    tabDesc: '睡眠・歩数・活動量の傾向',
+    tabDesc: '睡眠・歩数・活動量、身体のコンディション',
     panelLabel: 'Input → Insight',
     title: 'ヘルスケア連携で、努力の成果を生活リズムと読める。',
     inputs: [
@@ -259,7 +259,11 @@ export function EcosystemTabs() {
                     </span>
                   </div>
                   <span className="font-display text-sm font-semibold text-text">{p.name}</span>
-                  <span className="text-xs leading-relaxed text-text-muted">{p.tabDesc}</span>
+                  {/* block + min-h で 1行・2行どちらでもカード高さを揃える。
+                      leading-relaxed (1.625) * 0.75rem * 2 行 ≃ 2.4375rem 以上を確保。 */}
+                  <span className="block min-h-[2.5rem] text-xs leading-relaxed text-text-muted">
+                    {p.tabDesc}
+                  </span>
                   <ChevronRight className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-faint transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-primary group-data-[state=active]:rotate-90 group-data-[state=active]:text-primary" />
                 </TabsTrigger>
               ))}
