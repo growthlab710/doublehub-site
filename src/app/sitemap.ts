@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/products/doublehub/',
     '/products/bookcompass/',
     '/products/trainnote/',
+    '/products/hubwallet/',
     '/blog/',
     '/about/',
     '/support/',

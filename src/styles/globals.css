@@ -105,6 +105,13 @@
   --tn-text-dim: rgba(255, 255, 255, 0.45);
   --tn-text-faint: rgba(255, 255, 255, 0.25);
 
+  /* HubWallet tokens (やわらかいグリーン系 — 家計簿らしい安心感) */
+  --hw-primary: #2f9e6c;
+  --hw-accent: #38b27d;
+  --hw-accent-soft: #d8f1e3;
+  --hw-text-primary: #1f2a24;
+  --hw-text-secondary: #5b6b62;
+
   /* ==========================================================================
      Liquid Glass tokens
      Apple iOS 26 の Liquid Glass material を Web で backdrop-filter ベースにエミュレート。
@@ -186,6 +193,11 @@
 .theme-doublehub {
   --color-accent-product: var(--color-primary);
   --color-accent-product-fg: var(--color-text-inverse);
+}
+
+.theme-hubwallet {
+  --color-accent-product: var(--hw-accent);
+  --color-accent-product-fg: var(--hw-text-primary);
 }
 
 /* ==========================================================================

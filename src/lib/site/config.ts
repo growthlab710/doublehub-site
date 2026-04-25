@@ -76,6 +76,23 @@ export const products = [
     ],
     comingSoonWeb: true,
   },
+  {
+    slug: 'hubwallet',
+    name: 'HubWallet',
+    tagline: '節約疲れしない家計簿。',
+    description:
+      'レシートは「撮るだけ」、仕分けは隙間時間にまとめて。銀行連携不要・全プラン広告ゼロの、使い方を理解するための家計簿。',
+    href: '/products/hubwallet/',
+    accentClass: 'theme-hubwallet',
+    icon: '💰',
+    features: [
+      '撮って溜める・あとで仕分ける',
+      'Gemini OCR とカテゴリ推定',
+      '銀行連携不要 · ローカルファースト',
+      '全プラン広告なし',
+    ],
+    comingSoonWeb: true,
+  },
 ] as const;
 
 export type Product = (typeof products)[number];
@@ -92,6 +109,7 @@ export const footerNav = {
     { label: 'DoubleHub', href: '/products/doublehub/' },
     { label: 'BookCompass', href: '/products/bookcompass/' },
     { label: 'TrainNote', href: '/products/trainnote/' },
+    { label: 'HubWallet', href: '/products/hubwallet/' },
   ],
   company: [
     { label: 'About', href: '/about/' },
