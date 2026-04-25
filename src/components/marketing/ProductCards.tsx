@@ -36,7 +36,11 @@ export function ProductCards() {
         </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {products.map((p, i) => (
+          {products
+            // トップのメイングリッドは 3 枚固定。未リリースなどのプロダクトは
+            // 個別ページやフッターだけに出すため、ここでフィルタする。
+            .filter((p) => p.slug !== 'hubwallet')
+            .map((p, i) => (
             <motion.div
               key={p.slug}
               // 左から stagger 強めでスライド。他のセクションの縦フェードと区別し、
