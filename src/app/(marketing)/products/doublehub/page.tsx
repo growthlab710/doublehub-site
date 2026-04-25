@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title:
     'DoubleHub — もう一人の自分が、毎日の頭の中を整える。AI ToDo・メモ・対話アプリ',
   description:
-    'DoubleHub は ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダーの情報も束ねて「もう一人の自分（ダブル）」を育てる iOS アプリ。音声で投げるだけで AI が整理し、睡眠・予定・タスクを結びつけた気づきを届けます。無料で始められる AI 生活アシスタント。',
+    'DoubleHub は ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダー、読書記録（BookCompass）の情報も束ねて「もう一人の自分（ダブル）」を育てる iOS アプリ。音声で投げるだけで AI が整理し、睡眠・予定・タスク・読書から得た気づきを結びつけた応答を届けます。無料で始められる AI 生活アシスタント。',
   keywords: [
     'DoubleHub',
     'ダブルハブ',
@@ -21,6 +21,8 @@ export const metadata: Metadata = {
     '音声入力 ToDo',
     'ヘルスケア連携',
     'カレンダー連携',
+    'BookCompass 連携',
+    '読書連携',
     'もう一人の自分',
     'AI 生活アシスタント',
     'ジャーナリングアプリ',
@@ -100,13 +102,13 @@ const v110Highlights = [
     accent: 'from-[#93c5fd] via-[#60a5fa] to-[#3b82f6]',
   },
   {
-    tag: 'Weekly Review',
-    title: '週次レポートで、今週の自分が見える',
+    tag: 'BookCompass Link',
+    title: '読書で深めた自己理解が、会話に溶け込む',
     body:
-      '完了した ToDo、期限をまたいだ件数、動きやすかった時間帯、積み上がった理解——ダブルが今週のあなたを丁寧に整理してくれます。「今週は午前に動ける流れが見えていました。」のような一言が、来週の動き方のヒントになります。',
+      'BookCompass で読書中に言葉にした気づき・最近の関心テーマ・読んだ本の余韻が、ダブルとの会話に「文脈」として自然に流れ込みます。「最近どう？」と切り出されたとき、自分が切り口を提供しなくても、ダブルの方からあなたの関心を踏まえて話題を出してくれます。',
     image: '/images/doublehub-weekly.jpg',
-    imageAlt: 'DoubleHub の週次レポート画面',
-    accent: 'from-[#86efac] via-[#4ade80] to-[#22c55e]',
+    imageAlt: 'DoubleHub と BookCompass の連携イメージ',
+    accent: 'from-[#c4b5fd] via-[#a78bfa] to-[#8b5cf6]',
   },
 ];
 
@@ -159,6 +161,7 @@ const v110Improvements = [
   'データ保持ポリシーをアプリ内から確認可能',
   '朝/夜サマリの読みやすさ向上（冗長な「ダブルのひとこと」を廃止）',
   '天気の精度改善（時間帯ベースの降水確率）',
+  '週次レポートで、今週の自分のペースをやさしく整理',
 ];
 
 // 1日のシナリオ
@@ -236,6 +239,10 @@ const faqs = [
     a: 'はい。無料プランでは AI による ToDo / メモの自動仕分けが月 20 回まで、ホームの「今日」カテゴリのお知らせ、天気、ウィジェット、音声入力、ユーザー辞書などの基本機能をすべてお使いいただけます。「入力するだけで整理してくれる」価値を体験いただけます。',
   },
   {
+    q: 'BookCompass と連携すると何が変わりますか？',
+    a: '同じあなたなのにアプリをまたぐと毎回ゼロから説明し直す——その負担がなくなります。BookCompass で読書中に言葉にした気づきや最近の関心テーマ、読んだ本の余韻が、ダブルとの会話に「文脈」として自然に流れ込みます。たとえば「最近自信がなくて…」と話したとき、過去に読書中にたどり着いていた答えを踏まえて受け止めてくれたり、「最近どう？」とダブルから話題を切り出してもらえたりします。連携は任意で、いつでもオフにできます。',
+  },
+  {
     q: 'Plus プランではなにが解放されますか？',
     a: 'Plus（月 ¥480 / 年 ¥4,800）では、AI 自動仕分けが無制限になり、ダブルとの AI チャット、ホームの「気づき」「話したいこと」カテゴリ、朝/夜サマリ、週次ふり返り、ヘルスケア連携、カレンダー連携が利用できます。「自分のことを継続的に見てくれる理解者」としてのダブルが本格的に動き始めます。',
   },
@@ -273,7 +280,7 @@ const vsTable = [
   },
   {
     category: '一般的な AI チャットアプリ',
-    doublehub: '過去の入力・予定・健康状態を踏まえた、自分のための AI',
+    doublehub: '過去の入力・予定・健康状態・読書から得た気づきを踏まえた、自分のための AI',
   },
   {
     category: 'ヘルスケア単体アプリ',
@@ -290,6 +297,44 @@ const vsTable = [
   {
     category: '他の AI 秘書アプリ',
     doublehub: '「秘書」ではなく「もう一人の自分」。対等で押し付けないトーン',
+  },
+];
+
+// BookCompass 連携で起きる変化
+const bookCompassBenefits = [
+  {
+    tag: '内面の地図',
+    title: 'ダブルが、あなたの「内面の地図」を参照する',
+    body:
+      'BookCompass で読書中に AI と対話して言葉にした気づき——大切にしている価値観や、自分なりにたどり着いた答え——をダブルが踏まえて応答します。「最近ずっと自信がなくて…」と打ち明けたとき、初対面の AI のような汎用的な慰めではなく、あなたが過去に自分で見つけていた言葉に沿って受け止めてくれる対話になります。',
+  },
+  {
+    tag: '会話の入口',
+    title: '「最近の関心」が会話の入口になる',
+    body:
+      'BookCompass で直近どんなテーマを探していたか（キャリアチェンジ、子育てとの両立、お金との向き合い方など）をダブルが受け取ります。あなたが切り口を提供しなくても、ダブルの方から「最近どう？」と関心テーマに沿って自然に話を始めてくれます。',
+  },
+  {
+    tag: '想起できる過去',
+    title: '読んだ本が「想起できる過去」になる',
+    body:
+      'ダブルとの会話で「最近こういうことに悩んでいて…」と話すと、「前にあなたが読んでいた本に、似たテーマで残っていた問いがありましたね」のように、既読本の余韻を想起してくれます。本を売り込むのではなく、あなた自身が辿った思考の道のりを思い出させてくれる存在です。',
+  },
+];
+
+// BookCompass 連携の Coming Soon
+const bookCompassRoadmap = [
+  {
+    title: '読書からの行動化',
+    body: '本で出会った気づきを、ダブル側で ToDo や問いに整え直し、日常のアクションへ繋げる仕組みを準備中です。',
+  },
+  {
+    title: '応答の確実性向上',
+    body: '読書から得た文脈が、いつ・どんな会話で活きるか——その精度を継続的に磨いています。今は「文脈が運ばれる経路は通った」段階です。',
+  },
+  {
+    title: '評議会・Deep Research',
+    body: '複数の視点から深く考えるモードや、特定テーマを腰を据えて掘るモードを将来的に構想中です。',
   },
 ];
 
@@ -339,6 +384,7 @@ const jsonLd = {
         'ダブルとの AI チャット',
         'ヘルスケア連携（HealthKit / 読み取り専用）',
         'カレンダー双方向同期（EventKit）',
+        'BookCompass 連携（読書から得た気づきを会話に反映）',
         'ホームの「ダブルからのお知らせ」3 カテゴリ',
         'iOS 音声入力対応',
         '朝/夜サマリ・週次ふり返り',
@@ -416,7 +462,7 @@ export default function DoubleHubPage() {
               毎日の頭の中を整える。
             </h1>
             <p className="mt-5 max-w-lg text-text-muted">
-              DoubleHub は ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダーの情報も束ねて、あなたを誰よりも理解する「もう一人の自分（ダブル）」を育てる iOS アプリです。
+              DoubleHub は ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダー、読書記録（BookCompass）の情報も束ねて、あなたを誰よりも理解する「もう一人の自分（ダブル）」を育てる iOS アプリです。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
@@ -527,7 +573,7 @@ export default function DoubleHubPage() {
               ダブルが、生活の中心に。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              ToDo・メモ・対話だけだったダブルが、ヘルスケアとカレンダーまで束ねるようになりました。予定と身体と気持ちを、ひとつの時間軸で扱えます。
+              ToDo・メモ・対話だけだったダブルが、ヘルスケア・カレンダー、そして読書から得た気づきまで束ねるようになりました。予定と身体と気持ちと「内面の輪郭」を、ひとつの時間軸で扱えます。
             </p>
           </div>
 
@@ -911,8 +957,84 @@ export default function DoubleHubPage() {
         </Container>
       </Section>
 
-      {/* ========== 11. Ecosystem ========== */}
+      {/* ========== 11. BookCompass Link ========== */}
       <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              BookCompass Link
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              同じ自分を、二度説明しなくていい。
+            </h2>
+            <p className="mt-4 text-sm leading-[1.9] text-text-muted md:text-base">
+              <Link href="/products/bookcompass/" className="text-accent-product underline-offset-4 hover:underline">BookCompass</Link> で読書と向き合いながら言葉にした「内面の輪郭」が、DoubleHub に持ち込むときに再ヒアリングがいらない。読書で深めた自己理解が、日常の意思決定や感情整理の場面で、そのまま使える状態で待っています。
+            </p>
+          </div>
+
+          <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-3">
+            {bookCompassBenefits.map((b) => (
+              <article
+                key={b.title}
+                className="flex flex-col rounded-2xl border border-border bg-surface p-6 shadow-sm"
+              >
+                <span className="inline-flex w-fit items-center rounded-full border border-accent-product/30 bg-accent-product/10 px-3 py-1 text-xs font-semibold text-accent-product">
+                  {b.tag}
+                </span>
+                <h3 className="mt-4 font-display text-base font-semibold leading-[1.4] tracking-[-0.01em] md:text-lg">
+                  {b.title}
+                </h3>
+                <p className="mt-3 text-sm leading-[1.85] text-text-muted">
+                  {b.body}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          {/* 体感価値の一言 */}
+          <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-accent-product/20 bg-accent-product/5 p-6 md:p-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+              The Feeling
+            </p>
+            <p className="mt-4 font-display text-lg font-semibold leading-[1.5] tracking-[-0.01em] md:text-xl">
+              「同じ自分を、二度説明しなくていい」
+            </p>
+            <p className="mt-3 text-sm leading-[1.9] text-text-muted md:text-base">
+              本と向き合いながら言葉にした内面の輪郭を、ダブルとの会話に持ち込むときに、もう一度ゼロから話さなくていい。読書で深めた思考が、生活の中でそのまま生きている——その連続性が、データ連携とはちょっと違う種類の価値を運んでくれます。
+            </p>
+          </div>
+
+          {/* Coming Soon */}
+          <div className="mx-auto mt-12 max-w-5xl">
+            <div className="mb-6 flex items-center gap-3">
+              <span className="inline-flex items-center rounded-full bg-text/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
+                Coming Soon
+              </span>
+              <p className="text-sm text-text-muted">
+                BookCompass 連携をもとに、こんな体験を準備しています。
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {bookCompassRoadmap.map((r) => (
+                <div
+                  key={r.title}
+                  className="rounded-2xl border border-dashed border-border bg-surface-2/40 p-5"
+                >
+                  <h4 className="font-display text-sm font-semibold leading-[1.4] tracking-[-0.01em] text-text">
+                    {r.title}
+                  </h4>
+                  <p className="mt-2 text-xs leading-[1.8] text-text-muted">
+                    {r.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 12. Ecosystem ========== */}
+      <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
@@ -922,14 +1044,14 @@ export default function DoubleHubPage() {
               DoubleHub は、もっと大きな構想のハブ。
             </h2>
             <p className="mt-5 text-sm leading-[1.9] text-text-muted md:text-base">
-              DoubleHub は、読書記録の <Link href="/products/bookcompass/" className="text-accent-product underline-offset-4 hover:underline">BookCompass</Link> や、筋トレ記録 × AI コーチの <Link href="/products/trainnote/" className="text-accent-product underline-offset-4 hover:underline">TrainNote</Link> と連携予定。専門アプリで記録したあなたの思考や身体の情報が、DoubleHub に集まって、ダブルをさらに深く育てていきます。
+              読書記録の <Link href="/products/bookcompass/" className="text-accent-product underline-offset-4 hover:underline">BookCompass</Link> とはすでに連携が始まっています。さらに、筋トレ記録 × AI コーチの <Link href="/products/trainnote/" className="text-accent-product underline-offset-4 hover:underline">TrainNote</Link> との連携も今後予定。専門アプリで記録したあなたの思考や身体の情報が、DoubleHub に集まって、ダブルをさらに深く育てていきます。
             </p>
           </div>
         </Container>
       </Section>
 
-      {/* ========== 12. FAQ ========== */}
-      <Section spacing="md" surface="alt">
+      {/* ========== 13. FAQ ========== */}
+      <Section spacing="md">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
@@ -962,8 +1084,8 @@ export default function DoubleHubPage() {
         </Container>
       </Section>
 
-      {/* ========== 13. Final CTA ========== */}
-      <Section spacing="md">
+      {/* ========== 14. Final CTA ========== */}
+      <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.25rem)] font-bold leading-[1.25] tracking-[-0.02em]">
