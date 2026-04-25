@@ -91,9 +91,9 @@ const features = [
   },
   {
     label: 'AI Recognition',
-    title: 'Gemini が金額・日付・店舗・品目を読む。',
+    title: 'AI が金額・日付・店舗・品目を読む。',
     body:
-      'レシート画像から金額・日付・店舗・品目を OCR で抽出。さらに親カテゴリ（食費・交通・医療・健康など）を AI が推定し、店舗ごとの履歴から学習していきます。',
+      'レシート画像から金額・日付・店舗・品目を AI が抽出。さらに親カテゴリ（食費・交通・医療・健康など）を AI が推定し、店舗ごとの履歴から学習していきます。',
   },
   {
     label: 'Triage',
@@ -170,7 +170,7 @@ const faqs = [
   },
   {
     q: 'データは外部に送られますか？',
-    a: 'データは端末ローカル（SwiftData）に保存します。AI による OCR・カテゴリ推定を行うときのみ、画像やテキストを Gemini に送信します。',
+    a: 'データは端末ローカル（SwiftData）に保存します。AI による OCR・カテゴリ推定や音声認識を行うときのみ、必要な画像やテキスト・音声を AI に送信します。',
   },
   {
     q: 'Android 版はありますか？',
@@ -459,7 +459,7 @@ export default function HubWalletPage() {
                 {[
                   '銀行・カード連携なし。OCR・手入力・音声・CSV のみ',
                   'データは端末ローカル（SwiftData）に保存',
-                  'AI 処理時のみ、画像やテキストを Gemini に送信',
+                  'AI 処理時のみ、必要なデータを AI に送信',
                   'Sign in with Apple に対応',
                   '全プランで広告は一切なし',
                   '将来 Supabase 同期は Phase 2 で予定（任意）',
@@ -582,11 +582,11 @@ export default function HubWalletPage() {
                 </span>
               </div>
               <p className="mt-3 text-xs text-text-muted">
-                基本機能を制限なく。AI は月数回まで（仮）。
+                基本機能を制限なく。AI 関連は月数回まで（仮）。
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
-                  <Check /> 手入力・音声入力・CSV インポートは無制限
+                  <Check /> 手入力・CSV インポートは無制限
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 月次・年間レポートは制限なし
@@ -596,6 +596,9 @@ export default function HubWalletPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> AI OCR・カテゴリ推定 月数回まで（最終回数は調整中）
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 音声入力も 月数回まで（最終回数は調整中）
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 広告は一切なし
@@ -622,13 +625,19 @@ export default function HubWalletPage() {
                 年額 ¥3,800（仮）
               </div>
               <p className="mt-3 text-xs text-text-muted">
-                AI OCR・カテゴリ推定を毎日たくさん使いたい方向け。
+                AI OCR・カテゴリ推定・音声入力をたくさん使いたい方向け。
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
                   <Check />
                   <span>
-                    <strong className="font-semibold text-text">AI OCR・カテゴリ推定の無制限利用</strong>
+                    <strong className="font-semibold text-text">AI OCR・カテゴリ推定の利用上限を大幅アップ</strong>
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check />
+                  <span>
+                    <strong className="font-semibold text-text">音声入力の利用上限も大幅アップ</strong>
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
