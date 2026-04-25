@@ -2376,3 +2376,47 @@ DoubleHub サイトに専用プロダクトページ /products/hubwallet/ を新
 - `pnpm build` 成功（42 static pages）。
   - 増分: `/products/hubwallet`（前回 41 → 今回 42）。
   - TypeScript エラーなし。
+
+
+## 2026-04-25 — HubWallet 料金プラン微修正 + Ecosystem タブ更新
+
+### HubWallet ページ修正
+
+- 料金プラン (無料 / Plus) の文言を更新:
+  - 無料プラン: 「手入力・CSV インポートは無制限」「音声入力も 月数回まで（最終回数は調整中）」を追加。
+    音声入力も AI 関連と同じく月数回の上限があることを明示。
+  - Plus プラン: 「AI OCR・カテゴリ推定の無制限利用」→「AI OCR・カテゴリ推定の
+    利用上限を大幅アップ」に変更（無制限にするか検討中のため）。
+    「音声入力の利用上限も大幅アップ」も明示。
+- Features セクションの「Gemini が金額・日付・店舗・品目を読む。」の見出しを
+  「AI が金額・日付・店舗・品目を読む。」に変更。本文も「Gemini → AI」。
+- FAQ「データは外部に送られますか？」の回答からも Gemini 表記を削除し、
+  AI 表記に統一。Privacy セクションの注釈も同様。
+- これらの修正は LP の「広告 / モデル名にロックインしない記述」の方針にも沿う。
+
+### Ecosystem タブ (トップページ) 更新
+
+- 「家計アプリ」タブを HubWallet として再構成:
+  - name: '家計アプリ' → 'HubWallet'
+  - status: 'future' / 'Future' → 'coming' / 'Coming Soon'
+  - inputs / understands を MVP の機能に合わせて書き直し
+    （レシート撮影・親カテゴリ別の使い方・定期支出・未整理の保留 など）
+  - visual: 'none' → 'screenshots' に変更し、
+    /images/hubwallet-screen-home.jpg と
+    /images/hubwallet-screen-monthly.jpg をパネル内に表示
+  - note は「HubWallet は MVP リリース直前」の文脈に書き直し、
+    screenshots と併記して見せられるよう描画ロジックを拡張
+- タブカードの不揃いを解消:
+  - panelIconMap を `Record<string, PanelIcon>` 型に変更し、
+    image / emoji の 2 種を扱えるように。
+  - health は ❤️、finance (HubWallet) は 💰 の絵文字フォールバックを設定。
+  - タブの Image 描画もアイコン領域を「常に確保」する条件に変更。
+    結果、健康・ヘルスケアと HubWallet のカードが他のタブと同じ縦幅に揃った。
+
+### 検証
+
+- `pnpm build` 成功（42 static pages, TS エラーなし）。
+- ローカル dev サーバーで以下を目視確認:
+  - Ecosystem タブ 5 枚が同じ縦幅で並ぶ。
+  - HubWallet タブを開くとモック 2 枚と「MVP リリース直前」ノートが表示。
+  - HubWallet ページの Plans セクションの文言が要望どおりに更新。

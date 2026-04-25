@@ -123,40 +123,51 @@ const panels: InsightPanel[] = [
   },
   {
     id: 'finance',
-    name: '家計アプリ',
-    status: 'future',
-    statusLabel: 'Future',
-    tabDesc: '自己投資・娯楽・生活のバランス',
-    panelLabel: 'Future Input',
-    title: '家計データは「満足度の高い配分」を考える材料になる。',
+    name: 'HubWallet',
+    status: 'coming',
+    statusLabel: 'Coming Soon',
+    tabDesc: 'レシート、定期支出、使い方の傾向',
+    panelLabel: 'Input → Insight',
+    title: 'HubWallet から入るのは、「どんな使い方が自分を充電させるか」の手がかり。',
     inputs: [
-      '固定費と変動費の流れ',
-      '自己投資・娯楽・浪費のバランス',
-      '「使って良かった」と感じた支出のメモ',
-      '買うか迷っているものとその背景',
+      'レシート撮影と AI OCR から得られる支出データ',
+      '親カテゴリ別の使い方と進捗（食費・交通・娯楽、他）',
+      '家賃・光熱費・サブスクなどの定期支出とその推移',
+      '未整理に「とりあえず保留」している買い物の迷い',
     ],
     understands: [
-      '削るべき出費より、活かすべき支出',
-      '自分にとって「充電になるお金の使い方」',
-      '自己投資が効きやすい領域とタイミング',
-      '我慢に寄らない、満足度の高い選択',
+      '削るべき出費より、活かすべき支出の領域',
+      '自己投資と浪費の境目・「使って良かった」シグナル',
+      '生活コストの輪郭と、今月・来月の余裕',
+      '今のあなたには「推す」か「休む」か、助言の調子',
     ],
-    visual: 'none',
+    visual: 'screenshots',
+    screenshots: [
+      { src: '/images/hubwallet-screen-home.jpg', alt: 'HubWallet ホーム画面—今月の支出と未整理' },
+      { src: '/images/hubwallet-screen-monthly.jpg', alt: 'HubWallet 月次レポート—６ヶ月推移とカテゴリ別の進捗' },
+    ],
     note: {
-      label: '構想中の領域です',
-      body: '家計連携は現在未実装。将来的には「何を買うべきか」よりも「どんな使い方が自分を充電させるか」を一緒に考えるパートナーとして、ダブルが寄り添える姿を構想しています。',
+      label: 'HubWallet は MVP リリース直前',
+      body: 'iOS 家計簿アプリ「HubWallet」としてリリース直前。単体でも完結します。将来 DoubleHub につながると、「何を買うべきか」よりも「どんな使い方が自分を充電させるか」を一緒に考えるパートナーになります。',
     },
   },
 ];
 
 /**
  * タブボタンに表示する各プロダクトの公式アイコン。
- * 定義された panel のみアイコンを表示し、未定義はバッジのみにフォールバック。
+ * プロダクトアイコンがあるタブは画像、それ以外は絵文字フォールバックを
+ * 使い、どのタブも必ずアイコン領域を描画して カードの高さを揃える。
  */
-const panelIconMap: Record<string, string> = {
-  trainnote: '/images/trainnote-app-icon.jpg',
-  bookcompass: '/images/bookcompass-app-icon.jpg',
-  doublehub: '/images/doublehub-icon.jpg',
+type PanelIcon =
+  | { type: 'image'; src: string }
+  | { type: 'emoji'; char: string };
+
+const panelIconMap: Record<string, PanelIcon> = {
+  trainnote: { type: 'image', src: '/images/trainnote-app-icon.jpg' },
+  bookcompass: { type: 'image', src: '/images/bookcompass-app-icon.jpg' },
+  doublehub: { type: 'image', src: '/images/doublehub-icon.jpg' },
+  health: { type: 'emoji', char: '❤️' },
+  finance: { type: 'emoji', char: '💰' },
 };
 
 const statusStyles: Record<TabStatus, string> = {
@@ -226,17 +237,21 @@ export function EcosystemTabs() {
                   className="liquid-glass group relative flex flex-1 min-w-[150px] cursor-pointer flex-col items-start gap-2 whitespace-normal rounded-xl border-0 p-4 pr-8 text-left transition-all duration-300 hover:-translate-y-0.5 data-[state=active]:-translate-y-0.5 data-[state=active]:bg-primary/10 data-[state=active]:ring-2 data-[state=active]:ring-primary/40"
                 >
                   <div className="flex items-center gap-2">
-                    {panelIconMap[p.id] && (
-                      <div className="relative h-7 w-7 shrink-0 overflow-hidden rounded-lg ring-1 ring-border/70">
+                    <div className="relative flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-surface-2 ring-1 ring-border/70">
+                      {panelIconMap[p.id]?.type === 'image' ? (
                         <Image
-                          src={panelIconMap[p.id]}
+                          src={(panelIconMap[p.id] as { type: 'image'; src: string }).src}
                           alt=""
                           fill
                           sizes="28px"
                           className="object-cover"
                         />
-                      </div>
-                    )}
+                      ) : panelIconMap[p.id]?.type === 'emoji' ? (
+                        <span aria-hidden className="text-base leading-none">
+                          {(panelIconMap[p.id] as { type: 'emoji'; char: string }).char}
+                        </span>
+                      ) : null}
+                    </div>
                     <span
                       className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${statusStyles[p.status]}`}
                     >
@@ -308,8 +323,15 @@ export function EcosystemTabs() {
                         </div>
                       ))}
                     </div>
-                  ) : p.note ? (
+                  ) : null}
+                  {/* screenshots と併記したい補足ノート（未リリースとかの注釈用）も
+                      受け付けるため、screenshots の有無に関わらず note があれば表示する。 */}
+                  {p.visual === 'none' && p.note ? (
                     <div className="mt-8">
+                      <PanelNote label={p.note.label} body={p.note.body} />
+                    </div>
+                  ) : p.note ? (
+                    <div className="mt-6">
                       <PanelNote label={p.note.label} body={p.note.body} />
                     </div>
                   ) : null}
