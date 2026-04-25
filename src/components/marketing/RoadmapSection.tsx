@@ -17,35 +17,35 @@ type Phase = {
   title: string;
   desc: string;
   checks: { text: string; state: CheckState }[];
-  tone: 'now' | 'next' | 'future';
+  tone: 'shipped' | 'now' | 'next';
 };
 
 const phases: Phase[] = [
   {
-    label: 'Now',
-    tone: 'now',
-    title: '既存サービスを磨く',
-    desc: 'TrainNote、Book Compass をそれぞれ磨き、単体でも選ばれるサービスへ。DoubleHub 本体は設計・開発を推進中。',
+    label: 'Shipped',
+    tone: 'shipped',
+    title: '各サービスをリリースし、磨き込み中',
+    desc: 'TrainNote / Book Compass / DoubleHub 本体 はいずれもリリース済み。単体で使える状態を保ちながら、改善を重ねています。',
     checks: [
       { text: 'TrainNote — AI Coach Plus（5名の専門コーチ）', state: 'done' },
       { text: 'Book Compass — AI 読書整理', state: 'done' },
-      { text: 'DoubleHub 本体 — 設計・開発中', state: 'progress' },
+      { text: 'DoubleHub 本体 — リリース済み', state: 'done' },
+    ],
+  },
+  {
+    label: 'Now',
+    tone: 'now',
+    title: '連携基盤を整える',
+    desc: '認証とデータ連携の土台を整え、各サービスから必要な情報だけをダブルが横断的に読める状態をつくる。',
+    checks: [
+      { text: '共通認証基盤の構築', state: 'progress' },
+      { text: 'フェデレーテッド API 設計', state: 'progress' },
+      { text: 'データ連携の同意フロー', state: 'pending' },
     ],
   },
   {
     label: 'Next',
     tone: 'next',
-    title: '連携基盤を整える',
-    desc: '認証とデータ連携の土台を整え、各サービスから必要な情報だけをダブルが横断的に読める状態をつくる。',
-    checks: [
-      { text: '共通認証基盤の構築', state: 'pending' },
-      { text: 'フェデレーテッド API 設計', state: 'pending' },
-      { text: 'データ連携の同意フロー', state: 'pending' },
-    ],
-  },
-  {
-    label: 'Future',
-    tone: 'future',
     title: '生活全体へ広げる',
     desc: '家計、健康、娯楽まで入力が増えるほど、あなたにとって満足度の高い配分や選択を提案できるように。',
     checks: [
@@ -57,15 +57,20 @@ const phases: Phase[] = [
 ];
 
 const toneStyles: Record<Phase['tone'], { badge: string; border: string }> = {
-  now: {
+  shipped: {
+    // 「対応済み」を示すラベル。チェック色と揃えたプライマリ色を使う。
     badge: 'bg-primary text-white',
     border: 'border-primary/40',
   },
-  next: {
-    badge: 'bg-accent-warm/90 text-white',
+  now: {
+    // 現在進行中。進捗インジケータと揃えて accent-warm。
+    // CSS 変数と Tailwind のアルファ表記「/90」の互換性の関係で、
+    // スラッシュを使うと背景色が透明になってしまうためベタ塑り。
+    badge: 'bg-accent-warm text-white',
     border: 'border-accent-warm/30',
   },
-  future: {
+  next: {
+    // 今後の予定。控えめの中性色。
     badge: 'bg-surface-2 text-text-muted border border-border',
     border: 'border-border',
   },
