@@ -2201,3 +2201,67 @@ HTML 内に残存する `**...**` を検出:
 - リード文冒頭の `**` がブロック開始位置にある場合、その前に空白が
   入れられないため、リード文を区切る際はスクリプトが後続だけ空白追加
   する挙動（例: `**〜です。** 続く文` の形）で統一された
+
+## 2026-04-25 (4) — DoubleHub プロダクトページに BookCompass 連携セクションを追加
+
+ブランチ: `feature/update-doublehub-product-page-bc-link`
+変更ファイル: `src/app/(marketing)/products/doublehub/page.tsx`
+
+### 背景
+
+BookCompass で読書中に得た気づき・最近の検索テーマ・読んだ本の要約が、
+DoubleHub のダブルとの会話に「文脈」として流れ込む配線が完了。
+この価値をユーザー向けの表現でプロダクトページに反映する。
+
+社内向けに整理されていた素材から、ユーザーに伝わる体感価値だけを取捨選択。
+内部用語（chat_insights / retrieval_documents / Phase / PR 番号 / シナリオ番号 など）は載せず、
+未実装の機能は明確に "Coming Soon" として扱った。
+
+### 主な変更
+
+1. **Hero / metadata の更新**
+   - description / keywords に「読書記録（BookCompass）」を追加
+   - Hero リード文に BookCompass を明記
+
+2. **What's New（Ver.1.1.0）3枚目カードを差し替え**
+   - 旧: Weekly Review カード
+   - 新: BookCompass Link カード（紫アクセント）
+   - Weekly Review の内容は Other Refinements 側に短文で残した
+
+3. **新セクション: BookCompass Link**（Ecosystem の手前に追加）
+   - 見出し: 「同じ自分を、二度説明しなくていい。」
+   - 3 カード:
+     - 内面の地図 — ダブルが価値観や自分なりの答えを踏まえて応答
+     - 会話の入口 — 最近の関心テーマからダブル側が話を切り出す
+     - 想起できる過去 — 読んだ本の余韻を想起（推薦ではなく想起）
+   - 体感価値ボックス: "The Feeling" コピー
+   - Coming Soon 3 枚:
+     - 読書からの行動化（PR 7 相当を一般向け表現に）
+     - 応答の確実性向上（PR 6 相当）
+     - 評議会・Deep Research（v1.5 / v2.5 以降）
+
+4. **Ecosystem セクション**
+   - 「BookCompass とはすでに連携が始まっています」と現状を明記
+   - 旧: surface=default → 新: surface=alt（BookCompass Link との視覚分離）
+
+5. **FAQ に Q&A 追加**
+   - 「BookCompass と連携すると何が変わりますか？」を 2 番目に挿入
+
+6. **vsTable / featureList / 改善サマリの調整**
+   - 「過去の入力・予定・健康状態 + 読書から得た気づき」を反映
+   - JSON-LD featureList に BookCompass 連携を追加
+
+### 取捨選択
+
+- 載せた: 体感価値、3 つの体験軸、Coming Soon、誇大広告回避のニュアンス
+- 載せなかった: 内部 PR 番号、技術スキーマ名（chat_insights 等）、
+  App Store 審査リスク言及、Phase 4（rate limit / 429）の状態、
+  Beyond-Context 層、配線/プロンプト精緻化などの内部表現
+
+### 検証
+
+- `pnpm build` 成功（41 static pages、TS エラーなし）
+- /products/doublehub のセクション順序: Hero → Concept → What's New →
+  Three Pillars → Home Feed → A Day With Double → Before/After →
+  Why DoubleHub → Trust & Privacy → Plans → **BookCompass Link**（新規） →
+  Ecosystem → FAQ → Final CTA
