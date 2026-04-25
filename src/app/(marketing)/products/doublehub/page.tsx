@@ -968,7 +968,7 @@ export default function DoubleHubPage() {
               同じ自分を、二度説明しなくていい。
             </h2>
             <p className="mt-4 text-sm leading-[1.9] text-text-muted md:text-base">
-              <Link href="/products/bookcompass/" className="text-accent-product underline-offset-4 hover:underline">BookCompass</Link> で読書と向き合いながら言葉にした「内面の輪郭」が、DoubleHub に持ち込むときに再ヒアリングがいらない。読書で深めた自己理解が、日常の意思決定や感情整理の場面で、そのまま使える状態で待っています。
+              <Link href="/products/bookcompass/" className="text-accent-product underline-offset-4 hover:underline">BookCompass</Link> で読書と向き合いながら言葉にした「内面の輪郭」が、DoubleHub ではそのまま会話の背景になります。読書で深めた自己理解が、日常の意思決定や感情整理の場面で、そのまま使える状態で待っています。
             </p>
           </div>
 
@@ -997,10 +997,10 @@ export default function DoubleHubPage() {
               The Feeling
             </p>
             <p className="mt-4 font-display text-lg font-semibold leading-[1.5] tracking-[-0.01em] md:text-xl">
-              「同じ自分を、二度説明しなくていい」
+              「読書で深めた自分が、生活の中でそのまま生きている」
             </p>
             <p className="mt-3 text-sm leading-[1.9] text-text-muted md:text-base">
-              本と向き合いながら言葉にした内面の輪郭を、ダブルとの会話に持ち込むときに、もう一度ゼロから話さなくていい。読書で深めた思考が、生活の中でそのまま生きている——その連続性が、データ連携とはちょっと違う種類の価値を運んでくれます。
+              データが連携して便利になる——とはちょっと違う種類の価値です。BookCompass で本と向き合う時間は、主にひとりで思考を深める場面。そこで言葉にした思いが、ダブルとの会話を通して生活の意思決定や感情整理にそのままつながる。「考える」と「生きる」の間に、間を空けずにいられるようになります。
             </p>
           </div>
 

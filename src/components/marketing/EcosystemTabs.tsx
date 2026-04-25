@@ -27,9 +27,14 @@ type InsightPanel = {
   title: string;
   inputs: string[];
   understands: string[];
-  visual: 'screenshots' | 'abstract-todo' | 'image-finance' | 'image-health';
+  /**
+   * 'screenshots': 実機スクリーンショットを並べる
+   * 'none': 視覚ビジュアルは出さず、代わりに note (補足) を表示
+   */
+  visual: 'screenshots' | 'none';
   screenshots?: { src: string; alt: string }[];
-  imageSrc?: string;
+  /** visual === 'none' のときに表示される補足ブロック */
+  note?: { label: string; body: string };
 };
 
 const panels: InsightPanel[] = [
@@ -68,40 +73,79 @@ const panels: InsightPanel[] = [
   {
     id: 'doublehub',
     name: 'DoubleHub 本体',
-    status: 'coming',
-    statusLabel: 'Coming Soon',
-    tabDesc: 'ToDo、予定、対話、感情の流れ',
-    panelLabel: 'Coming Soon',
+    status: 'current',
+    statusLabel: 'Current',
+    tabDesc: 'ToDo・メモ・予定、ダブルとの対話',
+    panelLabel: 'Input → Insight',
     title: 'DoubleHub 本体は、生活のリアルタイムな流れを残す。',
-    inputs: ['ToDo と予定の配置', '先延ばしや集中のパターン', 'チャットで漏れる迷いや感情'],
-    understands: ['疲れる予定の並び', '決断が鈍るタイミング', '今日の自分に必要な整理方法'],
-    visual: 'abstract-todo',
+    inputs: [
+      '音声やテキストで投げた ToDo・メモ',
+      'カレンダーの予定と期限の配置',
+      'チャットで漏れる迷いや感情',
+      '「覚えておいて」と伝えたメモリ',
+    ],
+    understands: [
+      '動きやすい時間帯・疲れる予定の並び',
+      '先延ばしや集中のパターン',
+      '今日の自分に必要な整理と声かけの調子',
+    ],
+    visual: 'screenshots',
+    screenshots: [
+      { src: '/images/doublehub-task.jpg', alt: 'DoubleHub タスク画面——テキストと音声で投げた ToDo・メモを自動仕分け' },
+      { src: '/images/doublehub-chat.jpg', alt: 'DoubleHub チャット画面——ダブルとの対話' },
+    ],
   },
   {
     id: 'health',
     name: '健康・ヘルスケア',
     status: 'current',
     statusLabel: 'Current',
-    tabDesc: '睡眠時間、歩数、ワークアウト回数',
+    tabDesc: '睡眠・歩数・活動量の傾向',
     panelLabel: 'Input → Insight',
     title: 'ヘルスケア連携で、努力の成果を生活リズムと読める。',
-    inputs: ['睡眠時間 (Apple Health 等から連携)', '1 日の歩数・活動量', '1 日のワークアウト回数'],
-    understands: ['頑張れる日と休むべき日の違い', '睡眠不足が行動に与える影響', '行動提案の適切な強度'],
-    visual: 'image-health',
-    imageSrc: '/images/health-benefit-diagram.png',
+    inputs: [
+      '睡眠時間・睡眠スコア（Apple Health 等から連携）',
+      '1 日の歩数・アクティビティ量・エクササイズ分数',
+      '週次・月次で見た身体のコンディションの波',
+      '体調の揺らぎと予定の詰まり具合の関係',
+    ],
+    understands: [
+      '頑張れる日と休むべき日の違い',
+      '睡眠不足が集中力・決断力に与える影響',
+      '今日のタスク量が身体に見合っているか',
+      '行動提案の適切な強度（励ましを控えめにするか・背中を押すか）',
+    ],
+    visual: 'none',
+    note: {
+      label: '読み取り専用、生データは保存しません',
+      body: 'DoubleHub は Apple HealthKit から集計値のみを受け取り、書き込みは一切行いません。「最近あまり眠れていないみたいですね。明日の 5 件は少し多いかもしれません」のように、身体と予定を結びつけた気づきをダブルが届けます。',
+    },
   },
   {
     id: 'finance',
     name: '家計アプリ',
     status: 'future',
     statusLabel: 'Future',
-    tabDesc: '自己投資や娯楽のバランス',
+    tabDesc: '自己投資・娯楽・生活のバランス',
     panelLabel: 'Future Input',
     title: '家計データは「満足度の高い配分」を考える材料になる。',
-    inputs: ['固定費と変動費の流れ', '自己投資、娯楽、浪費のバランス', '満足度に対する費用対効果'],
-    understands: ['削るべき出費より、活かすべき支出', '自己投資の効きやすい領域', '我慢に寄らない満足度の高い選択'],
-    visual: 'image-finance',
-    imageSrc: '/images/finance-benefit-diagram.png',
+    inputs: [
+      '固定費と変動費の流れ',
+      '自己投資・娯楽・浪費のバランス',
+      '「使って良かった」と感じた支出のメモ',
+      '買うか迷っているものとその背景',
+    ],
+    understands: [
+      '削るべき出費より、活かすべき支出',
+      '自分にとって「充電になるお金の使い方」',
+      '自己投資が効きやすい領域とタイミング',
+      '我慢に寄らない、満足度の高い選択',
+    ],
+    visual: 'none',
+    note: {
+      label: '構想中の領域です',
+      body: '家計連携は現在未実装。将来的には「何を買うべきか」よりも「どんな使い方が自分を充電させるか」を一緒に考えるパートナーとして、ダブルが寄り添える姿を構想しています。',
+    },
   },
 ];
 
@@ -121,45 +165,22 @@ const statusStyles: Record<TabStatus, string> = {
   future: 'bg-text-faint/10 text-text-muted border-border',
 };
 
-function AbstractTodo() {
+/**
+ * 実機スクリーンショットがないパネル用の補足ノートブロック。
+ * 抽象図形を出さず、説明の丁寧さを優先する。
+ */
+function PanelNote({ label, body }: { label: string; body: string }) {
   return (
-    <svg viewBox="0 0 200 160" fill="none" className="h-full w-full">
-      <rect x="10" y="10" width="180" height="30" rx="8" className="fill-primary/20 stroke-primary/40" strokeWidth="1" />
-      <rect x="10" y="50" width="85" height="85" rx="8" className="fill-surface-2 stroke-border" strokeWidth="1" />
-      <rect x="105" y="50" width="85" height="40" rx="8" className="fill-surface-2 stroke-border" strokeWidth="1" />
-      <rect x="105" y="100" width="85" height="35" rx="8" className="fill-primary/15 stroke-primary/40" strokeWidth="1" />
-      <circle cx="52" cy="92" r="20" className="fill-primary/20" />
-      <text x="52" y="97" textAnchor="middle" fontSize="14" className="fill-primary" fontWeight="600">📋</text>
-    </svg>
-  );
-}
-
-
-function AbstractVisual({
-  kind,
-  label,
-}: {
-  kind: 'abstract-todo';
-  label: string;
-}) {
-  return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-border bg-surface-2/50 p-8">
-      <div className="aspect-[5/4] w-full max-w-md">
-        {kind === 'abstract-todo' && <AbstractTodo />}
-      </div>
-      <span className="mt-4 text-sm text-text-muted">{label}</span>
+    <div className="rounded-xl border border-dashed border-border bg-surface-2/40 p-5 md:p-6">
+      <p className="text-xs font-semibold uppercase tracking-wider text-text-muted">
+        {label}
+      </p>
+      <p className="mt-2 text-sm leading-[1.85] text-text-muted md:text-[0.95rem]">
+        {body}
+      </p>
     </div>
   );
 }
-
-const imageAltMap: Record<string, string> = {
-  health: '健康・ヘルスケアを象徴する抽象ビジュアル',
-  finance: '家計バランスを象徴する抽象ビジュアル（構想中）',
-};
-
-const abstractLabels: Record<string, string> = {
-  doublehub: 'ToDo・予定・対話をひとつに',
-};
 
 export function EcosystemTabs() {
   return (
@@ -270,43 +291,28 @@ export function EcosystemTabs() {
                     </div>
                   </div>
 
-                  <div className="mt-8">
-                    {p.visual === 'screenshots' && p.screenshots ? (
-                      <div className="grid gap-4 sm:grid-cols-2">
-                        {p.screenshots.map((s) => (
-                          <div
-                            key={s.src}
-                            className="relative aspect-[9/16] overflow-hidden rounded-xl border border-border bg-surface-2"
-                          >
-                            <Image
-                              src={s.src}
-                              alt={s.alt}
-                              fill
-                              sizes="(min-width: 768px) 320px, 50vw"
-                              className="object-contain"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    ) : p.visual === 'image-health' || p.visual === 'image-finance' ? (
-                      p.imageSrc && (
-                        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-border bg-surface-2">
+                  {p.visual === 'screenshots' && p.screenshots ? (
+                    <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                      {p.screenshots.map((s) => (
+                        <div
+                          key={s.src}
+                          className="relative aspect-[9/16] overflow-hidden rounded-xl border border-border bg-surface-2"
+                        >
                           <Image
-                            src={p.imageSrc}
-                            alt={imageAltMap[p.id] ?? p.name}
+                            src={s.src}
+                            alt={s.alt}
                             fill
-                            sizes="(min-width: 768px) 720px, 100vw"
-                            className="object-cover"
+                            sizes="(min-width: 768px) 320px, 50vw"
+                            className="object-contain"
                           />
                         </div>
-                      )
-                    ) : (
-                      <AbstractVisual
-                        kind={p.visual as 'abstract-todo'}
-                        label={abstractLabels[p.id]}
-                      />
-                    )}
-                  </div>
+                      ))}
+                    </div>
+                  ) : p.note ? (
+                    <div className="mt-8">
+                      <PanelNote label={p.note.label} body={p.note.body} />
+                    </div>
+                  ) : null}
                 </div>
               </TabsContent>
             ))}
