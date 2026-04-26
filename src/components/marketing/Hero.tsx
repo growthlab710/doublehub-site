@@ -34,30 +34,29 @@ export function Hero() {
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-medium text-text-muted">
             <Sparkles className="h-3.5 w-3.5 text-primary" />
-            Your Personal Partner
+            Your Personal AI Partner
           </span>
           <h1 className="mt-7 font-display text-[clamp(2rem,1rem+4.2vw,4rem)] font-semibold leading-[1.15] tracking-[-0.03em]">
-            世界で一番あなたのことを<br className="hidden md:inline" />
-            理解してくれる存在を目指す
+            あなたを理解し、<br className="hidden md:inline" />
+            毎日を一緒に整える
             <br />
             <span className="gradient-text-brand">
-              「DoubleHub（ダブルハブ）」
+              AI パートナー。
             </span>
           </h1>
           <p className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-text-muted md:text-lg">
-            タスクやスケジュールの整理だけではなく、<br className="hidden sm:inline" />
-            あなたの行動や考え方を理解し、思考整理や適切な<br className="hidden md:inline" />
-            コミュニケーションを提供してくれます。
+            学び（BookCompass）、身体（TrainNote）、お金（HubWallet）、タスク——<br className="hidden md:inline" />
+            複数のサービスをつないで、あなた専用の AI パートナーを育てます。
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg">
               <Link href="#daily-choices">
-                どう役に立つのか見る
+                DoubleHub の使い方を見る
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="secondary">
-              <Link href="#products">今すぐ使えるサービス</Link>
+              <Link href="#products">使えるサービスを見る</Link>
             </Button>
           </div>
         </motion.div>
