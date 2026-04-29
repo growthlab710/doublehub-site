@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { Hero } from '@/components/marketing/Hero';
 import { IdealSection } from '@/components/marketing/IdealSection';
 import { ProblemSection } from '@/components/marketing/ProblemSection';
@@ -13,6 +14,10 @@ import { VisionSection } from '@/components/marketing/VisionSection';
 import { FaqSection } from '@/components/marketing/FaqSection';
 import { BlogTeaser } from '@/components/marketing/BlogTeaser';
 import { CtaSection } from '@/components/marketing/CtaSection';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+};
 
 /**
  * トップページ（ハブエントリー）

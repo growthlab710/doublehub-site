@@ -37,7 +37,9 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   alternates: {
-    canonical: siteConfig.url,
+    // trailingSlash:true と整合させるため末尾スラッシュ付きの '/' を canonical のデフォルトにする。
+    // 各ページの metadata.alternates.canonical で上書きされる前提のフォールバック。
+    canonical: '/',
   },
 };
 

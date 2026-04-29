@@ -2505,3 +2505,62 @@ DoubleHub サイトに専用プロダクトページ /products/hubwallet/ を新
   一旦ユーザー承認のもと `git reset --hard origin/main` で同期し直してから
   `feature/update-hero-copy` を切り直して作業した。
   リモート (origin/main) には影響なし。
+
+## Day 11 — 2026-04-29 (JST) — Search Console「404 / 重複 / クロール済み未登録」の追加対応
+
+### 背景
+
+ユーザーから Search Console の追加指摘を共有：
+- 「インデックス登録が見つかりませんでした 404」: 2 件
+- 「重複しています」: 1 件
+- 「クロール済み - インデックス未登録」: 3 件
+
+Day 9 続き4（2026-04-23）で `add_canonical.py` / sitemap 再生成は実施済みだが、
+Next.js + Vercel への移行後にも残っていた以下の構造的問題に対処する。
+
+### 原因の診断
+
+1. **Vercel で旧 `.html` URL の 301 リダイレクトが効いていない**
+   - `_redirects` は Cloudflare Pages 用、`scripts/postbuild-redirects.mjs` は GitHub Pages 用。
+   - Vercel (`vercel.json` / `next.config.js`) には `redirects()` 定義がなく、
+     `bookcompass.html` 等の旧 URL に外部から流入が残っている場合 404 になる。
+2. **トップページ canonical が末尾スラッシュ無し**
+   - `src/app/layout.tsx` の `metadataBase + alternates.canonical: siteConfig.url` が
+     `https://doublehub.jp`（末尾スラッシュ無し）。一方 `trailingSlash: true` で実体は
+     `https://doublehub.jp/`。Google の判定で「重複しています」を誘発し得る。
+3. **sitemap の lastModified がビルド時刻**
+   - 静的ページの `lastModified` が毎デプロイで `new Date()` になり、
+     全 URL を「常に更新」と見なしてクロール優先度のシグナルを乱していた。
+
+### 変更内容
+
+#### `next.config.js`
+- `redirects()` を追加し、`isExport=false`（Vercel / Cloudflare Pages dynamic）時に
+  以下の旧 HTML URL を 301 で正規 URL へ転送：
+  - `/bookcompass.html`, `/trainnote.html`, `/about.html`, `/support.html`, `/privacy.html`
+  - `/blog/index.html`
+  - `/blog/{slug}.html`（19 件、`scripts/postbuild-redirects.mjs` と同じ slug 群）
+- 静的エクスポート時はビルドエラー回避のため `redirects()` を無効化（既存挙動維持）。
+
+#### `src/app/layout.tsx`
+- `alternates.canonical` を `siteConfig.url` → `'/'` に変更。
+  `metadataBase` と組み合わせて末尾スラッシュ付きの正規 URL `https://doublehub.jp/` が
+  解決される。各ページの `metadata.alternates.canonical` で上書きされる前提のフォールバック。
+
+#### `src/app/(marketing)/page.tsx`
+- 明示的に `export const metadata: Metadata = { alternates: { canonical: '/' } }` を追加。
+  layout 側に依存せずトップページが自己参照 canonical を持つ。
+
+#### `src/app/sitemap.ts`
+- 静的ページの `lastModified` をビルド時刻ではなく「ブログ最新 updatedAt」に固定。
+  ホーム URL は `${base}/`（末尾スラッシュ）に統一。
+
+### 検証
+
+- `pnpm build` 成功（42 static pages、TS エラーなし、既存 SSG ルート構成は不変）。
+
+### Search Console 側で必要な追加確認
+
+- 該当 URL（404 2 件 / 重複 1 件 / クロール済み未登録 3 件）の URL リストはまだ未共有。
+  ユーザーに「ページの索引登録 → 該当のフィルタ → URL 一覧をエクスポート」してもらえると
+  本番反映後に確実な再現確認とリクエスト送信ができる。

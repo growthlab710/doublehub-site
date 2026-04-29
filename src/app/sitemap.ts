@@ -7,8 +7,19 @@ export const dynamic = 'force-static';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url.replace(/\/$/, '');
+
+  // 静的ページの lastModified はビルド時刻を使うと毎デプロイで全URLが変動してしまい、
+  // GSC の「インデックス未登録」シグナルを悪化させ得る。代わりに blog 記事の最新 updatedAt を
+  // サイト全体の代表更新日として使い、揺れを抑える。
+  const posts = getAllPosts();
+  const latestPostDate = posts.reduce<Date>((acc, post) => {
+    const d = new Date(post.updatedAt || post.publishedAt);
+    return d > acc ? d : acc;
+  }, new Date(0));
+  const staticLastModified = latestPostDate.getTime() === 0 ? new Date() : latestPostDate;
+
   const staticPaths = [
-    '',
+    '/',
     '/products/doublehub/',
     '/products/bookcompass/',
     '/products/trainnote/',
@@ -19,12 +30,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/privacy/',
   ];
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((p) => ({
-    url: `${base}${p}`,
-    lastModified: new Date(),
-    changeFrequency: p === '' ? 'weekly' : 'monthly',
-    priority: p === '' ? 1 : 0.7,
+    // trailingSlash: true と揃えるため、ホームも `/` 末尾を維持。
+    url: p === '/' ? `${base}/` : `${base}${p}`,
+    lastModified: staticLastModified,
+    changeFrequency: p === '/' ? 'weekly' : 'monthly',
+    priority: p === '/' ? 1 : 0.7,
   }));
-  const postEntries: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
+  const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${base}/blog/${post.slug}/`,
     lastModified: new Date(post.updatedAt || post.publishedAt),
     changeFrequency: 'yearly',
