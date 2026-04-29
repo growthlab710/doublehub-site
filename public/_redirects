@@ -1,6 +1,9 @@
 # Cloudflare Pages 用 301 リダイレクトルール
 # （GitHub Pages は postbuild-redirects.mjs がメタリフレッシュを配置）
 
+# トップページ旧 URL（GSC 重複対策: /index.html を正規 / へ）
+/index.html            /                           301
+
 # プロダクト LP
 /bookcompass.html      /products/bookcompass/      301
 /trainnote.html        /products/trainnote/        301
