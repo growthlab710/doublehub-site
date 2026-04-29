@@ -44,6 +44,7 @@ const blogSlugs = [
 ];
 
 const redirects = [
+  { from: 'index.html', to: '/' },
   { from: 'bookcompass.html', to: '/products/bookcompass/' },
   { from: 'trainnote.html', to: '/products/trainnote/' },
   { from: 'about.html', to: '/about/' },

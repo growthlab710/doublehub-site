@@ -38,6 +38,8 @@ const legacyBlogSlugs = [
 ];
 
 const legacyRedirects = [
+  // トップページ旧 URL（GSC で重複扱いされていた /index.html を正規 / に寄せる）
+  { source: '/index.html', destination: '/' },
   { source: '/bookcompass.html', destination: '/products/bookcompass/' },
   { source: '/trainnote.html', destination: '/products/trainnote/' },
   { source: '/about.html', destination: '/about/' },

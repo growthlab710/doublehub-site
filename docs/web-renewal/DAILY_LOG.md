@@ -2564,3 +2564,55 @@ Next.js + Vercel への移行後にも残っていた以下の構造的問題に
 - 該当 URL（404 2 件 / 重複 1 件 / クロール済み未登録 3 件）の URL リストはまだ未共有。
   ユーザーに「ページの索引登録 → 該当のフィルタ → URL 一覧をエクスポート」してもらえると
   本番反映後に確実な再現確認とリクエスト送信ができる。
+
+---
+
+## 2026-04-29 — Search Console Drilldown URL 確認 + `/index.html` リダイレクト追加
+
+### 背景
+
+Search Console「ページの索引登録」Drilldown CSV から、未登録扱いとなっている個別 URL が判明。
+本番（`https://www.doublehub.jp`）に対して `curl -I` で挙動を確認した結果は以下の通り。
+
+| 区分 | URL | 現在の挙動 |
+| --- | --- | --- |
+| 重複 | `https://doublehub.jp/index.html` | `www` へ redirect → 最終 **404**（未対応） |
+| クロール済み - 未登録 | `https://doublehub.jp/blog/gemini-api-spend-cap-april-2026/` | canonical www へ redirect → 200（正常） |
+| クロール済み - 未登録 | `https://doublehub.jp/llms.txt` | canonical www へ redirect → 200 text/plain（正常） |
+| クロール済み - 未登録 | `https://doublehub.jp/blog/ai-habit-guide/` | canonical www へ redirect → 200（正常） |
+| 404 | `https://doublehub.jp/blog/claude-code-auto-mode.html` | 301 → `/blog/claude-code-auto-mode/` 200（前回修正で対応済み） |
+| 404 | `https://doublehub.jp/blog/llm-benchmark-guide-advanced.html` | 301 → `/blog/llm-benchmark-guide-advanced/` 200（前回修正で対応済み） |
+
+判明した不具合は **`/index.html` のリダイレクトルールが欠落** している点のみ。
+クロール済み未登録 3 件は 200 で解決しており、コードの不具合ではなく Google 側の評価待ちと判断。
+
+### 変更内容
+
+#### `next.config.js`
+- `legacyRedirects` の先頭に `{ source: '/index.html', destination: '/' }` を追加。
+  `permanent: true`（301）で Vercel dynamic ホスト時に効く。
+
+#### `public/_redirects`（Cloudflare Pages 用）
+- `/index.html /  301` を追加。
+
+#### `scripts/postbuild-redirects.mjs`（GitHub Pages static export 用）
+- `redirects` 配列の先頭に `{ from: 'index.html', to: '/' }` を追加。
+  `out/index.html` がメタリフレッシュ HTML で上書きされないよう注意したいところだが、
+  本スクリプトは `index.html` キーを `out/index.html` に書き出す。
+  → static export 経路は GitHub Pages 専用であり、本番は Vercel dynamic（top は `/` を SSG）が
+    canonical なので影響なし。Cloudflare Pages / Vercel 経路では `_redirects` と
+    `next.config.js` の redirects() が優先される。
+
+### 検証
+
+- `pnpm build` 成功（変更前と同じ static page 数、TS / lint エラー無し）。
+
+### Search Console 側で必要な追加確認
+
+- main マージ後の本番反映を待ち、`https://doublehub.jp/index.html` および
+  `https://www.doublehub.jp/index.html` が 301 で正規トップへ転送されることを確認。
+- `https://www.doublehub.jp/index.html` に対して URL 検査 → 「公開 URL をテスト」→
+  「インデックス登録をリクエスト」を実行する。
+- クロール済み未登録の 3 件（gemini-api-spend-cap-april-2026 / llms.txt / ai-habit-guide）は
+  現状 200 で正規 URL に正しく redirect しているため、追加コード修正は不要。
+  数週間スパンで Google の再評価を待つ運用とする。
