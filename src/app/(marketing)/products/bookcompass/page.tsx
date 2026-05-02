@@ -6,14 +6,14 @@ import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 
 export const metadata: Metadata = {
-  title: 'Book Compass — 読書が、知識マップになる | DoubleHub',
+  title: 'Book Compass — 読んだ本が、知識の地図になる | DoubleHub',
   description:
-    'Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。3人の読書パートナーと一緒に、読書の学びを深めます。',
+    '読みながら一言つぶやくだけ。AIがあなたの読書を「知識の地図」に整え、3人のAI読書パートナーと深めていく読書アプリ。冊数ではなく思考の方向を可視化します。',
   alternates: { canonical: '/products/bookcompass/' },
   openGraph: {
-    title: 'Book Compass — 読書が、知識マップになる | DoubleHub',
+    title: 'Book Compass — 読んだ本が、知識の地図になる | DoubleHub',
     description:
-      'Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。3人の読書パートナーと一緒に、読書の学びを深めます。',
+      '読みながら一言つぶやくだけ。AIがあなたの読書を「知識の地図」に整え、3人のAI読書パートナーと深めていく読書アプリ。冊数ではなく思考の方向を可視化します。',
     url: 'https://www.doublehub.jp/products/bookcompass/',
     type: 'website',
     siteName: 'DoubleHub',
@@ -88,9 +88,9 @@ const features = [
   },
   {
     label: 'ひと言つぶやき',
-    title: '長い感想はいらない。ひと言でOK。',
+    title: '読み終えてからではなく、読みながら呟く。',
     body:
-      '気になった一文、感じたこと、ふと浮かんだ問い。それを"ひと言"残すだけで十分です。非公開メモだから人目を気にせず気楽に書けて、読書が続きます。',
+      '気になった一文、湧いた違和感、ふと浮かんだ問い。Twitter感覚の280文字で、その瞬間に言葉にする。非公開メモだから人目を気にせず書けて、自分の言葉のまま記憶に残ります。',
   },
   {
     label: 'AI Reading Summary',
@@ -100,9 +100,9 @@ const features = [
   },
   {
     label: 'Explore',
-    title: '次の一冊を、"深める / 広げる"の2軸で提案。',
+    title: 'ランキングではなく、理由つきの一冊を。',
     body:
-      '読書傾向とつぶやきをもとに、AIが「今のテーマを深める本」と「視野を広げる本」を理由つきで提案。楽天ブックス連携でそのまま購入ページへ進めます。',
+      '読書傾向とつぶやきをもとに、AIが「今のテーマを深める本」と「視野を広げる本」の2軸で提案。「なぜ自分に合うのか」が見えるから、納得して次の一冊に手を伸ばせます。楽天ブックス連携でそのまま購入ページへ。',
   },
   {
     label: 'Share & Library',
@@ -141,6 +141,68 @@ const learns = [
   '繰り返し悩む問いは何か',
   '価値観がどの方向へ動いているか',
   '言語化しきれていない思考の傾向',
+];
+
+const pains = [
+  {
+    pain: '「あの本良かった」で詰まる。',
+    desc: '読み終えた直後は人生に残る一冊だったのに、半年後にはタイトルすら怪しい。',
+    answer: '読みながら一言呟くだけで、自分の言葉として記憶に残る。',
+  },
+  {
+    pain: '読書ノートが続かない。',
+    desc: 'きれいな文章を書こうとして詰まる。読み終えてからまとめると、もう忘れている。',
+    answer: '280文字の非公開メモ。完璧なレビューはいらない。',
+  },
+  {
+    pain: '次に何を読めばいいかわからない。',
+    desc: 'ランキングや「あなたへのおすすめ」を眺めても、どれもしっくりこない。',
+    answer: '自分の読書地図をもとに、理由つきで次の一冊を提案。',
+  },
+  {
+    pain: '読書を語れる相手がいない。',
+    desc: '面白い本に出会っても、それを話せる相手が周りにいない。読書会はハードルが高い。',
+    answer: 'あなたの読書を全部知っているAIが、いつでも壁打ち相手になる。',
+  },
+];
+
+const concepts = [
+  {
+    step: '01',
+    label: '入口',
+    title: 'ひと言つぶやくだけ。',
+    body: '読書中の気づき・違和感・問いを、Twitter感覚の280文字で残す。非公開メモだから、人目を気にせず思ったまま書ける。',
+  },
+  {
+    step: '02',
+    label: '中段',
+    title: 'AIが「知識の地図」に整える。',
+    body: '呟きと読書履歴を解析して、ジャンルバランス・思考の傾向・読み方の癖を可視化。冊数ではなく、思考の方向が見えてくる。',
+  },
+  {
+    step: '03',
+    label: '出口',
+    title: 'もう一人の自分と対話する。',
+    body: '過去の本とのつながりに気づき、まだ言葉にならない問いを整理し、次の一冊を理由つきで選ぶ。読書が「思考の道具」になる。',
+  },
+];
+
+const differentiators = [
+  {
+    not: '要約',
+    yes: '整理',
+    body: '本の内容の要約ではなく、「あなたがどう読んだか」を整える。知識の代行ではなく、理解の補助。',
+  },
+  {
+    not: 'ランキング',
+    yes: '理由つきレコメンド',
+    body: '他人の人気度ではなく、あなたの読書履歴と関心地図を根拠に、「なぜこの一冊が合うのか」とともに提案する。',
+  },
+  {
+    not: '冊数',
+    yes: '思考の方向',
+    body: '「年間50冊」ではなく「あなたの思考はこの方向に向かっている」を見せる。読書の評価軸を、量から方向と深さへ。',
+  },
 ];
 
 const flows = [
@@ -184,12 +246,12 @@ export default function BookCompassPage() {
               </span>
             </div>
             <h1 className="mt-5 font-display text-[clamp(1.75rem,1rem+2.8vw,3rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
-              読書が、
+              読んだ本が、
               <br />
-              知識マップになっていく。
+              知識の地図になる。
             </h1>
             <p className="mt-5 max-w-lg text-text-muted">
-              Book Compass は、読書記録を整理しながら、関心や価値観の変化を可視化するサービスです。3人の読書パートナーと一緒に学びを深め、DoubleHub につながると、その地図は「何を大事にしているか」の輪郭になります。
+              読みながら、ひと言つぶやくだけ。AIがあなたの呟きと読書履歴を整え、関心の広がり・思考の癖・次の一冊までを「あなたの読書地図」として育てていきます。読書を「消費」から「蓄積」へ、そして「思考の道具」へ。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
@@ -226,6 +288,46 @@ export default function BookCompassPage() {
           </div>
         </div>
       </Container>
+
+      {/* ========== 1.5 Concept (入口 / 中段 / 出口) ========== */}
+      <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              How It Works
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              つぶやく。地図になる。対話する。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              長文の感想文も、完璧なレビューもいりません。読みながら一言残すだけで、AIがあなただけの読書地図を育てていきます。
+            </p>
+          </div>
+          <ol className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+            {concepts.map((c) => (
+              <li
+                key={c.step}
+                className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="font-display text-2xl font-bold tracking-[-0.03em] text-accent-product">
+                    {c.step}
+                  </span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
+                    {c.label}
+                  </span>
+                </div>
+                <h3 className="mt-3 font-display text-lg font-semibold leading-[1.3] tracking-[-0.01em]">
+                  {c.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                  {c.body}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </Section>
 
       {/* ========== 2. App Screenshots ========== */}
       <Section spacing="md" surface="alt">
@@ -301,6 +403,46 @@ export default function BookCompassPage() {
         </Container>
       </Section>
 
+      {/* ========== 2.5 Pains × Solutions ========== */}
+      <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Why Book Compass
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              読書の「もったいない」を、解きほぐす。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              読んだのに思い出せない。ノートが続かない。次の一冊で迷子になる。語る相手がいない。Book Compass は、読書にまとわりつく4つの引っかかりに、それぞれの答えを用意しています。
+            </p>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
+            {pains.map((p) => (
+              <article
+                key={p.pain}
+                className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
+              >
+                <h3 className="font-display text-lg font-semibold leading-[1.3] tracking-[-0.01em]">
+                  {p.pain}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                  {p.desc}
+                </p>
+                <div className="mt-4 rounded-xl bg-accent-product/8 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                    Book Compass の答え
+                  </p>
+                  <p className="mt-2 text-sm leading-[1.7] text-text">
+                    {p.answer}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
       {/* ========== 3. 3人の読書パートナー ========== */}
       <Section spacing="md">
         <Container width="wide">
@@ -312,7 +454,7 @@ export default function BookCompassPage() {
               あなた専属の、3人の読書パートナー。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              役割の違う3人のAIが、あなたの読書に寄りそいます。気軽に感想を話したいとき、深く掘り下げたいとき、問いで考えを整理したいとき。目的に合わせてパートナーを選べます。
+              ChatGPTのような汎用AIと違うのは、3人とも「あなたの読書記録を全部知っている」こと。気軽に話したいとき、深く掘り下げたいとき、問いで考えを整理したいとき、目的に合わせてパートナーを選べます。
             </p>
           </div>
 
@@ -472,6 +614,39 @@ export default function BookCompassPage() {
                 ))}
               </ul>
             </article>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 6.5 Differentiators ========== */}
+      <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              What Makes It Different
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              読書アプリの「立て付け」を、組み替える。
+            </h2>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
+            {differentiators.map((d) => (
+              <article
+                key={d.yes}
+                className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
+              >
+                <p className="text-sm">
+                  <span className="text-text-muted line-through">{d.not}</span>
+                  <span className="mx-2 text-text-muted">ではなく</span>
+                  <span className="font-display text-lg font-semibold tracking-[-0.01em] text-accent-product">
+                    {d.yes}
+                  </span>
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                  {d.body}
+                </p>
+              </article>
+            ))}
           </div>
         </Container>
       </Section>
@@ -793,10 +968,10 @@ export default function BookCompassPage() {
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.25rem)] font-bold leading-[1.25] tracking-[-0.02em]">
-              本を、次の一歩に変えていこう。
+              あなたの読書地図を、今日から育てはじめる。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              読書から生まれた気づきは、DoubleHub につながることで「あなたの輪郭」になります。
+              読みながら一言つぶやくだけ。蓄積された気づきは、DoubleHub につながることで「あなたの輪郭」になっていきます。
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a
