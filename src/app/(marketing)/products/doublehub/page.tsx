@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: 'DoubleHub — もう一人の自分が、毎日の頭の中を整える。',
     description:
       'ToDo・メモ・対話を一つに。ヘルスケアとカレンダーを束ね、あなたを誰よりも理解する「ダブル」を育てる iOS アプリ。',
-    url: 'https://doublehub.jp/products/doublehub/',
+    url: 'https://www.doublehub.jp/products/doublehub/',
     type: 'website',
     siteName: 'DoubleHub',
     locale: 'ja_JP',
@@ -350,13 +350,13 @@ const jsonLd = {
       operatingSystem: 'iOS 17.0 以上',
       description:
         'ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダーも束ねる AI 生活アシスタント。「もう一人の自分（ダブル）」を育てる iOS アプリ。',
-      url: 'https://doublehub.jp/products/doublehub/',
-      image: 'https://doublehub.jp/images/doublehub-icon-rich.png',
+      url: 'https://www.doublehub.jp/products/doublehub/',
+      image: 'https://www.doublehub.jp/images/doublehub-icon-rich.png',
       softwareVersion: '1.1.0',
       author: {
         '@type': 'Organization',
         name: 'GrowthLab',
-        url: 'https://doublehub.jp/about/',
+        url: 'https://www.doublehub.jp/about/',
       },
       offers: [
         {
@@ -406,19 +406,19 @@ const jsonLd = {
           '@type': 'ListItem',
           position: 1,
           name: 'ホーム',
-          item: 'https://doublehub.jp/',
+          item: 'https://www.doublehub.jp/',
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: 'Products',
-          item: 'https://doublehub.jp/#products',
+          item: 'https://www.doublehub.jp/#products',
         },
         {
           '@type': 'ListItem',
           position: 3,
           name: 'DoubleHub',
-          item: 'https://doublehub.jp/products/doublehub/',
+          item: 'https://www.doublehub.jp/products/doublehub/',
         },
       ],
     },

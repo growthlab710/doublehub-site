@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える',
     description:
       '190以上の科学論文を参照する5人の専門AIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。',
-    url: 'https://doublehub.jp/products/trainnote/',
+    url: 'https://www.doublehub.jp/products/trainnote/',
     type: 'website',
     siteName: 'DoubleHub',
     locale: 'ja_JP',

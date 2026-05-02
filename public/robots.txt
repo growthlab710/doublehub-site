@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /app/
 
-Sitemap: https://doublehub.jp/sitemap.xml
+Sitemap: https://www.doublehub.jp/sitemap.xml

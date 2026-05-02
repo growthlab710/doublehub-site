@@ -1,26 +1,28 @@
 # DoubleHub
 
-> 「もう一人の自分」——読書・筋トレ・タスクの記録をAIがつなぎ合わせて、あなたにとって最適な次の一歩を提案するiOSアプリエコシステム。
+> あなたを理解し、毎日を一緒に整える AI パートナー。学び（BookCompass）・身体（TrainNote）・お金（HubWallet）・タスク（DoubleHub）のサービスをつないで、あなた専用の「ダブル」を育てる iOS アプリエコシステム。
 
 ## プロダクト
-- [TrainNote](https://doublehub.jp/trainnote.html): 筋トレ記録×AIコーチアプリ。トレーニング記録とAIパーソナルコーチを組み合わせ、「続け方」の特徴を見つけていくサービス。
-- [Book Compass](https://doublehub.jp/bookcompass.html): 読書記録×AI整理アプリ。読んだ本とメモをAIが整理し、思考や価値観の変化を可視化するサービス。
-- DoubleHub（開発中）: 上記データを横断するAI秘書アプリ。ToDo、予定、対話をまとめて扱う中核サービス。
+- [TrainNote](https://www.doublehub.jp/products/trainnote/): 筋トレ記録×AIコーチアプリ。トレーニング記録とAIパーソナルコーチを組み合わせ、「続け方」の特徴を見つけていくサービス。
+- [BookCompass](https://www.doublehub.jp/products/bookcompass/): 読書記録×AI整理アプリ。読んだ本とメモをAIが整理し、思考や価値観の変化を可視化するサービス。
+- [HubWallet](https://www.doublehub.jp/products/hubwallet/): 節約疲れしない家計簿アプリ。レシートは撮るだけ、銀行連携不要・全プラン広告ゼロ。
+- [DoubleHub](https://www.doublehub.jp/products/doublehub/): 上記データを横断する AI 秘書アプリ。ToDo、予定、対話をまとめて扱う中核サービス。
 
 ## ブログ（AI・習慣化・自己理解・個人開発）
-- [ブログ一覧](https://doublehub.jp/blog/): AI活用・習慣化・ライフデータ管理・個人開発に関する記事一覧
-- [AIを活用した習慣化の完全ガイド2026](https://doublehub.jp/blog/ai-habit-guide.html): AI×習慣化のピラーページ
-- [ライフデータで自分を知る](https://doublehub.jp/blog/lifedata-self-understanding.html): ライフデータ×自己理解のピラーページ
-- [個人開発でAI機能を実装する方法](https://doublehub.jp/blog/indie-dev-ai-implementation.html): 個人開発×AIのピラーページ
+- [ブログ一覧](https://www.doublehub.jp/blog/): AI活用・習慣化・ライフデータ管理・個人開発に関する記事一覧
+- [AIを活用した習慣化の完全ガイド2026](https://www.doublehub.jp/blog/ai-habit-guide/): AI×習慣化のピラーページ
+- [ライフデータで自分を知る](https://www.doublehub.jp/blog/lifedata-self-understanding/): ライフデータ×自己理解のピラーページ
+- [個人開発でAI機能を実装する方法](https://www.doublehub.jp/blog/indie-dev-ai-implementation/): 個人開発×AIのピラーページ
 
 ## AIニュース・AI情報
-- [Claude Code「Auto Mode」登場](https://doublehub.jp/blog/claude-code-auto-mode.html): Anthropicが2026年3月にリリースしたClaude Codeの新機能を解説
-- [Perplexity Computerとは何か](https://doublehub.jp/blog/perplexity-computer-guide.html): 19のAIモデルを協調させる汎用デジタルワーカーを解説
+- [Claude Code「Auto Mode」登場](https://www.doublehub.jp/blog/claude-code-auto-mode/): Anthropicが2026年3月にリリースしたClaude Codeの新機能を解説
+- [Perplexity Computerとは何か](https://www.doublehub.jp/blog/perplexity-computer-guide/): 19のAIモデルを協調させる汎用デジタルワーカーを解説
+- [Claude Opus 4.7 リアルワールドレビュー](https://www.doublehub.jp/blog/claude-opus-4-7-real-world-review/): リリース1週間の実使用フィードバック
 
 ## 開発者
 Naoki：iOSアプリ個人開発者（Swift）。DoubleHubシリーズ作者。西日本在住。
 
 ## Optional
 
-- [著者プロフィール](https://doublehub.jp/about.html)
-- [Sitemap](https://doublehub.jp/sitemap.xml)
+- [著者プロフィール](https://www.doublehub.jp/about/)
+- [Sitemap](https://www.doublehub.jp/sitemap.xml)

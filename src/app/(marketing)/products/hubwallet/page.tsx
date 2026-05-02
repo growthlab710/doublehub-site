@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'HubWallet — 節約疲れしない家計簿。 | DoubleHub',
     description:
       'レシートは「撮るだけ」、仕分けは隙間時間にまとめて。銀行連携なし・広告ゼロの iOS 家計簿アプリ。',
-    url: 'https://doublehub.jp/products/hubwallet/',
+    url: 'https://www.doublehub.jp/products/hubwallet/',
     type: 'website',
     siteName: 'DoubleHub',
     locale: 'ja_JP',
