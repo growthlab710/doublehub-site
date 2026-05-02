@@ -71,7 +71,7 @@ export function MarketingFooter() {
         <p>© {year} GrowthLab. All rights reserved.</p>
         <p>
           <a
-            href="https://doublehub.jp/llms.txt"
+            href="https://www.doublehub.jp/llms.txt"
             className="transition hover:text-primary"
           >
             llms.txt

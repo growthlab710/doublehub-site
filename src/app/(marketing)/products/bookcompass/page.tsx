@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'Book Compass — 読書が、知識マップになる | DoubleHub',
     description:
       'Book Compass は読書記録を整理し、思考や価値観の変化を見える化するサービスです。3人の読書パートナーと一緒に、読書の学びを深めます。',
-    url: 'https://doublehub.jp/products/bookcompass/',
+    url: 'https://www.doublehub.jp/products/bookcompass/',
     type: 'website',
     siteName: 'DoubleHub',
     locale: 'ja_JP',

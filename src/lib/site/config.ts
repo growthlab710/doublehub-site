@@ -3,17 +3,22 @@
  */
 export const siteConfig = {
   name: 'DoubleHub',
-  tagline: 'ひとりで、でも、孤独じゃない。',
+  // ヒーローコピー（あなたを理解し、毎日を一緒に整える AI パートナー。）に合わせた短縮版。
+  // page title `${name} — ${tagline}` として SERP / ブラウザタブに表示される。
+  tagline: 'あなたを理解し、毎日を一緒に整える AI パートナー',
   description:
-    'DoubleHub は「自己理解」を核にした生産性ツール群のエコシステム。ToDo / メモ / 読書記録 / トレーニング記録を横断し、あなたの行動データから「自分の型」を見つけます。',
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://doublehub.jp',
+    '学び（BookCompass）、身体（TrainNote）、お金（HubWallet）、タスク——複数のサービスをつないで、あなた専用の AI パートナーを育てる DoubleHub のエコシステム。',
+  // canonical ホストは www 付き。apex は Vercel 側で 308 → www に転送されるため、
+  // sitemap / OGP / 構造化データの URL は全て www に揃え、GSC の
+  // 「ページにリダイレクトがあります」を発生させない。
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.doublehub.jp',
   ogImage: '/images/og-default.jpg',
   locale: 'ja_JP',
   language: 'ja',
   gaMeasurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? 'G-DJW7K08F6F',
   author: {
     name: 'GrowthLab',
-    url: 'https://doublehub.jp/about/',
+    url: 'https://www.doublehub.jp/about/',
   },
   social: {
     appStoreBookCompass: 'https://apps.apple.com/jp/app/bookcompass/id6741010284',
