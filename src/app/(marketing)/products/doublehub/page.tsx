@@ -863,6 +863,41 @@ export default function DoubleHubPage() {
         </Container>
       </Section>
 
+      {/* ========== 9.4. 情報の向きを、あなた自身へ ========== */}
+      <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Information Flows Back to You
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              情報の向きを、
+              <br className="sm:hidden" />
+              あなた自身へ。
+            </h2>
+            <p className="mt-5 text-sm leading-[1.9] text-text-muted md:text-base">
+              ToDo、読書、運動、予定、ヘルスケア——日々ためている記録は、本来あなた自身のためのものです。DoubleHub は、これらを「アプリに引き止めるため」ではなく、「あなた自身の判断に返すため」に使います。集まった情報の向きを、もう一度あなたへ戻す。それが、ダブルというハブの役割です。
+            </p>
+          </div>
+
+          <div className="mx-auto mt-12 max-w-4xl">
+            <div className="relative overflow-hidden rounded-3xl border border-border bg-surface shadow-lg">
+              <Image
+                src="/images/doublehub-user-centered-hub.jpg"
+                alt="ToDo、読書、運動、予定などの情報がDoubleHubに集まり、ユーザー自身へ戻っていく様子"
+                width={1600}
+                height={1000}
+                className="h-auto w-full object-cover"
+                sizes="(min-width: 768px) 880px, 100vw"
+              />
+            </div>
+            <p className="mt-5 text-center text-xs leading-[1.8] text-text-faint md:text-sm">
+              ToDo・読書・運動・予定・ヘルスケアなどの記録がダブルに集まり、判断としてあなた自身に返っていく。
+            </p>
+          </div>
+        </Container>
+      </Section>
+
       {/* ========== 9.5. 依存させない設計 ========== */}
       <Section spacing="md" surface="alt">
         <Container width="wide">
