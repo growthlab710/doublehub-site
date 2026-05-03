@@ -48,6 +48,10 @@ export function Hero() {
             学び（BookCompass）、身体（TrainNote）、お金（HubWallet）、タスク——<br className="hidden md:inline" />
             複数のサービスをつないで、あなた専用の AI パートナーを育てます。
           </p>
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-text-muted md:text-base">
+            売り込みも、引き止めもなく。<br className="hidden md:inline" />
+            あなた自身に向かう情報だけを、必要なときに届けます。
+          </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             <Button asChild size="lg">
               <Link href="#daily-choices">
