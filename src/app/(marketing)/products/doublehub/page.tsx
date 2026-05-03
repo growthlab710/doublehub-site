@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title:
     'DoubleHub — もう一人の自分が、毎日の頭の中を整える。AI ToDo・メモ・対話アプリ',
   description:
-    'DoubleHub は ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダー、読書記録（BookCompass）の情報も束ねて「もう一人の自分（ダブル）」を育てる iOS アプリ。音声で投げるだけで AI が整理し、睡眠・予定・タスク・読書から得た気づきを結びつけた応答を届けます。無料で始められる AI 生活アシスタント。',
+    'DoubleHub は、あなた自身に向かう情報を届ける、依存させない設計の AI パートナー。ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダー、読書記録（BookCompass）も束ねて「もう一人の自分（ダブル）」を育てる iOS アプリ。広告ではなく直接課金で、滞在時間ではなくあなたの納得を優先します。',
   keywords: [
     'DoubleHub',
     'ダブルハブ',
@@ -518,6 +518,9 @@ export default function DoubleHubPage() {
             <p className="mt-5 text-sm leading-[1.9] text-text-muted md:text-base">
               DoubleHub が育てる「ダブル」は、頼まれたことをやる人ではなく、言わなくてもわかってくれる存在。踏み込みすぎないやわらかな敬語で、指図ではなく気づきを置いていく伴走者。使い続けるほどあなたへの理解が深まり、良いことも気になることも誠実に伝えてくれる——そんな、もう一人の自分を育てるためのアプリです。
             </p>
+            <p className="mt-5 text-sm leading-[1.9] text-text-muted md:text-base">
+              ダブルが見ているのは、あなただけ。広告主や別の誰かの都合は入りません。アプリ側にも、あなたの注意を引き留めたり、長く滞在させたりする都合はありません。だからこそ、必要なときに必要なことだけを、静かに置いていけます。
+            </p>
           </div>
 
           <div className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-3">
@@ -860,8 +863,62 @@ export default function DoubleHubPage() {
         </Container>
       </Section>
 
+      {/* ========== 9.5. 依存させない設計 ========== */}
+      <Section spacing="md" surface="alt">
+        <Container width="wide">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              No Addiction by Design
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              「長く使わせる」ではなく、
+              <br className="sm:hidden" />
+              「あなたに戻す」ための設計。
+            </h2>
+            <p className="mt-5 text-sm leading-[1.9] text-text-muted md:text-base">
+              DoubleHub は、滞在時間や利用頻度を伸ばすことを目的にしていません。アプリを開いた時間より、アプリを閉じた後の毎日が良くなることを優先しています。そのために、UI と通知の作りそのものを次の方針で揃えています。
+            </p>
+          </div>
+
+          <div className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-2">
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="font-display text-base font-semibold tracking-[-0.01em] md:text-lg">
+                通知は、必要なタイミングだけ。
+              </h3>
+              <p className="mt-3 text-sm leading-[1.85] text-text-muted">
+                「最近どうですか」のような呼び戻しの通知は送りません。期限・予定・体調の変化など、あなたが知っておきたい瞬間に絞って届けます。
+              </p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="font-display text-base font-semibold tracking-[-0.01em] md:text-lg">
+                プル型のお知らせ。
+              </h3>
+              <p className="mt-3 text-sm leading-[1.85] text-text-muted">
+                ホームの「気づき」「話したいこと」は、あなたが開いたときに並ぶプル型。プッシュで横から割り込んで、注意を引きにいくような作りにはしていません。
+              </p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="font-display text-base font-semibold tracking-[-0.01em] md:text-lg">
+                無限スクロールも、おすすめフィードもありません。
+              </h3>
+              <p className="mt-3 text-sm leading-[1.85] text-text-muted">
+                ホームに並ぶのは、今のあなたに関係するものだけ。続きが気になるレコメンドや、別の人が見ているコンテンツを差し込む仕組みは持ちません。
+              </p>
+            </article>
+            <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
+              <h3 className="font-display text-base font-semibold tracking-[-0.01em] md:text-lg">
+                滞在時間を伸ばす UI を置かない。
+              </h3>
+              <p className="mt-3 text-sm leading-[1.85] text-text-muted">
+                バッジで未読をあおったり、ストリークで連続日数を競わせたり——アプリに戻ってこさせるための仕掛けは入れません。用が済んだら閉じていい、それが正しい使い方です。
+              </p>
+            </article>
+          </div>
+        </Container>
+      </Section>
+
       {/* ========== 10. Plans ========== */}
-      <Section spacing="md" id="plans" surface="alt">
+      <Section spacing="md" id="plans">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
@@ -872,6 +929,9 @@ export default function DoubleHubPage() {
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
               Free で「整理してくれる」、Plus で「見守ってくれる」。月 ¥480 は、コーヒー 1 杯ぶんの価格です。
+            </p>
+            <p className="mt-3 text-xs leading-relaxed text-text-faint md:text-sm">
+              広告や滞在時間ではなく、あなたから直接いただく形で運営しています。アプリの利益とあなたの利益の向きを揃えるための選択です。
             </p>
           </div>
           <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
