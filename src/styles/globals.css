@@ -220,6 +220,13 @@
     transition:
       background-color 300ms var(--ease-out),
       color 300ms var(--ease-out);
+    /* モバイルでのスワイプ時に、framer-motion の x オフセット
+       (whileInView で 16〜24px のスライドイン) や absolute 配置の装飾光源が
+       一瞬ビューポートをはみ出して横ジッターを起こすのを防ぐ。
+       overflow-x: clip は overflow-x: hidden と違い position: sticky を破壊しない。
+       未対応ブラウザのためのフォールバックとして overflow-x: hidden も併記。 */
+    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   h1,

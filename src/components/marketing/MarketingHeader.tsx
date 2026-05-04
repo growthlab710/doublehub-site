@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { Menu, X, LogIn } from 'lucide-react';
+import { Menu, X, LogIn, BookOpen, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { marketingNav, products, siteConfig } from '@/lib/site/config';
@@ -152,6 +152,18 @@ export function MarketingHeader() {
         {/* Right side */}
         <div className="flex items-center gap-2">
           <ThemeToggle />
+
+          {/* Mobile: 縮めたテーマトグルで生まれた余白に Blog の直接 CTA を置く。
+              ブログをプロダクトと混同させないため、独立したアイコン付き丸ボタンとして表示。 */}
+          <Link
+            href="/blog/"
+            className="flex h-9 items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 text-xs font-semibold text-primary transition hover:bg-primary/15 md:hidden"
+            aria-label="ブログを開く"
+          >
+            <BookOpen className="h-3.5 w-3.5" />
+            <span>Blog</span>
+          </Link>
+
           {loginEnabled ? (
             <Button asChild size="sm" variant="secondary" className="hidden md:inline-flex">
               <Link href="/app/login/">
@@ -185,10 +197,14 @@ export function MarketingHeader() {
         className={cn(
           'overflow-hidden border-t border-border/60 bg-bg md:hidden',
           'transition-[max-height] duration-300 ease-out',
-          open ? 'max-h-[500px]' : 'max-h-0'
+          open ? 'max-h-[640px]' : 'max-h-0'
         )}
       >
         <nav className="container-wide flex flex-col gap-1 py-4" aria-label="モバイルナビ">
+          {/* セクションラベル: プロダクト */}
+          <p className="px-3 pb-1 pt-1 text-[10px] font-semibold uppercase tracking-wider text-text-faint">
+            Products
+          </p>
           {products.map((p) => (
             <Link
               key={p.slug}
@@ -200,19 +216,51 @@ export function MarketingHeader() {
               <span>{p.name}</span>
             </Link>
           ))}
-          <div className="my-1 h-px bg-border" />
-          {marketingNav
-            .filter((n) => n.label !== 'Products')
-            .map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="rounded-lg px-3 py-2.5 text-sm text-text-muted transition hover:bg-surface-2 hover:text-text"
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
+
+          {/* プロダクト一覧（ホームの #products へ直接ジャンプする CTA）
+              モバイルからプロダクト一覧の俯瞰へすぐ降りられるようにする。 */}
+          <Link
+            href="/#products"
+            className="mt-1 flex items-center justify-between rounded-lg border border-border bg-surface-2/60 px-3 py-2.5 text-sm font-medium text-text transition hover:bg-surface-2"
+            onClick={() => setOpen(false)}
+          >
+            <span>プロダクト一覧を開く</span>
+            <ChevronRight className="h-4 w-4 text-text-muted" />
+          </Link>
+
+          {/* プロダクトと Blog を視覚的に明確に分離する。 */}
+          <div className="my-3 h-px bg-border" />
+
+          {/* Blog を About/Support と区別して目立たせる。
+              プライマリカラーの枠と背景で「読み物カテゴリ」であることを明示。 */}
+          <Link
+            href="/blog/"
+            className="flex items-center justify-between rounded-lg border border-primary/30 bg-primary/10 px-3 py-3 text-sm font-semibold text-primary transition hover:bg-primary/15"
+            onClick={() => setOpen(false)}
+          >
+            <span className="flex items-center gap-2">
+              <BookOpen className="h-4 w-4" />
+              Blog — 開発ログ・思考の整理
+            </span>
+            <ChevronRight className="h-4 w-4" />
+          </Link>
+
+          {/* About / Support は従来通り控えめなテキストリンクで残す。 */}
+          <div className="mt-1">
+            {marketingNav
+              .filter((n) => n.label !== 'Products' && n.label !== 'Blog')
+              .map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="block rounded-lg px-3 py-2.5 text-sm text-text-muted transition hover:bg-surface-2 hover:text-text"
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+          </div>
+
           {loginEnabled && (
             <Button asChild size="sm" className="mt-2 w-full">
               <Link href="/app/login/" onClick={() => setOpen(false)}>

@@ -2902,3 +2902,34 @@ user から提供された実機キャプチャ動画（`tahuruhahusaitototuhuhe
 
 - ブランチ: `feature/prepare-product-video-captures` を push し、`main` にマージする予定。
 - マージ完了後、Vercel の自動デプロイで本番反映される想定。
+
+---
+
+## 2026-05-04 — モバイル横ジッター修正＋ヘッダー導線リフレッシュ
+
+### 概要
+
+トップページの実機動画投入後、スマホでスワイプするとトップページだけが横方向に微振動する不具合を修正した。原因は body にグローバルな横方向オーバーフロー対策がなく、framer-motion の `whileInView` で 16〜24px の x オフセットを使うセクション（IdealSection / SolutionSection / ProductCards）と Solution 動画スロットの寸法が重なって、スクロール反映時にビューポート外に一瞬はみ出すことだった。あわせてモバイルヘッダーの可読性（テーマトグルが幅を取りすぎ・Blog/Products への導線が弱い）を改善した。
+
+### 変更ファイル
+
+- `src/styles/globals.css` — body に `overflow-x: hidden; overflow-x: clip;` を追加（clip 未対応ブラウザ向けに hidden もフォールバック）。`overflow-x: clip` は sticky を破壊しないため、`MarketingHeader` の `sticky top-0` は従来どおり機能する。
+- `src/components/marketing/IdealSection.tsx` — `<section>` に `relative overflow-hidden` を追加。x: -16 / x: 16 のスライドインによる一瞬の横はみ出しを節で吸収。
+- `src/components/marketing/SolutionSection.tsx` — `<section>` に `relative overflow-hidden` を追加し、`<VideoSlot>` の親に `aspect-[800/1400]` を持つ枠を追加。動画/poster 切替時に intrinsic 800×1400 のまま親幅を押し広げないようにした。
+- `src/components/marketing/ProductCards.tsx` — `<Section>` に `overflow-hidden` を付与。x: -24 のスタガーアニメーションが横スクロールを誘発しないようにする。
+- `src/components/theme/ThemeToggle.tsx` — モバイル（md 未満）では現在のモード（Sun/Moon/Monitor）のみを丸ボタン 1 個で表示し、タップで Light / Dark / System を選べる Radix DropdownMenu に切り替え。デスクトップは従来の 3 状態セグメンテッドコントロールを維持。SSR スケルトンも mobile / desktop それぞれの形に分けた。
+- `src/components/marketing/MarketingHeader.tsx` —
+  - モバイル右肩に「Blog」直リンク（プライマリトーンの丸ピル）を追加。テーマトグル縮小で空いたスペースを使い、ブログをプロダクトと混同させない単独 CTA として配置。
+  - モバイルメニューの構成をリファクタ：上部に Products リスト＋「プロダクト一覧を開く」(`/#products` 直行) ボタン、続いて視覚的に明確な区切り、Blog をプライマリトーン枠で強調、その下に About / Support を控えめに配置。max-h を `500px → 640px` に拡張。
+  - `Menu/X/LogIn` に加えて `BookOpen / ChevronRight` を新たに import。
+
+### 検証
+
+- `pnpm build` 成功（Next.js 16.2.4 / Turbopack、TypeScript エラーなし、Static 48 ページ）。
+- ローカルの dev サーバーで `/_next/static/.../globals.*.css` 内に `body{...overflow-x: clip;...}` が出力されていることを確認。
+- iPhone 想定（375 / 390px）の横幅でロゴ + テーマトグル(36px) + Blog ピル(約70px) + メニューボタン(36px) を gap-2 で配置しても折り返さないことをマークアップ上で確認（実機での視覚確認はリポジトリ内の Playwright 等は未導入のため未実施）。
+
+### 状況
+
+- ブランチ: `feature/fix-mobile-top-nav-overflow` を main から作成。
+- 検証後 push → main マージ予定。マージ完了後、Vercel の自動デプロイで本番反映される想定。
