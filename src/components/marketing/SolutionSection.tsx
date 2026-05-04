@@ -57,8 +57,8 @@ export function SolutionSection() {
             {steps.map((s, idx) => (
               <motion.div
                 key={s.num}
-                initial={{ opacity: 0, x: -16 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{
                   duration: 0.6,

@@ -43,10 +43,10 @@ export function ProductCards() {
             .map((p, i) => (
             <motion.div
               key={p.slug}
-              // 左から stagger 強めでスライド。他のセクションの縦フェードと区別し、
-              // 「3カードが順に登場する」リズムをそのまま見せる。
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              // 縦方向のフェードイン（モバイルでの横スライドはビューポートを
+              // 数十pxはみ出して横ジッターの原因になっていたため、y 軸へ統一）。
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.7, delay: i * 0.14, ease: [0.16, 1, 0.3, 1] }}
               className={p.accentClass}
