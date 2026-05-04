@@ -2972,3 +2972,30 @@ user から提供された実機キャプチャ動画（`tahuruhahusaitototuhuhe
 
 - ブランチ: `feature/fix-home-overflow-product-menu` を main から作成。
 - 検証後 push → main マージ予定。マージ完了後、Vercel の自動デプロイで本番反映される想定。
+
+## 2026-05-04 05:00 JST — プロダクトメニュー自動クローズ対応
+
+### 背景
+
+トップ・プロダクト関連ページで、Product ショートカットパネルやハンバーガーメニュー、Products ドロップダウンを開いた状態で「画面外をタップ」「上方向にスクロール」しても閉じない、という UX 課題があった。ユーザーの「上にスクロールしたり、画面をタップするとメニューが自動で閉じるようにできますか」という要望に対応。
+
+### 変更点
+
+- `src/components/marketing/MarketingHeader.tsx` —
+  - `headerRef` を `<header>` に紐付け、ヘッダー領域内（メニュー本体・トリガーボタン含む）のクリック/タップは「外側」と見なさないようにする判定基盤を追加。
+  - `anyMenuOpen`（`open || productsOpen || mobileProductsOpen`）が真のときのみ、document/window に下記リスナーを `useEffect` でアタッチ。閉じた瞬間に確実に解除する形でメモリリーク・無駄な発火を防止:
+    - `mousedown` / `touchstart`（passive）— ヘッダー外側のポインタ操作で全メニューを閉じる。
+    - `scroll`（passive）— 直前の `window.scrollY` との差分で「上方向スクロール」（`delta < -8px`）を検知してメニューを閉じる。8px の閾値で慣性スクロールの戻りや微小ジッターを誤検知しない。
+    - `keydown` — `Escape` でメニューを閉じる（アクセシビリティ向上）。
+  - `closeAllMenus` ヘルパで 3 つの state を一括クリア。トリガーボタン押下時の挙動（`onClick` でのトグル）は変更せず、デザイン・既存導線は完全保持。
+  - SSR/ハイドレーション安全（`'use client'` 配下、`useEffect` 内でのみ `window`/`document` にアクセス）。
+
+### 検証
+
+- `pnpm build` 成功（Next.js 16.2.4 / Turbopack、TypeScript エラーなし、Static 48 ページ生成完了）。
+- メニュー閉時はリスナーゼロ（スクロール時のオーバーヘッドなし）。開時のみ最小限のリスナーを貼る方式。
+
+### 状況
+
+- ブランチ: `feature/auto-close-product-menus` を main から作成。
+- 検証後 push → main マージ予定。マージ完了後、Vercel の自動デプロイで本番反映される想定。

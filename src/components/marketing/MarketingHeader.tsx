@@ -25,6 +25,16 @@ export function MarketingHeader() {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const loginEnabled = isDynamicMode();
+  // ヘッダー全体（メニュー本体含む）の参照。外側タップ判定に使う。
+  const headerRef = useRef<HTMLElement | null>(null);
+
+  // 開いているメニューを一括で閉じるヘルパー。
+  const anyMenuOpen = open || productsOpen || mobileProductsOpen;
+  const closeAllMenus = () => {
+    setOpen(false);
+    setProductsOpen(false);
+    setMobileProductsOpen(false);
+  };
 
   // スクロール 24px 以上で "浮き上がる" モードに切り替える。
   // ヘッダーはスクロールで頻繁に再レンダリングされやすいため、
@@ -38,6 +48,55 @@ export function MarketingHeader() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // 開いているメニューがあるとき:
+  //  - 画面外タップ/クリックで閉じる（ヘッダー領域内は除く）
+  //  - 上方向スクロールで閉じる（小さなジッターは閾値で無視）
+  //  - Escape キーで閉じる
+  // メニューが閉じている間は何のリスナーも貼らない（負荷ゼロ）。
+  useEffect(() => {
+    if (!anyMenuOpen) return;
+
+    const handlePointerDown = (event: Event) => {
+      const target = event.target as Node | null;
+      if (!target) return;
+      const headerEl = headerRef.current;
+      if (headerEl && headerEl.contains(target)) return;
+      closeAllMenus();
+    };
+
+    let lastY = window.scrollY;
+    // 上方向スクロールの閾値。指のジッターや慣性スクロールの戻りで
+    // 誤って閉じないよう少し大きめに取る。
+    const SCROLL_UP_THRESHOLD = 8;
+    const handleScrollClose = () => {
+      const y = window.scrollY;
+      const delta = y - lastY;
+      lastY = y;
+      // 上にスクロール = scrollY が減少。閾値を超える上方向スクロールで閉じる。
+      if (delta < -SCROLL_UP_THRESHOLD) {
+        closeAllMenus();
+      }
+    };
+
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeAllMenus();
+    };
+
+    document.addEventListener('mousedown', handlePointerDown);
+    document.addEventListener('touchstart', handlePointerDown, { passive: true });
+    window.addEventListener('scroll', handleScrollClose, { passive: true });
+    document.addEventListener('keydown', handleKey);
+
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('touchstart', handlePointerDown);
+      window.removeEventListener('scroll', handleScrollClose);
+      document.removeEventListener('keydown', handleKey);
+    };
+    // closeAllMenus は安定的なクロージャを参照するため依存に含めない（setter のみ使用）
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [anyMenuOpen]);
 
   // Products ドロップダウンの開閉を少し遅延して、ボタン→メニュー間を
   // マウスが細かく出入りしたときに繰り返し閉じないようにする。
@@ -57,6 +116,7 @@ export function MarketingHeader() {
 
   return (
     <header
+      ref={headerRef}
       className={cn(
         'sticky top-0 z-40 w-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]',
         // トップ方向: 通常はごくわずかな余白。スクロール後はもう少し下に浮かせる。
