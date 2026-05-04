@@ -209,6 +209,11 @@
     @apply antialiased;
     scroll-behavior: smooth;
     color-scheme: light dark;
+    /* iOS Safari は body のみ overflow-x: clip だと
+       html のスクロールコンテナが先に効いてしまい横ジッターが残る。
+       html 側にも clip を効かせて document スクロールを横方向に封じる。 */
+    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {
@@ -224,7 +229,11 @@
        (whileInView で 16〜24px のスライドイン) や absolute 配置の装飾光源が
        一瞬ビューポートをはみ出して横ジッターを起こすのを防ぐ。
        overflow-x: clip は overflow-x: hidden と違い position: sticky を破壊しない。
-       未対応ブラウザのためのフォールバックとして overflow-x: hidden も併記。 */
+       未対応ブラウザのためのフォールバックとして overflow-x: hidden も併記。
+       width:100% を併用して 100vw 由来のスクロールバー差分も無効化。 */
+    position: relative;
+    width: 100%;
+    max-width: 100%;
     overflow-x: hidden;
     overflow-x: clip;
   }

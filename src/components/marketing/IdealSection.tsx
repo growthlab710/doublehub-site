@@ -44,8 +44,8 @@ export function IdealSection() {
 
         <div className="mx-auto mt-12 grid max-w-4xl gap-5 md:grid-cols-2 md:gap-6">
           <motion.div
-            initial={{ opacity: 0, x: -16 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="rounded-2xl border border-border bg-surface-2 p-6 md:p-8"
@@ -64,8 +64,8 @@ export function IdealSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 16 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
             className="rounded-2xl border border-primary/30 bg-primary-soft p-6 shadow-sm md:p-8"

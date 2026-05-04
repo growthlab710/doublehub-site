@@ -2933,3 +2933,42 @@ user から提供された実機キャプチャ動画（`tahuruhahusaitototuhuhe
 
 - ブランチ: `feature/fix-mobile-top-nav-overflow` を main から作成。
 - 検証後 push → main マージ予定。マージ完了後、Vercel の自動デプロイで本番反映される想定。
+
+---
+
+## 2026-05-04 — トップ横ジッター追加修正＋ Product ショートカット導入
+
+### 概要
+
+前回の修正（body の `overflow-x: clip`）後もトップページのみ横方向ジッターが残っているという報告に対応。あわせて、モバイルヘッダーに Product ショートカットを追加した。Product 一覧ページは存在しないためページ遷移はせず、トップページ上にプロダクト一覧パネルがせり出す挙動とした。
+
+### 根本原因（追加調査）
+
+1. iOS Safari は body に `overflow-x: clip` を当てても、html 側に何の制約も無いと document スクロールが先に効き、framer-motion の `x: -16/-24` スライドイン中に微小な横スクロールが発生し得る。
+2. ホーム限定の `SpotlightSection` は `<section>` に `overflow-hidden` が付いておらず、内部の `inset-[-15%]` ブラー装飾が親をはみ出していた（他ホームセクションは既に `relative overflow-hidden` 済み）。
+3. `IdealSection / SolutionSection / ProductCards` の x 軸スライドイン自体がジッターの主原因。clip で見えなくしても、レイアウト計算上は数十px 広がる瞬間があり、ブラウザによってはタッチスクロールにフィードバックされる。
+
+### 変更ファイル
+
+- `src/styles/globals.css` — html にも `overflow-x: hidden; overflow-x: clip;` を付与。body に `position: relative; width: 100%; max-width: 100%;` を追加。html / body / main の三段クリップ体制に。
+- `src/app/(marketing)/layout.tsx` — `<main className="flex-1 overflow-x-clip">` に変更。レイアウト直近のクリップで保険を掛ける。
+- `src/components/marketing/IdealSection.tsx` — 2 つの motion.div の `x: -16/16` を `y: 16` フェードに統一。横スライドを廃止。
+- `src/components/marketing/SolutionSection.tsx` — ステップカードの `x: -16` を `y: 16` に変更。
+- `src/components/marketing/ProductCards.tsx` — カードの `x: -24` を `y: 24` に変更（ステージア演出は y 方向で踏襲）。
+- `src/components/marketing/SpotlightSection.tsx` — `<section>` に `relative overflow-hidden` を追加。`inset-[-15%]` の装飾が親を超えないように。
+- `src/components/marketing/MarketingHeader.tsx` —
+  - `mobileProductsOpen` state を追加。モバイル右肩に Product ショートカットボタン（`LayoutGrid` アイコン）を新設。タップでヘッダー直下に Product 一覧パネルがせり出す。Product 一覧ページは存在しないため、ホーム文脈を保ったまま各プロダクトへ素早く到達するための軽量メニューとして機能。
+  - モバイル幅 375px でも溢れないよう、Product / Blog ボタンはアイコンのみ（`sm:` 以上でテキスト表示）に。
+  - 既存ハンバーガーメニューはそのまま、Products / Blog / About / Support を含む形で残置。
+  - 既存の Products ドロップダウン（デスクトップ用）も従来通り保持。
+
+### 検証
+
+- `pnpm build` 成功（Next.js 16.2.4 / Turbopack、TypeScript エラーなし、Static 48 ページ）。
+- ホーム限定の x 軸 framer-motion アニメーションは `grep -rn "x: -\|x: [0-9]" src/components/marketing/` でゼロ件であることを確認。
+- 三段（html / body / main）の `overflow-x: clip` で `documentElement.scrollWidth === clientWidth` がコード上保証される構成（ブラウザ実機計測は本環境にブラウザが無いため未実施）。
+
+### 状況
+
+- ブランチ: `feature/fix-home-overflow-product-menu` を main から作成。
+- 検証後 push → main マージ予定。マージ完了後、Vercel の自動デプロイで本番反映される想定。

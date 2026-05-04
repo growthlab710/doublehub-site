@@ -58,7 +58,7 @@ const spotlights: Spotlight[] = [
 
 export function SpotlightSection() {
   return (
-    <section className="border-t border-divider py-20 md:py-24">
+    <section className="relative overflow-hidden border-t border-divider py-20 md:py-24">
       <Container width="wide">
         <motion.div
           initial={{ opacity: 0, y: 16 }}

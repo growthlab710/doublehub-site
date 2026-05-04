@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { Menu, X, LogIn, BookOpen, ChevronRight } from 'lucide-react';
+import { Menu, X, LogIn, BookOpen, ChevronRight, LayoutGrid } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { marketingNav, products, siteConfig } from '@/lib/site/config';
@@ -19,6 +19,10 @@ import { cn, isDynamicMode } from '@/lib/utils';
 export function MarketingHeader() {
   const [open, setOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
+  // モバイル用: Product ショートカット押下で「プロダクト一覧だけ」を
+  // トップページ上にせり出させる軽量パネル。商品リストページは存在しないため
+  // ここで上層オーバーレイとして見せ、ホーム文脈から離脱させない。
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const loginEnabled = isDynamicMode();
 
@@ -153,15 +157,35 @@ export function MarketingHeader() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
 
-          {/* Mobile: 縮めたテーマトグルで生まれた余白に Blog の直接 CTA を置く。
-              ブログをプロダクトと混同させないため、独立したアイコン付き丸ボタンとして表示。 */}
+          {/* Mobile: Product ショートカット。
+              プロダクト一覧ページは存在しないため、押下するとトップページ上に
+              プロダクト一覧パネルがせり出す形で表示される（ナビゲーションせず、
+              ホーム文脈のままサービスへの入口を選べる）。
+              375px の狭いビューでは「Blog ボタン + ハンバーガー + テーマトグル」と
+              横並びになるためアイコンのみ。sm 以上ではテキストも表示。 */}
+          <button
+            type="button"
+            className="flex h-9 items-center gap-1.5 rounded-full border border-border bg-surface px-2.5 text-xs font-semibold text-text transition hover:bg-surface-2 md:hidden"
+            aria-label="プロダクト一覧を開く"
+            aria-expanded={mobileProductsOpen}
+            aria-haspopup="menu"
+            onClick={() => {
+              setOpen(false);
+              setMobileProductsOpen((v) => !v);
+            }}
+          >
+            <LayoutGrid className="h-3.5 w-3.5 text-primary" />
+            <span className="hidden sm:inline">Product</span>
+          </button>
+
+          {/* Mobile: Blog ショートカットはそのまま直接遷移リンクとして残す。 */}
           <Link
             href="/blog/"
-            className="flex h-9 items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 text-xs font-semibold text-primary transition hover:bg-primary/15 md:hidden"
+            className="flex h-9 items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 text-xs font-semibold text-primary transition hover:bg-primary/15 md:hidden"
             aria-label="ブログを開く"
           >
             <BookOpen className="h-3.5 w-3.5" />
-            <span>Blog</span>
+            <span className="hidden sm:inline">Blog</span>
           </Link>
 
           {loginEnabled ? (
@@ -185,7 +209,10 @@ export function MarketingHeader() {
             className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-text transition hover:bg-surface-2 md:hidden"
             aria-label="メニューを開く"
             aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              setMobileProductsOpen(false);
+              setOpen((v) => !v);
+            }}
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
@@ -269,6 +296,60 @@ export function MarketingHeader() {
             </Button>
           )}
         </nav>
+      </div>
+
+      {/* Mobile Product パネル: ヘッダー直下にプロダクト一覧だけをせり出させる。
+          プロダクト一覧ページは存在しないため、ホーム文脈を保ったまま
+          各プロダクトへの導線を素早く開く軽量メニューとして機能する。 */}
+      <div
+        className={cn(
+          'overflow-hidden border-t border-border/60 bg-bg md:hidden',
+          'transition-[max-height] duration-300 ease-out',
+          mobileProductsOpen ? 'max-h-[520px]' : 'max-h-0'
+        )}
+        role="menu"
+        aria-label="プロダクト一覧"
+      >
+        <div className="container-wide flex flex-col gap-1 py-4">
+          <div className="flex items-center justify-between px-3 pb-2">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-text-faint">
+              Products
+            </p>
+            <button
+              type="button"
+              onClick={() => setMobileProductsOpen(false)}
+              className="text-[11px] text-text-muted hover:text-text"
+              aria-label="プロダクト一覧を閉じる"
+            >
+              閉じる
+            </button>
+          </div>
+          {products.map((p) => (
+            <Link
+              key={p.slug}
+              href={p.href}
+              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-text transition hover:bg-surface-2"
+              onClick={() => setMobileProductsOpen(false)}
+              role="menuitem"
+            >
+              <ProductMenuIcon product={p} size={28} />
+              <span className="flex-1">
+                <span className="block font-medium">{p.name}</span>
+                <span className="block text-[11px] text-text-muted">{p.tagline}</span>
+              </span>
+              <ChevronRight className="h-4 w-4 text-text-faint" />
+            </Link>
+          ))}
+          {/* ホームの #products アンカーへも降りられる導線を残す。 */}
+          <Link
+            href="/#products"
+            className="mt-1 flex items-center justify-between rounded-lg border border-border bg-surface-2/60 px-3 py-2.5 text-sm font-medium text-text transition hover:bg-surface-2"
+            onClick={() => setMobileProductsOpen(false)}
+          >
+            <span>トップのプロダクト一覧へ</span>
+            <ChevronRight className="h-4 w-4 text-text-muted" />
+          </Link>
+        </div>
       </div>
     </header>
   );
