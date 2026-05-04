@@ -22,7 +22,7 @@ const productIconMap: Record<string, string> = {
 
 export function ProductCards() {
   return (
-    <Section id="products" spacing="lg">
+    <Section id="products" spacing="lg" className="overflow-hidden">
       <Container width="wide">
         <div className="max-w-2xl">
           <SectionEyebrow number="05" label="Products" align="left" />

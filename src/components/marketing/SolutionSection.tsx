@@ -36,7 +36,7 @@ const steps = [
 
 export function SolutionSection() {
   return (
-    <section className="border-t border-divider bg-surface-2/40 py-20 md:py-24">
+    <section className="relative overflow-hidden border-t border-divider bg-surface-2/40 py-20 md:py-24">
       <Container width="wide">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -92,16 +92,20 @@ export function SolutionSection() {
             className="relative mx-auto w-full max-w-sm md:max-w-md"
           >
             <div className="relative overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
-              <VideoSlot
-                videoSrc={HOME_SOLUTION_VIDEO}
-                posterSrc={HOME_SOLUTION_POSTER}
-                alt="DoubleHub があなたを理解している画面"
-                width={800}
-                height={1400}
-                sizes="(min-width: 768px) 420px, 80vw"
-                mediaClassName="rounded-[1.5rem]"
-                className="rounded-[1.5rem]"
-              />
+              {/* aspect-ratio を親に固定することで、動画が読込中・フォールバック切替時に
+                  intrinsic 800×1400 のまま親幅を押し広げて横ジッターを起こすのを防ぐ。 */}
+              <div className="relative aspect-[800/1400] w-full overflow-hidden rounded-[1.5rem]">
+                <VideoSlot
+                  videoSrc={HOME_SOLUTION_VIDEO}
+                  posterSrc={HOME_SOLUTION_POSTER}
+                  alt="DoubleHub があなたを理解している画面"
+                  width={800}
+                  height={1400}
+                  sizes="(min-width: 768px) 420px, 80vw"
+                  mediaClassName="rounded-[1.5rem]"
+                  className="absolute inset-0 rounded-[1.5rem]"
+                />
+              </div>
             </div>
             {/* 装飾: 後ろの光 */}
             <div
