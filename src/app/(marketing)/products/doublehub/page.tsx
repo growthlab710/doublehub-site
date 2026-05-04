@@ -4,7 +4,14 @@ import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
+import { VideoSlot } from '@/components/marketing/VideoSlot';
 import { siteConfig } from '@/lib/site/config';
+
+// 動画アセット差し替えポイント（プロダクト Hero）:
+//   public/videos/doublehub-product-hero.mp4 を置けば自動でループ再生に切り替わる。
+//   未配置の場合は posterSrc の既存コンセプト画像にフォールバック。
+const PRODUCT_HERO_VIDEO = '/videos/doublehub-product-hero.mp4';
+const PRODUCT_HERO_POSTER = '/images/DoubleHub-Concept.png';
 
 export const metadata: Metadata = {
   title:
@@ -490,12 +497,15 @@ export default function DoubleHubPage() {
 
           <div className="relative mx-auto w-full max-w-md">
             <div className="relative aspect-[3/4] overflow-hidden rounded-3xl">
-              <Image
-                src="/images/DoubleHub-Concept.png"
+              <VideoSlot
+                videoSrc={PRODUCT_HERO_VIDEO}
+                posterSrc={PRODUCT_HERO_POSTER}
                 alt="DoubleHub のコンセプトイメージ"
-                fill
-                className="object-contain"
+                width={840}
+                height={1120}
                 sizes="(min-width: 768px) 420px, 100vw"
+                mediaClassName="object-contain rounded-3xl"
+                className="absolute inset-0 rounded-3xl"
                 priority
               />
             </div>
@@ -586,7 +596,7 @@ export default function DoubleHubPage() {
                 key={h.title}
                 className="relative flex flex-col overflow-hidden rounded-3xl border border-border bg-surface shadow-sm"
               >
-                <div className="relative aspect-[9/16] w-full overflow-hidden bg-[#0a0a0a]">
+                <div className="relative aspect-[9/16] w-full overflow-hidden rounded-t-3xl bg-[#0a0a0a]">
                   <Image
                     src={h.image}
                     alt={h.imageAlt}
