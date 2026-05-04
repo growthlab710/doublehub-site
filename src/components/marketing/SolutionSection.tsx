@@ -1,9 +1,15 @@
 'use client';
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Container } from '@/components/ui/Container';
 import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
+import { VideoSlot } from '@/components/marketing/VideoSlot';
+
+// 動画アセット差し替えポイント:
+//   public/videos/doublehub-home-solution.mp4 を置けば自動でループ再生に切り替わる。
+//   未配置の場合は posterSrc の既存スクショ（doublehub-memory.webp）にフォールバック。
+const HOME_SOLUTION_VIDEO = '/videos/doublehub-home-solution.mp4';
+const HOME_SOLUTION_POSTER = '/images/doublehub-memory.webp';
 
 /**
  * Solution セクション
@@ -86,12 +92,15 @@ export function SolutionSection() {
             className="relative mx-auto w-full max-w-sm md:max-w-md"
           >
             <div className="relative overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
-              <Image
-                src="/images/doublehub-memory.webp"
+              <VideoSlot
+                videoSrc={HOME_SOLUTION_VIDEO}
+                posterSrc={HOME_SOLUTION_POSTER}
                 alt="DoubleHub があなたを理解している画面"
                 width={800}
                 height={1400}
-                className="h-auto w-full rounded-[1.5rem]"
+                sizes="(min-width: 768px) 420px, 80vw"
+                mediaClassName="rounded-[1.5rem]"
+                className="rounded-[1.5rem]"
               />
             </div>
             {/* 装飾: 後ろの光 */}
