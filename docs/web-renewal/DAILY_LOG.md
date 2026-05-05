@@ -2999,3 +2999,34 @@ user から提供された実機キャプチャ動画（`tahuruhahusaitototuhuhe
 
 - ブランチ: `feature/auto-close-product-menus` を main から作成。
 - 検証後 push → main マージ予定。マージ完了後、Vercel の自動デプロイで本番反映される想定。
+
+## 2026-05-05 — アプリ連携ガイドページ追加（/app-linking/）
+
+### 背景
+
+iOS の各アプリ（DoubleHub / BookCompass）の設定画面から、ユーザーがアプリ間連携の意義と手順を確認できる安定 URL を必要としていた。現状は BookCompass × DoubleHub の双方向連携のみだが、今後 TrainNote / HubWallet など他アプリも順次対応していく前提で、共通の「アプリ連携ガイド」ページを 1 枚用意し、すべての対応アプリ設定画面からこのページにリンクする運用に揃える。
+
+### 変更点
+
+- `src/app/(marketing)/app-linking/page.tsx` — 新規ページを追加。Hero / Benefits（4 件）/ How to Link（3 ステップ・スクリーンショット付き）/ Supported Apps（DoubleHub・BookCompass 対応済み、TrainNote・HubWallet は今後対応予定）/ FAQ / CTA の構成。`Container`・`Section`・`Button` の既存 UI プリミティブと `next/image` を使用し、PC とモバイルの両方で読みやすいレスポンシブレイアウト。
+- `src/app/sitemap.ts` — `staticPaths` に `/app-linking/` を追加。GSC 上で確実にクロール対象になるよう、他の静的ページと同じ `priority: 0.7` / `changeFrequency: monthly` で扱う。
+- `src/lib/site/config.ts` — `footerNav.company` に `App Linking → /app-linking/` を追加。フッターから直接到達できるようにし、内部リンクの孤立を防ぐ。
+- `public/images/app-linking-step-01-bookcompass-settings.jpg` — BookCompass 設定画面で「DoubleHub と連携」をタップする手順 1 のスクリーンショット（1080×2348）。
+- `public/images/app-linking-step-02-doublehub-settings.jpg` — DoubleHub 設定画面で「BookCompass と連携」カードをタップする手順 2 のスクリーンショット（1080×2348）。
+- `public/images/app-linking-step-03-doublehub-code-input.jpg` — DoubleHub のコード入力画面（手順 3）のスクリーンショット（1080×2348）。
+
+### URL / メタ
+
+- 公開 URL: `https://www.doublehub.jp/app-linking/`（trailingSlash: true）。App Store Connect のサポート URL のように、各アプリの設定画面から固定リンクとして安全に貼れる前提で `/app-linking/` を採用。
+- `metadata.alternates.canonical` を `/app-linking/` に明示。OpenGraph / Twitter カードも設定済み。
+- スクリーンショットは `next/image` で `width={1080} height={2348}` の intrinsic ratio を渡し、`max-width: 280–300px` のフレームに収めることでスマホスクリーンショットが意図的なデザインに見えるようにしている。`alt` は画面の中身が分かる説明文。
+
+### 検証
+
+- `pnpm build` 成功（Next.js 16.2.4 / Turbopack、TypeScript エラーなし、Static 49 ページ）。`/app-linking` が `○ (Static)` として正しくプリレンダリングされていることを確認。
+- ESLint / next.config.js の既存警告（`Invalid next.config.js options: eslint`、複数 lockfile 警告）は本変更とは無関係（main 時点で既に出ていたもの）。
+
+### 状況
+
+- ブランチ: `feature/add-app-linking-guide` を main から作成。
+- 検証後 push → main マージ予定。マージ完了後、Vercel の自動デプロイで本番反映される想定。
