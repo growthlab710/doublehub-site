@@ -120,6 +120,7 @@ export const footerNav = {
     { label: 'About', href: '/about/' },
     { label: 'Blog', href: '/blog/' },
     { label: 'Support', href: '/support/' },
+    { label: 'App Linking', href: '/app-linking/' },
     { label: 'Privacy', href: '/privacy/' },
   ],
 } as const;
