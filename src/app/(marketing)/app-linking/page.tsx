@@ -49,39 +49,44 @@ export const metadata: Metadata = {
   },
 };
 
+// アプリ内（特に BookCompass / DoubleHub の設定画面）から流入するユーザー向け。
+// 「連携してから何が起きるか」を、現状実装ベースで具体的に示す。
+// 横断的なワンタップ遷移など、未実装の体験は書かない。
 const benefits = [
   {
-    title: '複数アプリの記録を、一つの「ダブル」が理解する',
+    title: '読書の記録が、ダブルの判断材料になる',
     body:
-      'BookCompass で読んだ本、DoubleHub のタスクやメモ——別アプリの記録があなたのダブルに渡り、「この本のメモが今のタスクに効きそう」のような横断的な気づきが生まれます。',
+      'BookCompass に貯めてきた本・Mutter（短文感想）・読書履歴が、DoubleHub の「ダブル」から参照できる材料に加わります。タスクやメモだけでは見えなかった、あなたの興味・関心や思考の傾向まで含めて、ダブルが日々の整理や対話に活かせるようになります。',
   },
   {
-    title: 'アプリ間の移動が、ワンタップで滑らかに',
+    title: '初期設定をやり直さず、興味の軸を引き継げる',
     body:
-      '連携済みのアプリは、画面間の往復もスムーズ。読書中に思いついたタスクを DoubleHub にすぐ渡したり、ダブルとの対話から関連する本に戻ったり、文脈が途切れません。',
+      'すでに BookCompass で残してきた読書ジャンルやテーマ性は、DoubleHub 側で再入力する必要がありません。アプリ単独で使うときよりも、最初から「あなたが何に時間を使ってきた人なのか」を踏まえた応答に近づきます。',
   },
   {
-    title: '今後、対応アプリが増えていきます',
+    title: '渡す範囲は、あなたが決めて、あとから外せる',
     body:
-      '現在は BookCompass と DoubleHub の連携のみ対応していますが、TrainNote（鍛える）や HubWallet（家計）など、エコシステム内のアプリを順次追加していく予定です。',
+      '連携は端末ごとの手動操作で完結し、勝手にアカウントを横断同期することはありません。不要になれば各アプリの設定からいつでも解除でき、解除後はそれぞれのアプリ単体の状態に戻ります。',
   },
   {
-    title: 'あなたの意思で、いつでも繋ぎ直せる',
+    title: 'TrainNote・HubWallet など、今後の対応に備える',
     body:
-      '連携は端末ごとの操作で完結し、不要になれば各アプリの設定からいつでも解除できます。アカウントを跨ぐ自動同期はせず、あなたが「渡したい」と決めた範囲だけが共有されます。',
+      '現在は BookCompass × DoubleHub のみの対応ですが、今後 TrainNote（身体）や HubWallet（家計）など、エコシステム内の他アプリも順次連携対象に加える予定です。今の段階で BookCompass と DoubleHub をつないでおくと、対応が増えたタイミングでそのまま輪を広げられます。',
   },
 ];
 
+// モバイルからの閲覧が中心のため、各ステップは 1〜2 行で読み切れる短い文に。
+// 1 ステップ＝「どのアプリで／何をタップするか／何が起きるか」だけに絞る。
 const steps = [
   {
     number: '01',
     eyebrow: 'BookCompass',
-    title: 'BookCompass の設定で「DoubleHub と連携」をタップ',
+    title: '設定で「DoubleHub と連携」をタップ',
     body: (
       <>
-        BookCompass を開き、画面下部の「設定」タブから一番下にある
-        <strong className="text-text"> 「DoubleHub と連携」</strong>{' '}
-        をタップします。連携用のコードが発行されますので、画面に表示されたコードを控えておいてください。
+        BookCompass の<strong className="text-text">「設定」</strong>を開き、
+        <strong className="text-text">「DoubleHub と連携」</strong>をタップ。
+        連携コードが表示されます。
       </>
     ),
     image: '/images/app-linking-step-01-bookcompass-settings.jpg',
@@ -91,12 +96,11 @@ const steps = [
   {
     number: '02',
     eyebrow: 'DoubleHub',
-    title: 'DoubleHub の設定で「BookCompass と連携」をタップ',
+    title: '設定で「BookCompass と連携」をタップ',
     body: (
       <>
-        次に DoubleHub を開き、設定画面の下部にある
-        <strong className="text-text"> 「BookCompass と連携」</strong>{' '}
-        のカードをタップします。コード入力画面に遷移します。
+        DoubleHub の<strong className="text-text">「設定」</strong>を開き、
+        <strong className="text-text">「BookCompass と連携」</strong>をタップ。
       </>
     ),
     image: '/images/app-linking-step-02-doublehub-settings.jpg',
@@ -106,12 +110,12 @@ const steps = [
   {
     number: '03',
     eyebrow: 'DoubleHub',
-    title: '連携コードを入力して連携完了',
+    title: 'コードを入力して「連携する」',
     body: (
       <>
-        BookCompass で発行されたコードを入力欄にペーストするか手入力し、
-        <strong className="text-text"> 「連携する」</strong>{' '}
-        をタップします。連携が完了すると、両アプリで連携状態が「連携済み」に変わります。
+        BookCompass で表示されたコードを入力し、
+        <strong className="text-text">「連携する」</strong>をタップ。
+        両アプリの表示が「連携済み」になれば完了です。
       </>
     ),
     image: '/images/app-linking-step-03-doublehub-code-input.jpg',
@@ -209,11 +213,11 @@ export default function AppLinkingPage() {
             </p>
           </div>
 
-          <ol className="mt-12 space-y-16 md:space-y-24">
+          <ol className="mt-10 space-y-12 md:space-y-24">
             {steps.map((step, i) => (
               <li
                 key={step.number}
-                className="grid items-center gap-8 md:grid-cols-2 md:gap-12"
+                className="grid items-center gap-6 md:grid-cols-2 md:gap-12"
               >
                 <div
                   className={
@@ -221,7 +225,7 @@ export default function AppLinkingPage() {
                     (i % 2 === 1 ? 'md:order-2' : '')
                   }
                 >
-                  <div className="relative w-full max-w-[280px] sm:max-w-[300px]">
+                  <div className="relative w-full max-w-[220px] sm:max-w-[260px] md:max-w-[300px]">
                     {/* iPhone screenshots: 1080x2348 ≈ 9:19.56. Use intrinsic ratio. */}
                     <div className="relative overflow-hidden rounded-[2rem] border border-border bg-surface-2 shadow-xl">
                       <Image
@@ -229,7 +233,7 @@ export default function AppLinkingPage() {
                         alt={step.imageAlt}
                         width={1080}
                         height={2348}
-                        sizes="(min-width: 768px) 300px, 80vw"
+                        sizes="(min-width: 768px) 300px, (min-width: 640px) 260px, 220px"
                         className="h-auto w-full"
                         priority={i === 0}
                       />

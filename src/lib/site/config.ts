@@ -21,7 +21,9 @@ export const siteConfig = {
     url: 'https://www.doublehub.jp/about/',
   },
   social: {
-    appStoreBookCompass: 'https://apps.apple.com/jp/app/bookcompass/id6741010284',
+    // App Store ID は他の参照箇所（products/bookcompass、SpotlightSection 等）と揃える。
+    appStoreBookCompass:
+      'https://apps.apple.com/us/app/bookcompass-%E8%AA%AD%E6%9B%B8%E7%9F%A5%E8%AD%98%E3%83%9E%E3%83%83%E3%83%97/id6760604663?itscg=30200&itsct=apps_box_badge&mttnsubad=6760604663',
     appStoreDoubleHub:
       'https://apps.apple.com/jp/app/doublehub-ai%E6%B4%BB%E7%94%A8todo%E7%AE%A1%E7%90%86/id6761981050',
     appStoreTrainNote: 'https://apps.apple.com/jp/app/trainnote/id6745749843',
