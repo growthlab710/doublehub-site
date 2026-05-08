@@ -14,7 +14,7 @@ import { Textarea } from '@/components/ui/Textarea';
  * - ハニーポットによるボット対策あり
  * - メールアドレスは JS 組立て（収集対策の踏襲）
  */
-const SERVICES = ['DoubleHub', 'TrainNote', 'Book Compass', 'その他 / 全般'];
+const SERVICES = ['DoubleHub', 'TrainNote', 'Book Compass', 'HubWallet', 'その他 / 全般'];
 const CATEGORIES = [
   '不具合の報告',
   '機能のご要望',
