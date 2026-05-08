@@ -16,7 +16,7 @@ import { SupportForm } from './_components/SupportForm';
 export const metadata: Metadata = {
   title: 'サポート・お問い合わせ',
   description:
-    'DoubleHub・TrainNote・Book Compass に関するお問い合わせやサポート情報をご案内します。',
+    'DoubleHub・TrainNote・Book Compass・HubWallet に関するお問い合わせやサポート情報をご案内します。',
   alternates: { canonical: '/support/' },
 };
 
@@ -34,7 +34,7 @@ export default function SupportPage() {
               サポート・お問い合わせ
             </h1>
             <p className="mt-4 text-text-muted leading-relaxed">
-              DoubleHub、TrainNote、Book Compass に関するご質問・不具合の報告・ご要望などを
+              DoubleHub、TrainNote、Book Compass、HubWallet に関するご質問・不具合の報告・ご要望などを
               受け付けています。下記のフォームから内容を選んで送信してください。
             </p>
           </div>
