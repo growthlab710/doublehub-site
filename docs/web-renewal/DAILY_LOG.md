@@ -3138,3 +3138,43 @@ TrainNote / BookCompass のポリシーは GitHub Pages 上の別リポジトリ
 - GitHub Pages 側 (trainnote-privacy-policy / bookcompass-privacy-policy)
   を新 URL への <meta refresh> リダイレクトに置き換え
 - App Store Connect の各アプリのプライバシー URL を新 URL に差し替え（手作業）
+
+
+## 2026-05-08 — HubWallet プライバシーポリシー初版を公開（ステップ2）
+
+### 背景
+
+HubWallet のプライバシーポリシー本文を受領 (PRIVACY_POLICY.md, 2026-05-08 版)。
+ステップ1 で空けておいた /privacy/hubwallet/ 枠を埋め、ハブからのリンクを有効化。
+
+### 変更内容
+
+- `src/app/(marketing)/privacy/hubwallet/page.tsx` 新規作成。
+  PRIVACY_POLICY.md を一次ソースとして全文反映:
+  - 1. 適用範囲 / 2. 取得する情報（4 サブセクション）/ 3. 利用目的 /
+    4. データの保存場所 / 5. 第三者提供および外部送信 /
+    6. レシート画像および収入書類の取扱い / 7. 広告およびトラッキング /
+    8. 利用者の権利 / 9. データの保存期間 / 10. お子様のプライバシー /
+    11. 本ポリシーの変更 / 12. お問い合わせ窓口 / 改定履歴
+  - 5. 章のフロー図は `<pre>` ブロックで等幅表示。
+  - 5. 章の送信先一覧は専用テーブルで表示（prose の table を経由せず、
+    not-prose で枠線・背景・段違い色を確実に当てる）。
+  - 12. 章の外部リンクは noopener noreferrer 付き new tab。
+- `src/app/(marketing)/privacy/page.tsx` の HubWallet エントリ:
+  href: null → '/privacy/hubwallet/'、badge:「準備中」を削除。
+  これでハブから普通にリンクされる扱いに。
+- `src/app/sitemap.ts` に `/privacy/hubwallet/` を追加。
+
+### 検証
+
+- `pnpm build` 成功。/privacy/hubwallet/ が static 生成されることを確認
+  （/privacy 配下は doublehub / trainnote / bookcompass / hubwallet の 4 ページ + ハブ）。
+- ローカル dev サーバーで:
+  - /privacy/ … HubWallet カードが普通のリンクに（バッジなし、→ 表示）
+  - /privacy/hubwallet/ … ヒーロー、各章、フロー図、送信先テーブル、
+    外部リンク、改定履歴まで意図通り描画。
+
+### 残タスク（ユーザー作業）
+
+- App Store Connect の HubWallet（ほか3アプリも）プライバシー URL を
+  https://www.doublehub.jp/privacy/<slug>/ に差し替え。
