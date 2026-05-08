@@ -29,6 +29,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/support/',
     '/app-linking/',
     '/privacy/',
+    '/privacy/doublehub/',
+    '/privacy/trainnote/',
+    '/privacy/bookcompass/',
   ];
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((p) => ({
     // trailingSlash: true と揃えるため、ホームも `/` 末尾を維持。
