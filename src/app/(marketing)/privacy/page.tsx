@@ -63,8 +63,7 @@ const policies: PolicyEntry[] = [
     name: 'HubWallet',
     description:
       '家計簿アプリ。レシート OCR・カテゴリ推定時の AI 送信、ローカル保存、銀行連携を行わない方針について。',
-    href: null,
-    badge: '準備中',
+    href: '/privacy/hubwallet/',
   },
 ];
 
