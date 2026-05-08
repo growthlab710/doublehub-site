@@ -5,178 +5,155 @@ import { Section } from '@/components/ui/Section';
 
 /**
  * /privacy/
- * App Store Connect にプライバシー URL として登録済み。
- * legacy/privacy.html から本文を完全移植（Ver.1.1.0 対応、ヘルスケア/カレンダー連携記載あり）。
+ *
+ * プライバシーポリシーのハブページ。
+ * 各プロダクトの詳細ポリシーは /privacy/<slug>/ に分割。
+ *
+ * 注:
+ * - 旧バージョンではこのページに DoubleHub 本体のプライバシーポリシー本文が
+ *   直書きされていたが、HubWallet を含む 4 プロダクト体制に合わせてハブ化。
+ *   DoubleHub 本体のポリシー本文は /privacy/doublehub/ に移設。
+ * - App Store Connect 等に登録済みの旧 URL からは、ハブ → 各プロダクトページ
+ *   へ 1 クリックで辿れるようにしてある。
  */
 export const metadata: Metadata = {
-  title: 'Privacy Policy — プライバシーポリシー',
-  description: 'DoubleHub / BookCompass / TrainNote のプライバシーポリシー。',
+  title: 'Privacy — プライバシーポリシー',
+  description:
+    'DoubleHub / TrainNote / BookCompass / HubWallet のプライバシーポリシーをまとめています。各プロダクトのプライバシーポリシーへ進めます。',
   alternates: { canonical: '/privacy/' },
 };
 
-export default function PrivacyPage() {
+type PolicyEntry = {
+  /** プロダクト識別子。href にも使う。 */
+  slug: 'doublehub' | 'trainnote' | 'bookcompass' | 'hubwallet';
+  /** プロダクト表示名。 */
+  name: string;
+  /** 1 行説明（このプロダクトのプライバシー方針の要約）。 */
+  description: string;
+  /** ページがある場合は内部リンク、まだ無い場合は null。 */
+  href: string | null;
+  /** カードに添える状態ラベル（任意）。 */
+  badge?: string;
+};
+
+const policies: PolicyEntry[] = [
+  {
+    slug: 'doublehub',
+    name: 'DoubleHub',
+    description:
+      'パーソナル AI アシスタント本体。ToDo・メモ・チャット、ヘルスケア／カレンダー連携の取扱い、外部 AI サービスへの送信について。',
+    href: '/privacy/doublehub/',
+  },
+  {
+    slug: 'trainnote',
+    name: 'TrainNote',
+    description:
+      'トレーニング記録アプリ。記録は基本的に端末内に保存。AI コーチ利用時の外部送信の範囲について。',
+    href: '/privacy/trainnote/',
+  },
+  {
+    slug: 'bookcompass',
+    name: 'BookCompass',
+    description:
+      '読書アプリ。匿名ユーザー ID と Supabase によるクラウド保存、AI チャット機能と外部送信について。',
+    href: '/privacy/bookcompass/',
+  },
+  {
+    slug: 'hubwallet',
+    name: 'HubWallet',
+    description:
+      '家計簿アプリ。レシート OCR・カテゴリ推定時の AI 送信、ローカル保存、銀行連携を行わない方針について。',
+    href: null,
+    badge: '準備中',
+  },
+];
+
+export default function PrivacyHubPage() {
   return (
     <Section spacing="lg">
       <Container width="narrow">
-        <h1 className="font-display text-3xl font-semibold md:text-4xl">
-          DoubleHub プライバシーポリシー
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-text-muted">
+          Privacy
+        </p>
+        <h1 className="mt-3 font-display text-3xl font-semibold md:text-4xl">
+          プライバシーポリシー
         </h1>
+        <p className="mt-4 max-w-2xl text-text-muted">
+          GrowthLab が提供する各プロダクトのプライバシーポリシーをまとめています。アプリごとに保存先や外部送信の構成が異なるため、ご利用のプロダクトのページをご確認ください。
+        </p>
 
-        <div className="prose prose-neutral mt-8 max-w-none dark:prose-invert">
-          <p>
-            GrowthLab（以下「当方」）は、DoubleHub（以下「本アプリ」）で取り扱う情報について、以下のとおり定めます。
-          </p>
+        <div className="mt-10 flex flex-col gap-3">
+          {policies.map((p) => {
+            const isAvailable = p.href !== null;
+            const baseClass =
+              'group flex flex-col gap-2 rounded-2xl border border-border bg-surface p-6 shadow-sm transition';
+            const interactiveClass = isAvailable
+              ? 'hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md'
+              : 'opacity-70';
+            const Wrapper = ({ children }: { children: React.ReactNode }) =>
+              isAvailable ? (
+                <Link href={p.href!} className={`${baseClass} ${interactiveClass}`}>
+                  {children}
+                </Link>
+              ) : (
+                <div className={`${baseClass} ${interactiveClass}`}>{children}</div>
+              );
+            return (
+              <Wrapper key={p.slug}>
+                <div className="flex items-center justify-between gap-3">
+                  <h2 className="font-display text-lg font-semibold tracking-[-0.01em] md:text-xl">
+                    {p.name}
+                  </h2>
+                  <div className="flex items-center gap-2">
+                    {p.badge ? (
+                      <span className="rounded-full border border-border bg-surface-2 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-text-muted">
+                        {p.badge}
+                      </span>
+                    ) : null}
+                    {isAvailable ? (
+                      <span
+                        aria-hidden
+                        className="text-text-faint transition group-hover:translate-x-0.5 group-hover:text-primary"
+                      >
+                        →
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+                <p className="text-sm leading-relaxed text-text-muted">{p.description}</p>
+              </Wrapper>
+            );
+          })}
+        </div>
 
-          <h2>1. 取得する情報</h2>
-          <p>本アプリでは、以下の情報を取り扱います。</p>
-          <ul>
+        <div className="mt-12 rounded-2xl border border-border bg-surface-2 p-6">
+          <h2 className="font-display text-base font-semibold">共通の事項</h2>
+          <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-text-muted">
             <li>
-              アカウント情報（匿名アカウント、Sign in with Apple
-              を含む認証情報、内部ユーザーID）
+              事業者名:{' '}
+              <span className="text-text">GrowthLab</span>
             </li>
             <li>
-              ユーザーが入力・保存する情報（ToDo、メモ、チャット内容、ユーザー辞書、週次ふり返りに関する内容、自己理解のために任意入力するプロフィールや設定情報）
+              お問い合わせ:{' '}
+              <a
+                href="mailto:growthlab116710@gmail.com"
+                className="text-primary hover:underline"
+              >
+                growthlab116710@gmail.com
+              </a>
+              （
+              <Link href="/support/" className="text-primary hover:underline">
+                サポートフォーム
+              </Link>
+              からも受け付けています）
             </li>
             <li>
-              本アプリが生成する補助情報（AI
-              による分類結果、要約、理解を深めるための学習データ、検索性向上のための埋め込み情報など）
+              いずれのプロダクトでも、法令に基づく場合を除きユーザー情報を第三者へ販売することはなく、広告目的で個人情報を提供することもありません。
             </li>
             <li>
-              アプリ設定情報（テーマ、通知設定、オンボーディング状態、位置情報利用設定など）
-            </li>
-            <li>位置情報（ユーザーが許可した場合に限る）</li>
-            <li>
-              音声入力時の音声データおよび音声認識結果テキスト（ユーザーが音声入力を使う場合に限る）
-            </li>
-            <li>
-              ヘルスケアデータ（ユーザーがヘルスケア連携を許可した場合に限り、iOS
-              のヘルスケアから歩数、睡眠、ワークアウトのデータを読み取り専用で取得します。本アプリからヘルスケアへの書き込みは行いません）
-            </li>
-            <li>
-              カレンダー情報（ユーザーがカレンダー連携を許可した場合に限り、iOS
-              カレンダーの予定のタイトル、説明、開始・終了日時、終日フラグ、場所、繰り返し設定、カレンダー色、状態、カレンダーソース、外部
-              ID を取得します）
-            </li>
-            <li>お問い合わせ時にユーザーが送信する情報</li>
-          </ul>
-
-          <h2>2. 利用目的</h2>
-          <p>取得した情報は、以下の目的で利用します。</p>
-          <ul>
-            <li>ToDo、メモ、チャット、週次ふり返りなど本アプリの基本機能を提供するため</li>
-            <li>ユーザーの入力内容を整理し、AI による応答、提案、要約、検索補助を行うため</li>
-            <li>ユーザーごとの継続傾向や好みを反映し、より適した提案や表示を行うため</li>
-            <li>認証、データ同期、バックアップ、アカウント削除処理を行うため</li>
-            <li>現在地に応じた天気表示を行うため</li>
-            <li>音声入力をテキスト化して利用しやすくするため</li>
-            <li>
-              ヘルスケアデータをもとに、活動や睡眠の傾向に基づいた気づきや会話の提示、AI
-              による応答への文脈反映を行うため
-            </li>
-            <li>期限付き ToDo を iOS カレンダーと双方向に同期し、スケジュール管理に活用するため</li>
-            <li>お問い合わせ対応、不具合調査、品質改善のため</li>
-          </ul>
-          <p className="text-sm text-text-muted">
-            ヘルスケアデータおよびカレンダー情報は、広告配信、第三者マーケティング、ユーザー属性の推定販売などの目的には一切使用しません。
-          </p>
-
-          <h2>3. 保存先と外部送信</h2>
-          <ul>
-            <li>
-              入力データや設定情報は、端末内に保存されるほか、アカウント利用時には当方が管理するサーバー環境へ同期・保存されることがあります。
-            </li>
-            <li>
-              AI
-              機能を利用した場合、ユーザー入力、会話内容、関連する ToDo・メモ・辞書・要約情報など、応答生成や整理に必要な範囲のデータが、外部
-              AI サービスへ送信されることがあります。現時点では Google が提供する Gemini API
-              を利用する構成を含みます。
-            </li>
-            <li>
-              ヘルスケアデータ（歩数、睡眠、ワークアウトの日次サマリ）は、ユーザーが連携を許可した場合に限り、当方が管理するサーバー環境へ同期・保存されます。また、チャット応答の文脈反映のために、直近数日分のサマリが
-              Gemini API
-              へ送信されることがあります。端末の「ヘルスケア」アプリから直接取得した生データそのものを外部へ送信することはありません。
-            </li>
-            <li>
-              カレンダー情報（iOS
-              カレンダーの予定）は、ユーザーが連携を許可した場合に限り、双方向同期のために当方が管理するサーバー環境へ保存されます。カレンダー情報そのものを
-              Gemini API など外部 AI サービスへ送信することはありません。
-            </li>
-            <li>
-              位置情報を利用する場合、天気取得のために緯度・経度などが Open-Meteo へ送信されます。
-            </li>
-            <li>Sign in with Apple を利用する場合、Apple が提供する認証基盤を利用します。</li>
-            <li>
-              これらの外部送信は、本アプリの機能提供のために行うものであり、広告配信や第三者マーケティングを目的とするものではありません。
+              本ポリシーは、法令改正や各アプリの機能変更に応じて改定することがあります。重要な変更がある場合は、アプリ内表示またはこのページでお知らせします。
             </li>
           </ul>
-
-          <h2>4. 第三者提供</h2>
-          <p>
-            当方は、法令に基づく場合を除き、ユーザー情報を第三者へ販売しません。広告目的で個人情報を提供することもありません。
-            <br />
-            ただし、本アプリの提供に必要な範囲で、認証、サーバー運用、AI
-            応答生成、天気取得に関わる事業者のサービスを利用することがあります。送信先事業者における情報の取扱いは、各事業者の定める利用条件やプライバシーポリシーに従う場合があります。
-          </p>
-
-          <h2>5. ユーザーによる管理</h2>
-          <ul>
-            <li>
-              ユーザーは本アプリ内で ToDo、メモ、チャット履歴、ユーザー辞書などを編集・削除できます。
-            </li>
-            <li>
-              位置情報、マイク、音声認識の利用は OS
-              設定から変更できます。許可しなくても本アプリの主要機能は利用できますが、一部機能は制限されます。
-            </li>
-            <li>
-              ヘルスケア連携は本アプリの設定画面から有効化／解除できます。読み取るデータの種類は「設定
-              → ヘルスケア → データアクセスとデバイス → DoubleHub」からも個別に変更できます。
-            </li>
-            <li>
-              カレンダー連携は本アプリの設定画面から有効化／解除できます。アクセス許可自体は「設定
-              → プライバシーとセキュリティ → カレンダー」からも変更できます。
-            </li>
-            <li>
-              ゲスト利用中でも、Sign in with Apple
-              利用中でも、設定画面の「アカウント」からアカウント削除を開始できます。
-            </li>
-            <li>
-              アカウント削除依頼を受け付けた後、本アプリはサインアウト状態に戻ります。保存データの削除はサーバー側で処理され、通常は受付から
-              24 時間経過後に削除処理の対象となります。処理状況により前後する場合があります。
-            </li>
-            <li>
-              アカウント削除により削除されるのは DoubleHub 上のアカウントおよび関連データであり、ユーザー本人の
-              Apple ID 自体は削除されません。
-            </li>
-          </ul>
-
-          <h2>6. 安全管理</h2>
-          <ul>
-            <li>
-              当方は、認証、アクセス制御、通信の保護、秘密情報の分離管理など、合理的な安全管理措置を講じるよう努めます。
-            </li>
-            <li>
-              サーバー側で利用する機密情報は、アプリ本体に埋め込まず、管理された環境で保護する方針です。
-            </li>
-            <li>
-              ただし、インターネット通信や外部サービス利用を伴う以上、完全な安全性を保証するものではありません。
-            </li>
-          </ul>
-
-          <h2>7. 改定</h2>
-          <p>
-            本ポリシーは、法令改正や本アプリの機能変更に応じて改定することがあります。重要な変更がある場合は、アプリ内表示または公開先ページでお知らせします。
-          </p>
-
-          <h2>8. お問い合わせ先</h2>
-          <ul>
-            <li>事業者名: GrowthLab</li>
-            <li>
-              連絡先:{' '}
-              <a href="mailto:growthlab116710@gmail.com">growthlab116710@gmail.com</a>
-            </li>
-          </ul>
-
-          <p className="text-sm text-text-faint">最終更新日: 2026-04-18</p>
         </div>
 
         <p className="mt-10 text-sm text-text-muted">
