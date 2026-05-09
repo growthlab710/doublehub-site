@@ -25,7 +25,12 @@ const CATEGORIES = [
 ];
 
 export function SupportForm() {
-  const [service, setService] = useState(SERVICES[0]);
+  // デフォルトで「DoubleHub」が選ばれていると、TrainNote / BookCompass /
+  // HubWallet のユーザーがアプリからこのページに遷移したときに
+  // そのまま送信してしまう誤送信ケースが起きるため、
+  // 未選択 (=空文字列) を初期値にして送信時に必須チェックする。
+  const [service, setService] = useState('');
+  const [serviceError, setServiceError] = useState(false);
   const [category, setCategory] = useState(CATEGORIES[0]);
   const [device, setDevice] = useState('');
   const [osVersion, setOsVersion] = useState('');
@@ -38,6 +43,15 @@ export function SupportForm() {
 
     // ハニーポット: 人間には見えない欄に値が入っていれば bot と判断して中断
     if (website.trim() !== '') return;
+
+    // 対象サービス未選択をブロックし、赤枚エラーを出してフォーカスさせる。
+    if (service === '') {
+      setServiceError(true);
+      const el = document.getElementById('support-service');
+      el?.focus();
+      el?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      return;
+    }
 
     if (detail.trim() === '') {
       alert('お問い合わせ内容をご入力ください。');
@@ -82,20 +96,49 @@ export function SupportForm() {
     >
       {/* 対象サービス */}
       <div className="mb-6">
-        <Label htmlFor="support-service">お問い合わせ対象</Label>
+        <Label htmlFor="support-service">
+          お問い合わせ対象{' '}
+          <span className="font-semibold text-accent-warm">*</span>
+        </Label>
+        <p className="mt-1 text-xs text-text-muted">
+          ご利用中のアプリを必ず選択してください。
+        </p>
         <select
           id="support-service"
           value={service}
-          onChange={(e) => setService(e.target.value)}
+          onChange={(e) => {
+            setService(e.target.value);
+            if (e.target.value !== '') setServiceError(false);
+          }}
           required
-          className="mt-2 flex h-10 w-full rounded-md border border-border bg-surface px-3 py-2 text-sm text-text transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+          aria-invalid={serviceError || undefined}
+          aria-describedby={serviceError ? 'support-service-error' : undefined}
+          className={
+            'mt-2 flex h-10 w-full rounded-md border bg-surface px-3 py-2 text-sm transition-colors focus:outline-none focus:ring-2 ' +
+            (serviceError
+              ? 'border-accent-warm text-text focus:border-accent-warm focus:ring-accent-warm/40'
+              : 'border-border text-text focus:border-primary focus:ring-primary/40') +
+            (service === '' ? ' text-text-muted' : '')
+          }
         >
+          <option value="" disabled>
+            -- 選択してください --
+          </option>
           {SERVICES.map((v) => (
             <option key={v} value={v}>
               {v}
             </option>
           ))}
         </select>
+        {serviceError ? (
+          <p
+            id="support-service-error"
+            role="alert"
+            className="mt-2 text-sm font-medium text-accent-warm"
+          >
+            お問い合わせ対象を選択してください。
+          </p>
+        ) : null}
       </div>
 
       {/* 種別 */}
