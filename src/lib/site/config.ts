@@ -92,6 +92,7 @@ export const products = [
     href: '/products/hubwallet/',
     accentClass: 'theme-hubwallet',
     icon: '💰',
+    appIcon: '/images/hubwallet-app-icon.jpg',
     features: [
       '撮って溜める・あとで仕分ける',
       'Gemini OCR とカテゴリ推定',

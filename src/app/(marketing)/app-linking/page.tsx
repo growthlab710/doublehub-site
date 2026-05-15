@@ -322,9 +322,13 @@ export default function AppLinkingPage() {
               </div>
             </div>
             <div className="flex items-center gap-4 rounded-2xl border border-dashed border-border bg-surface/60 p-4 opacity-80">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-surface-2 text-2xl">
-                💰
-              </div>
+              <Image
+                src="/images/hubwallet-app-icon.jpg"
+                alt="HubWallet アプリアイコン"
+                width={56}
+                height={56}
+                className="h-14 w-14 rounded-2xl grayscale"
+              />
               <div className="flex-1">
                 <div className="font-display text-base font-semibold text-text">
                   HubWallet
