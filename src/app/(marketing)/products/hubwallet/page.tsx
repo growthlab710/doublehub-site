@@ -126,7 +126,7 @@ const compare = [
     type: '自動連携型',
     examples: 'マネーフォワード ME, Zaim',
     diff:
-      '銀行口座やカード情報を渡さなくていい。OCR・手入力・音声・CSV のみで、自分の手元だけで家計簿が完結します。',
+      '銀行口座やカード情報を渡さなくていい。OCR・手入力・音声のみで、自分の手元だけで家計簿が完結します。',
   },
   {
     type: 'シンプル家計簿',
@@ -166,7 +166,7 @@ const flows = [
 const faqs = [
   {
     q: '銀行やクレジットカードと連携できますか？',
-    a: 'いいえ。連携は行わず、レシート撮影・手入力・音声・CSV インポートのみで記録します。金融規制やプライバシーの観点から、当面はこの方針を維持します。',
+    a: 'いいえ。連携は行わず、レシート撮影・手入力・音声入力のみで記録します。金融規制やプライバシーの観点から、当面はこの方針を維持します。',
   },
   {
     q: 'データは外部に送られますか？',
@@ -175,10 +175,6 @@ const faqs = [
   {
     q: 'Android 版はありますか？',
     a: '初回リリースは iOS のみです（iOS 17.0 以上）。Android 版は現時点で予定していません。',
-  },
-  {
-    q: '既存の家計簿アプリから移行できますか？',
-    a: 'マネーフォワードや Zaim などからの CSV インポートに対応する予定です。',
   },
   {
     q: '広告は表示されますか？',
@@ -352,6 +348,28 @@ export default function HubWalletPage() {
               ※ 表示中のデータはすべて開発用のモックです。
             </p>
           </div>
+
+          {/* 15 秒の紹介動画 */}
+          <figure className="mx-auto mt-10 max-w-sm">
+            <div className="relative aspect-[9/19] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                src="/videos/hubwallet-product-intro.mp4"
+                poster="/images/hubwallet-screen-home.jpg"
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                preload="metadata"
+                aria-label="HubWallet 15 秒紹介動画 — レシート撮影から仕分け、レポートまで"
+              />
+            </div>
+            <figcaption className="mt-3 text-center text-xs text-text-faint">
+              15 秒で見る HubWallet — 撮って溜めて、あとで整理する。
+            </figcaption>
+          </figure>
+
           <div
             className="-mx-4 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 sm:mt-12 sm:grid sm:snap-none sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 sm:grid-cols-2 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden"
             aria-label="HubWallet の画面ギャラリー"
@@ -457,7 +475,7 @@ export default function HubWalletPage() {
               </h2>
               <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                 {[
-                  '銀行・カード連携なし。OCR・手入力・音声・CSV のみ',
+                  '銀行・カード連携なし。OCR・手入力・音声のみ',
                   'データは端末ローカル（SwiftData）に保存',
                   'AI 処理時のみ、必要なデータを AI に送信',
                   'Sign in with Apple に対応',
@@ -563,10 +581,10 @@ export default function HubWalletPage() {
               まずは無料で、家計簿を始める。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              基本の記録機能は Free プランから制限なく使えます。AI による OCR・カテゴリ推定をたくさん使いたい方は、Plus プランへ。
+              基本の記録機能は Free プランから使えます。AI による OCR・音声入力・カテゴリ推定をたくさん使いたい方は、月額 ¥380 の Plus プランへ。
             </p>
             <p className="mt-3 text-xs text-text-faint">
-              ※ 価格・回数はリリース前の仮置きです。リリース時に変更になる可能性があります。
+              ※ MVP リリース時点のプラン構成です。年額プランは提供していません。
             </p>
           </div>
           <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
@@ -582,23 +600,23 @@ export default function HubWalletPage() {
                 </span>
               </div>
               <p className="mt-3 text-xs text-text-muted">
-                基本機能を制限なく。AI 関連は月数回まで（仮）。
+                まずは無料で。AI 機能は月 10 回までお試しいただけます。
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
-                  <Check /> 手入力・CSV インポートは無制限
+                  <Check /> 手入力は無制限
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 月次・年間レポートは制限なし
+                  <Check /> 月次・年間レポート（基本）
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 親カテゴリ別の予算・定期支出
+                  <Check /> 定期支出のテンプレート
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> AI OCR・カテゴリ推定 月数回まで（最終回数は調整中）
+                  <Check /> 予算管理は 2 カテゴリまで
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 音声入力も 月数回まで（最終回数は調整中）
+                  <Check /> AI OCR・音声・カテゴリ推定 月 10 回まで
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 広告は一切なし
@@ -612,36 +630,36 @@ export default function HubWalletPage() {
                 おすすめ
               </span>
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-                Subscription
+                Plus Plan
               </p>
               <h3 className="mt-2 font-display text-lg font-bold">Plus</h3>
               <div className="mt-4 flex items-baseline gap-1">
                 <span className="font-display text-4xl font-bold tracking-[-0.03em]">
-                  ¥480
+                  ¥380
                 </span>
-                <span className="text-sm text-text-muted">／ 月（仮）</span>
-              </div>
-              <div className="mt-2 inline-flex items-center rounded-full bg-accent-product/10 px-2.5 py-1 text-[0.7rem] font-semibold text-accent-product">
-                年額 ¥3,800（仮）
+                <span className="text-sm text-text-muted">／ 月</span>
               </div>
               <p className="mt-3 text-xs text-text-muted">
-                AI OCR・カテゴリ推定・音声入力をたくさん使いたい方向け。
+                Plus は AI 機能を月 500 回までご利用いただけます。
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
                   <Check />
                   <span>
-                    <strong className="font-semibold text-text">AI OCR・カテゴリ推定の利用上限を大幅アップ</strong>
+                    <strong className="font-semibold text-text">AI OCR・音声・カテゴリ推定 月 500 回まで</strong>
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check />
                   <span>
-                    <strong className="font-semibold text-text">音声入力の利用上限も大幅アップ</strong>
+                    <strong className="font-semibold text-text">予算管理は無制限カテゴリ</strong>
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 将来の DoubleHub 連携を優先的に開放
+                  <Check /> サブカテゴリ追加（最大 30 件）
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 親カテゴリ別レポート
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> いつでも解約可能・記録は端末に残る
@@ -653,7 +671,58 @@ export default function HubWalletPage() {
             </div>
           </div>
 
-          <div className="mx-auto mt-12 max-w-4xl rounded-2xl border border-border bg-surface-2 p-6">
+          {/* Free vs Plus 詳細比較表 */}
+          <div className="mx-auto mt-12 max-w-4xl overflow-x-auto rounded-2xl border border-border bg-surface shadow-sm">
+            <table className="w-full text-sm">
+              <caption className="sr-only">Free と Plus の機能比較</caption>
+              <thead>
+                <tr className="border-b border-divider bg-surface-2 text-left">
+                  <th className="px-4 py-3 font-semibold text-text">機能</th>
+                  <th className="px-4 py-3 text-center font-semibold text-text-muted">Free</th>
+                  <th className="px-4 py-3 text-center font-semibold text-accent-product">Plus</th>
+                </tr>
+              </thead>
+              <tbody className="[&>tr]:border-b [&>tr]:border-divider [&>tr:last-child]:border-0">
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">AI OCR・音声・カテゴリ推定</td>
+                  <td className="px-4 py-3 text-center text-text-muted">月 10 回</td>
+                  <td className="px-4 py-3 text-center font-semibold text-accent-product">月 500 回</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">手入力</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} /></td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">予算管理</td>
+                  <td className="px-4 py-3 text-center text-text-muted">2 カテゴリ</td>
+                  <td className="px-4 py-3 text-center font-semibold text-accent-product">無制限</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">サブカテゴリ追加</td>
+                  <td className="px-4 py-3 text-center text-text-faint">—</td>
+                  <td className="px-4 py-3 text-center font-semibold text-accent-product">30 件</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">定期支出</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} /></td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">レポート機能</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} /></td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">親カテゴリ別レポート</td>
+                  <td className="px-4 py-3 text-center text-text-faint">—</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-border bg-surface-2 p-6">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
               Premium プランについて（将来予定）
             </p>
@@ -736,6 +805,24 @@ function Check() {
         strokeWidth="2"
         className="text-accent-product"
       >
+        <path d="M2.5 6l2.5 2.5 4.5-5" />
+      </svg>
+    </span>
+  );
+}
+
+function PlanCheck({ on, accent = false }: { on: boolean; accent?: boolean }) {
+  if (!on) return <span className="text-text-faint">—</span>;
+  return (
+    <span
+      aria-label="対応"
+      className={
+        accent
+          ? 'inline-grid h-5 w-5 place-items-center rounded-full bg-accent-product/15 text-accent-product'
+          : 'inline-grid h-5 w-5 place-items-center rounded-full bg-text-muted/15 text-text-muted'
+      }
+    >
+      <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M2.5 6l2.5 2.5 4.5-5" />
       </svg>
     </span>
