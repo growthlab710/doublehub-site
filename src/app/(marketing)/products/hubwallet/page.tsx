@@ -200,8 +200,14 @@ export default function HubWalletPage() {
         <div className="mx-auto grid max-w-content-wide items-center gap-12 md:grid-cols-[1fr_0.9fr]">
           <div>
             <div className="inline-flex items-center gap-2">
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-xl shadow-sm">
-                💰
+              <span className="relative inline-flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
+                <Image
+                  src="/images/hubwallet-app-icon.jpg"
+                  alt="HubWallet アプリアイコン"
+                  fill
+                  sizes="40px"
+                  className="object-cover"
+                />
               </span>
               <span className="inline-flex items-center rounded-full border border-accent-product/30 bg-accent-product/10 px-3 py-1 text-xs font-semibold text-accent-product">
                 HubWallet

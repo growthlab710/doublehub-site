@@ -18,6 +18,7 @@ const productIconMap: Record<string, string> = {
   trainnote: '/images/trainnote-app-icon.jpg',
   bookcompass: '/images/bookcompass-app-icon.jpg',
   doublehub: '/images/doublehub-icon.jpg',
+  hubwallet: '/images/hubwallet-app-icon.jpg',
 };
 
 export function ProductCards() {

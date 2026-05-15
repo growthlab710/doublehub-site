@@ -167,7 +167,7 @@ const panelIconMap: Record<string, PanelIcon> = {
   bookcompass: { type: 'image', src: '/images/bookcompass-app-icon.jpg' },
   doublehub: { type: 'image', src: '/images/doublehub-icon.jpg' },
   health: { type: 'emoji', char: '❤️' },
-  finance: { type: 'emoji', char: '💰' },
+  finance: { type: 'image', src: '/images/hubwallet-app-icon.jpg' },
 };
 
 const statusStyles: Record<TabStatus, string> = {
