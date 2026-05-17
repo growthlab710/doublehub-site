@@ -95,7 +95,7 @@ const tagStyles: Record<Choice['tagVariant'], string> = {
 
 export function DailyChoices() {
   return (
-    <section className="relative py-20 md:py-28">
+    <section id="daily-choices" className="relative py-20 md:py-28">
       <Container width="wide">
         <div className="mx-auto max-w-2xl text-center">
           <SectionEyebrow number="02" label="Daily Choices" />

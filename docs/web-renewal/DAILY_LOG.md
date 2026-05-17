@@ -3409,3 +3409,39 @@ Book Compass の App Store 公開を機に、検索流入からアプリ DL に
 
 - `pnpm build` 成功（後述）。
 - 静的生成された blog ルートに新スラッグが含まれることを確認。
+
+## 2026-05-17 — トップヒーローの「DoubleHub の使い方を見る」ボタンのアンカー切れ修正
+
+### 背景
+
+トップページ Hero セクションの CTA「DoubleHub の使い方を見る」が
+`href="#daily-choices"` を指していたが、ジャンプ先である
+`DailyChoices` セクションの `<section>` 要素に対応する `id` が
+未設定で、押しても画面が動かない状態だった。ユーザーから
+「ボタンが意味をなさない」との指摘を受けて修正。
+
+### 修正ファイル
+
+`src/components/marketing/DailyChoices.tsx`:
+
+- セクションルート要素に `id="daily-choices"` を追加。
+  Hero のアンカーリンクから正しくスクロールするようになる。
+
+### 追加監査
+
+トップページ（`src/app/(marketing)/page.tsx`）から到達可能な
+コンポーネント内の `href="#..."` を全件洗い出し、対応する
+`id` の有無を確認:
+
+- `#products` → `ProductCards.tsx:26` に `id="products"` あり、OK
+- `#daily-choices` → 未設定（本修正で追加）
+
+プロダクト詳細ページ側のアンカーも参考までに確認し、
+`#plans` / `#features` / `#ai-coach` はいずれも対応する
+`Section id="..."` が存在し問題なし。
+
+### 検証
+
+- `pnpm build` 成功（55 ページ、静的生成）。
+- 既存のクラス名・構造には手を加えず、`id` 属性追加のみの
+  最小差分（1 行）。
