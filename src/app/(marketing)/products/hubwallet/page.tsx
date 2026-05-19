@@ -4,6 +4,11 @@ import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
+import { siteConfig } from '@/lib/site/config';
+
+const appStoreUrl = siteConfig.social.appStoreHubWallet;
+const appStoreBadge =
+  'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
 
 export const metadata: Metadata = {
   title: 'HubWallet — 節約疲れしない家計簿。 | DoubleHub',
@@ -182,7 +187,7 @@ const faqs = [
   },
   {
     q: 'いつから使えますか？',
-    a: '現在 MVP リリース直前の段階です。事前登録の受付や公開時期は、DoubleHub のブログ・X でお知らせします。',
+    a: 'App Store で配信中です。iOS 17.0 以上の端末から、上記の App Store ボタンよりダウンロードできます。',
   },
 ];
 
@@ -212,8 +217,8 @@ export default function HubWalletPage() {
               <span className="inline-flex items-center rounded-full border border-accent-product/30 bg-accent-product/10 px-3 py-1 text-xs font-semibold text-accent-product">
                 HubWallet
               </span>
-              <span className="inline-flex items-center rounded-full border border-border bg-surface-2 px-3 py-1 text-xs font-medium text-text-muted">
-                近日公開予定
+              <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                App Store 配信中
               </span>
             </div>
             <h1 className="mt-5 font-display text-[clamp(1.75rem,1rem+2.8vw,3rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
@@ -225,16 +230,24 @@ export default function HubWalletPage() {
               HubWallet は、レシートを「撮るだけ」で溜めて、隙間時間にまとめて仕分ける iOS の家計簿アプリです。銀行連携なし・全プラン広告ゼロ。お金の使い方を、反省の対象から自己理解の手がかりへと変えていきます。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Button asChild size="lg" variant="product">
+              <a
+                href={appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex transition-transform hover:scale-[1.02]"
+                aria-label="App Store で HubWallet をダウンロード"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={appStoreBadge}
+                  alt="App Storeでダウンロード"
+                  style={{ height: 44, objectFit: 'contain' }}
+                />
+              </a>
+              <Button asChild size="lg" variant="secondary">
                 <Link href="#plans">プランを見る</Link>
               </Button>
-              <Button asChild size="lg" variant="secondary">
-                <Link href="/#ecosystem">DoubleHub 全体構想を見る</Link>
-              </Button>
             </div>
-            <p className="mt-4 text-xs text-text-faint">
-              現在は MVP リリース直前です。App Store での公開時期は、DoubleHub のブログ・X でお知らせします。
-            </p>
           </div>
 
           <div className="relative mx-auto w-full max-w-md">
@@ -571,7 +584,7 @@ export default function HubWalletPage() {
             ))}
           </div>
           <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-text-faint">
-            ※ DoubleHub との具体的な連携体験は Phase 2 以降で順次拡張予定です。MVP では「ユーザーが書き出せる API」を提供する程度です。
+            ※ DoubleHub との具体的な連携体験は Phase 2 以降で順次拡張予定です。初回リリース時点では「ユーザーが書き出せる API」を提供する程度です。
           </p>
         </Container>
       </Section>
@@ -590,7 +603,7 @@ export default function HubWalletPage() {
               基本の記録機能は Free プランから使えます。AI による OCR・音声入力・カテゴリ推定をたくさん使いたい方は、月額 ¥380 の Plus プランへ。
             </p>
             <p className="mt-3 text-xs text-text-faint">
-              ※ MVP リリース時点のプラン構成です。年額プランは提供していません。
+              ※ 初回リリース時点のプラン構成です。年額プランは提供していません。
             </p>
           </div>
           <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
@@ -733,7 +746,7 @@ export default function HubWalletPage() {
               Premium プランについて（将来予定）
             </p>
             <p className="mt-3 text-sm leading-relaxed text-text-muted">
-              Phase 2 以降に Premium プランを予定しています。トレンド予測、固定費シミュレーション、ライフプランなど、より踏み込んだ未来予測系の機能を中心に検討中です。MVP リリース時点では未提供です。
+              Phase 2 以降に Premium プランを予定しています。トレンド予測、固定費シミュレーション、ライフプランなど、より踏み込んだ未来予測系の機能を中心に検討中です。現在は未提供です。
             </p>
           </div>
         </Container>
@@ -779,12 +792,23 @@ export default function HubWalletPage() {
               お金の使い方を、自己理解の手がかりに。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              HubWallet は MVP リリース直前です。公開時期や事前登録の案内は、DoubleHub のブログ・X でお知らせします。
+              HubWallet は App Store で配信中です。撮って溜める家計簿を、まずは無料プランから試してみてください。
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild size="lg" variant="product">
-                <Link href="/blog/">最新のお知らせを見る</Link>
-              </Button>
+              <a
+                href={appStoreUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex transition-transform hover:scale-[1.02]"
+                aria-label="App Store で HubWallet をダウンロード"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={appStoreBadge}
+                  alt="App Storeでダウンロード"
+                  style={{ height: 44, objectFit: 'contain' }}
+                />
+              </a>
               <Button asChild size="lg" variant="secondary">
                 <Link href="/#ecosystem">DoubleHub 全体構想を見る</Link>
               </Button>

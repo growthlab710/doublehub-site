@@ -27,6 +27,8 @@ export const siteConfig = {
     appStoreDoubleHub:
       'https://apps.apple.com/jp/app/doublehub-ai%E6%B4%BB%E7%94%A8todo%E7%AE%A1%E7%90%86/id6761981050',
     appStoreTrainNote: 'https://apps.apple.com/jp/app/trainnote/id6745749843',
+    appStoreHubWallet:
+      'https://apps.apple.com/jp/app/hubwallet-ai%E5%AE%B6%E8%A8%88%E7%B0%BF/id6766543029',
   },
 } as const;
 
@@ -99,7 +101,6 @@ export const products = [
       '銀行連携不要 · ローカルファースト',
       '全プラン広告なし',
     ],
-    comingSoonWeb: true,
   },
 ] as const;
 
