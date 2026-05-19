@@ -3445,3 +3445,71 @@ Book Compass の App Store 公開を機に、検索流入からアプリ DL に
 - `pnpm build` 成功（55 ページ、静的生成）。
 - 既存のクラス名・構造には手を加えず、`id` 属性追加のみの
   最小差分（1 行）。
+
+## 2026-05-19 05:55 UTC — HubWallet 正式リリース反映（App Store 配信中）
+
+### 背景
+
+HubWallet が App Store にリリースされたため、サイト全体で
+「近日公開 / MVP リリース直前」表現を「App Store 配信中」へ
+更新。導線として他プロダクト（DoubleHub・BookCompass・
+TrainNote）と同じ App Store バッジ（Apple Marketing Tools
+の `download-on-the-app-store` 黒・日本語）を採用し、
+プロダクトページの導線アイコンを揃えた。
+
+App Store URL:
+`https://apps.apple.com/jp/app/hubwallet-ai家計簿/id6766543029`
+
+### 修正ファイル
+
+- `src/lib/site/config.ts`
+  - `siteConfig.social.appStoreHubWallet` を追加（他 3 アプリと
+    同じ並び・命名規則）。
+  - `products[].comingSoonWeb` を HubWallet から削除（TrainNote
+    側は引き続き保持）。
+- `src/app/(marketing)/products/hubwallet/page.tsx`
+  - `appStoreUrl` / `appStoreBadge` を導入（trainnote / bookcompass /
+    doublehub と同じパターン）。
+  - Hero バッジ「近日公開予定」→ 「App Store 配信中」（primary
+    トーン）に変更し、CTA を App Store バッジ + 「プランを見る」
+    の二段構成に差し替え。
+  - 「現在は MVP リリース直前です…」キャプションを削除。
+  - FAQ「いつから使えますか？」の回答を App Store 配信中の文面
+    へ更新。
+  - プラン注記「MVP リリース時点」→「初回リリース時点」、
+    Premium 注記の「MVP リリース時点では未提供」→「現在は
+    未提供」。
+  - Flow Into DoubleHub 注記の「MVP では」→「初回リリース時点
+    では」。
+  - 最終 CTA を App Store バッジに差し替え、コピーを「App
+    Store で配信中です」に更新。
+- `src/components/marketing/EcosystemTabs.tsx`
+  - HubWallet パネルの `status: 'coming'` → `'current'`、
+    `statusLabel: 'Coming Soon'` → `'Current'`。
+  - note の「MVP リリース直前」→「App Store で配信中」コピー。
+- `content/blog/doublehub-personal-ai.mdx`
+  - 「HubWallet（家計簿、準備中）」→ プロダクトページへの
+    リンクに更新。
+  - FAQ 回答内の「現在準備中です」→「App Store で配信中です」。
+
+### 維持した内容
+
+- HubWallet 価格は ¥380/月、年額プランなし。CSV エクスポート
+  なし、新しいアプリアイコン、紹介動画、最新スクリーン
+  ショットは前回までの修正をそのまま維持。
+- ProductCards はトップでの 3 枚固定（HubWallet を `filter` で
+  除外）の既存仕様を維持。
+- app-linking ページの HubWallet 連携は「今後対応予定」
+  のまま（連携機能が未対応であり、アプリ自体のリリースとは
+  別軸のため）。
+
+### 検証
+
+- `pnpm build` 成功。
+  - Next.js 16.2.4 (Turbopack) で 55 ページの静的生成。
+  - TypeScript・lint エラーなし。
+- App Store バッジは他プロダクトと同じ Apple Marketing
+  Tools 提供アセット（`download-on-the-app-store/black/ja-jp`）
+  を直接 `<img>` 表示。`height: 44` でハブ的 CTA 配置を 4 プロダクト
+  間で揃えた（trainnote / bookcompass / doublehub と同じ）。
+

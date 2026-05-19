@@ -124,8 +124,8 @@ const panels: InsightPanel[] = [
   {
     id: 'finance',
     name: 'HubWallet',
-    status: 'coming',
-    statusLabel: 'Coming Soon',
+    status: 'current',
+    statusLabel: 'Current',
     tabDesc: 'レシート、定期支出、使い方の傾向',
     panelLabel: 'Input → Insight',
     title: 'HubWallet から入るのは、「どんな使い方が自分を充電させるか」の手がかり。',
@@ -147,8 +147,8 @@ const panels: InsightPanel[] = [
       { src: '/images/hubwallet-screen-monthly.jpg', alt: 'HubWallet 月次レポート—６ヶ月推移とカテゴリ別の進捗' },
     ],
     note: {
-      label: 'HubWallet は MVP リリース直前',
-      body: 'iOS 家計簿アプリ「HubWallet」としてリリース直前。単体でも完結します。将来 DoubleHub につながると、「何を買うべきか」よりも「どんな使い方が自分を充電させるか」を一緒に考えるパートナーになります。',
+      label: 'HubWallet は App Store で配信中',
+      body: 'iOS 家計簿アプリ「HubWallet」は App Store で配信中です。単体でも完結します。将来 DoubleHub につながると、「何を買うべきか」よりも「どんな使い方が自分を充電させるか」を一緒に考えるパートナーになります。',
     },
   },
 ];
