@@ -28,20 +28,16 @@ export function ProductCards() {
         <div className="max-w-2xl">
           <SectionEyebrow number="05" label="Products" align="left" />
           <h2 className="mt-4 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold leading-tight">
-            3 つのプロダクトで、自分の型を見つける。
+            4 つのプロダクトで、自分の型を見つける。
           </h2>
           <p className="mt-4 text-text-muted">
-            タスク管理、読書、トレーニング。異なる領域のデータが一つに繋がることで、
+            タスク管理、読書、トレーニング、家計。異なる領域のデータが一つに繋がることで、
             あなたの「無意識のパターン」が見えてきます。
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {products
-            // トップのメイングリッドは 3 枚固定。未リリースなどのプロダクトは
-            // 個別ページやフッターだけに出すため、ここでフィルタする。
-            .filter((p) => p.slug !== 'hubwallet')
-            .map((p, i) => (
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {products.map((p, i) => (
             <motion.div
               key={p.slug}
               // 縦方向のフェードイン（モバイルでの横スライドはビューポートを
