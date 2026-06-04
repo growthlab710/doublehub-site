@@ -47,15 +47,6 @@ const messages: ProactiveMessage[] = [
 export function ProactiveSupport() {
   return (
     <section className="relative border-t border-divider bg-surface-2/40 py-20 md:py-28">
-      {/* 装飾: 右上にソフトグラデ */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <div className="absolute right-[-10%] top-[-20%] h-[420px] w-[420px] rounded-full bg-primary/10 blur-[120px]" />
-        <div className="absolute bottom-[-20%] left-[-10%] h-[320px] w-[320px] rounded-full bg-accent-warm/10 blur-[120px]" />
-      </div>
-
       <Container width="wide">
         <div className="mx-auto max-w-2xl text-center">
           <SectionEyebrow number="03" label="Proactive Partner" />

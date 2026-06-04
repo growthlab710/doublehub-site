@@ -62,12 +62,6 @@ export function ProductCards() {
                   'hover:-translate-y-1 hover:border-accent-product/50 hover:shadow-xl'
                 )}
               >
-                {/* hover時に表し、カード背面にアクセント光源 + ガラスを浮かべる。
-                    通常時は不可視なのでリストの読みやすさは損なわない。*/}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent-product/0 opacity-0 blur-2xl transition-all duration-500 group-hover:bg-accent-product/30 group-hover:opacity-100"
-                />
                 <div className="flex items-start justify-between">
                   <div className="relative h-20 w-20 overflow-hidden rounded-2xl ring-1 ring-border/60">
                     {productIconMap[p.slug] ? (

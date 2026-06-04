@@ -68,7 +68,13 @@ export function SolutionSection() {
                 className="flex gap-4 md:gap-5"
               >
                 <div className="flex-shrink-0">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent-warm font-display text-lg font-semibold text-white shadow-md">
+                  {/* Problem セクションと同じエディトリアル風の番号タイポに統一。
+                      グラデ円をやめ、Display フォントの大きな単色番号にする。 */}
+                  <div
+                    className={`font-display text-[2.5rem] font-semibold leading-none tracking-[-0.04em] ${
+                      idx === 1 ? 'text-accent-warm' : 'text-primary'
+                    }`}
+                  >
                     {s.num}
                   </div>
                 </div>
@@ -107,11 +113,6 @@ export function SolutionSection() {
                 />
               </div>
             </div>
-            {/* 装飾: 後ろの光 */}
-            <div
-              aria-hidden
-              className="absolute inset-[-20%] -z-10 rounded-full bg-primary/15 blur-3xl"
-            />
           </motion.div>
         </div>
       </Container>

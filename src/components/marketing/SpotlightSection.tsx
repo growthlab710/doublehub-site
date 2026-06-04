@@ -145,10 +145,6 @@ export function SpotlightSection() {
                     className="h-auto w-full rounded-[1.5rem]"
                   />
                 </div>
-                <div
-                  aria-hidden
-                  className="absolute inset-[-15%] -z-10 rounded-full bg-primary/10 blur-3xl"
-                />
               </div>
             </motion.div>
           ))}
