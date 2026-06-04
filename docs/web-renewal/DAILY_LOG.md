@@ -3513,3 +3513,52 @@ App Store URL:
   を直接 `<img>` 表示。`height: 44` でハブ的 CTA 配置を 4 プロダクト
   間で揃えた（trainnote / bookcompass / doublehub と同じ）。
 
+
+---
+
+## 2026-06-04 (JST) — LP の「AIっぽさ」軽減 + ヒーロー背景動画 + リリース反映
+
+ブランチ: `feature/reduce-ai-look`（main へ `--no-ff` マージ）
+
+### 背景・方針
+
+- ユーザー所感「サイトのデザインがAIっぽい」。大掛かりな刷新ではなく、まず
+  2024-25 の AI/SaaS テンプレ署名だけを外科的に除去し、効果を見る段階的方針。
+- 構成・文章・書体・配色・グラスヘッダーは維持。
+
+### 実施内容
+
+- **AIテンプレ署名の除去**（`refactor`）
+  - グラデ光源（ぼかし円）を全削除: Hero / ProactiveSupport / ProductHero /
+    Solution・Spotlight 背後 / ProductCards ホバー光。
+  - ヒーローの ✨Sparkles + 丸ピル → 罫線+ラベル(SectionEyebrow)に統一。
+  - ヒーロー見出しの虹色グラデ文字 → 黒インク。
+  - Solution の 1/2/3 をグラデ円 → Problem と同じ大きな番号タイポに統一。
+- **ヒーロー背景動画**（`feat`）
+  - AI生成コンセプト図を廃し、人の日常に寄り添うコンセプト動画を背景に敷く。
+  - 生成動画(3:2, 10s)を ffmpeg で圧縮: ぼかし(gblur sigma=8)焼込み・無音化・
+    MP4(H.264) 約1.2MB / WebM(VP9) 約0.95MB。poster 静止画も生成。
+  - テーマ背景色の薄い膜(opacity 0.48)で覆い、ライト/ダーク両対応。
+  - muted/loop/playsInline 自動再生、prefers-reduced-motion 時は静止画のみ。
+- **リリース反映 / ステータス最新化**（`feat`）
+  - about: DoubleHub「開発中」バッジ削除、HubWallet カード追加（4プロダクト2×2）、
+    導入文に「家計」を追加。
+  - Roadmap: Shipped(リリース済み) 一覧に HubWallet を追加。
+  - トップ Products: HubWallet 除外をやめ4枚に（見出し/領域文も4プロダクトへ）。
+  - Spotlight: HubWallet の深掘り紹介（実機スクショ + App Store 導線）を追加。
+
+### 方針変更（前回からの転換）
+
+- 前回 Day で「ProductCards はトップ3枚固定（HubWallet を filter 除外）を維持」と
+  記録していたが、HubWallet リリース済みを公平に見せるためユーザー要望で4枚に変更。
+
+### 検証
+
+- `pnpm build` 成功（Next.js 16.2.4 / 55ページ静的生成 / 型・ビルドエラーなし）。
+- ローカルでライト・ダーク、自動再生、可読性を目視確認。ユーザー承認済み。
+
+### 残課題 / 次の候補
+
+- About に開発者本人の写真（顔出しなし＝後ろ姿/手元/遠景など）を追加して親近感を出す案を検討中。
+  AI生成ではなく実写を使う（AIっぽさ回避のため）。素材入手後に追加予定。
+- 圧縮用に ffmpeg を Homebrew で新規導入。raw 動画は `site/_video-src/`（リポジトリ外）に保管。
