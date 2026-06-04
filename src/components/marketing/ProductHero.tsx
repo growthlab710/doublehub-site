@@ -25,12 +25,6 @@ export function ProductHero({
 }: ProductHeroProps) {
   return (
     <Container width="wide" className="relative pt-16 pb-14 md:pt-24 md:pb-20">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <div className="absolute left-[-5%] top-[-10%] h-[480px] w-[480px] rounded-full bg-accent-product/15 blur-[120px]" />
-      </div>
       <div className="mx-auto grid max-w-content-wide items-center gap-12 md:grid-cols-[1fr_0.9fr]">
         <motion.div
           initial={{ opacity: 0, y: 12 }}

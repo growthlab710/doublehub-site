@@ -28,20 +28,16 @@ export function ProductCards() {
         <div className="max-w-2xl">
           <SectionEyebrow number="05" label="Products" align="left" />
           <h2 className="mt-4 font-display text-[clamp(1.8rem,1rem+2.5vw,2.75rem)] font-semibold leading-tight">
-            3 つのプロダクトで、自分の型を見つける。
+            4 つのプロダクトで、自分の型を見つける。
           </h2>
           <p className="mt-4 text-text-muted">
-            タスク管理、読書、トレーニング。異なる領域のデータが一つに繋がることで、
+            タスク管理、読書、トレーニング、家計。異なる領域のデータが一つに繋がることで、
             あなたの「無意識のパターン」が見えてきます。
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {products
-            // トップのメイングリッドは 3 枚固定。未リリースなどのプロダクトは
-            // 個別ページやフッターだけに出すため、ここでフィルタする。
-            .filter((p) => p.slug !== 'hubwallet')
-            .map((p, i) => (
+        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {products.map((p, i) => (
             <motion.div
               key={p.slug}
               // 縦方向のフェードイン（モバイルでの横スライドはビューポートを
@@ -62,12 +58,6 @@ export function ProductCards() {
                   'hover:-translate-y-1 hover:border-accent-product/50 hover:shadow-xl'
                 )}
               >
-                {/* hover時に表し、カード背面にアクセント光源 + ガラスを浮かべる。
-                    通常時は不可視なのでリストの読みやすさは損なわない。*/}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent-product/0 opacity-0 blur-2xl transition-all duration-500 group-hover:bg-accent-product/30 group-hover:opacity-100"
-                />
                 <div className="flex items-start justify-between">
                   <div className="relative h-20 w-20 overflow-hidden rounded-2xl ring-1 ring-border/60">
                     {productIconMap[p.slug] ? (

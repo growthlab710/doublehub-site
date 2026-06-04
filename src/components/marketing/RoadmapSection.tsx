@@ -25,11 +25,12 @@ const phases: Phase[] = [
     label: 'Shipped',
     tone: 'shipped',
     title: '各サービスをリリースし、磨き込み中',
-    desc: 'TrainNote / Book Compass / DoubleHub 本体 はいずれもリリース済み。単体で使える状態を保ちながら、改善を重ねています。',
+    desc: 'TrainNote / Book Compass / DoubleHub 本体 / HubWallet はいずれもリリース済み。単体で使える状態を保ちながら、改善を重ねています。',
     checks: [
       { text: 'TrainNote — AI Coach Plus（5名の専門コーチ）', state: 'done' },
       { text: 'Book Compass — AI 読書整理', state: 'done' },
       { text: 'DoubleHub 本体 — リリース済み', state: 'done' },
+      { text: 'HubWallet — AI 家計簿', state: 'done' },
     ],
   },
   {

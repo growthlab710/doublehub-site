@@ -34,7 +34,7 @@ export default function AboutPage() {
           <p>
             「テクノロジーで人間の可能性をバージョンアップさせたい」——その思いから
             DoubleHub
-            プロジェクトは始まりました。読書、筋トレ、タスク管理。一見バラバラに見える記録や情報をつなぎ合わせて、一人ひとりに合った次の一歩を提案できるエコシステムを目指しています。
+            プロジェクトは始まりました。読書、筋トレ、タスク管理、家計。一見バラバラに見える記録や情報をつなぎ合わせて、一人ひとりに合った次の一歩を提案できるエコシステムを目指しています。
           </p>
 
           <h2>開発しているプロダクト</h2>
@@ -67,17 +67,25 @@ export default function AboutPage() {
           </Link>
           <Link
             href="/products/doublehub/"
-            className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg md:col-span-2"
+            className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
           >
-            <div className="flex items-center gap-2 font-display text-lg font-semibold group-hover:text-primary">
+            <div className="font-display text-lg font-semibold group-hover:text-primary">
               DoubleHub
-              <span className="rounded-full bg-accent-warm-soft px-2 py-0.5 text-[0.65rem] font-medium text-accent-warm">
-                開発中
-              </span>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-text-muted">
               上記サービスのデータを横断する AI
               秘書アプリ。ToDo、予定、対話をまとめて扱い、散らばった生活データから「もう一人の自分」を育てる中核サービスです。
+            </p>
+          </Link>
+          <Link
+            href="/products/hubwallet/"
+            className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
+          >
+            <div className="font-display text-lg font-semibold group-hover:text-primary">
+              HubWallet
+            </div>
+            <p className="mt-2 text-sm leading-relaxed text-text-muted">
+              節約疲れしない家計簿 × AI。レシートは撮るだけ、仕分けは隙間時間に。お金の使い方から「自分が何に充電されるか」を理解するための家計簿アプリです。
             </p>
           </Link>
         </div>

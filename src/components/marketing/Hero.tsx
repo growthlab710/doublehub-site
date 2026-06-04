@@ -1,48 +1,68 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
+import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 /**
  * Hero セクション
- * 本番サイト（doublehub.jp）のコピーに準拠しつつ、
- * Granola/Notion のエッセンス（グラデ光源・コンセプト画像）を取り入れる。
+ * 本番サイト（doublehub.jp）のコピーに準拠。
+ * 背景に「人の日常に寄り添う」コンセプト動画を敷き、その上にコピー＋ボタンを重ねる。
+ * - ぼかしは動画ファイルに焼き込み済み（CSS で毎フレームぼかさず、再生は通常コストのみ）。
+ * - テーマ背景色の薄い膜（scrim）で覆い、ライト/ダーク両方で文字を読みやすくする。
+ * - 動画は muted/loop/playsInline で自動再生。poster と静止画フォールバックを併用。
+ * - prefers-reduced-motion 時は動画を隠し、静止画（poster）のみ表示。
  */
 export function Hero() {
   return (
     <section className="relative overflow-hidden py-20 md:py-28">
-      {/* Gradient mesh background */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        <div className="absolute left-1/2 top-[-15%] h-[540px] w-[540px] -translate-x-1/2 rounded-full bg-primary/20 blur-[140px]" />
-        <div className="absolute right-[5%] bottom-[0%] h-[320px] w-[320px] rounded-full bg-accent-warm/20 blur-[120px]" />
-        <div className="absolute left-[5%] top-[40%] h-[260px] w-[260px] rounded-full bg-primary/10 blur-[100px]" />
+      {/* 背景動画レイヤー（装飾） */}
+      <div aria-hidden className="absolute inset-0">
+        {/* 端のフェードを隠すため少しだけ拡大 */}
+        <div className="absolute inset-0 scale-[1.06]">
+          {/* prefers-reduced-motion 時や動画読込前のフォールバック静止画 */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/hero-home-poster.jpg"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <video
+            className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster="/images/hero-home-poster.jpg"
+          >
+            <source src="/videos/hero-home.webm" type="video/webm" />
+            <source src="/videos/hero-home.mp4" type="video/mp4" />
+          </video>
+        </div>
+        {/* テーマ背景色の薄い膜（ライト=明るく/ダーク=暗く 自動で切替）*/}
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: 'var(--color-bg)', opacity: 0.48 }}
+        />
       </div>
 
-      <Container width="wide">
+      <Container width="wide" className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto max-w-4xl text-center"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-xs font-medium text-text-muted">
-            <Sparkles className="h-3.5 w-3.5 text-primary" />
-            Your Personal AI Partner
-          </span>
+          <SectionEyebrow label="Your Personal AI Partner" align="center" />
           <h1 className="mt-7 font-display text-[clamp(2rem,1rem+4.2vw,4rem)] font-semibold leading-[1.15] tracking-[-0.03em]">
             あなたを理解し、<br className="hidden md:inline" />
             毎日を一緒に整える
             <br />
-            <span className="gradient-text-brand">
-              AI パートナー。
-            </span>
+            AI パートナー。
           </h1>
           <p className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-text-muted md:text-lg">
             学び（BookCompass）、身体（TrainNote）、お金（HubWallet）、タスク——<br className="hidden md:inline" />
@@ -63,41 +83,6 @@ export function Hero() {
               <Link href="#products">使えるサービスを見る</Link>
             </Button>
           </div>
-        </motion.div>
-
-        {/* コンセプト画像
-            - spring に納めて "リアルな物が召定位置に落ち着く" 演出
-            - 他のセクションの ease-out 一辺倒と差別化し AIっぽい均質さを折る */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.92, y: 48 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{
-            type: 'spring',
-            stiffness: 60,
-            damping: 16,
-            mass: 1,
-            delay: 0.25,
-          }}
-          className="relative mx-auto mt-14 max-w-4xl md:mt-20"
-        >
-          {/* Liquid Glass のフレーム
-              - 外側: 透き通るガラスの面。背後のグラデーション光源がハミ出しに滞留
-              - 内側: 画像をそのまま表示（視認性優先） */}
-          <div className="liquid-glass relative rounded-2xl p-1.5 md:rounded-3xl md:p-2">
-            <div className="relative overflow-hidden rounded-xl md:rounded-2xl">
-              <Image
-                src="/images/DoubleHub-Concept.webp"
-                alt="DoubleHub コンセプト図：あなたの行動・習慣・思考を学習し、プロアクティブな提案と成長をもたらすAIパートナー"
-                width={1600}
-                height={900}
-                priority
-                className="h-auto w-full"
-              />
-            </div>
-          </div>
-          <p className="mt-4 text-center text-xs text-text-faint">
-            日々の記録や会話が集まり、あなたを理解して成長していく。
-          </p>
         </motion.div>
       </Container>
     </section>

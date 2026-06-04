@@ -10,7 +10,7 @@ import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 /**
  * Spotlight セクション
- * TrainNote と BookCompass を横並び交互レイアウトで紹介。
+ * TrainNote / BookCompass / HubWallet を横並び交互レイアウトで紹介。
  */
 
 type Spotlight = {
@@ -53,6 +53,19 @@ const spotlights: Spotlight[] = [
     image: '/images/bookcompass-map.webp',
     imageAlt: 'Book Compass アプリ画面',
     reverse: true,
+  },
+  {
+    badge: 'HubWallet',
+    iconSrc: '/images/hubwallet-app-icon.jpg',
+    titleLines: ['お金の使い方を、', '理解するための家計簿。'],
+    desc:
+      'レシートは撮るだけ、仕分けは隙間時間に。銀行連携不要・全プラン広告ゼロで、支出の傾向から「どんな使い方が自分を充電させるか」が見えてきます。DoubleHub につながると、お金の選択も「もう一人の自分」と一緒に考えられるようになります。',
+    href: '/products/hubwallet/',
+    appStoreUrl:
+      'https://apps.apple.com/jp/app/hubwallet-ai%E5%AE%B6%E8%A8%88%E7%B0%BF/id6766543029',
+    appStoreLabel: 'HubWallet',
+    image: '/images/hubwallet-screen-home.jpg',
+    imageAlt: 'HubWallet ホーム画面 — 今月の支出と未整理',
   },
 ];
 
@@ -145,10 +158,6 @@ export function SpotlightSection() {
                     className="h-auto w-full rounded-[1.5rem]"
                   />
                 </div>
-                <div
-                  aria-hidden
-                  className="absolute inset-[-15%] -z-10 rounded-full bg-primary/10 blur-3xl"
-                />
               </div>
             </motion.div>
           ))}
