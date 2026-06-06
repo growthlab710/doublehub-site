@@ -3562,3 +3562,34 @@ App Store URL:
 - About に開発者本人の写真（顔出しなし＝後ろ姿/手元/遠景など）を追加して親近感を出す案を検討中。
   AI生成ではなく実写を使う（AIっぽさ回避のため）。素材入手後に追加予定。
 - 圧縮用に ffmpeg を Homebrew で新規導入。raw 動画は `site/_video-src/`（リポジトリ外）に保管。
+
+---
+
+## 2026-06-04 (JST) — 公開後の微修正（中央寄せ/Ecosystem既定/Roadmap/FAQ）
+
+ブランチ: `feature/web-polish-mobile-status`（main へ `--no-ff` マージ）
+
+### 実施内容
+
+- **SectionEyebrow の中央寄せズレ修正**
+  - 番号なし中央寄せ時、「罫線＋ラベル」を1グループとして中央寄せしていたため
+    ラベルが右にずれていた（モバイルで顕著）。中央寄せ時は罫線を出さず、ラベルを
+    真の中央に。対象: Hero "Your Personal AI Partner" / IdealSection "Your Partner" /
+    Spotlight / FAQ。番号付き(01〜06)は従来どおり。
+- **EcosystemTabs の既定タブを HubWallet に**
+  - `defaultValue: 'trainnote' → 'finance'`。並び順は不変。
+  - HubWallet パネル2枚目の画像切れ（`hubwallet-screen-monthly.jpg` が存在しない）を
+    実在の `hubwallet-screen-categories.jpg` に差し替え、alt も更新。
+  - 「HubWallet は App Store で配信中」の note を削除（全プロダクト配信済みのため
+    HubWallet だけ明記する必要がない）。
+- **RoadmapSection**
+  - Shipped 内「DoubleHub 本体 — リリース済み」→「DoubleHub 本体 — AI 活用 ToDo 管理」。
+- **FaqSection**
+  - 「DoubleHub はいつ使えるようになりますか？」を削除（リリース済みのため不要）。
+  - 「TrainNote や Book Compass は単体でも使えますか？」→「TrainNote や Book Compass、
+    HubWallet は単体でも使えますか？」へ HubWallet を追加。
+
+### 検証
+
+- `pnpm build` 成功（55ページ静的生成 / 型・ビルドエラーなし）。
+- ローカルでモバイル幅の中央寄せ・既定タブ・FAQ をユーザーが目視確認、承認済み。

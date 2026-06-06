@@ -144,12 +144,8 @@ const panels: InsightPanel[] = [
     visual: 'screenshots',
     screenshots: [
       { src: '/images/hubwallet-screen-home.jpg', alt: 'HubWallet ホーム画面—今月の支出と未整理' },
-      { src: '/images/hubwallet-screen-monthly.jpg', alt: 'HubWallet 月次レポート—６ヶ月推移とカテゴリ別の進捗' },
+      { src: '/images/hubwallet-screen-categories.jpg', alt: 'HubWallet カテゴリ別レポート—親カテゴリ別の支出と進捗' },
     ],
-    note: {
-      label: 'HubWallet は App Store で配信中',
-      body: 'iOS 家計簿アプリ「HubWallet」は App Store で配信中です。単体でも完結します。将来 DoubleHub につながると、「何を買うべきか」よりも「どんな使い方が自分を充電させるか」を一緒に考えるパートナーになります。',
-    },
   },
 ];
 
@@ -226,7 +222,7 @@ export function EcosystemTabs() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="mt-14"
         >
-          <Tabs defaultValue="trainnote" className="w-full">
+          <Tabs defaultValue="finance" className="w-full">
             <TabsList className="flex h-auto w-full flex-wrap gap-2 bg-transparent p-0">
               {panels.map((p) => (
                 <TabsTrigger

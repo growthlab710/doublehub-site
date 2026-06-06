@@ -29,7 +29,7 @@ const phases: Phase[] = [
     checks: [
       { text: 'TrainNote — AI Coach Plus（5名の専門コーチ）', state: 'done' },
       { text: 'Book Compass — AI 読書整理', state: 'done' },
-      { text: 'DoubleHub 本体 — リリース済み', state: 'done' },
+      { text: 'DoubleHub 本体 — AI 活用 ToDo 管理', state: 'done' },
       { text: 'HubWallet — AI 家計簿', state: 'done' },
     ],
   },
