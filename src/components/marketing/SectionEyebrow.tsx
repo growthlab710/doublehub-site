@@ -48,7 +48,9 @@ export function SectionEyebrow({
         <span className="font-display text-base font-semibold tracking-[-0.02em] text-primary">
           {number}
         </span>
-      ) : (
+      ) : align === 'center' ? null : (
+        // 中央寄せのときに罫線を出すと「罫線＋ラベル」が1グループとして中央寄せされ、
+        // ラベルだけ見ると右にずれる。中央寄せ時は罫線を出さずラベルを真の中央に置く。
         <span aria-hidden className="h-px w-8 shrink-0 bg-primary/60" />
       )}
       <span className="font-display text-sm font-semibold tracking-[0.02em] text-primary">

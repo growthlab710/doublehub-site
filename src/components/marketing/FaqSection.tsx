@@ -13,11 +13,7 @@ import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 
 const faqs = [
   {
-    q: 'DoubleHub はいつ使えるようになりますか？',
-    a: '現在は構想公開と基盤づくりの段階です。テスト版の提供時期が見えてきたら、このサイトと更新案内でお知らせします。',
-  },
-  {
-    q: 'TrainNote や Book Compass は単体でも使えますか？',
+    q: 'TrainNote や Book Compass、HubWallet は単体でも使えますか？',
     a: 'はい。各サービスは単体でも価値を持つ設計です。DoubleHub に接続するとさらに深い洞察が得られますが、必須ではありません。',
   },
   {
