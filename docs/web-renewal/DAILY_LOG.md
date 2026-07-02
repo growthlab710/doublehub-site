@@ -3593,3 +3593,27 @@ App Store URL:
 
 - `pnpm build` 成功（55ページ静的生成 / 型・ビルドエラーなし）。
 - ローカルでモバイル幅の中央寄せ・既定タブ・FAQ をユーザーが目視確認、承認済み。
+
+---
+
+## 2026-07-03 (JST) — ブログ記事2本追加（Fable 5復活 / Claude Code 6月アップデート）
+
+ブランチ: `feature/add-blog-fable-5-return`, `feature/add-blog-claude-code-june-2026`（それぞれ main へ `--no-ff` マージ）
+
+### 実施内容
+
+- **ブログ記事「Fable 5 が復活——19日間の全世界停止が『終わった』あとに残ったもの」を追加**
+  - `content/blog/fable-5-return-july-2026.mdx`（カテゴリ: AIニュース）
+  - 6/13公開の停止記事（`fable-5-mythos-5-export-suspension`）の続編。6/30の輸出管理解除、
+    7/1のグローバル再提供、停止の引き金（Amazon研究者のセーフガード回避報告）、
+    新サイバーセキュリティ分類器、Mythos 5 / Project Glasswing の現状を整理。
+    前回記事への内部リンクあり。
+- **ブログ記事「Claude Code 2026年6月アップデートまとめ」を追加**
+  - `content/blog/claude-code-june-2026-updates.mdx`（カテゴリ: AIニュース）
+  - ネスト型サブエージェント、フォールバックモデルチェーン、ツールマーケットプレイス、
+    `claude mcp login`、`/rewind` の `/clear` 復元などを個人開発者視点で整理。
+    ハーネス記事・Fable 5復活記事への内部リンクあり。
+
+### 検証
+
+- `pnpm build` 成功（各記事追加後に2回実行 / 型・ビルドエラーなし / ブログ34記事生成）。
