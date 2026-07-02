@@ -1,0 +1,149 @@
+---
+title: "Fable 5 が復活——19日間の全世界停止が「終わった」あとに残ったもの"
+description: "2026年7月1日、米政府の輸出管理解除を受けてClaude Fable 5が全世界で再提供されました。停止の引き金となったAmazon研究者のレポート、追加された新しいサイバーセキュリティ分類器、7月7日までの利用条件、そしてMythos 5とProject Glasswingの現状まで、6月13日の停止記事の続編として個人開発者の視点で整理します。"
+publishedAt: "2026-07-03"
+updatedAt: "2026-07-03"
+category: "AIニュース"
+slug: "fable-5-return-july-2026"
+readingTime: 9
+summary: "米政府は2026年6月30日にClaude Fable 5・Mythos 5への輸出管理を解除し、Fable 5は7月1日から新しいサイバーセキュリティ分類器を搭載した形で全世界に再提供された。停止の引き金はAmazon研究者によるセーフガード回避報告だったことが公になり、Mythos 5は承認済み米国組織のみへの提供にとどまる。19日間の停止は「フロンティアAIは止まりうるインフラ」という前提を業界に定着させた。"
+tags:
+  - "Claude Fable 5"
+  - "Anthropic"
+  - "AI規制"
+  - "輸出管理"
+  - "AIニュース"
+faq:
+  - question: "Fable 5はいつから、どこで使えるようになりましたか？"
+    answer: "米政府が2026年6月30日に輸出管理を解除し、7月1日からClaude Platform（API）、Claude.ai、Claude Code、Claude Coworkでグローバルに再提供されています。Pro・Max・Team・一部EnterpriseプランではFable 5が週次利用上限の最大50%まで含まれる形で7月7日まで提供され、それ以降は利用クレジット経由での利用になります。"
+  - question: "停止の原因は結局何だったのですか？"
+    answer: "Amazonの研究者がFable 5のセーフガードを回避する手法を発見したというレポートを、米政府が把握したことが引き金でした。ソフトウェアの脆弱性を特定させるようなプロンプトでセーフガードを迂回でき、一件では該当する脆弱性を悪用する実証コードまで生成されたと報告されています。停止時点では根拠が曖昧とされていましたが、復旧の過程でこの経緯が公になりました。"
+  - question: "復活したFable 5は停止前と同じものですか？"
+    answer: "基盤モデルは同じですが、セーフガードが強化されています。Anthropicは問題となったジェイルブレイク手法に特化した新しい分類器（クラシファイア）レイヤーを追加し、テストでは約99%をブロックできるとしています。一方でフィルタリングが厳しくなった影響で、正当なサイバーセキュリティ用途やコーディングの質問が誤ってブロックされる可能性も同社は認めています。"
+  - question: "Mythos 5はどうなりましたか？"
+    answer: "Mythos 5は政府の審査を経て、承認された米国組織に限定して再導入が進められています。Anthropicは連邦当局と協力しながら、Project Glasswingという枠組みを通じてアクセス拡大に取り組むとしています。一般提供の予定は現時点で示されていません。"
+  - question: "個人開発者は今回の一連の出来事から何を学ぶべきですか？"
+    answer: "「フロンティアモデルは規制によって止まりうるインフラである」という前提が現実になったことです。単一モデルへの密結合を避けてフォールバックを用意する設計は引き続き有効です。加えて、復活後のモデルはセーフガード強化により挙動（特にセキュリティ関連タスクの拒否率）が変わりうるため、モデルの再開＝以前と同じ挙動、とは限らない点も運用上の新しい教訓です。"
+---
+
+**2026年7月1日、Claude Fable 5 が帰ってきました。** 6月12日の米政府による輸出管理指令から19日間、全世界で停止されていたAnthropicのフロンティアモデルは、6月30日の規制解除を受けて、新しいセーフガードを搭載した形で再提供が始まりました。
+
+本記事は、[6月13日に公開した停止時の記事](/blog/fable-5-mythos-5-export-suspension/)の続編です。前回は「なぜ全世界が止まったのか」「AIが安全保障のカードになる時代」を扱いましたが、今回は**復旧までに何があったのか、復活したFable 5は何が変わったのか、そしてこの19日間が業界に何を残したのか**を整理します。
+
+---
+
+## 何が起きたか——停止から復活までの19日間
+
+まず、前回記事以降の動きを時系列でまとめます。
+
+| 日付（2026年） | 出来事 |
+|---|---|
+| 6月9日 | Fable 5 / Mythos 5 リリース |
+| 6月12日 | 米政府の輸出管理指令により全世界停止（〜19日間） |
+| 6月30日 | 米政府が輸出管理を解除 |
+| 7月1日 | Fable 5 がグローバルに再提供開始。新分類器を搭載 |
+| 7月7日まで | Pro / Max / Team / 一部 Enterprise で週次上限の最大50%まで利用可、以降は利用クレジット経由 |
+
+[Anthropicの公式発表](https://www.anthropic.com/news/redeploying-fable-5)によれば、Fable 5 は7月1日から Claude Platform（API）、Claude.ai、Claude Code、Claude Cowork でグローバルに利用できます。[Amazon Bedrock でも提供が再開](https://aws.amazon.com/blogs/aws/anthropic-claude-fable-5-on-aws-mythos-class-capabilities-with-built-in-safeguards-now-available/)されました。
+
+一方の **Mythos 5 は「全面復活」ではありません**。政府審査を経て承認された米国組織に限定して再導入が進められており、Anthropicは「Project Glasswing」という枠組みを通じて連邦当局と協力しながらアクセスを広げていくとしています。
+
+---
+
+## 停止の「本当の理由」が見えてきた
+
+前回記事の時点では、政府のレターに具体的な根拠が示されていないことが大きな論点でした。復旧までの報道で、経緯がかなり具体的になっています。
+
+[MacRumorsの報道](https://www.macrumors.com/2026/07/01/anthropic-fable-5-relaunch/)によれば、6月12日の指令の引き金は、**Amazonの研究者がFable 5のセーフガードを回避する手法を発見したというレポート**を政府が把握したことでした。ソフトウェアの脆弱性を特定させるようなプロンプトでセーフガードを迂回でき、一件では**該当する脆弱性を悪用する方法を実証するコードまで生成された**と報告されています。
+
+つまり、停止時にAnthropicが「口頭で伝えられた」としていた「コードベースを読ませて脆弱性を修正させる用途に関わる狭い内容」の正体は、脆弱性発見という防御にも攻撃にも使える領域での、具体的なジェイルブレイク報告だったわけです。
+
+「曖昧な根拠で止められた」という前回時点の構図は、「根拠は具体的に存在したが、それが停止時に公開されなかった」という構図に変わりました。**手続きの透明性への疑問は残る一方、政府側の判断が完全に恣意的だったわけでもない**——評価はより難しくなったと言えます。
+
+---
+
+## 復活したFable 5は何が変わったのか
+
+再提供されたFable 5は、停止前とまったく同じものではありません。
+
+[Anthropicは「用心に用心を重ねて（out of an abundance of caution）」](https://9to5google.com/2026/07/01/anthropic-fable-5-returns-to-claude/)、サイバーセキュリティ関連タスクの扱いを再設計したと説明しています。中核となるのは、[問題となったジェイルブレイク手法に特化した新しい分類器（クラシファイア）レイヤー](https://www.marktechpost.com/2026/07/01/anthropic-redeploys-claude-fable-5-on-july-1-after-us-export-controls-lift-adds-new-cybersecurity-classifier/)です。
+
+- テストでは該当手法の**約99%をブロック**できるとAnthropicは説明
+- 一方で、フィルタリングが厳しくなった影響で、**正当なサイバーセキュリティ用途やコーディングの質問が誤ってブロック（偽陽性）される可能性**があることも同社は認めている
+
+ここは個人開発者として実務に直結するポイントです。**「モデルが復活した」＝「以前と同じ挙動」ではありません。** セキュリティ寄りのタスク——脆弱性調査、依存パッケージの脆弱性説明、セキュリティレビュー補助など——では、停止前より拒否や警告が増える可能性があります。Fable 5を組み込んだフローを再開する場合は、この挙動変化を織り込んだ再検証が必要です。
+
+### 利用条件——7月7日までは「お試し枠」
+
+再提供にあたって、[Pro・Max・Team・一部Enterpriseプランでは、Fable 5が週次利用上限の最大50%まで含まれる形で7月7日まで提供](https://www.digitaltrends.com/computing/youll-be-able-to-use-claude-fable-5-again-starting-july-1/)されます。それ以降は利用クレジット経由での提供になります。復帰記念の導入期間と、需要集中の抑制を兼ねた設計と見てよいでしょう。
+
+---
+
+## 19日間の停止が業界に残したもの
+
+今回の一連の出来事は「無事解決」で終わる話ではなく、いくつかの前例と教訓を業界に残しました。
+
+**1. 「フロンティアAIは止まりうるインフラ」が既成事実になった。** [企業向けの論考](https://www.marketscale.com/industries/software-and-technology/fable-5-and-mythos-5-are-back-what-the-19-day-shutdown-taught-every-enterprise-about-ai-as-infrastructure)では、この19日間を「AIをインフラとして扱うすべての企業への教材」と位置づけています。電力や通信と違い、AIモデルは一夜にして・世界同時に・規制によって止まりうる。この前提でアーキテクチャを組む必要があります。
+
+**2. 停止も復旧も、条件は事後に見えてくる。** 停止時には根拠が示されず、復旧の過程で「Amazon研究者のレポート」という具体的な経緯が見えてきました。逆に言えば、渦中にいる間は「いつ戻るのか」「何が条件なのか」が外からわからないということです。前回記事で指摘した**手続きの透明性の問題は、復旧によって解消されたわけではありません**。
+
+**3. 「復活後のモデル」は別物として扱う。** セーフガード強化は今後も「復旧の条件」として使われる可能性が高いパターンです。モデルが一度止まって戻ってきたとき、挙動の再検証をワークフローに組み込んでおくこと——これは今回初めて具体化した、新しい運用上の教訓です。
+
+前回記事で書いた「単一モデルに全部を賭けない」という教訓は、そのまま有効です。今回はそこに「**止まったモデルは、戻ってきても同じとは限らない**」が加わりました。
+
+---
+
+## まとめ——「一度きりの混乱」か「新しい常態」か
+
+- 米政府は6月30日にFable 5 / Mythos 5への輸出管理を解除し、Fable 5は7月1日から全世界で再提供された
+- 停止の引き金は、Amazon研究者によるセーフガード回避（脆弱性特定＋実証コード生成）の報告だったことが公になった
+- 復活したFable 5には該当ジェイルブレイクに特化した新分類器が追加され、約99%をブロックする一方、正当な用途の偽陽性リスクも認められている
+- Mythos 5は承認済み米国組織限定で、Project Glasswingを通じた段階的な拡大にとどまる
+- 個人開発者の教訓は「単一モデルに賭けない」に加えて、「復活後のモデルは挙動を再検証する」
+
+前回記事の最後に、「復旧の条件や手続きがどこまで透明に示されるかが、この前例を『一度きりの混乱』にとどめるのか『AIと国家の新しい常態』にするのかを左右する」と書きました。現時点の答えは中間です。復旧は実現し、経緯もある程度見えてきた——しかし、それらが見えたのは事後であり、次に同じことが起きたときのルールが明文化されたわけではありません。**AIモデルの提供と国家のコントロールの間の緊張関係は、解消されたのではなく、常態として組み込まれ始めた**——それが19日間の停止が残したいちばん大きなものだと筆者は考えています。
+
+---
+
+## 関連記事
+
+- [Fable 5 全世界停止が示したもの——AIモデルが「輸出管理」の対象になった日](/blog/fable-5-mythos-5-export-suspension/)
+- [Claude Opus 4.7レビュー——ベンチマークと実使用感を1週間検証してわかったこと](/blog/claude-opus-4-7-real-world-review/)
+- [AIエージェントの品質は「ハーネスの数」では決まらない](/blog/ai-agent-quality-harness-count/)
+
+---
+
+## 出典・参考
+
+- [Redeploying Claude Fable 5 — Anthropic（2026年6月30日）](https://www.anthropic.com/news/redeploying-fable-5)
+- [Anthropic's Claude Fable 5 Available Again After U.S. Lifts Export Controls — MacRumors（2026年7月1日）](https://www.macrumors.com/2026/07/01/anthropic-fable-5-relaunch/)
+- [Claude Fable 5 is making a dramatic return with 'extraordinarily strong' safeguards — 9to5Google（2026年7月1日）](https://9to5google.com/2026/07/01/anthropic-fable-5-returns-to-claude/)
+- [Anthropic Redeploys Claude Fable 5 on July 1, Adds New Cybersecurity Classifier — MarkTechPost（2026年7月1日）](https://www.marktechpost.com/2026/07/01/anthropic-redeploys-claude-fable-5-on-july-1-after-us-export-controls-lift-adds-new-cybersecurity-classifier/)
+- [US lifts export controls on Anthropic's Fable 5 — TNW](https://thenextweb.com/news/anthropic-fable-5-export-controls-lifted)
+- [Anthropic finally brings back Claude Fable 5, but with a temporary usage limit — Digital Trends](https://www.digitaltrends.com/computing/youll-be-able-to-use-claude-fable-5-again-starting-july-1/)
+- [Fable 5 and Mythos 5 Are Back — MarketScale](https://www.marketscale.com/industries/software-and-technology/fable-5-and-mythos-5-are-back-what-the-19-day-shutdown-taught-every-enterprise-about-ai-as-infrastructure)
+- [Anthropic Claude Fable 5 on AWS — AWS News Blog](https://aws.amazon.com/blogs/aws/anthropic-claude-fable-5-on-aws-mythos-class-capabilities-with-built-in-safeguards-now-available/)
+
+---
+
+## よくある質問
+
+### Fable 5はいつから、どこで使えるようになりましたか？
+
+米政府が2026年6月30日に輸出管理を解除し、7月1日からClaude Platform（API）、Claude.ai、Claude Code、Claude Coworkでグローバルに再提供されています。Pro・Max・Team・一部EnterpriseプランではFable 5が週次利用上限の最大50%まで含まれる形で7月7日まで提供され、それ以降は利用クレジット経由での利用になります。
+
+### 停止の原因は結局何だったのですか？
+
+Amazonの研究者がFable 5のセーフガードを回避する手法を発見したというレポートを、米政府が把握したことが引き金でした。ソフトウェアの脆弱性を特定させるようなプロンプトでセーフガードを迂回でき、一件では該当する脆弱性を悪用する実証コードまで生成されたと報告されています。停止時点では根拠が曖昧とされていましたが、復旧の過程でこの経緯が公になりました。
+
+### 復活したFable 5は停止前と同じものですか？
+
+基盤モデルは同じですが、セーフガードが強化されています。Anthropicは問題となったジェイルブレイク手法に特化した新しい分類器（クラシファイア）レイヤーを追加し、テストでは約99%をブロックできるとしています。一方でフィルタリングが厳しくなった影響で、正当なサイバーセキュリティ用途やコーディングの質問が誤ってブロックされる可能性も同社は認めています。
+
+### Mythos 5はどうなりましたか？
+
+Mythos 5は政府の審査を経て、承認された米国組織に限定して再導入が進められています。Anthropicは連邦当局と協力しながら、Project Glasswingという枠組みを通じてアクセス拡大に取り組むとしています。一般提供の予定は現時点で示されていません。
+
+### 個人開発者は今回の一連の出来事から何を学ぶべきですか？
+
+「フロンティアモデルは規制によって止まりうるインフラである」という前提が現実になったことです。単一モデルへの密結合を避けてフォールバックを用意する設計は引き続き有効です。加えて、復活後のモデルはセーフガード強化により挙動（特にセキュリティ関連タスクの拒否率）が変わりうるため、モデルの再開＝以前と同じ挙動、とは限らない点も運用上の新しい教訓です。
