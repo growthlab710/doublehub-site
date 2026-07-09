@@ -3663,3 +3663,32 @@ App Store URL:
 ### 検証
 
 - `pnpm build` 成功（型・ビルドエラーなし）。
+
+---
+
+## 2026-07-10 (JST) — ブログ記事追加（GPT-5.6 リリース + 初日のユーザー反応）
+
+ブランチ: `feature/add-blog-gpt-5-6`（main へ `--no-ff` マージ）
+
+### 実施内容
+
+- **ブログ記事「GPT-5.6（Sol / Terra / Luna）登場——基本スペックと『使ってみた』初日の反応まとめ」を追加**
+  - `content/blog/gpt-5-6-sol-terra-luna.mdx`（カテゴリ: AIニュース）
+  - 2026-07-09（PT）一般公開のGPT-5.6を、基本スペック（Sol/Terra/Lunaの3層命名体系）・
+    ベンチマーク（Terminal-Bench 2.1、Coding Agent Index）・新機能（max/ultra、
+    Programmatic Tool Calling）・価格・同時発表のChatGPT Workまで整理。
+  - **リアルタイム性の高い「初日のXでの開発者反応」節**を、ユーザー提供のX反応素材＋報道
+    （CNBC / Digital Trends 等）と突き合わせて作成。ベンダー公表値・X反応それぞれに
+    ファクトチェック注記を明示。
+  - 内部リンク: `gpt-5-5-agentic-coding` / `fable-5-return-july-2026` /
+    `ai-coding-agent-comparison-2026` / `llm-benchmark-guide-basics`。
+
+### ファクトチェック方針
+
+- 知識カットオフ（2026-01）以降の出来事のため、WebSearch/WebFetch で一次情報・報道を確認。
+  Sol/Terra/Luna という命名、54%トークン効率化（Altman/CNBC）、価格、ChatGPT Work、
+  Fable 5比較などを複数ソースで裏取り。OpenAI公式ページは403のため二次ソースで補完。
+
+### 検証
+
+- `pnpm build` 成功（61ページ静的生成 / 型・ビルドエラーなし）。

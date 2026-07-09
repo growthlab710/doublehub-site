@@ -1,0 +1,233 @@
+---
+title: "GPT-5.6（Sol / Terra / Luna）登場——基本スペックと『使ってみた』初日の反応まとめ"
+description: "2026年7月9日（PT）に一般公開されたGPT-5.6を、旗艦Sol・バランス型Terra・高速低価格Lunaの3層構成、Terminal-Bench 2.1やコーディングインデックスのベンチマーク、max/ultraモードやプログラマティック・ツールコール、価格、同時発表のChatGPT Workまで整理。さらに公開初日にXで飛び交った開発者のリアルな反応を、報道と突き合わせながらまとめます。"
+publishedAt: "2026-07-10"
+updatedAt: "2026-07-10"
+category: "AIニュース"
+slug: "gpt-5-6-sol-terra-luna"
+readingTime: 12
+summary: "GPT-5.6はOpenAIが2026年7月9日（PT）に一般公開したモデル群で、世代を表す数字（5.6）と恒久的な能力ティアを表すSol（旗艦）/Terra（バランス）/Luna（高速低価格）という新しい命名体系を採用した。Sam Altmanはエージェントコーディングで前世代比54%のトークン効率化を強調し、Artificial AnalysisのCoding Agent IndexではSol（max）がスコア80の新記録を、次点より出力54%減・時間57%減で達成。同時にアプリ横断で完成物を返す自律エージェント『ChatGPT Work』も発表された。初日のXでは『久々に実用的な進化』『Terraがサプライズの勝者』という落ち着いた好評が目立った。"
+tags:
+  - "GPT-5.6"
+  - "OpenAI"
+  - "AIエージェント"
+  - "ChatGPT Work"
+  - "AIコーディング"
+  - "AIニュース"
+faq:
+  - question: "GPT-5.6とは何ですか？"
+    answer: "OpenAIが2026年7月9日（太平洋時間、日本時間では7月10日）に一般公開したモデル群です。米政府の安全性レビューを経て、6月下旬に約20社の限定パートナー先行提供から始まり、7月9日に広く開放されました。最大の特徴は新しい命名体系で、数字の『5.6』が世代を、『Sol / Terra / Luna』がそれぞれ独自のペースで進化する恒久的な能力ティア（旗艦／バランス／高速低価格）を表します。コーディング・科学的推論・長時間のエージェント作業と、トークン効率・信頼性の向上に主眼が置かれています。"
+  - question: "Sol・Terra・Lunaはどう使い分けますか？"
+    answer: "Sol は旗艦モデルで、大規模コードベースの複雑な推論や長時間の自律エージェント作業向け。新しい『max』リーズニングと、複数エージェントを並列で動かす『ultra』モードを解放できます。Terra は日常使いのバランス型で、OpenAIは『GPT-5.5並みの性能を約半額で』と位置づけています。Luna は最も速く安いモデルで、高ボリューム・低レイテンシ用途向けです。GitHub Copilot では Sol が上位SKU、Terra / Luna が広めのプランで提供されます。"
+  - question: "GPT-5.6の料金はいくらですか？"
+    answer: "API価格は1Mトークンあたり、Sol が入力$5・出力$30、Terra が入力$2.50・出力$15、Luna が入力$1・出力$6 です（2026年7月時点）。プロンプトキャッシュはキャッシュ書き込みが未キャッシュ入力の1.25倍、読み出しは約90%割引が適用されます。Sam Altman はエージェントコーディングで前世代比54%のトークン効率化を強調しており、単価だけでなく『タスクあたりの実効コスト』で見るのが妥当です。"
+  - question: "GPT-5.6は初日のユーザーからどう評価されましたか？"
+    answer: "公開初日のXでは、爆発的な熱狂というより『久々に実用的な進化を感じる』という落ち着いた好評が目立ちました。コードレビューやバグ検知の向上、AGENTS.md などカスタム指示の遵守を評価する具体的な声が複数。モデル別では Terra を『サプライズの勝者（日常使いに最適）』と評する開発者が多く、Sol は強力だがトークン消費が激しいという指摘、Luna は『一日中使える速度とコスパ』という評価でした。一方でPlusでSolがまだ来ない、APIで404が出るなど段階提供のばらつきも報告されています。"
+  - question: "同時発表されたChatGPT Workとは何ですか？"
+    answer: "GPT-5.6を基盤とする、ChatGPT内蔵の自律エージェントです。接続したアプリ横断で文脈を集め、ゴールを小さな手順に分解し、数時間かけて自律的に実行して、チャットの返答ではなく『完成物』——表計算・スライド・ドキュメント・インタラクティブなWebアプリ——を返します。Web・モバイルではまずPro / Enterprise / Eduに提供され、Plus / Business には数日かけて展開、デスクトップアプリでは全プランで利用可能とされています。Anthropicの Claude Cowork に続く、職場向け自律エージェント競争の一手です。"
+---
+
+**GPT-5.6の結論を先に言うと、「一番賢いモデル競争」から「一番実用的で、コストの見合う労働力」へOpenAIが舵を切った、という話です。** 2026年7月9日（太平洋時間、日本時間では7月10日）、OpenAIは[GPT-5.6を一般公開](https://www.cnbc.com/2026/07/08/openai-expanding-gpt-5point6-ai-model-release-ending-government-limits.html)しました。6月下旬に米政府の安全性レビューを前提とした約20社の限定パートナー提供から始まり、レビュー完了を受けて広く開放された形です。
+
+本記事では、GPT-5.6の基本スペック・ベンチマーク・価格・同時発表の**ChatGPT Work**を整理したうえで、**公開初日にX（Twitter）で飛び交った開発者のリアルな反応**を、報道と突き合わせながらまとめます。前世代の[GPT-5.5](/blog/gpt-5-5-agentic-coding/)や[Claude Fable 5](/blog/fable-5-return-july-2026/)との比較も交えつつ、「自分のユースケースに効くか」の判断材料を目指します。
+
+> **注記**: 一部の数値・比較はOpenAI自身の発表やベンチマークに基づきます。ベンダー公表値は自社に有利な条件で示される傾向があるため、独立系（Artificial Analysis 等）の計測や実利用の声と併せて読むことをおすすめします。初日のXの反応は「早期の第一印象」であり、確定的な評価ではない点にご留意ください。
+
+---
+
+## GPT-5.6とは何か——新しい命名体系を3行で理解する
+
+GPT-5.6の最大の変化は、モデルの**命名体系そのもの**です。重要なポイントを3行でまとめます。
+
+- **命名** : 数字「5.6」が**世代**を、`Sol` / `Terra` / `Luna` が**恒久的な能力ティア**を表す。各ティアは独自のペースで進化する
+- **ラインナップ** : Sol（旗艦）／Terra（バランス・日常使い）／Luna（高速・低価格）の3層
+- **狙い** : コーディング・科学的推論・長時間エージェント作業の強化と、**トークン効率・信頼性の底上げ**
+
+[OpenAIの説明](https://help.openai.com/en/articles/20001325-a-preview-of-gpt-56-sol-terra-and-luna)によれば、Sol / Terra / Luna は「今後も世代を超えて残るティア名」であり、次世代以降も同じ枠組みで進化していく設計です。「モデル名を毎回覚え直す」時代から、「ティアで役割を選ぶ」時代への移行と言えます。
+
+| ティア | 位置づけ | 特徴 |
+|---|---|---|
+| **Sol** | 旗艦・最強 | 大規模コードベースの複雑な推論、長時間の自律作業。`max`リーズニングと`ultra`モードを解放 |
+| **Terra** | バランス・日常使い | 「GPT-5.5並みの性能を約2倍安く」。多くの開発者の常用候補 |
+| **Luna** | 高速・低価格 | 最安。高ボリューム・低レイテンシ用途向け |
+
+---
+
+## ベンチマーク——GPT-5.6はどこで強いのか
+
+主要ベンチマークを、独立系メディアの整理をもとに表にまとめます。まずはターミナル操作系の代表格 **Terminal-Bench 2.1** です。
+
+| モデル | Terminal-Bench 2.1 |
+|---|---|
+| **GPT-5.6 Sol（Ultra）** | **91.9%** |
+| **GPT-5.6 Sol** | 88.8% |
+| GPT-5.5 | 88.0% |
+| Claude Mythos 5 | 84.3% |
+| GPT-5.6 Luna | 84.3% |
+| Claude Fable 5 | 83.4% |
+| GPT-5.6 Terra | 82.5% |
+| Claude Opus 4.8 | 78.9% |
+| Gemini 3.1 Pro | 70.7% |
+
+（[DataCamp](https://www.datacamp.com/blog/gpt-5-6-sol-luna-terra)の整理をもとに作成）
+
+注目すべきは**コスパとトークン効率**です。[CNBCの取材](https://www.cnbc.com/2026/07/09/open-ai-sam-altman-chatgpt-5-6-sol.html)でSam Altmanは、GPT-5.6 Solが**エージェントコーディングで前世代比54%のトークン効率化**を達成したと明言。Artificial Analysis の **Coding Agent Index** では、Sol（maxリーズニング）が**スコア80の新記録**を、次点モデルより**出力トークン54%減・所要時間57%減**で達成したと報告されています。
+
+そのほか、DataCampやMarkTechPostが挙げる特徴的な数字は次のとおりです。
+
+- **OSWorld 2.0**（コンピュータ操作）: Solが62.6%を、[Claude Opus 4.8より85%少ない出力トークン](https://www.marktechpost.com/2026/07/09/openai-releases-gpt-5-6-a-three-tier-model-family-with-programmatic-tool-calling/)で達成
+- **コーディング全般**: Solは[Claude Fable 5に対し、出力トークン・所要時間ともに半分未満](https://www.marktechpost.com/2026/07/09/openai-releases-gpt-5-6-a-three-tier-model-family-with-programmatic-tool-calling/)
+- **長コンテキストは弱点**: Lunaは OpenAI MRCR v2（8-needle）で**41.3%まで低下**。長文脈を要する用途にLunaは不向き
+
+「スコアの絶対値」より「同じ仕事を何トークン・何秒でこなすか」を前面に出しているのが、今回の訴求の特徴です。ベンチマークの読み方に不安がある方は[LLMベンチマーク入門](/blog/llm-benchmark-guide-basics/)も参考にしてください。
+
+---
+
+## 3つの新機能——実務に効く差分
+
+### 1. `max` リーズニングと `ultra` モード
+
+Solでは、思考時間をさらに延ばす**`max`リーズニング**という新しいエフォート設定が解放されます。加えて **`ultra`モード**は、単一エージェントではなく[**4つのエージェントを既定で並列に協調**](https://www.marktechpost.com/2026/07/09/openai-releases-gpt-5-6-a-three-tier-model-family-with-programmatic-tool-calling/)させる仕組みで、Terminal-Bench 2.1のスコアを 88.8%→91.9% に押し上げます。BrowseComp では Sol Ultra が 92.2% に達したと報告されています。強力な反面、初日のXでは「Ultraはトークン消費がbrutal（残酷なほど激しい）」という声も目立ちました。
+
+### 2. プログラマティック・ツールコール（Responses API）
+
+Responses API に追加された **Programmatic Tool Calling** は、[モデルが書いたJavaScriptを、ネットワーク遮断された隔離V8ランタイムで実行](https://www.marktechpost.com/2026/07/09/openai-releases-gpt-5-6-a-three-tier-model-family-with-programmatic-tool-calling/)する仕組みです。ツール呼び出しの往復をコードにまとめられるため、先行顧客からは**38%〜63.5%のトークン削減**が報告されています。エージェント的ワークフローの効率化に直結する機能です。
+
+### 3. Cerebras 高速ホスティング
+
+Solは Cerebras 上のホスティングで**最大750トークン/秒**（7月提供開始）に達するとされ、レイテンシが効く用途での選択肢が広がります。
+
+---
+
+## 価格構造——「値上げ」ではなく「効率で見る」
+
+| モデル | 入力（/1M） | 出力（/1M） |
+|---|---|---|
+| **GPT-5.6 Sol** | $5.00 | $30.00 |
+| **GPT-5.6 Terra** | $2.50 | $15.00 |
+| **GPT-5.6 Luna** | $1.00 | $6.00 |
+
+（単位: 1Mトークンあたり米ドル。[OpenAI](https://help.openai.com/en/articles/20001325-a-preview-of-gpt-56-sol-terra-and-luna) / DataCamp をもとに整理）
+
+- **Sol の単価**は[GPT-5.5](/blog/gpt-5-5-agentic-coding/)と同じ$5 / $30。ただしトークン効率が54%向上している分、**タスクあたりの実効コストは下がりうる**
+- **Terra**は Sol の半額で「GPT-5.5並み」をうたう。**初日に最も評価された価格帯**
+- プロンプトキャッシュは**書き込みが未キャッシュ入力の1.25倍、読み出しは約90%割引**
+
+Altmanは「あらゆる企業がいまや支出とAIから得る価値を天秤にかけている」と述べており、今回の設計思想は明確に**エンタープライズのコスト意識**を意識したものです。
+
+---
+
+## ChatGPT Work——「モデル」ではなく「労働」を売りに来た
+
+GPT-5.6と**同時に**発表されたのが、自律エージェント **ChatGPT Work** です。[OpenAIの発表](https://www.macrumors.com/2026/07/09/openai-chatgpt-work/)によれば、ChatGPT Work は次のように動きます。
+
+1. アウトカム（達成したい成果）を受け取る
+2. 接続したアプリ・ワークフロー横断で**文脈を収集**
+3. ゴールを小さな手順に**分解**
+4. **数時間かけて自律的に実行**し、チャットの返答ではなく**完成物**を返す
+
+返ってくるのは「会話」ではなく、**表計算・スライド・ドキュメント・インタラクティブなWebアプリ**といった成果物です。[Bloomberg](https://www.bnnbloomberg.ca/business/artificial-intelligence/2026/07/09/openai-launches-chatgpt-work/)は「複数ステップのタスクを何時間もこなすエージェント」と報じています。
+
+- **提供**: Web・モバイルはまず Pro / Enterprise / Edu、Plus / Business には数日かけて展開。**デスクトップアプリは全プラン**
+- **周辺**: Codexを内蔵したデスクトップアプリの刷新、OpenAI顧客向けのホスティング（サイト公開）サービスも同時発表
+- **競争軸**: Anthropicの [Claude Cowork](/blog/fable-5-return-july-2026/) に続く、職場向け自律エージェント競争の一手
+
+初日のXで「モデル単体ではなく『労働』として売りに来ている」と評されたのは、この同時リリースの構図を指しています。
+
+---
+
+## 公開初日のユーザーの反応まとめ——Xで何が語られたか
+
+ここからは、公開初日（日本時間7月10日朝時点）にX上で目立った**開発者のリアルな反応**を、報道と突き合わせながら整理します。全体のトーンは、**爆発的な熱狂というより「久々に実用的な進化を感じる」という落ち着いた好評**でした。
+
+### 全体の空気感
+
+- 「OpenAI久々の本気のジャンプ」という声が複数
+- ベンチマーク至上主義から「毎日使えて、コストも抑えられる」方向へのシフトを好意的に受け止める意見が優勢
+- 「[Fable 5](/blog/fable-5-return-july-2026/)に完全勝利」とまでは言わず、「用途によっては互角以上、実務ではむしろ勝る」という冷静な比較が多い
+
+この空気感は報道とも符合します。[Digital Trends](https://www.digitaltrends.com/cool-tech/if-youve-grown-tired-of-babysitting-chatgpt-the-new-gpt-5-6-models-might-be-the-fix/)は「ChatGPTのお守り（babysitting）に疲れた人向けの改善」と表現しており、「手取り足取り指示しなくても大きなタスクをこなす」という信頼性の向上が共通の評価軸になっています。
+
+### モデル別の初感想
+
+- **Sol（旗艦）**: 「バグハンティング・コードレビューで明らかに5.5より上」「リポジトリ全体の変更提案に自信がある」と高評価。一方で**トークン消費が激しい**という指摘が複数で、「Ultraは強力だが日常使いには不向き」との声も
+- **Terra（バランス）**: **「サプライズの勝者」**という評価が目立つ。「日常のプロダクション用途に最適」「5.5並みを半額で使える」と好評で、「一番よく使うモデルになる」と予想する開発者が多い
+- **Luna（高速・低価格）**: 「一日中使うのにちょうどいい速度とコスパ」。高ボリューム用途・埋め込み向けという声
+
+### 特に評価が高かったポイント
+
+- **コードレビュー・バグ検知**: 「5.5のX-Highでも見逃していた問題を拾う」「**AGENTS.md などのカスタム指示をきちんと守る**ようになった」という具体的な体験談が複数
+- **トークン効率**: 「エージェント的コーディングで前世代比54%効率化」という数字を挙げ、「企業にとってはこれが一番デカい」との指摘。これはAltmanの公式コメントとも一致します
+- **実務寄りの信頼性**: 「Fableはワープドライブでカッコいいが、5.6は街乗りで一番信頼できるツール」という比喩が印象的
+
+### ロールアウトのばらつき
+
+段階的リリース中であることが実感されており、「**PlusプランでまだSolが来ていない**」「**APIで404が出る**」といった報告も散見されました。一方で「Terra と Luna はすでに普通に使える」という声もあり、モデルによって開放タイミングに差がある模様です。[GitHub Copilot でも同日提供が始まり](https://github.blog/changelog/2026-07-09-openais-gpt-5-6-sol-terra-and-luna-are-now-available-in-github-copilot/)、Microsoft Copilot など各種ツールへの統合も同時進行で、「エンタープライズ側は早く恩恵を受けられそう」という見方が出ています。
+
+> **ファクトチェックの注記**: 上記はXの個別ポストに基づく**早期の第一印象**であり、体験談の一部（特定タスクでの優劣など）は追試のない主観です。定量評価は本記事のベンチマーク節・出典を、実運用の判断は複数モデルでの検証を前提にしてください。
+
+---
+
+## Claude Fable 5との比較——「賢さ」か「実用性」か
+
+初日のXで繰り返し見られたニュアンスを、判断表として整理します。
+
+| 観点 | 優勢と見られた側 | 補足 |
+|---|---|---|
+| 純粋な賢さ・創造性 | **Claude Fable 5** | 「難問・創造性ではFableに軍配」という声が一定数 |
+| コスト・実効効率 | **GPT-5.6** | Solは同一コーディングタスクで出力・時間ともFable 5の半分未満（OpenAI計測） |
+| 毎日使える安定感 | **GPT-5.6（Terra）** | 「街乗りで一番信頼できる」という比喩 |
+| Terminal-Bench 2.1 | **GPT-5.6 Sol** | Sol 88.8% / Sol Ultra 91.9% vs Fable 5 83.4% |
+
+総じて「OpenAIは**一番賢いモデルではなく、一番実用的な労働力**を提供しに来た」という総括が多く見られました。ただしFable 5比較の定量値はOpenAI側の計測が中心であり、[独立検証や自分のワークロードでの実測](/blog/ai-coding-agent-comparison-2026/)を推奨します。
+
+---
+
+## まとめ——GPT-5.6で変わること、変わらないこと
+
+- GPT-5.6は2026年7月9日（PT）一般公開。数字=世代、**Sol / Terra / Luna=恒久ティア**という新命名体系を採用
+- 旗艦Solは`max`リーズニングと4エージェント並列の`ultra`モードを解放。Terminal-Bench 2.1で Sol Ultra 91.9%
+- 訴求の中心は**トークン効率**。Altmanは「エージェントコーディングで54%効率化」を強調し、料金単価より**タスクあたりコスト**で見る設計
+- 同時発表の**ChatGPT Work**で「モデル」ではなく「完成物を返す労働」を売りに来た
+- 初日のXは**落ち着いた好評**。とりわけ**Terra（バランス型）が実務での常用候補**として高評価。一方でSolのトークン消費と段階提供のばらつきは要注意
+
+「モデルを1つに決める時代」はすでに終わっています。**Solで難所を攻め、Terraで日常を回し、Lunaで量をさばく**——ティアで役割を配分する運用が、GPT-5.6世代の現実解になりそうです。
+
+---
+
+## 出典・参考
+
+- [GPT-5.6: Frontier intelligence that scales with your ambition — OpenAI（2026年7月9日）](https://openai.com/index/gpt-5-6/)
+- [A preview of GPT-5.6 Sol, Terra, and Luna — OpenAI Help Center（2026年7月）](https://help.openai.com/en/articles/20001325-a-preview-of-gpt-56-sol-terra-and-luna)
+- [OpenAI's newest AI model is 54% more token efficient on agentic coding, Altman tells CNBC（2026年7月9日）](https://www.cnbc.com/2026/07/09/open-ai-sam-altman-chatgpt-5-6-sol.html)
+- [OpenAI to publicly release GPT-5.6, ending government limits — CNBC（2026年7月8日）](https://www.cnbc.com/2026/07/08/openai-expanding-gpt-5point6-ai-model-release-ending-government-limits.html)
+- [GPT-5.6 Sol, Terra, and Luna: OpenAI's Next-Gen Model Family — DataCamp（2026年7月9日）](https://www.datacamp.com/blog/gpt-5-6-sol-luna-terra)
+- [OpenAI Releases GPT-5.6: A Three-Tier Model Family With Programmatic Tool Calling — MarkTechPost（2026年7月9日）](https://www.marktechpost.com/2026/07/09/openai-releases-gpt-5-6-a-three-tier-model-family-with-programmatic-tool-calling/)
+- [OpenAI's GPT-5.6 Sol, Terra, and Luna are now available in GitHub Copilot — GitHub Changelog（2026年7月9日）](https://github.blog/changelog/2026-07-09-openais-gpt-5-6-sol-terra-and-luna-are-now-available-in-github-copilot/)
+- [OpenAI Debuts ChatGPT Work Agent and New GPT-5.6 Models — MacRumors（2026年7月9日）](https://www.macrumors.com/2026/07/09/openai-chatgpt-work/)
+- [OpenAI launches ChatGPT Work, deepening race for workplace AI tools — BNN Bloomberg（2026年7月9日）](https://www.bnnbloomberg.ca/business/artificial-intelligence/2026/07/09/openai-launches-chatgpt-work/)
+- [If you've grown tired of babysitting ChatGPT, the new GPT-5.6 models might be the fix — Digital Trends（2026年7月9日）](https://www.digitaltrends.com/cool-tech/if-youve-grown-tired-of-babysitting-chatgpt-the-new-gpt-5-6-models-might-be-the-fix/)
+
+---
+
+## よくある質問
+
+### GPT-5.6とは何ですか？
+
+OpenAIが2026年7月9日（太平洋時間、日本時間では7月10日）に一般公開したモデル群です。米政府の安全性レビューを経て、6月下旬に約20社の限定パートナー先行提供から始まり、7月9日に広く開放されました。最大の特徴は新しい命名体系で、数字の「5.6」が世代を、「Sol / Terra / Luna」がそれぞれ独自のペースで進化する恒久的な能力ティア（旗艦／バランス／高速低価格）を表します。コーディング・科学的推論・長時間のエージェント作業と、トークン効率・信頼性の向上に主眼が置かれています。
+
+### Sol・Terra・Lunaはどう使い分けますか？
+
+Sol は旗艦モデルで、大規模コードベースの複雑な推論や長時間の自律エージェント作業向け。新しい「max」リーズニングと、複数エージェントを並列で動かす「ultra」モードを解放できます。Terra は日常使いのバランス型で、OpenAIは「GPT-5.5並みの性能を約半額で」と位置づけています。Luna は最も速く安いモデルで、高ボリューム・低レイテンシ用途向けです。GitHub Copilot では Sol が上位SKU、Terra / Luna が広めのプランで提供されます。
+
+### GPT-5.6の料金はいくらですか？
+
+API価格は1Mトークンあたり、Sol が入力$5・出力$30、Terra が入力$2.50・出力$15、Luna が入力$1・出力$6 です（2026年7月時点）。プロンプトキャッシュはキャッシュ書き込みが未キャッシュ入力の1.25倍、読み出しは約90%割引が適用されます。Sam Altman はエージェントコーディングで前世代比54%のトークン効率化を強調しており、単価だけでなく「タスクあたりの実効コスト」で見るのが妥当です。
+
+### GPT-5.6は初日のユーザーからどう評価されましたか？
+
+公開初日のXでは、爆発的な熱狂というより「久々に実用的な進化を感じる」という落ち着いた好評が目立ちました。コードレビューやバグ検知の向上、AGENTS.md などカスタム指示の遵守を評価する具体的な声が複数。モデル別では Terra を「サプライズの勝者（日常使いに最適）」と評する開発者が多く、Sol は強力だがトークン消費が激しいという指摘、Luna は「一日中使える速度とコスパ」という評価でした。一方でPlusでSolがまだ来ない、APIで404が出るなど段階提供のばらつきも報告されています。
+
+### 同時発表されたChatGPT Workとは何ですか？
+
+GPT-5.6を基盤とする、ChatGPT内蔵の自律エージェントです。接続したアプリ横断で文脈を集め、ゴールを小さな手順に分解し、数時間かけて自律的に実行して、チャットの返答ではなく「完成物」——表計算・スライド・ドキュメント・インタラクティブなWebアプリ——を返します。Web・モバイルではまずPro / Enterprise / Eduに提供され、Plus / Business には数日かけて展開、デスクトップアプリでは全プランで利用可能とされています。Anthropicの Claude Cowork に続く、職場向け自律エージェント競争の一手です。
