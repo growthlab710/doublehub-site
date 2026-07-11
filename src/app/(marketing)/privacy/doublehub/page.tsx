@@ -20,7 +20,7 @@ export default function DoubleHubPrivacyPage() {
     <PrivacyLayout
       title="DoubleHub プライバシーポリシー"
       productLabel="DoubleHub"
-      lastUpdated="2026-07-06"
+      lastUpdated="2026-07-11"
     >
       <p>
         GrowthLab（以下「当方」）は、DoubleHub（以下「本アプリ」）で取り扱う情報について、以下のとおり定めます。
@@ -59,6 +59,9 @@ export default function DoubleHubPrivacyPage() {
           カレンダーの予定のタイトル、説明、開始・終了日時、終日フラグ、場所、繰り返し設定、カレンダー色、状態、カレンダーソース、外部
           ID を取得します）
         </li>
+        <li>
+          有料プラン（Plus / Premium）のご案内画面（ペイウォール）の表示状況（表示日時、表示元の画面や操作、選択されたプラン種別、アプリ内の匿名利用者識別子）
+        </li>
         <li>お問い合わせ時にユーザーが送信する情報</li>
       </ul>
 
@@ -81,6 +84,7 @@ export default function DoubleHubPrivacyPage() {
         </li>
         <li>期限付き ToDo を iOS カレンダーと双方向に同期し、スケジュール管理に活用するため</li>
         <li>お問い合わせ対応、不具合調査、品質改善のため</li>
+        <li>有料プランのご案内画面の表示状況を把握し、機能改善やご案内の最適化に役立てるため</li>
       </ul>
       <p className="text-sm text-text-muted">
         ヘルスケアデータおよびカレンダー情報は、広告配信、第三者マーケティング、ユーザー属性の推定販売などの目的には一切使用しません。
@@ -121,6 +125,9 @@ export default function DoubleHubPrivacyPage() {
           位置情報を利用する場合、天気取得のために緯度・経度などが Open-Meteo へ送信されます。
         </li>
         <li>Sign in with Apple を利用する場合、Apple が提供する認証基盤を利用します。</li>
+        <li>
+          有料プラン案内画面（ペイウォール）の表示状況は、機能改善のための分析目的で、当方が管理するサーバー環境へ送信・保存されます。広告配信や第三者マーケティングには利用しません。
+        </li>
         <li>
           これらの外部送信は、本アプリの機能提供のために行うものであり、広告配信や第三者マーケティングを目的とするものではありません。
         </li>
