@@ -3735,3 +3735,28 @@ App Store URL:
 
 - `pnpm typecheck` 成功（型エラーなし）。
 - `pnpm build` 成功（61ページ生成、`/privacy/bookcompass` の静的生成を確認）。
+
+---
+
+## 2026-07-11 (JST) — HubWallet / DoubleHub プライバシーポリシーにペイウォール計測の記載を追加
+
+ブランチ: `feature/update-privacy-paywall-tracking`
+
+### 背景
+
+- HubWallet / DoubleHub の各 iOS アプリに「ペイウォール（有料プラン案内画面）の表示状況」を計測する機能を実装（表示日時・表示元の導線・アプリバージョン・RevenueCat 匿名利用者識別子等を自社 Supabase へ送信）。両アプリとも当該機能を含むバージョンを App Store へ申請済みのため、公開プライバシーポリシーへ記載を追加する。
+
+### 実施内容
+
+- `/privacy/hubwallet`
+  - 第2.3項「自動的に記録される情報」にペイウォール表示状況を追記。
+  - 第7項「広告およびトラッキング」を実態に合わせて更新。従来の「解析 SDK は一切組み込まれていません」を「第三者の広告 SDK・第三者の解析 SDK は組み込んでいません」に改め、当社自身による最小限のペイウォール計測（送信内容・送信先 Supabase・家計データは送信しない旨）を明記。ATT 非対象・IDFA 不取得の記載は維持。
+  - 改定履歴に 2026-07-11 の項を追加。`lastUpdated` を 2026-07-11 に更新。
+- `/privacy/doublehub`
+  - 第1項「取得する情報」・第2項「利用目的」・第3項「保存先と外部送信」にペイウォール表示計測の記載を追加（広告・第三者マーケティングには利用しない旨を明記）。
+  - `lastUpdated` を 2026-07-11 に更新。
+- BookCompass / TrainNote のプライバシーページは変更なし。
+
+### 検証
+
+- `pnpm build` 成功（EXIT=0・Compiled successfully、`/privacy/hubwallet`・`/privacy/doublehub` を静的生成で確認）。
