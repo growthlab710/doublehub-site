@@ -19,7 +19,7 @@ export default function HubWalletPrivacyPage() {
     <PrivacyLayout
       title="HubWallet プライバシーポリシー"
       productLabel="HubWallet"
-      lastUpdated="2026-05-08"
+      lastUpdated="2026-07-11"
     >
       <p>
         本ポリシーは、iOS アプリ「HubWallet」（以下「本アプリ」）における個人情報および利用者データの取扱いについて定めるものです。本アプリの利用にあたっては本ポリシーをご確認のうえ、内容に同意されるものとします。
@@ -57,6 +57,9 @@ export default function HubWalletPrivacyPage() {
         <li>AI 機能の利用回数（月次・日次）</li>
         <li>整理継続日数などのアプリ内統計</li>
         <li>アプリ内で発生したエラーログ（端末ローカルのみ）</li>
+        <li>
+          有料プラン案内画面（ペイウォール）の表示状況（表示日時・表示された画面や導線の種類・アプリのバージョン）
+        </li>
       </ul>
 
       <h3>2.4 取得しない情報</h3>
@@ -141,8 +144,14 @@ export default function HubWalletPrivacyPage() {
       <h2>7. 広告およびトラッキングについて</h2>
       <ul>
         <li>本アプリはすべてのプランにおいて広告を表示しません</li>
-        <li>広告 SDK や解析 SDK は一切組み込まれていません</li>
-        <li>iOS の App Tracking Transparency（ATT）対象となるトラッキングは行いません</li>
+        <li>第三者の広告 SDK・第三者の解析 SDK は組み込んでいません</li>
+        <li>
+          サービス改善のため、有料プラン案内画面（ペイウォール）の表示状況に限り、当社自身による最小限の記録を行います。記録する内容は、ペイウォールの表示日時・表示された画面や導線の種類・アプリのバージョン、および課金状態と突き合わせるための
+          RevenueCat の匿名利用者識別子であり、当社が管理するサーバー（Supabase）へ送信・保存されます。氏名・メールアドレス・家計データ（取引記録やレシート画像など）は送信しません
+        </li>
+        <li>
+          他社のサービスやウェブサイトをまたいだ行動追跡は行わず、iOS の App Tracking Transparency（ATT）の対象となるトラッキングは行いません
+        </li>
         <li>IDFA、その他のクロスサイト識別子は取得しません</li>
       </ul>
 
@@ -207,6 +216,7 @@ export default function HubWalletPrivacyPage() {
       <h2>改定履歴</h2>
       <ul>
         <li>2026-05-08 初版作成（HubWallet v0.1.0 リリースに合わせて公開）</li>
+        <li>2026-07-11 ペイウォール表示状況の記録に関する記載を追加（第2.3項・第7項）</li>
       </ul>
     </PrivacyLayout>
   );
