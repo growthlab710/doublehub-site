@@ -3760,3 +3760,28 @@ App Store URL:
 ### 検証
 
 - `pnpm build` 成功（EXIT=0・Compiled successfully、`/privacy/hubwallet`・`/privacy/doublehub` を静的生成で確認）。
+
+---
+
+## 2026-07-16 (JST) — ブログ: 流入強化記事2本を追加（家計・日記カテゴリ新設）
+
+ブランチ: `feature/add-inflow-articles`
+
+### 背景
+
+- 4アプリの大型アップデート（HubWallet 2.0.0 / DoubleHub 2.0.0 ほか）リリースを受け、ブログの空白領域だった「家計・サブスク系」「日記系」に課題起点のSEO記事を追加。告知ウェーブ（X・In-App Events）の受け皿を兼ねる。
+
+### 実施内容
+
+- `content/blog/subscription-forget-prevention.mdx` を新規追加
+  - 「サブスクの解約忘れを防ぐ方法」。狙いクエリ: サブスク 解約忘れ／サブスク 管理／固定費。カテゴリ「家計」新設
+  - HubWallet 2.0.0のトライアル終了アラート・更新前リマインド・今後の予定タイムラインを紹介、`/products/hubwallet/` へ導線
+  - 表現ライン準拠: 自動解約はしない旨を明記・「解約すべき」の断定なし
+- `content/blog/photo-diary-habit.mdx` を新規追加
+  - 「日記が続かない理由と、写真1枚から続ける方法」。狙いクエリ: 日記 続かない／フォトダイアリー。カテゴリ「日記」新設
+  - DoubleHub 2.0.0の日記（1日1枚・ダブルのリアクション・気分カレンダー・週次ふり返り=Plus）を紹介、`/products/doublehub/` へ導線
+  - 表現ライン準拠: 「完全オフライン」不使用。「写真は端末の外に残らない／AI解析時のみ縮小画像を一時送信・保存されない」で記載
+
+### 検証
+
+- `pnpm build` 成功（EXIT=0・Compiled successfully・静的生成 63/63、新記事2ページ生成を確認）。
