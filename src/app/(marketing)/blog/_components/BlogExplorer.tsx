@@ -1,9 +1,31 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { BlogPostMeta } from '@/lib/content/blog';
+
+/** 公開からこの日数以内は NEW バッジ＋相対日付で表示 */
+const NEW_WINDOW_DAYS = 14;
+
+function daysSince(iso: string, now: number): number {
+  return Math.floor((now - new Date(iso).getTime()) / 86_400_000);
+}
+
+/** マウント後（now あり）は直近を相対表記、それ以外は絶対日付 */
+function formatPublished(iso: string, now: number | null): string {
+  if (now !== null) {
+    const d = daysSince(iso, now);
+    if (d === 0) return '今日';
+    if (d === 1) return '昨日';
+    if (d >= 2 && d < NEW_WINDOW_DAYS) return `${d}日前`;
+  }
+  return new Date(iso).toLocaleDateString('ja-JP', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
 
 interface CategoryCount {
   name: string;
@@ -41,6 +63,9 @@ export function BlogExplorer({ posts, categories, tags, archives }: BlogExplorer
   const [category, setCategory] = useState<string>(ALL);
   const [tag, setTag] = useState<string | null>(null);
   const [archive, setArchive] = useState<string | null>(null);
+  // NEW バッジ・相対日付は静的ビルド時刻でなく閲覧時刻で判定する（SSR とのミスマッチ回避のためマウント後に有効化）
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => setNow(Date.now()), []);
 
   const filtered = useMemo(() => {
     return posts.filter((p) => {
@@ -159,21 +184,34 @@ export function BlogExplorer({ posts, categories, tags, archives }: BlogExplorer
               href={`/blog/${post.slug}/`}
               className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
             >
-              <div className="flex flex-wrap gap-1.5">
-                {post.category ? (
-                  <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary">
-                    {post.category}
-                  </span>
-                ) : (
-                  post.tags.slice(0, 3).map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary"
-                    >
-                      {t}
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {now !== null && daysSince(post.publishedAt, now) < NEW_WINDOW_DAYS && (
+                    <span className="rounded-full bg-primary px-2 py-0.5 text-[0.65rem] font-semibold text-white">
+                      NEW
                     </span>
-                  ))
-                )}
+                  )}
+                  {post.category ? (
+                    <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary">
+                      {post.category}
+                    </span>
+                  ) : (
+                    post.tags.slice(0, 3).map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary"
+                      >
+                        {t}
+                      </span>
+                    ))
+                  )}
+                </div>
+                <time
+                  dateTime={post.publishedAt}
+                  className="shrink-0 pt-0.5 text-xs text-text-faint"
+                >
+                  {formatPublished(post.publishedAt, now)}
+                </time>
               </div>
               <h2 className="mt-4 font-display text-lg font-semibold leading-snug group-hover:text-primary">
                 {post.title}
@@ -181,14 +219,7 @@ export function BlogExplorer({ posts, categories, tags, archives }: BlogExplorer
               <p className="mt-3 text-sm leading-relaxed text-text-muted line-clamp-3">
                 {post.description}
               </p>
-              <div className="mt-auto flex items-center justify-between pt-6 text-xs text-text-faint">
-                <time dateTime={post.publishedAt}>
-                  {new Date(post.publishedAt).toLocaleDateString('ja-JP', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                  })}
-                </time>
+              <div className="mt-auto flex items-center justify-end pt-6 text-xs text-text-faint">
                 {post.readingTime && <span>{post.readingTime} 分</span>}
               </div>
             </Link>
