@@ -19,7 +19,7 @@ export default function BookCompassPrivacyPage() {
     <PrivacyLayout
       title="BookCompass プライバシーポリシー"
       productLabel="BookCompass"
-      lastUpdated="2026-07-11"
+      lastUpdated="2026-07-17"
     >
       <p>
         GrowthLab（以下「当方」）は、BookCompass（以下「本アプリ」）で取り扱う情報について、以下のとおり定めます。なお、現在のリリース版の本アプリは会員登録なしで利用でき、アプリ内データは匿名ユーザーIDに紐づいて管理されます。
@@ -40,6 +40,10 @@ export default function BookCompassPrivacyPage() {
         <li>AIチャット内の会話から抽出される関心軸・検索意図・洞察データ</li>
         <li>XP・称号などのゲーミフィケーションデータ</li>
         <li>購入・サブスクリプション情報（課金状態・プラン種別など）</li>
+        <li>
+          アプリ内案内画面の表示履歴（Compass
+          Proのご案内画面を表示した日時・表示のきっかけとなった機能の種類・匿名ユーザーID・課金管理用の識別子）
+        </li>
         <li>お問い合わせ時にユーザーが任意に送信する情報</li>
       </ul>
       <p>
@@ -60,6 +64,9 @@ export default function BookCompassPrivacyPage() {
         <li>AIチャットで整理された関心軸をもとにした本探し導線・検索体験の改善</li>
         <li>読書記録や結果画面から生成する共有画像機能の提供</li>
         <li>サブスクリプション機能（Compass Pro）の提供</li>
+        <li>
+          アプリ内案内画面の表示状況の分析による、アプリの品質改善およびマーケティング分析（第三者広告目的での利用・外部提供は行いません）
+        </li>
         <li>お問い合わせ対応</li>
         <li>品質改善および不具合調査</li>
       </ul>

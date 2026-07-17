@@ -3785,3 +3785,24 @@ App Store URL:
 ### 検証
 
 - `pnpm build` 成功（EXIT=0・Compiled successfully・静的生成 63/63、新記事2ページ生成を確認）。
+
+---
+
+## 2026-07-17 (JST) — BookCompass プライバシーポリシーにペイウォール計測の記載を追加
+
+ブランチ: `feature/update-bookcompass-privacy-paywall`
+
+### 背景
+
+- BookCompass 2.0.1 にペイウォール（Compass Pro 案内画面）の表示回数・表示文脈を自社 Supabase へ記録する機能を収載（表示日時・表示のきっかけとなった機能の種類・匿名ユーザーID・RevenueCat 識別子）。App Store 提出前に公開プライバシーポリシーへ記載を追加する（2026-07-11 の HubWallet / DoubleHub 対応と同趣旨。BookCompass 分の追随）。
+
+### 実施内容
+
+- `/privacy/bookcompass`
+  - 第1項「取得する情報」に、アプリ内案内画面の表示履歴（表示日時・表示のきっかけとなった機能の種類・匿名ユーザーID・課金管理用の識別子）を追記。
+  - 第2項「利用目的」に、表示状況の分析による品質改善・マーケティング分析を追記（第三者広告目的での利用・外部提供は行わない旨を明記）。
+  - `lastUpdated` を 2026-07-17 に更新。
+
+### 検証
+
+- `pnpm build` 成功（全ルート静的生成を確認）。
