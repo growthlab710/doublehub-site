@@ -44,7 +44,7 @@ export function SeriesSection({ groups }: SeriesSectionProps) {
               <h3 className="mt-1 font-display text-sm font-semibold leading-snug group-hover:text-primary">
                 {g.name}
               </h3>
-              <p className="mt-2 text-xs leading-relaxed text-text-muted line-clamp-2">
+              <p className="mt-2 text-xs leading-relaxed text-text-muted line-clamp-3">
                 {meta?.description ?? first.description}
               </p>
               <div className="mt-auto flex items-center justify-between pt-3 text-[0.7rem] text-text-faint">
