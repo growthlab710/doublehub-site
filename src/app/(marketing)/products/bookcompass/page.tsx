@@ -111,12 +111,6 @@ const features = [
       '本棚は「すべて / お気に入り / 読みたい / 読書中 / 読了」でステータス管理。AIサマリーカードや冊数ログカードで、読書の積み重ねを仲間とシェアすることもできます。',
   },
   {
-    label: 'Reading Special Issue',
-    title: 'あなたの読書が、1冊の特集誌になる。',
-    body:
-      '複数の本にまたがる呟きを、AIが「専属編集者」として横断編集。一定期間の読書が、あなたを主役にした1冊の特集号にまとまります。無料でも半年に1号、Pro なら90日ごとに発行できます。',
-  },
-  {
     label: 'Reading Documentary',
     title: '1冊の読書の歩みが、ドキュメンタリーに。',
     body:
@@ -546,6 +540,61 @@ export default function BookCompassPage() {
               </article>
             ))}
           </div>
+        </Container>
+      </Section>
+
+      {/* ========== 4.5 読書特集号 ========== */}
+      <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Reading Special Issue
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              あなたの読書が、
+              <br className="sm:hidden" />
+              1冊の特集誌になる。
+            </h2>
+            <p className="mt-4 text-sm leading-[1.9] text-text-muted md:text-base">
+              複数の本にまたがる呟きを、AIが「専属編集者」として横断編集。表紙のタイトルから章立て、あなたが立てた「問いの記録」まで、一定期間の読書があなたを主役にした1冊の特集号にまとまります。無料でも半年に1号、Pro なら90日ごとに発行できます。
+            </p>
+          </div>
+
+          <div className="mx-auto mt-12 grid max-w-4xl gap-10 sm:grid-cols-2">
+            <figure className="mx-auto w-full max-w-sm">
+              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
+                <Image
+                  src="/images/bookcompass-special-issue-cover.jpg"
+                  alt="読書特集号の表紙 — 期間の読書に編集者がタイトルをつけ、語った本と呟きの数字が並ぶ"
+                  width={860}
+                  height={1861}
+                  className="h-auto w-full rounded-[1.5rem]"
+                  sizes="(min-width: 640px) 384px, 90vw"
+                />
+              </div>
+              <figcaption className="mt-3 text-center text-xs leading-[1.7] text-text-muted">
+                表紙——その期間のあなたの読書に、専属編集者がタイトルをつけます。
+              </figcaption>
+            </figure>
+            <figure className="mx-auto w-full max-w-sm">
+              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
+                <Image
+                  src="/images/bookcompass-special-issue-inside.jpg"
+                  alt="読書特集号の中面 — 「問いの記録」の章で、期間中に立てた問いと呟きが誌面に編み込まれている"
+                  width={860}
+                  height={1861}
+                  className="h-auto w-full rounded-[1.5rem]"
+                  sizes="(min-width: 640px) 384px, 90vw"
+                />
+              </div>
+              <figcaption className="mt-3 text-center text-xs leading-[1.7] text-text-muted">
+                中面——章立てのなかに「問いの記録」。あなたの呟きが、そのまま誌面に編み込まれます。
+              </figcaption>
+            </figure>
+          </div>
+          <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-text-faint">
+            ※ 誌面は実際の生成例です。内容には AI が生成したコンテンツを含みます。
+          </p>
         </Container>
       </Section>
 

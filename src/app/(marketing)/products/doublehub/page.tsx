@@ -678,30 +678,42 @@ export default function DoubleHubPage() {
             ))}
           </div>
 
-          {/* ダブルのリアクション例 */}
-          <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-border bg-surface p-6 shadow-sm md:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-              Double’s Reaction
-            </p>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl bg-surface-2 p-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
-                  あなたの投稿
-                </p>
-                <p className="mt-2 text-sm text-text-muted">
-                  公園の写真1枚と、気分スタンプ「はれ」だけ。
-                </p>
+          {/* 実際の画面 */}
+          <div className="mx-auto mt-14 grid max-w-4xl gap-10 sm:grid-cols-2">
+            <figure className="mx-auto w-full max-w-sm">
+              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
+                <Image
+                  src="/images/doublehub-diary-entry.jpg"
+                  alt="DoubleHub の日記画面 — 写真1枚と気分スタンプの投稿に、ダブルのひと言リアクションとゲスト視点が添えられている"
+                  width={860}
+                  height={1793}
+                  className="h-auto w-full rounded-[1.5rem]"
+                  sizes="(min-width: 640px) 384px, 90vw"
+                />
               </div>
-              <div className="rounded-xl bg-accent-product/5 p-4 ring-1 ring-accent-product/20">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-                  ダブルのひと言
-                </p>
-                <p className="mt-2 text-sm leading-[1.8] text-text">
-                  いい空ですね。外で過ごした時間、気持ちよさそうです。
-                </p>
+              <figcaption className="mt-3 text-center text-xs leading-[1.7] text-text-muted">
+                写真1枚とスタンプの投稿に、ダブルからひと言。選んだ偉人風のゲスト視点も添えられます（すべて AI 生成ラベルつき）。
+              </figcaption>
+            </figure>
+            <figure className="mx-auto w-full max-w-sm">
+              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
+                <Image
+                  src="/images/doublehub-diary-tab.jpg"
+                  alt="DoubleHub の日記タブ — 未来日記カード、ライフスキャン「最近の自分」、気分・充実度の推移、写真つきカレンダー"
+                  width={860}
+                  height={1786}
+                  className="h-auto w-full rounded-[1.5rem]"
+                  sizes="(min-width: 640px) 384px, 90vw"
+                />
               </div>
-            </div>
+              <figcaption className="mt-3 text-center text-xs leading-[1.7] text-text-muted">
+                日記タブには、未来日記・「最近の自分」（気分と充実度の推移）・写真つきカレンダーが1画面に並びます。
+              </figcaption>
+            </figure>
           </div>
+          <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-text-faint">
+            ※ 画面は実際の利用イメージです。プライバシー保護のため一部をぼかしています。
+          </p>
         </Container>
       </Section>
 
@@ -722,20 +734,38 @@ export default function DoubleHubPage() {
             </p>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-3">
-            {futureDiaryPoints.map((p) => (
-              <article
-                key={p.title}
-                className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
-              >
-                <h3 className="font-display text-base font-semibold leading-[1.4] tracking-[-0.01em] md:text-lg">
-                  {p.title}
-                </h3>
-                <p className="mt-3 text-sm leading-[1.85] text-text-muted">
-                  {p.body}
-                </p>
-              </article>
-            ))}
+          <div className="mx-auto mt-12 grid max-w-5xl items-center gap-10 md:grid-cols-[0.85fr_1.15fr]">
+            <figure className="mx-auto w-full max-w-sm">
+              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
+                <Image
+                  src="/images/doublehub-future-diary-cover.jpg"
+                  alt="未来日記の表紙ページ — 「一冊に、ふたつの未来。」の構成案内と、予測ではないことの明示"
+                  width={860}
+                  height={1794}
+                  className="h-auto w-full rounded-[1.5rem]"
+                  sizes="(min-width: 768px) 384px, 90vw"
+                />
+              </div>
+              <figcaption className="mt-3 text-center text-xs leading-[1.7] text-text-muted">
+                表紙ページ。「これは記録から想像した“もしもの続き”です。予測ではありません」を誌面上でも明示しています。
+              </figcaption>
+            </figure>
+
+            <div className="flex flex-col gap-5">
+              {futureDiaryPoints.map((p) => (
+                <article
+                  key={p.title}
+                  className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
+                >
+                  <h3 className="font-display text-base font-semibold leading-[1.4] tracking-[-0.01em] md:text-lg">
+                    {p.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-[1.85] text-text-muted">
+                    {p.body}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
 
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-[1.8] text-text-faint">
