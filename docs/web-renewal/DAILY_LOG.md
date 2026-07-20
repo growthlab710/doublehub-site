@@ -3909,3 +3909,15 @@ App Store URL:
 ### 検証
 
 - `pnpm build` 成功（EXIT=0・エラー/警告なし・静的生成 67/67）
+
+---
+
+## 2026-07-20 (JST) その3 — 「ダブルの理解」スクショ2枚差し替え＋Integrationsカードの装飾ぼかし除去
+
+ブランチ: `feature/update-understanding-screenshots`
+
+- DoubleHubページ Features「Memory」の画像を新設計の「ダブルの理解」ダッシュボード（理解スコア70/100リング・領域別内訳）に差し替え（`doublehub-understanding-dashboard.jpg`）。本文も「理解のスコアと『いま活きている理解』を確からしさの根拠つきで確認できる」表現へ更新
+- Integrations「BookCompass Link」カードの画像（週次レポート画面の流用だったもの）を「いま活きている理解＋今週のふり返り」画面に差し替え（`doublehub-understanding-insights.jpg`）
+- Integrationsの3カード右上にあった赤・青・紫のグラデーションぼかし装飾を削除（角で切れて尖って見える違和感の解消。ユーザー指摘）。`accent` プロパティも撤去
+- 未使用となった旧 `doublehub-understanding.jpg`・`doublehub-weekly.jpg` を削除
+- `pnpm build` 成功（EXIT=0・エラー/警告なし・67/67）

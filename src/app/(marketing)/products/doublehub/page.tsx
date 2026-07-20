@@ -87,9 +87,9 @@ const features = [
     label: 'Memory',
     title: '使い続けるほど、ダブルがあなたを覚えていく。',
     body:
-      '毎週火曜の送迎、水曜のジム——行動パターンを自動で学習。「覚えておいて」と言えば、明示的なメモリとして保存されます。設定画面からはダブルの理解度（カルテ）を確認・編集でき、提案には必ず「理由」がついて、ブラックボックス化しません。',
-    image: '/images/doublehub-understanding.jpg',
-    imageAlt: 'DoubleHub のダブルの理解度ダッシュボード画面',
+      '毎週火曜の送迎、水曜のジム——行動パターンを自動で学習。「覚えておいて」と言えば、明示的なメモリとして保存されます。設定の「ダブルの理解」ダッシュボードでは、理解のスコアと「いま活きている理解」を確からしさの根拠つきで確認でき、ブラックボックス化しません。',
+    image: '/images/doublehub-understanding-dashboard.jpg',
+    imageAlt: 'DoubleHub の「ダブルの理解」ダッシュボード — 理解スコアと領域別の内訳、いま活きている理解',
   },
 ];
 
@@ -143,7 +143,6 @@ const integrations = [
       '歩数・睡眠・アクティビティの傾向をダブルが受け取り、「最近あまり眠れていないみたいですね。明日の 5 件は少し多いかもしれません」のように、身体と予定を結びつけた気づきを届けます。ポジティブな健康トレンドも見逃さず、褒めてくれます。読み取り専用。書き込みは一切しません。',
     image: '/images/doublehub-integrations.jpg',
     imageAlt: 'DoubleHub のヘルスケア連携・カレンダー連携設定画面',
-    accent: 'from-[#fca5a5] via-[#f87171] to-[#ef4444]',
   },
   {
     tag: 'EventKit',
@@ -152,16 +151,14 @@ const integrations = [
       '期限付き ToDo はそのまま iOS カレンダーに載って管理できます。iOS 設定で Google アカウントを追加していれば Google カレンダーにも自動反映（OAuth 不要）。予定とタスクを 1 つの時間軸で扱えます。',
     image: '/images/doublehub-calendar.jpg',
     imageAlt: 'DoubleHub のカレンダー画面（月間ビュー）',
-    accent: 'from-[#93c5fd] via-[#60a5fa] to-[#3b82f6]',
   },
   {
     tag: 'BookCompass Link',
     title: '読書で深めた自己理解が、会話に溶け込む',
     body:
       'BookCompass で読書中に言葉にした気づき・最近の関心テーマ・読んだ本の余韻が、ダブルとの会話に「文脈」として自然に流れ込みます。「最近どう？」と切り出されたとき、自分が切り口を提供しなくても、ダブルの方からあなたの関心を踏まえて話題を出してくれます。',
-    image: '/images/doublehub-weekly.jpg',
-    imageAlt: 'DoubleHub と BookCompass の連携イメージ',
-    accent: 'from-[#c4b5fd] via-[#a78bfa] to-[#8b5cf6]',
+    image: '/images/doublehub-understanding-insights.jpg',
+    imageAlt: 'ダブルの理解画面 — いま活きている理解と週次レポート「今週のふり返り」',
   },
 ];
 
@@ -802,10 +799,6 @@ export default function DoubleHubPage() {
                     fill
                     className="object-cover object-top"
                     sizes="(min-width: 768px) 300px, 90vw"
-                  />
-                  <div
-                    aria-hidden
-                    className={`pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${h.accent} opacity-30 blur-2xl mix-blend-screen`}
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-6">
