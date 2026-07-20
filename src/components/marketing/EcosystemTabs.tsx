@@ -75,11 +75,12 @@ const panels: InsightPanel[] = [
     name: 'DoubleHub 本体',
     status: 'current',
     statusLabel: 'Current',
-    tabDesc: 'ToDo・メモ・予定、ダブルとの対話',
+    tabDesc: 'ToDo・メモ・予定・日記、ダブルとの対話',
     panelLabel: 'Input → Insight',
     title: 'DoubleHub 本体は、生活のリアルタイムな流れを残す。',
     inputs: [
       '音声やテキストで投げた ToDo・メモ',
+      '1日1枚の日記（写真・気分スタンプ・ひと言）',
       'カレンダーの予定と期限の配置',
       'チャットで漏れる迷いや感情',
       '「覚えておいて」と伝えたメモリ',

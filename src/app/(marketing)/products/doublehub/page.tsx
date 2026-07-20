@@ -15,12 +15,19 @@ const PRODUCT_HERO_POSTER = '/images/DoubleHub-Concept.png';
 
 export const metadata: Metadata = {
   title:
-    'DoubleHub — もう一人の自分が、毎日の頭の中を整える。AI ToDo・メモ・対話アプリ',
+    'DoubleHub — もう一人の自分が、毎日を整える。ToDo・日記・AI相棒アプリ',
   description:
-    'DoubleHub は、あなた自身に向かう情報を届ける、依存させない設計の AI パートナー。ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダー、読書記録（BookCompass）も束ねて「もう一人の自分（ダブル）」を育てる iOS アプリ。広告ではなく直接課金で、滞在時間ではなくあなたの納得を優先します。',
+    'DoubleHub は、写真1枚と気分スタンプで残せる日記と、投げるだけで整う ToDo・メモを「もう一人の自分（ダブル）」が覚えていく iOS アプリ。日記の写真は端末から出ません。記録が集まった月には、あなたの日記から「もしもの続き」を想像した未来日記も届きます。広告ではなく直接課金で、滞在時間ではなくあなたの納得を優先します。',
   keywords: [
     'DoubleHub',
     'ダブルハブ',
+    '日記アプリ',
+    'フォトダイアリー',
+    '写真日記',
+    '気分記録',
+    'AI 日記',
+    '未来日記',
+    '三日坊主',
     'AI ToDo',
     'AI タスク管理',
     'AI メモ',
@@ -29,18 +36,16 @@ export const metadata: Metadata = {
     'ヘルスケア連携',
     'カレンダー連携',
     'BookCompass 連携',
-    '読書連携',
     'もう一人の自分',
-    'AI 生活アシスタント',
     'ジャーナリングアプリ',
     '振り返り習慣',
     'iOS アプリ',
   ],
   alternates: { canonical: '/products/doublehub/' },
   openGraph: {
-    title: 'DoubleHub — もう一人の自分が、毎日の頭の中を整える。',
+    title: 'DoubleHub — もう一人の自分が、毎日を整える。',
     description:
-      'ToDo・メモ・対話を一つに。ヘルスケアとカレンダーを束ね、あなたを誰よりも理解する「ダブル」を育てる iOS アプリ。',
+      '写真1枚と気分スタンプの日記、投げるだけで整う ToDo・メモ。あなたを誰よりも理解する「ダブル」を育てる iOS アプリ。',
     url: 'https://www.doublehub.jp/products/doublehub/',
     type: 'website',
     siteName: 'DoubleHub',
@@ -49,9 +54,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'DoubleHub — もう一人の自分が、毎日の頭の中を整える。',
+    title: 'DoubleHub — もう一人の自分が、毎日を整える。',
     description:
-      'ToDo・メモ・対話・ヘルスケア・カレンダーを束ねる AI 生活アシスタント。',
+      '日記・ToDo・メモ・対話・ヘルスケア・カレンダーを束ねる、ToDo・日記・AI相棒アプリ。',
     images: ['/images/og-default.jpg'],
   },
 };
@@ -88,8 +93,49 @@ const features = [
   },
 ];
 
-// Ver.1.1.0 新機能（3カード）
-const v110Highlights = [
+// 日記（2.0.0〜）の3つの柱
+const diaryPillars = [
+  {
+    tag: '1日1枚',
+    title: '写真1枚と気分スタンプだけで、今日が残る。',
+    body:
+      '文章が出てこない日は、今日撮った写真を1枚選んで、気分スタンプを1タップするだけでいい。それでもダブルがその日の記録にひと言添えてくれます。ことばで書きたい日は、ひと言メモも。三日坊主を責めない、低摩擦の日記です。',
+  },
+  {
+    tag: 'カレンダー',
+    title: '月をながめるだけで、気分の波が見えてくる。',
+    body:
+      'カレンダーには写真のサムネイルと、気分の「天気」アイコンが並びます。晴れの日、くもりの日。がんばって分析しなくても、ながめるだけで自分の1ヶ月の波が見えてきます。週ごとのふり返りは、ダブルが見出しとハイライト写真つきでまとめてくれます。',
+  },
+  {
+    tag: 'プライバシー',
+    title: '日記の写真は、端末から出ません。',
+    body:
+      '日記の写真は端末の中に保存され、外部に保存されることはありません。ダブルがリアクションを生成するときだけ縮小画像を一時送信し、サーバーには残りません。気分や傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
+  },
+];
+
+// 未来日記（2.1.0）の説明カード
+const futureDiaryPoints = [
+  {
+    title: '2つの「続き」が届く',
+    body:
+      'あなたの記録から「このままの続き」と「分かれ目を変えた続き」、2つの未来を未来の日付の日記として綴ります。分かれ目は、実際の記録を根拠に選ばれます。',
+  },
+  {
+    title: '予測でも占いでもない',
+    body:
+      'これは想像上のシミュレーションであることを、誌面上でも明示しています。当てにいくのではなく、「もしもの続き」を読むことで、いまの自分をながめ直すための演出です。',
+  },
+  {
+    title: '翌月に答え合わせ',
+    body:
+      '想像した未来と、実際に過ごした1ヶ月。翌月に読み返すと、自分の分かれ目がどちらへ進んだのかを、日記の続きとして確かめられます。',
+  },
+];
+
+// つながる情報（HealthKit / EventKit / BookCompass）
+const integrations = [
   {
     tag: 'HealthKit',
     title: 'ヘルスケアと結びつく「気づき」',
@@ -159,18 +205,6 @@ const homeCategories = [
   },
 ];
 
-// Ver.1.1.0 改善点サマリ
-const v110Improvements = [
-  '期限に時刻を設定できる',
-  'チャットからの一括操作・相対期限変更（「全部終わった」「3 日延ばして」など）',
-  '期限切れ ToDo の視認性改善（色と日付）',
-  'チャット失敗時の再送 UX と遅延時のエラー表示',
-  'データ保持ポリシーをアプリ内から確認可能',
-  '朝/夜サマリの読みやすさ向上（冗長な「ダブルのひとこと」を廃止）',
-  '天気の精度改善（時間帯ベースの降水確率）',
-  '週次レポートで、今週の自分のペースをやさしく整理',
-];
-
 // 1日のシナリオ
 const scenes = [
   {
@@ -193,9 +227,9 @@ const scenes = [
   },
   {
     time: '夜',
-    title: 'やさしい振り返り',
+    title: '写真1枚で、今日を残す',
     body:
-      'ダブルから「今日はどんな 1 日でしたか？」とやさしく声がかかります。一言返すだけで、ダブルが今日の出来事を整理してくれます。',
+      '今日撮った写真を1枚選んで、気分スタンプを押すだけ。ことばが出てこない日はそれで十分です。ダブルがひと言リアクションを添えてくれて、1日がそっと締まります。',
   },
   {
     time: '週末',
@@ -237,21 +271,34 @@ const beforeAfter = [
     after:
       'チャットから「全部終わった」「明日に回して」「3 日延ばして」と自然文で一括操作',
   },
+  {
+    before: '日記アプリを、何度も三日坊主で終えてきた',
+    after:
+      '写真1枚と気分スタンプだけの日でもOK。ダブルからひと言リアクションが返ってくる',
+  },
 ];
 
 // FAQ（AIO/SEO 対策）
 const faqs = [
   {
     q: 'DoubleHub は無料で使えますか？',
-    a: 'はい。無料プランでは AI による ToDo / メモの自動仕分けが月 20 回まで、ホームの「今日」カテゴリのお知らせ、天気、ウィジェット、音声入力、ユーザー辞書などの基本機能をすべてお使いいただけます。「入力するだけで整理してくれる」価値を体験いただけます。',
+    a: 'はい。無料プランでは、1日1枚の日記（写真・気分スタンプ・メモ）とダブルの写真リアクション（週 3 回）、日記のふり返り（記録が一定数ある週を対象に月 1 回）、AI による ToDo / メモの自動仕分け（月 20 回まで）、天気、ウィジェット、音声入力、ユーザー辞書などをお使いいただけます。未来日記も、初回の 1 通は無料でまるごと読めます。',
+  },
+  {
+    q: '日記の写真はどこに保存されますか？',
+    a: '日記の写真は端末の中に保存され、端末から出ません。ダブルがリアクションを生成するときだけ縮小画像を一時送信し、サーバーには保存されません。気分や充実度の記録、傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
+  },
+  {
+    q: '未来日記とはなんですか？',
+    a: '蓄積された日記から、「このままの続き」と「分かれ目を変えた続き」という 2 つの未来を、未来の日付の日記として想像するコンテンツです。予測や占いではなく、実際の記録を根拠にした想像上のシミュレーションであることを誌面上でも明示しています。日記の材料が集まった月に届き、無料では初回の 1 通をフルで体験できます。Plus では月 1 回フルで届き、翌月に「答え合わせ」として読み返せます。',
   },
   {
     q: 'BookCompass と連携すると何が変わりますか？',
     a: '同じあなたなのにアプリをまたぐと毎回ゼロから説明し直す——その負担がなくなります。BookCompass で読書中に言葉にした気づきや最近の関心テーマ、読んだ本の余韻が、ダブルとの会話に「文脈」として自然に流れ込みます。たとえば「最近自信がなくて…」と話したとき、過去に読書中にたどり着いていた答えを踏まえて受け止めてくれたり、「最近どう？」とダブルから話題を切り出してもらえたりします。連携は任意で、いつでもオフにできます。',
   },
   {
-    q: 'Plus プランではなにが解放されますか？',
-    a: 'Plus（月 ¥480 / 年 ¥4,800）では、AI 自動仕分けが無制限になり、ダブルとの AI チャット、ホームの「気づき」「話したいこと」カテゴリ、朝/夜サマリ、週次ふり返り、ヘルスケア連携、カレンダー連携が利用できます。「自分のことを継続的に見てくれる理解者」としてのダブルが本格的に動き始めます。',
+    q: 'Plus / Premium プランではなにが解放されますか？',
+    a: 'Plus（月 ¥480 / 年 ¥4,800）では、ダブルとの AI チャット（直近 7 日の日記も踏まえて応答）、日記 AI リアクションが毎日、日記のふり返りが毎週、日記のゲスト（選んだ偉人風の視点がひとことを添える）、日記から読み取った活動傾向、未来日記の月 1 回フル配信、AI 自動仕分けの無制限化が利用できます。Premium（月 ¥1,280 / 年 ¥12,800）では、Plus の全機能に加えて、複数の視点で考えを整理する「評議会」が使えます。',
   },
   {
     q: '対応 OS を教えてください。',
@@ -300,6 +347,10 @@ const vsTable = [
   {
     category: '既存のメモ・ジャーナルアプリ',
     doublehub: '入力するだけで構造化され、後から会話で参照できる',
+  },
+  {
+    category: '一般的な日記アプリ',
+    doublehub: '写真1枚とスタンプだけの日でも成立。ダブルからひと言が返ってきて、蓄積は未来日記につながる',
   },
   {
     category: '他の AI 秘書アプリ',
@@ -353,13 +404,13 @@ const jsonLd = {
       '@type': 'SoftwareApplication',
       name: 'DoubleHub',
       alternateName: 'ダブルハブ',
-      applicationCategory: 'ProductivityApplication',
+      applicationCategory: 'LifestyleApplication',
       operatingSystem: 'iOS 17.0 以上',
       description:
-        'ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダーも束ねる AI 生活アシスタント。「もう一人の自分（ダブル）」を育てる iOS アプリ。',
+        '写真1枚と気分スタンプの日記と、投げるだけで整う ToDo・メモを「もう一人の自分（ダブル）」が覚えていく iOS アプリ。ヘルスケア・カレンダー・読書記録も束ねる、ToDo・日記・AI相棒。',
       url: 'https://www.doublehub.jp/products/doublehub/',
       image: 'https://www.doublehub.jp/images/doublehub-icon-rich.png',
-      softwareVersion: '1.1.0',
+      softwareVersion: '2.1.0',
       author: {
         '@type': 'Organization',
         name: 'GrowthLab',
@@ -384,18 +435,34 @@ const jsonLd = {
           price: '4800',
           priceCurrency: 'JPY',
         },
+        {
+          '@type': 'Offer',
+          name: 'Premium (月額)',
+          price: '1280',
+          priceCurrency: 'JPY',
+        },
+        {
+          '@type': 'Offer',
+          name: 'Premium (年額)',
+          price: '12800',
+          priceCurrency: 'JPY',
+        },
       ],
       downloadUrl: appStoreUrl,
       featureList: [
+        '1日1枚の日記（写真・気分スタンプ・ひと言メモ）',
+        'ダブルの写真リアクション',
+        '日記カレンダー（気分の天気アイコン）',
+        '週次ふり返り',
+        '未来日記（記録から「もしもの続き」を想像するシミュレーション）',
         'AI による ToDo / メモ自動仕分け',
         'ダブルとの AI チャット',
         'ヘルスケア連携（HealthKit / 読み取り専用）',
         'カレンダー双方向同期（EventKit）',
         'BookCompass 連携（読書から得た気づきを会話に反映）',
-        'ホームの「ダブルからのお知らせ」3 カテゴリ',
         'iOS 音声入力対応',
-        '朝/夜サマリ・週次ふり返り',
         'ホーム画面ウィジェット',
+        '評議会（Premium / 複数の視点での整理）',
       ],
     },
     {
@@ -460,7 +527,7 @@ export default function DoubleHubPage() {
                 className="h-10 w-10 rounded-lg border border-border object-cover shadow-sm"
               />
               <span className="inline-flex items-center rounded-full border border-accent-product/30 bg-accent-product/10 px-3 py-1 text-xs font-semibold text-accent-product">
-                DoubleHub · Ver.1.1.0
+                DoubleHub · Ver.2.1.0
               </span>
             </div>
             <h1 className="mt-5 font-display text-[clamp(1.75rem,1rem+2.8vw,3rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
@@ -469,7 +536,7 @@ export default function DoubleHubPage() {
               毎日の頭の中を整える。
             </h1>
             <p className="mt-5 max-w-lg text-text-muted">
-              DoubleHub は ToDo・メモ・対話を一つにまとめ、ヘルスケアやカレンダー、読書記録（BookCompass）の情報も束ねて、あなたを誰よりも理解する「もう一人の自分（ダブル）」を育てる iOS アプリです。
+              DoubleHub は、写真1枚と気分スタンプで残せる日記と、投げるだけで整う ToDo・メモ・対話をひとつにまとめ、ヘルスケアやカレンダー、読書記録（BookCompass）の情報も束ねて、あなたを誰よりも理解する「もう一人の自分（ダブル）」を育てる iOS アプリです。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
@@ -575,23 +642,125 @@ export default function DoubleHubPage() {
         </Container>
       </Section>
 
-      {/* ========== 3. Ver.1.1.0 ハイライト ========== */}
+      {/* ========== 2.5. 日記（2.0.0〜の顔） ========== */}
       <Section spacing="md">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-              What’s New
+              Diary
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              写真1枚と気分スタンプの、
+              <br className="sm:hidden" />
+              1日1枚日記。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              日記が続かなかったのは、意志の弱さではなく「書くことを求められすぎていた」からかもしれません。DoubleHub の日記は、写真1枚・スタンプ1タップの日があっていい設計。それでも、ダブルはちゃんと見てくれています。
+            </p>
+          </div>
+
+          <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-3">
+            {diaryPillars.map((d) => (
+              <article
+                key={d.title}
+                className="flex flex-col rounded-2xl border border-border bg-surface p-6 shadow-sm"
+              >
+                <span className="inline-flex w-fit items-center rounded-full border border-accent-product/30 bg-accent-product/10 px-3 py-1 text-xs font-semibold text-accent-product">
+                  {d.tag}
+                </span>
+                <h3 className="mt-4 font-display text-base font-semibold leading-[1.4] tracking-[-0.01em] md:text-lg">
+                  {d.title}
+                </h3>
+                <p className="mt-3 text-sm leading-[1.85] text-text-muted">
+                  {d.body}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          {/* ダブルのリアクション例 */}
+          <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-border bg-surface p-6 shadow-sm md:p-8">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+              Double’s Reaction
+            </p>
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl bg-surface-2 p-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
+                  あなたの投稿
+                </p>
+                <p className="mt-2 text-sm text-text-muted">
+                  公園の写真1枚と、気分スタンプ「はれ」だけ。
+                </p>
+              </div>
+              <div className="rounded-xl bg-accent-product/5 p-4 ring-1 ring-accent-product/20">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                  ダブルのひと言
+                </p>
+                <p className="mt-2 text-sm leading-[1.8] text-text">
+                  いい空ですね。外で過ごした時間、気持ちよさそうです。
+                </p>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 2.7. 未来日記（2.1.0） ========== */}
+      <Section spacing="md" surface="alt">
+        <Container width="wide">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Future Diary · New in 2.1.0
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              記録から「もしもの続き」を想像する、
+              <br className="sm:hidden" />
+              未来日記。
+            </h2>
+            <p className="mt-5 text-sm leading-[1.9] text-text-muted md:text-base">
+              日記の材料が集まった月に、ダブルがあなたの記録の中の相関をながめて、「未来のある1日の日記」を綴って届けます。読み終えたあと、いまの自分を少しだけ違う場所からながめられる——そんな、想像上のシミュレーションです。
+            </p>
+          </div>
+
+          <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-3">
+            {futureDiaryPoints.map((p) => (
+              <article
+                key={p.title}
+                className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
+              >
+                <h3 className="font-display text-base font-semibold leading-[1.4] tracking-[-0.01em] md:text-lg">
+                  {p.title}
+                </h3>
+                <p className="mt-3 text-sm leading-[1.85] text-text-muted">
+                  {p.body}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-[1.8] text-text-faint">
+            ※ 未来日記は毎月ではなく、日記の材料が集まった月に届きます。無料では初回の 1 通をフルで体験でき、Plus では月 1 回フルで届きます。
+          </p>
+        </Container>
+      </Section>
+
+      {/* ========== 3. つながる情報 ========== */}
+      <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Integrations
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
               ダブルが、生活の中心に。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              ToDo・メモ・対話だけだったダブルが、ヘルスケア・カレンダー、そして読書から得た気づきまで束ねるようになりました。予定と身体と気持ちと「内面の輪郭」を、ひとつの時間軸で扱えます。
+              ToDo・メモ・対話・日記に加えて、ヘルスケア・カレンダー、そして読書から得た気づきまで。予定と身体と気持ちと「内面の輪郭」を、ひとつの時間軸で扱えます。
             </p>
           </div>
 
           <div className="mx-auto mt-14 grid max-w-5xl gap-8 md:grid-cols-3">
-            {v110Highlights.map((h) => (
+            {integrations.map((h) => (
               <article
                 key={h.title}
                 className="relative flex flex-col overflow-hidden rounded-3xl border border-border bg-surface shadow-sm"
@@ -622,23 +791,6 @@ export default function DoubleHubPage() {
                 </div>
               </article>
             ))}
-          </div>
-
-          {/* 細かい改善点 */}
-          <div className="mx-auto mt-10 max-w-5xl rounded-2xl border border-border bg-surface-2/60 p-6 md:p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-              Other Refinements
-            </p>
-            <h3 className="mt-2 font-display text-lg font-semibold leading-[1.3]">
-              日常で触れるところを、もっと馴染むように。
-            </h3>
-            <ul className="mt-5 grid gap-2.5 sm:grid-cols-2">
-              {v110Improvements.map((t) => (
-                <li key={t} className="flex items-start gap-2 text-sm text-text-muted">
-                  <Check /> {t}
-                </li>
-              ))}
-            </ul>
           </div>
         </Container>
       </Section>
@@ -702,7 +854,7 @@ export default function DoubleHubPage() {
               ホームに並ぶのは、今のあなた向けの声がけ。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              ホーム画面上部の「ダブルからのお知らせ」は、性質の違う 3 カテゴリで構成されています。今日の行動に効くもの、読むこと自体に価値があるもの、そして話したくなるもの。
+              ホームの「ダブルからのお知らせ」フィードには、性質の違う 3 種類の声がけが届きます。今日の行動に効くもの、読むこと自体に価値があるもの、そして話したくなるもの。
             </p>
           </div>
 
@@ -854,6 +1006,12 @@ export default function DoubleHubPage() {
                 <Check /> 個人情報や健康データを広告目的で利用することは一切ありません
               </li>
               <li className="flex items-start gap-2 text-sm text-text-muted">
+                <Check /> 日記の写真は端末の中に保存。AI 解析時のみ縮小画像を一時送信し、サーバーには残りません
+              </li>
+              <li className="flex items-start gap-2 text-sm text-text-muted">
+                <Check /> 気分・充実度の記録と傾向の分析は端末の中で完結。心理データを新規にサーバー保存しません
+              </li>
+              <li className="flex items-start gap-2 text-sm text-text-muted">
                 <Check /> ヘルスケアデータは読み取り専用・生データの保存なし
               </li>
               <li className="flex items-start gap-2 text-sm text-text-muted">
@@ -979,7 +1137,7 @@ export default function DoubleHubPage() {
               広告や滞在時間ではなく、あなたから直接いただく形で運営しています。アプリの利益とあなたの利益の向きを揃えるための選択です。
             </p>
           </div>
-          <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
+          <div className="mx-auto mt-14 grid max-w-6xl gap-6 md:grid-cols-3">
             {/* Free */}
             <div className="rounded-2xl border border-border bg-surface p-8 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
@@ -992,23 +1150,23 @@ export default function DoubleHubPage() {
                 </span>
               </div>
               <p className="mt-3 text-xs text-text-muted">
-                「入力するだけで整理してくれる」価値を体験
+                日記と「投げるだけの整理」を体験
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                <li className="flex items-start gap-2">
+                  <Check /> 1日1枚の日記・カレンダー（写真リアクションは週 3 回）
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 日記のふり返り 月 1 回（記録が一定数ある週が対象）
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 未来日記 初回 1 通をフル体験
+                </li>
                 <li className="flex items-start gap-2">
                   <Check /> AI による ToDo / メモ自動仕分け（月 20 回まで）
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> ホームの「今日」カテゴリのお知らせ
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 音声入力・ユーザー辞書
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 天気・ホーム画面ウィジェット（全サイズ）
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 起動時の軽い振り返り
+                  <Check /> 音声入力・ユーザー辞書・天気・ウィジェット
                 </li>
               </ul>
             </div>
@@ -1036,19 +1194,50 @@ export default function DoubleHubPage() {
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
+                  <Check /> ダブルとの <strong className="font-semibold text-text">AI チャット</strong>（直近 7 日の日記も踏まえて応答）
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 日記 AI リアクション <strong className="font-semibold text-text">毎日</strong>・ふり返り <strong className="font-semibold text-text">毎週</strong>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 未来日記 月 1 回フル配信
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 日記のゲスト（偉人風の視点）・活動傾向の読み取り
+                </li>
+                <li className="flex items-start gap-2">
                   <Check /> <strong className="font-semibold text-text">AI 自動仕分け 無制限</strong>
                 </li>
+              </ul>
+            </div>
+
+            {/* Premium */}
+            <div className="rounded-2xl border border-border bg-surface p-8 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                Subscription
+              </p>
+              <h3 className="mt-2 font-display text-lg font-bold">Premium</h3>
+              <div className="mt-4 flex items-baseline gap-1">
+                <span className="font-display text-4xl font-bold tracking-[-0.03em]">
+                  ¥1,280
+                </span>
+                <span className="text-sm text-text-muted">／ 月（税込）</span>
+              </div>
+              <div className="mt-2 inline-flex items-center rounded-full bg-accent-product/10 px-2.5 py-1 text-[0.7rem] font-semibold text-accent-product">
+                年額 ¥12,800 プランもあります
+              </div>
+              <p className="mt-3 text-xs text-text-muted">
+                Plus の全機能に「評議会」が加わる
+              </p>
+              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
-                  <Check /> ダブルとの <strong className="font-semibold text-text">AI チャット</strong>
+                  <Check /> Plus の全機能
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> ホームの「気づき」「話したいこと」カテゴリ解放
+                  <Check /> <strong className="font-semibold text-text">評議会</strong>——複数の視点で考えを整理する思考実験ツール
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 朝／夜サマリ、週次ふり返り
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> ヘルスケア連携・カレンダー連携
+                  <Check /> BookCompass 連携中は、読んだ本の視点も議論に加わる
                 </li>
               </ul>
             </div>

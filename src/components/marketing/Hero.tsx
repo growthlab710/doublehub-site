@@ -65,7 +65,7 @@ export function Hero() {
             AI パートナー。
           </h1>
           <p className="mx-auto mt-7 max-w-2xl text-base leading-relaxed text-text-muted md:text-lg">
-            学び（BookCompass）、身体（TrainNote）、お金（HubWallet）、タスク——<br className="hidden md:inline" />
+            学び（BookCompass）、身体（TrainNote）、お金（HubWallet）、日記・タスク——<br className="hidden md:inline" />
             複数のサービスをつないで、あなた専用の AI パートナーを育てます。
           </p>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-text-muted md:text-base">
