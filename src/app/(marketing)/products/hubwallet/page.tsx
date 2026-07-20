@@ -29,6 +29,11 @@ export const metadata: Metadata = {
 
 const screenshots = [
   {
+    src: '/images/hubwallet-recurring-dashboard.jpg',
+    alt: 'ホームの固定費・サブスク ミニダッシュボード — 月額換算・月額構成・30日以内の予定タイムラインと解約期限バッジ',
+    caption: '固定費・サブスク — 30日以内の予定と解約期限がひと目',
+  },
+  {
     src: '/images/hubwallet-screen-home.jpg',
     alt: 'HubWallet ホーム画面 — 今月の支出と未整理',
     caption: 'ホーム — 今月の支出と未整理がひと目で分かる',
@@ -380,7 +385,7 @@ export default function HubWalletPage() {
               HubWallet の主な画面。
             </h2>
             <p className="mt-4 text-xs text-text-faint">
-              ※ 表示中のデータはすべて開発用のモックです。
+              ※ 画面の金額・サービス名はサンプルデータです。
             </p>
           </div>
 

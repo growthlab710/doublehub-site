@@ -64,8 +64,8 @@ const spotlights: Spotlight[] = [
     appStoreUrl:
       'https://apps.apple.com/jp/app/hubwallet-ai%E5%AE%B6%E8%A8%88%E7%B0%BF/id6766543029',
     appStoreLabel: 'HubWallet',
-    image: '/images/hubwallet-screen-home.jpg',
-    imageAlt: 'HubWallet ホーム画面 — 今月の支出と未整理',
+    image: '/images/hubwallet-recurring-dashboard.jpg',
+    imageAlt: 'HubWallet ホームの固定費・サブスク ミニダッシュボード — 30日以内の予定と解約期限バッジ',
   },
 ];
 

@@ -3885,3 +3885,27 @@ App Store URL:
 ### 検証
 
 - `pnpm build` 成功（EXIT=0・エラー/警告なし・全ページ静的生成）
+
+---
+
+## 2026-07-20 (JST) その2 — 優先度Aスクリーンショット6枚の組み込み
+
+ブランチ: `feature/add-screenshots-202607`
+
+### 背景
+
+- 前回のサイト最新化で新設した日記・未来日記・特集号・サブスク管理の各セクションがテキストのみだったため、ユーザー提供の実機スクショ6枚を組み込み。
+
+### 実施内容
+
+- 画像処理: 全6枚を幅860pxへリサイズ・JPG最適化（74〜314KB）。**DoubleHub日記タブのスクショは「週のふり返り」行に人名が写っていたため、PILでガウスぼかしを適用してから配置**（公開サイトへの実名掲載を回避）
+- 配置画像: `doublehub-diary-entry.jpg`（日記投稿詳細）・`doublehub-diary-tab.jpg`（日記タブ全景）・`doublehub-future-diary-cover.jpg`（未来日記表紙）・`bookcompass-special-issue-cover.jpg` / `-inside.jpg`（特集号表紙・中面）・`hubwallet-recurring-dashboard.jpg`（固定費・サブスクダッシュボード）
+- **DoubleHub** (`products/doublehub/page.tsx`): 日記セクションのモック「リアクション例」を実画面2枚（投稿詳細＋日記タブ）に置き換え。未来日記セクションを表紙画像＋説明カード縦積みの2カラムへ再構成。「ぼかし処理あり」「実際の利用イメージ」の注記を追加
+- **BookCompass** (`products/bookcompass/page.tsx`): Featuresグリッドの特集号カードを独立セクション「読書特集号」（4.5節・表紙＋中面の2枚showcase）へ格上げ。「AI生成コンテンツを含む」注記つき
+- **HubWallet** (`products/hubwallet/page.tsx`): スクショギャラリー先頭に固定費・サブスクダッシュボードを追加。ギャラリー注記を「サンプルデータ」表記に更新
+- **トップページ** (`SpotlightSection.tsx`): HubWalletのSpotlight画像を旧ホーム画面→固定費・サブスクダッシュボード（2.0.0の顔）に差し替え
+- 受け渡し用 `_incoming/` は処理後に削除（未加工の元画像をリポジトリに残さない）
+
+### 検証
+
+- `pnpm build` 成功（EXIT=0・エラー/警告なし・静的生成 67/67）
