@@ -7,7 +7,7 @@ export const siteConfig = {
   // page title `${name} — ${tagline}` として SERP / ブラウザタブに表示される。
   tagline: 'あなたを理解し、毎日を一緒に整える AI パートナー',
   description:
-    '学び（BookCompass）、身体（TrainNote）、お金（HubWallet）、タスク——複数のサービスをつないで、あなた専用の AI パートナーを育てる DoubleHub のエコシステム。',
+    '学び（BookCompass）、身体（TrainNote）、お金（HubWallet）、日記・タスク——複数のサービスをつないで、あなた専用の AI パートナーを育てる DoubleHub のエコシステム。',
   // canonical ホストは www 付き。apex は Vercel 側で 308 → www に転送されるため、
   // sitemap / OGP / 構造化データの URL は全て www に揃え、GSC の
   // 「ページにリダイレクトがあります」を発生させない。
@@ -36,18 +36,18 @@ export const products = [
   {
     slug: 'doublehub',
     name: 'DoubleHub',
-    tagline: '自己理解から始まる、頭の整理術。',
+    tagline: 'もう一人の自分と、毎日を残す。',
     description:
-      'タスクとメモを一体化した、自己理解のためのノート。完了タスクも捨てずに、あなたの行動ログとして残ります。',
+      '写真1枚と気分スタンプの日記、投げるだけで整う ToDo・メモ。記録をダブル（AI）が覚えて、あなたへの理解を深めていきます。',
     href: '/products/doublehub/',
     accentClass: 'theme-doublehub',
     icon: '🧠',
     appIcon: '/images/doublehub-icon.jpg',
     features: [
-      'ToDo とメモが一体化',
-      '完了タスクが行動ログになる',
-      'プライベート / ワーク切替',
-      'パターン分析で自己理解へ',
+      '写真1枚と気分スタンプの1日1枚日記',
+      'ToDo・メモは投げるだけで AI が自動仕分け',
+      '未来日記——記録から「もしもの続き」を想像',
+      '写真は端末から出ないプライバシー設計',
     ],
   },
   {
@@ -55,16 +55,16 @@ export const products = [
     name: 'BookCompass',
     tagline: '本との対話を、羅針盤に。',
     description:
-      '読んだ本を「知の地図」として可視化。ISBN 検索で素早く登録、Mutter（呟き）で短文感想を残せます。',
+      '読んだ本を「知の地図」として可視化。読みながらひと言つぶやくだけで、AI があなたの読書を特集誌やドキュメンタリーに編み上げます。',
     href: '/products/bookcompass/',
     accentClass: 'theme-bookcompass',
     icon: '📘',
     appIcon: '/images/bookcompass-app-icon.jpg',
     features: [
       'ISBN / タイトルで本を登録',
-      'Mutter で短文感想を残す',
-      '読書履歴を地図として俯瞰',
-      'AI との対話で読書を深める',
+      '呟きで読書中の気づきを残す',
+      '読書特集号——あなたの読書が1冊の特集誌に',
+      '3人の AI 読書パートナーと対話',
     ],
   },
   {
@@ -72,16 +72,16 @@ export const products = [
     name: 'TrainNote',
     tagline: '鍛えるを、記録する。',
     description:
-      'シンプルなトレーニング記録アプリ。部位別のヒートマップで、継続と成長を可視化。',
+      'トレーニング記録・ボディフォト・AI コーチをつなげる継続支援アプリ。体重だけでは分からない前進を、写真・記録・AI で振り返れます。',
     href: '/products/trainnote/',
     accentClass: 'theme-trainnote',
     icon: '💪',
     appIcon: '/images/trainnote-app-icon.jpg',
     features: [
       'シンプルなワークアウト記録',
-      '部位別カレンダーヒートマップ',
-      'AI コーチが継続をサポート',
-      'ピークと成長を自動集計',
+      'ボディフォトの蓄積と 2〜4 枚比較',
+      'AI ボディ変化レポート（AI Coach Plus）',
+      '部位別の回復状況と PEAK バッジ',
     ],
     comingSoonWeb: true,
   },
@@ -90,14 +90,14 @@ export const products = [
     name: 'HubWallet',
     tagline: '節約疲れしない家計簿。',
     description:
-      'レシートは「撮るだけ」、仕分けは隙間時間にまとめて。銀行連携不要・全プラン広告ゼロの、使い方を理解するための家計簿。',
+      'レシートは「撮るだけ」、仕分けは隙間時間にまとめて。サブスク・固定費の管理と解約忘れを防ぐ通知まで。銀行連携不要・全プラン広告ゼロの家計簿。',
     href: '/products/hubwallet/',
     accentClass: 'theme-hubwallet',
     icon: '💰',
     appIcon: '/images/hubwallet-app-icon.jpg',
     features: [
       '撮って溜める・あとで仕分ける',
-      'Gemini OCR とカテゴリ推定',
+      'サブスク・固定費管理と解約忘れ防止の通知',
       '銀行連携不要 · ローカルファースト',
       '全プラン広告なし',
     ],

@@ -3857,3 +3857,31 @@ App Store URL:
 - `series-meta.ts` の説明文4本を2〜3行に収まる長さへ圧縮（見切れ「…」の解消。ユーザー指摘対応）
 - `SeriesSection.tsx` の clamp を 2行→3行に緩和（フォールバック時の保険として維持）
 - `pnpm build` 成功（EXIT=0・67/67）
+
+---
+
+## 2026-07-20 (JST) — サイト全体の情報最新化（4アプリの公開済みバージョンへ同期）＋CMO観点の改善
+
+ブランチ: `feature/update-site-refresh-202607`
+
+### 背景
+
+- 各プロダクトページの情報が古く（DoubleHubはVer.1.1.0表記のまま）、公開済みの大型アップデートが未反映だった。正本 `マーケティング/10.情報/アプリバージョン・機能履歴.md`（2026-07-20時点: BookCompass 2.0.1 / TrainNote 3.1.0 / HubWallet 2.0.0 / DoubleHub 2.1.0）へ同期。
+- 審査待ちバージョン（BookCompass 2.1.0「ブックバディの一言」・TrainNote 3.2.0）は掲載しない方針を厳守。
+
+### 実施内容
+
+- **DoubleHub** (`products/doublehub/page.tsx`): Ver.2.1.0へ更新。日記セクション新設（1日1枚・カレンダー・「写真は端末から出ません」）、未来日記セクション新設（「もしもの続き」語彙・「材料が集まった月に届く」表記・予測/占い否定の明示）。旧Ver.1.1.0ハイライトは「Integrations」に再編、改善点リストは削除。プランをFree/Plus/Premiumの3枚構成に刷新（アプリ内ペイウォール比較表と整合: リアクション週3/毎日、ふり返り月1/毎週、仕分け月20回/無制限、評議会=Premium）。FAQに日記写真の保存先・未来日記の2問を追加。JSON-LD（softwareVersion 2.1.0・Premiumオファー・featureList・LifestyleApplicationへ変更）とメタデータを日記軸に更新。ホームお知らせは統合フィード表記へ修正
+- **BookCompass** (`products/bookcompass/page.tsx`): 読書特集号・読書ドキュメンタリー（読者の声つき）・読前の問い/フラッシュバック/本と本のあいだをFeaturesに追加。チャット相手選択（2.0.1）を反映。プラン比較表に特集号（半年1号/90日ごと）・ドキュメンタリー（月15回）の行を追加
+- **TrainNote** (`products/trainnote/page.tsx`): ボディフォト（撮影・2〜4枚比較・TrainNote内のみ保存）、AIボディ変化レポート＋XP（AI Coach Plus）、コーチチェックイン（16問カタログ・出典チップ）を追加。表現ラインを厳守（身体変化の断定なし・「継続の振り返りを手伝う」表現）
+- **HubWallet** (`products/hubwallet/page.tsx`): サブスク・固定費管理（トライアル終了/更新前/解約期限の通知・タイムライン・コスト多面表示）、月次レポート刷新、変動固定費入力、コントロールセンター撮影を追加。「解約手続きは代行しない」FAQを新設（自動解約の誤解防止）。旧Premium将来予定ボックス・「初回リリース時点」「Phase 2」等の古い表記を削除
+- **ホーム関連** (`config.ts`・`Hero`・`RoadmapSection`・`SpotlightSection`・`EcosystemTabs`): 4アプリのカード文言を現行機能へ同期（DoubleHub=日記軸、HubWallet=サブスク管理、TrainNote=ボディフォト、BookCompass=特集号）。Heroの列挙に「日記」を追加
+
+### 表現ラインの適用
+
+- DoubleHub: 生産性語彙・「完全オフライン」不使用。「写真は端末から出ません」「想像上のシミュレーション」等のOK語彙のみ使用。未来日記は「毎月」と言わず「材料が集まった月に」
+- HubWallet連携（DoubleHub側で結合済みだが公開ポリシー未記載）はサイトに掲載せず
+
+### 検証
+
+- `pnpm build` 成功（EXIT=0・エラー/警告なし・全ページ静的生成）

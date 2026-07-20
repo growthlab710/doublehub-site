@@ -13,12 +13,12 @@ const appStoreBadge =
 export const metadata: Metadata = {
   title: 'HubWallet — 節約疲れしない家計簿。 | DoubleHub',
   description:
-    'HubWallet は、レシートを「撮るだけ」で溜めて、隙間時間にまとめて仕分けるための iOS 家計簿アプリです。銀行連携不要・全プラン広告ゼロ。お金の使い方を、反省ではなく自己理解の手がかりに変えていきます。',
+    'HubWallet は、レシートを「撮るだけ」で溜めて、隙間時間にまとめて仕分ける iOS 家計簿アプリです。サブスク・固定費の管理と、無料トライアル終了・更新前・解約期限の通知にも対応。銀行連携不要・全プラン広告ゼロで、お金の使い方を自己理解の手がかりに変えていきます。',
   alternates: { canonical: '/products/hubwallet/' },
   openGraph: {
     title: 'HubWallet — 節約疲れしない家計簿。 | DoubleHub',
     description:
-      'レシートは「撮るだけ」、仕分けは隙間時間にまとめて。銀行連携なし・広告ゼロの iOS 家計簿アプリ。',
+      'レシートは「撮るだけ」、仕分けは隙間時間にまとめて。サブスクの解約忘れは通知で防ぐ。銀行連携なし・広告ゼロの iOS 家計簿アプリ。',
     url: 'https://www.doublehub.jp/products/hubwallet/',
     type: 'website',
     siteName: 'DoubleHub',
@@ -92,7 +92,7 @@ const features = [
     label: 'Input',
     title: 'カメラ、共有シート、音声、手入力。',
     body:
-      'カメラ撮影は連続可・撮った瞬間に未整理へ保存。Safari・メール・Files・写真からの共有シート、音声入力、手入力にも対応。「一番ラクな入り口」をその時々で選べます。',
+      'カメラ撮影は連続可・撮った瞬間に未整理へ保存。Safari・メール・Files・写真からの共有シート、音声入力、手入力にも対応。コントロールセンターからのワンタップ撮影起動（iOS 18 以上）もでき、「一番ラクな入り口」をその時々で選べます。',
   },
   {
     label: 'AI Recognition',
@@ -110,13 +110,25 @@ const features = [
     label: 'Reports',
     title: '月次・6ヶ月推移・年間見込みを自動集計。',
     body:
-      '月間支出、6 ヶ月推移、親カテゴリ別の進捗、年間換算サマリ、年間支出見込みを自動でまとめます。数字を眺めるだけで、自分の生活コストの輪郭が見えてきます。',
+      '月間支出、6 ヶ月推移、親カテゴリ別の進捗、「ハイライト」章、「今月の発見」の数字サマリーを自動でまとめます。数値は集計のみで AI に渡さない事実ベース設計。数字を眺めるだけで、自分の生活コストの輪郭が見えてきます。',
   },
   {
     label: 'Recurring',
     title: '家賃・光熱費・サブスクは、テンプレ化。',
     body:
-      '毎月手動で記録するのが手間な定期支出は、テンプレートとして登録しておけば自動計上。固定費に加えて、変動額モードにも対応しています。',
+      '毎月手動で記録するのが手間な定期支出は、テンプレートとして登録しておけば自動計上。変動する固定費も「前回と同じ」「数ヶ月平均」のワンタップ入力や通知長押しでの同額記録に対応し、実績はグラフで見返せます。',
+  },
+  {
+    label: 'Subscriptions',
+    title: 'サブスクの「うっかり」を、通知で防ぐ。',
+    body:
+      '外部サービスの無料トライアル終了日を登録すると、期限前に通知が届き、ホームで「続ける／やめる」を確認できます。年額更新の 1 週間前、解約期限の 5 日前などのリマインドにも対応。少額の月額は通知しない、ノイズを抑えた設計です。',
+  },
+  {
+    label: 'Timeline & Cost View',
+    title: '30日以内にいくら出ていくかが、一目で分かる。',
+    body:
+      '定期支出を「次の予定・30 日以内の合計」として時系列タイムラインで表示。月額換算・年額換算・30 日予定額をリングゲージや構成バーで多面的に確認でき、ホームのミニダッシュボードから追加・編集もすぐにできます。',
   },
   {
     label: 'Insight',
@@ -163,7 +175,7 @@ const flows = [
     desc: 'カテゴリ別の支出傾向、続いた習慣／頓挫した習慣、自己投資と浪費の境目に関するシグナル。',
   },
   {
-    label: '将来返ってくる提案（Phase 2 以降）',
+    label: '将来返ってくる提案（順次拡張）',
     desc: 'お金・時間・体調の関係を踏まえた、「どんな使い方が自分を充電させるか」の提案。',
   },
 ];
@@ -184,6 +196,10 @@ const faqs = [
   {
     q: '広告は表示されますか？',
     a: '全プランで広告は一切表示しません。Free プランも同じ条件です。',
+  },
+  {
+    q: 'サブスクの解約もアプリからできますか？',
+    a: 'いいえ。HubWallet が行うのは、無料トライアル終了日や更新日・解約期限が近づいたときの通知と、ホームでの「続ける／やめる」の確認までです。外部サービスの解約手続きそのものを代行することはありません。解約は各サービスの手順に沿って行ってください。',
   },
   {
     q: 'いつから使えますか？',
@@ -227,7 +243,7 @@ export default function HubWalletPage() {
               撮って溜める、あとで整理する。
             </h1>
             <p className="mt-5 max-w-lg text-text-muted">
-              HubWallet は、レシートを「撮るだけ」で溜めて、隙間時間にまとめて仕分ける iOS の家計簿アプリです。銀行連携なし・全プラン広告ゼロ。お金の使い方を、反省の対象から自己理解の手がかりへと変えていきます。
+              HubWallet は、レシートを「撮るだけ」で溜めて、隙間時間にまとめて仕分ける iOS の家計簿アプリです。サブスクや固定費の管理、「無料のつもりが課金開始」を防ぐ通知にも対応。銀行連携なし・全プラン広告ゼロで、お金の使い方を反省の対象から自己理解の手がかりへと変えていきます。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
@@ -499,7 +515,7 @@ export default function HubWalletPage() {
                   'AI 処理時のみ、必要なデータを AI に送信',
                   'Sign in with Apple に対応',
                   '全プランで広告は一切なし',
-                  '将来 Supabase 同期は Phase 2 で予定（任意）',
+                  '数値レポートは集計のみで AI に渡さない事実ベース設計',
                 ].map((t) => (
                   <li
                     key={t}
@@ -584,7 +600,7 @@ export default function HubWalletPage() {
             ))}
           </div>
           <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-text-faint">
-            ※ DoubleHub との具体的な連携体験は Phase 2 以降で順次拡張予定です。初回リリース時点では「ユーザーが書き出せる API」を提供する程度です。
+            ※ DoubleHub との具体的な連携体験は、今後順次拡張していく予定です。
           </p>
         </Container>
       </Section>
@@ -600,10 +616,10 @@ export default function HubWalletPage() {
               まずは無料で、家計簿を始める。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              基本の記録機能は Free プランから使えます。AI による OCR・音声入力・カテゴリ推定をたくさん使いたい方は、月額 ¥380 の Plus プランへ。
+              基本の記録機能とサブスク・固定費管理は Free プランから使えます。AI による OCR・音声入力・カテゴリ推定をたくさん使いたい方は、月額 ¥380 の Plus プランへ。
             </p>
             <p className="mt-3 text-xs text-text-faint">
-              ※ 初回リリース時点のプラン構成です。年額プランは提供していません。
+              ※ 年額プランは提供していません。価格は執筆時点のもので、最新の料金は App Store 上の表示をご確認ください。
             </p>
           </div>
           <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
@@ -741,14 +757,6 @@ export default function HubWalletPage() {
             </table>
           </div>
 
-          <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-border bg-surface-2 p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-text-muted">
-              Premium プランについて（将来予定）
-            </p>
-            <p className="mt-3 text-sm leading-relaxed text-text-muted">
-              Phase 2 以降に Premium プランを予定しています。トレンド予測、固定費シミュレーション、ライフプランなど、より踏み込んだ未来予測系の機能を中心に検討中です。現在は未提供です。
-            </p>
-          </div>
         </Container>
       </Section>
 

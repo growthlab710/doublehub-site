@@ -32,7 +32,7 @@ const spotlights: Spotlight[] = [
     iconSrc: '/images/trainnote-app-icon.jpg',
     titleLines: ['5人の専門AIコーチが、', 'あなたの筋トレを変える。'],
     desc:
-      '190以上の科学論文を参照する5名のAIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。DoubleHub につながると、継続パターンがさらに深い洞察に変わります。',
+      '190以上の科学論文を参照する5名のAIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。ボディフォトの蓄積と AI ボディ変化レポートで、体重だけでは分からない前進も振り返れます。',
     href: '/products/trainnote/',
     appStoreUrl:
       'https://apps.apple.com/us/app/trainnote/id6759539755?itscg=30200&itsct=apps_box_artwork&mttnsubad=6759539755',
@@ -45,7 +45,7 @@ const spotlights: Spotlight[] = [
     iconSrc: '/images/bookcompass-app-icon.jpg',
     titleLines: ['読書記録ではなく、', '思考の流れを残す地図。'],
     desc:
-      '読んだ本、残したメモ、繰り返し考えるテーマから、価値観の移り変わりを可視化。DoubleHub に接続すると「何を大事にしているか」が輪郭を持ちはじめます。',
+      '読んだ本、残したメモ、繰り返し考えるテーマから、価値観の移り変わりを可視化。呟きは AI が「読書特集号」として、あなたを主役にした1冊の特集誌に編み上げます。DoubleHub に接続すると「何を大事にしているか」が輪郭を持ちはじめます。',
     href: '/products/bookcompass/',
     appStoreUrl:
       'https://apps.apple.com/us/app/bookcompass-%E8%AA%AD%E6%9B%B8%E7%9F%A5%E8%AD%98%E3%83%9E%E3%83%83%E3%83%97/id6760604663?itscg=30200&itsct=apps_box_badge&mttnsubad=6760604663',
@@ -59,7 +59,7 @@ const spotlights: Spotlight[] = [
     iconSrc: '/images/hubwallet-app-icon.jpg',
     titleLines: ['お金の使い方を、', '理解するための家計簿。'],
     desc:
-      'レシートは撮るだけ、仕分けは隙間時間に。銀行連携不要・全プラン広告ゼロで、支出の傾向から「どんな使い方が自分を充電させるか」が見えてきます。DoubleHub につながると、お金の選択も「もう一人の自分」と一緒に考えられるようになります。',
+      'レシートは撮るだけ、仕分けは隙間時間に。サブスクや固定費の更新・解約期限は通知でお知らせ。銀行連携不要・全プラン広告ゼロで、支出の傾向から「どんな使い方が自分を充電させるか」が見えてきます。DoubleHub につながると、お金の選択も「もう一人の自分」と一緒に考えられるようになります。',
     href: '/products/hubwallet/',
     appStoreUrl:
       'https://apps.apple.com/jp/app/hubwallet-ai%E5%AE%B6%E8%A8%88%E7%B0%BF/id6766543029',

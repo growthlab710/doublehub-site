@@ -8,12 +8,12 @@ import { Button } from '@/components/ui/Button';
 export const metadata: Metadata = {
   title: 'Book Compass — 読んだ本が、知識の地図になる | DoubleHub',
   description:
-    '読みながら一言つぶやくだけ。AIがあなたの読書を「知識の地図」に整え、3人のAI読書パートナーと深めていく読書アプリ。冊数ではなく思考の方向を可視化します。',
+    '読みながら一言つぶやくだけ。AIがあなたの読書を「知識の地図」に整え、読書特集号やドキュメンタリーに編み上げる読書アプリ。3人のAI読書パートナーと、冊数ではなく思考の方向を深めます。',
   alternates: { canonical: '/products/bookcompass/' },
   openGraph: {
     title: 'Book Compass — 読んだ本が、知識の地図になる | DoubleHub',
     description:
-      '読みながら一言つぶやくだけ。AIがあなたの読書を「知識の地図」に整え、3人のAI読書パートナーと深めていく読書アプリ。冊数ではなく思考の方向を可視化します。',
+      '読みながら一言つぶやくだけ。AIがあなたの読書を「知識の地図」に整え、読書特集号やドキュメンタリーに編み上げる読書アプリ。3人のAI読書パートナーと、冊数ではなく思考の方向を深めます。',
     url: 'https://www.doublehub.jp/products/bookcompass/',
     type: 'website',
     siteName: 'DoubleHub',
@@ -109,6 +109,24 @@ const features = [
     title: '本棚とシェアで、知識が自分のものになる。',
     body:
       '本棚は「すべて / お気に入り / 読みたい / 読書中 / 読了」でステータス管理。AIサマリーカードや冊数ログカードで、読書の積み重ねを仲間とシェアすることもできます。',
+  },
+  {
+    label: 'Reading Special Issue',
+    title: 'あなたの読書が、1冊の特集誌になる。',
+    body:
+      '複数の本にまたがる呟きを、AIが「専属編集者」として横断編集。一定期間の読書が、あなたを主役にした1冊の特集号にまとまります。無料でも半年に1号、Pro なら90日ごとに発行できます。',
+  },
+  {
+    label: 'Reading Documentary',
+    title: '1冊の読書の歩みが、ドキュメンタリーに。',
+    body:
+      '1冊分の呟きから、AIが読書の歩みを読み応えのある誌面に編集（Pro）。誌面の末尾には「読者の声」として、ブックバディと読書メンターがあなたの読書の歩みへの感想を寄せてくれます。',
+  },
+  {
+    label: 'Questions & Serendipity',
+    title: '読む前の問いと、よみがえる呟き。',
+    body:
+      '読み始める前に「何を知りたいか」を一言記録して、能動的な読書に。ホームには過去の呟きが日替わりで再登場し、別々に読んだ本同士のつながりも、AIが気づきカードでそっと教えてくれます。',
   },
 ];
 
@@ -494,7 +512,7 @@ export default function BookCompassPage() {
           </div>
 
           <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-text-muted">
-            3人のパートナーとの対話に加えて、自由に質問できる「フリーチャット」、これまでの会話を振り返れる「過去のチャット」も利用できます。
+            チャットの開始時に、ブックバディ／読書メンター／思考コーチから今日の相手を選べます。長い会話でも文脈を保って対話でき、これまでの会話を振り返れる「過去のチャット」も利用できます。
           </p>
         </Container>
       </Section>
@@ -811,6 +829,9 @@ export default function BookCompassPage() {
                 <li className="flex items-start gap-2">
                   <Check /> AI チャット 生涯 30 回まで
                 </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 読書特集号 半年に 1 号
+                </li>
               </ul>
               <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
                 ※ 無料の 30 回はリセットなしの生涯枠です。消費しきると過去チャットの閲覧のみになります。
@@ -845,6 +866,9 @@ export default function BookCompassPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 全ての本の特性分析・読書サマリーを閲覧
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 読書特集号 90 日ごと・読書ドキュメンタリー 月 15 回
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> いつでも解約可能・過去の記録は残る
@@ -902,6 +926,16 @@ export default function BookCompassPage() {
                     <td className="px-4 py-3 text-text">Push 型レコメンド（探す）</td>
                     <td className="px-4 py-3 text-center text-text-muted">無制限</td>
                     <td className="px-4 py-3 text-center text-text">無制限</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">読書特集号（複数の本の横断編集）</td>
+                    <td className="px-4 py-3 text-center text-text-muted">半年に 1 号</td>
+                    <td className="px-4 py-3 text-center text-text">90 日ごと</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-3 text-text">読書ドキュメンタリー（読者の声つき）</td>
+                    <td className="px-4 py-3 text-center text-text-muted">—</td>
+                    <td className="px-4 py-3 text-center text-text">月 15 回</td>
                   </tr>
                   <tr>
                     <td className="px-4 py-3 text-text">AI チャット</td>

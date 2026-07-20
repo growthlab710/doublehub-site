@@ -8,12 +8,12 @@ import { Button } from '@/components/ui/Button';
 export const metadata: Metadata = {
   title: 'TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える',
   description:
-    '190以上の科学論文を参照する5人の専門AIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。iOS専用の筋トレ記録×AIコーチングアプリ。',
+    '190以上の科学論文を参照する5人の専門AIコーチと、ボディフォト × AIボディ変化レポート。写真と記録で体の変化を見逃さない、iOS専用の筋トレ記録×AIコーチングアプリ。',
   alternates: { canonical: '/products/trainnote/' },
   openGraph: {
     title: 'TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える',
     description:
-      '190以上の科学論文を参照する5人の専門AIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。',
+      '190以上の科学論文を参照する5人の専門AIコーチと、ボディフォト × AIボディ変化レポート。写真と記録で体の変化を見逃さない筋トレアプリ。',
     url: 'https://www.doublehub.jp/products/trainnote/',
     type: 'website',
     siteName: 'DoubleHub',
@@ -92,6 +92,24 @@ const features = [
     body:
       'ホーム画面からチップを切り替えるだけで、今週と今月のレビューを即確認。ボリューム推移と変化率のグラフで、トレーニングの成長を直感的に把握できます。',
   },
+  {
+    label: 'Body Photo',
+    title: '写真と記録で、体の変化を見逃さない。',
+    body:
+      'ボディフォトを撮影・保存して、月別グリッドや向きタグで整理。2〜4枚を並べて比較できます。写真は TrainNote の中だけに保存され、外には出ません。体重・体脂肪率もホイールピッカーでさっと記録でき、ボディタブの TODAY カードに今日の状況がまとまります。',
+  },
+  {
+    label: 'AI Body Report',
+    title: '体重だけでは分からない前進を、AIと振り返る。',
+    body:
+      'Before/After の写真と記録から、AIが変化レポートを生成（AI Coach Plus）。Visual XP・Training XP などのスコアと PR ハイライトで「見える変化」と「積み上げ」を言語化し、継続の振り返りを手伝います。身体を評価するのではなく、続けてきた歩みを一緒に見返すためのレポートです。',
+  },
+  {
+    label: 'Coach Check-in',
+    title: '16の質問カタログから、今日の相談を始める。',
+    body:
+      'フォーム・栄養・回復など、よくある相談の質問カタログからワンタップでコーチチェックイン（AI Coach Plus）。回答には参照した知識の出典チップが付き、根拠を確かめながら読み進められます。',
+  },
 ];
 
 const screenshots = [
@@ -135,7 +153,7 @@ export default function TrainNotePage() {
               あなたの筋トレを変える。
             </h1>
             <p className="mt-5 max-w-lg text-text-muted">
-              筋トレ記録とAIコーチングが一体化した iOS アプリ。190以上の科学論文をもとに、あなたの記録・傾向に合わせた個別提案を届けます。
+              筋トレ記録とAIコーチングが一体化した iOS アプリ。190以上の科学論文をもとに、あなたの記録・傾向に合わせた個別提案を届けます。ボディフォトと記録の蓄積から、体重だけでは分からない前進も AI と一緒に振り返れます。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
@@ -386,6 +404,9 @@ export default function TrainNotePage() {
                   <Check /> グラフ・ウィークリー/マンスリーレビュー
                 </li>
                 <li className="flex items-start gap-2">
+                  <Check /> ボディフォトの撮影・比較、体重・体脂肪率の記録
+                </li>
+                <li className="flex items-start gap-2">
                   <Check /> カレンダー表示・過去日の記録作成
                 </li>
                 <li className="flex items-start gap-2">
@@ -420,6 +441,9 @@ export default function TrainNotePage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> グラフ・ウィークリー/マンスリーレビュー
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> ボディフォトの撮影・比較、体重・体脂肪率の記録
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> カレンダー表示・過去日の記録作成
@@ -461,10 +485,13 @@ export default function TrainNotePage() {
                   <Check /> <strong className="font-semibold text-text">5 名の専門 AI コーチ</strong>によるサポート
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> チャットで深掘り相談
+                  <Check /> <strong className="font-semibold text-text">AI ボディ変化レポート</strong>（写真と記録から生成）
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 6 領域（記録・栄養・回復・計画・心理・知識）に対応
+                  <Check /> コーチチェックイン（16 の質問カタログ・出典チップつき）
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> チャットで深掘り相談
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 190 以上の論文に基づくアドバイス
