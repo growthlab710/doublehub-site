@@ -1,0 +1,156 @@
+---
+title: "Gemini 3.6 Flash・3.5 Flash-Lite・3.5 Flash Cyber 登場——Googleが出した『3つ』と、出さなかった『3.5 Pro』"
+description: "2026年7月21日、GoogleはGeminiの新モデル3種——3.6 Flash・3.5 Flash-Lite・3.5 Flash Cyber——を一度に公開しました。旗艦の3.5 Proは出ませんでした。各モデルの価格・ベンチマーク・提供先、17%のトークン削減が意味するもの、遅れている3.5 Proと事前学習が始まったGemini 4の現在地まで、一次情報を突き合わせてファクトチェックし、個人開発者の視点で整理します。"
+publishedAt: "2026-07-23"
+updatedAt: "2026-07-23"
+category: "AIニュース"
+slug: "gemini-3-6-flash-3-5-flash-lite-july-2026"
+readingTime: 10
+summary: "Googleは2026年7月21日、Gemini 3.6 Flash・3.5 Flash-Lite・3.5 Flash Cyberの3モデルを公開したが、旗艦の3.5 Proは含まれなかった（Bloombergは社内の性能目標未達による遅延と報道）。主力の3.6 Flashは3.5 Flash比で出力トークンを約17%削減し、出力単価を100万トークンあたり$9.00→$7.50に引き下げつつDeepSWEを37%→49%へ改善。低価格帯の3.5 Flash-Liteは毎秒350トークンの高速・低価格を打ち出し、Flash Cyberは政府・信頼できるパートナー限定でサイバー脆弱性の発見と修正に特化する。Gemini 4はすでに事前学習が始まっている。"
+tags:
+  - "Gemini 3.6 Flash"
+  - "Gemini 3.5 Flash-Lite"
+  - "Google"
+  - "AIエージェント"
+  - "AIコーディング"
+  - "AIニュース"
+faq:
+  - question: "Gemini 3.6 Flash・3.5 Flash-Lite・3.5 Flash Cyber はいつ発表されましたか？"
+    answer: "3モデルはいずれも2026年7月21日にGoogleが発表しました。3.6 Flash と 3.5 Flash-Lite は発表当日から Gemini アプリや Gemini API、Google AI Studio、Android Studio などで利用でき、3.5 Flash-Lite は Google 検索にも展開されます。3.5 Flash Cyber は一般提供ではなく、CodeMender を通じた政府・信頼できるパートナー向けの限定パイロットです。"
+  - question: "Gemini 3.6 Flash は 3.5 Flash から何が変わりましたか？"
+    answer: "Googleによると、主力の『働き者（workhorse）』モデルとしてコーディング・知的作業・マルチモーダル性能が向上し、Artificial Analysis Index上で出力トークンを約17%削減しました。ベンチマークではDeepSWEが37%→49%、MLE-Benchが49.7%→63.9%、コンピュータ操作のOSWorld-Verifiedが78.4%→83.0%に改善。API価格は入力が100万トークンあたり$1.50で据え置き、出力が$9.00から$7.50へ下がりました。"
+  - question: "Gemini 3.5 Flash-Lite の価格と特徴は？"
+    answer: "3.5 Flash-Liteは低レイテンシ・高スループット向けの最も安価な3.5クラスのモデルで、API価格は100万トークンあたり入力$0.30・出力$2.50です。Artificial Analysis Indexで毎秒約350トークンの出力速度を出し、Terminal-Bench 2.1では旧世代の3.1 Flash-Liteの31%に対して54%を記録。エージェント検索や大量のドキュメント処理など、速度と単価が効く用途に向きます。"
+  - question: "なぜ Gemini 3.5 Pro は今回リリースされなかったのですか？"
+    answer: "旗艦モデルの3.5 Proは今回の3モデルに含まれませんでした。Bloombergは、社内の性能目標を満たせず立ち上げが遅れていると報じています。Googleのプロダクトリードは『パートナーとテスト中で、近く提供したい』としていますが、2026年5月には『来月』とされていた予定を過ぎている状況です。"
+  - question: "Gemini 4 の状況は？"
+    answer: "Googleは今回の発表にあわせて、Gemini 4に向けて『これまでで最も野心的な事前学習を開始した』と明らかにしています。具体的なリリース時期は示されていません。"
+---
+
+**結論から言うと、今回のGoogleの発表は「一番賢いモデルを出す」話ではなく、「エージェントを安く・速く回すためのコストを下げる」話です。** 2026年7月21日、Googleは[Gemini 3.6 Flash・3.5 Flash-Lite・3.5 Flash Cyber の3モデルを一度に公開しました](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/)。旗艦にあたる **3.5 Pro は、今回は出ませんでした。**
+
+まず事実確認から。ニュースでは「Gemini 3.6が出た」とまとめて語られがちですが、正確には **発表されたのは"Flash系"の3モデル**であり、日付は7月21日です。この記事では、各モデルの価格・ベンチマーク・提供先を一次情報で確認したうえで、「出なかった3.5 Pro」と「もう始まっているGemini 4」まで含めて、個人開発者・アプリ運営者の視点で整理します。
+
+---
+
+## 何が発表されたか——3モデルの全体像
+
+| モデル | 位置づけ | 提供状況 |
+|---|---|---|
+| **Gemini 3.6 Flash** | 主力の「働き者」モデル。コーディング・知的作業・マルチモーダルを底上げ | 当日から一般提供（API / Gemini アプリ 等） |
+| **Gemini 3.5 Flash-Lite** | 低レイテンシ・高スループット向けの最安クラス | 当日から一般提供（API / Gemini アプリ / Google 検索） |
+| **Gemini 3.5 Flash Cyber** | サイバー脆弱性の発見・修正に特化した専用モデル | 政府・信頼できるパートナー限定のパイロット |
+
+3つに共通するテーマは **「賢さの限界を押し上げる」ではなく「同じ仕事をより少ないトークン・より低い単価でこなす」** ことです。エージェント（AIが複数ステップを自律実行する使い方）が普及するにつれ、モデルの"1回あたりの賢さ"よりも"タスクあたりの実効コスト"が効いてくる、という流れに沿った発表と言えます。
+
+---
+
+## Gemini 3.6 Flash——「賢さ」より「トークン効率」
+
+今回の主役は Gemini 3.6 Flash です。Googleはこれを主力の**「働き者（workhorse）」モデル**と位置づけ、[Artificial Analysis Index上で 3.5 Flash 比で出力トークンを約17%削減した](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/)としています。DeepSWEのような一部タスクでは最大65%のトークン削減にも言及しています。
+
+トークン削減がなぜ重要かというと、**エージェント用途では「単価×消費トークン量」で請求額が決まる**からです。同じ結果を出すのに使うトークンが17%減れば、単価が同じでもコストは17%下がります。今回は単価そのものも下がっているので、効果は二重になります。
+
+### 価格（100万トークンあたり・API）
+
+| | 入力 | 出力 |
+|---|---|---|
+| **Gemini 3.6 Flash** | $1.50 | $7.50 |
+| （参考）3.5 Flash | $1.50 | $9.00 |
+
+出典: [9to5Google](https://9to5google.com/2026/07/21/gemini-3-6-flash-launch/)・[Google 公式ブログ](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/)。入力は据え置き、**出力単価が $9.00 → $7.50 に約17%下がりました。**
+
+### ベンチマーク（3.5 Flash からの改善）
+
+| ベンチマーク | 内容 | 3.6 Flash | 3.5 Flash |
+|---|---|---|---|
+| DeepSWE | 長時間のソフトウェア開発 | **49%** | 37% |
+| MLE-Bench | 機械学習エンジニアリング | **63.9%** | 49.7% |
+| OSWorld-Verified | コンピュータ操作 | **83.0%** | 78.4% |
+| GDPval-AA v2 | 知的作業 | **1421** | 1349 |
+
+出典: [Google 公式ブログ](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/)。ベンチマークの読み方そのものに不安がある方は、[LLMベンチマーク入門](/blog/llm-benchmark-guide-basics/)もあわせてどうぞ。
+
+ナレッジカットオフ（学習データの締め日）も更新されました。[9to5Googleの報道](https://9to5google.com/2026/07/21/gemini-3-6-flash-launch/)によれば、**2025年1月から2026年3月へと前進**しています（Google公式ブログでは明示されていないため、この点は報道ベースの情報として扱ってください）。
+
+安全性については、Googleは化学・生物・放射性物質・核（CBRN）やサイバー攻撃悪用の領域で**Frontier Safetyのセーフガードを強化した**としています。提供先は Gemini API、Google AI Studio、Android Studio、Google Antigravity、Gemini Enterprise Agent Platform、Gemini Enterprise アプリ、Gemini アプリと幅広く、発表当日から使えます。
+
+---
+
+## Gemini 3.5 Flash-Lite——速さと安さに全振り
+
+もう一つの新モデル、Gemini 3.5 Flash-Lite は **「とにかく速く・安く」** に振り切ったモデルです。エージェント検索や大量ドキュメント処理のような、低レイテンシ・高スループットが効く用途に向きます。[Artificial Analysis Index で毎秒約350トークンの出力速度](https://deepmind.google/models/gemini/flash-lite/)を出すとされています。
+
+### 価格（100万トークンあたり・API）
+
+| | 入力 | 出力 |
+|---|---|---|
+| **Gemini 3.5 Flash-Lite** | $0.30 | $2.50 |
+
+3.6 Flash と比べても入力で1/5、出力で1/3という価格帯です。「賢さは Flash ほど要らないが、回数を大量にこなしたい」処理のコストを一段下げにくる位置づけです。
+
+### ベンチマーク
+
+Googleは、3月に出た旧世代の **3.1 Flash-Lite** と比べて大きく伸びたと説明しています。
+
+| ベンチマーク | 内容 | 3.5 Flash-Lite | 3.1 Flash-Lite |
+|---|---|---|---|
+| Terminal-Bench 2.1 | ターミナル操作・エージェント | **54%** | 31% |
+| GDM-MRCR v2 | 長文コンテキスト | **72.2%** | 60.1% |
+| GDPval-AA v2 | 実タスク実行 | **1140** | 642 |
+
+さらにGoogleは、上位だったはずの **Gemini 3 Flash を一部で上回る**とも述べています（SWE-Bench Pro: 54.2% vs 49.6%、OSWorld-Verified: 74.0% vs 65.1%）。出典はいずれも[Google 公式ブログ](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/)です。提供先は API・AI Studio・Android Studio・Gemini アプリに加えて **Google 検索**にも展開されます。
+
+---
+
+## Gemini 3.5 Flash Cyber——脆弱性を見つけて直す専用モデル
+
+3つ目は毛色が違います。Gemini 3.5 Flash Cyber は、**ソフトウェアの脆弱性を見つけて修正することに特化**してファインチューニングされたモデルで、大型モデルより低い単価で動くのが狙いです。[Google 公式ブログ](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/)によれば、**複数の Flash Cyber エージェントが協調して1つの統合レポートを生成する**構成をとります。
+
+ただしこれは一般提供ではありません。Googleの脆弱性修正エージェント **CodeMender** を通じて、**政府や信頼できるパートナーに限定した限定アクセスのパイロット**として提供される予定です。攻撃にも防御にも使える「デュアルユース」な領域だけに、提供先を絞る判断がされています。この「セキュリティ用途はアクセスを絞る」流れは、[Fable 5 の全世界停止と復活](/blog/fable-5-return-july-2026/)でも見られたもので、フロンティアAI各社に共通する方向性です。
+
+---
+
+## 影の主役は「出なかった」Gemini 3.5 Pro
+
+今回いちばん語られているのは、実は**出たモデルではなく、出なかったモデル**です。旗艦にあたる **Gemini 3.5 Pro は、今回の3モデルに含まれませんでした。**
+
+[TechCrunch](https://techcrunch.com/2026/07/21/google-releases-three-new-gemini-models-but-no-3-5-pro/)によれば、**Bloombergは「社内の性能目標を満たせず、3.5 Pro の立ち上げが社内で遅れている」と報道**しています。Googleのプロダクトリードである Logan Kilpatrick 氏は「3.5 Pro はパートナーとテスト中で、近く提供したい」とコメントしていますが、2026年5月時点では「来月」とされていた予定を過ぎており、スケジュールは後ろ倒しになっています。
+
+競合と並べると構図が見えます。OpenAIは[GPT-5.6（Sol / Terra / Luna）](/blog/gpt-5-6-sol-terra-luna/)を、Anthropicは[Claude Opus 4.8 / Sonnet 5](/blog/claude-opus-4-7-real-world-review/)を出している中で、Googleは**旗艦を出せない代わりに、中〜低価格帯のコスト効率で存在感を示した**——今回はそういう発表だった、と読めます。
+
+---
+
+## Gemini 4 はすでに事前学習中
+
+もう一つ、発表にさらりと含まれていた重要な情報があります。Googleは Gemini 4 に向けて、**「これまでで最も野心的な事前学習（pre-training）を開始した」**と明らかにしました（[TechCrunch](https://techcrunch.com/2026/07/21/google-releases-three-new-gemini-models-but-no-3-5-pro/)）。
+
+つまり今回の Flash 系3モデルは、3.5 Pro を挟んで **「4への橋渡し期」に出た効率化アップデート**という位置づけになります。リリース時期は示されていませんが、次の大きなジャンプは 3.5 Pro ではなく 4 の側にある、というシグナルです。
+
+---
+
+## 個人開発者・アプリ運営者にとっての意味
+
+DoubleHub のように、AIを組み込んだアプリを個人〜小規模で開発・運用する立場から見ると、今回の発表のポイントは3つに絞れます。
+
+1. **エージェント運用のコストがまた下がった。** 3.6 Flash は「単価↓×消費トークン↓」の二重で実効コストを下げてきます。すでに 3.5 Flash を使っているなら、移行するだけで請求額が下がる可能性があります。ただし挙動は変わりうるので、[課金上限の設定](/blog/gemini-api-spend-cap-april-2026/)は引き続き必須です。
+2. **「用途で3層を使い分ける」設計が定着した。** 重い推論は Pro、日常は Flash、大量処理は Flash-Lite——という3層構成は、[GPT-5.6の Sol / Terra / Luna](/blog/gpt-5-6-sol-terra-luna/)と同じ発想です。単一モデルに密結合せず、タスクごとに安いモデルへ振り分ける設計が、そのままコスト最適化になります。
+3. **旗艦の遅れは織り込んでおく。** 3.5 Pro のスケジュールは流動的です。「最上位モデル前提」で機能を設計すると、提供時期に振り回されます。まずは Flash 系で成立する設計にしておくのが安全です。
+
+モデル選びの全体像は、[AIコーディングエージェント比較2026](/blog/ai-coding-agent-comparison-2026/)もあわせて参考にしてみてください。
+
+---
+
+## まとめ
+
+- 2026年7月21日、Googleは **Gemini 3.6 Flash・3.5 Flash-Lite・3.5 Flash Cyber** の3モデルを公開。旗艦の **3.5 Pro は出なかった**。
+- **3.6 Flash** は主力の効率モデル。出力トークン約17%削減、出力単価 $9.00→$7.50、DeepSWE 37%→49% など全面的に改善。
+- **3.5 Flash-Lite** は毎秒約350トークンの高速・最安クラス（入力$0.30 / 出力$2.50）。
+- **3.5 Flash Cyber** は脆弱性の発見・修正に特化し、CodeMender 経由で政府・パートナー限定提供。
+- **3.5 Pro** は社内の性能目標未達で遅延（Bloomberg報道）。一方で **Gemini 4 の事前学習はすでに開始**。
+
+今回の発表は「最高性能競争」の一手ではなく、**エージェント時代のコスト勝負**の一手です。賢さの数字より、"タスクあたりいくらか"で選ぶ時代になってきた——そのことを分かりやすく示す3モデルでした。
+
+---
+
+*本記事は2026年7月23日時点の公開情報にもとづきます。価格・提供状況・ベンチマークは今後変更される可能性があるため、最新情報は[Google 公式ブログ](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/)でご確認ください。*
