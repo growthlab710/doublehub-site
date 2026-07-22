@@ -3921,3 +3921,25 @@ App Store URL:
 - Integrationsの3カード右上にあった赤・青・紫のグラデーションぼかし装飾を削除（角で切れて尖って見える違和感の解消。ユーザー指摘）。`accent` プロパティも撤去
 - 未使用となった旧 `doublehub-understanding.jpg`・`doublehub-weekly.jpg` を削除
 - `pnpm build` 成功（EXIT=0・エラー/警告なし・67/67）
+
+---
+
+## 2026-07-23 (JST) — Geminiモデル発表ブログ記事の追加
+
+ブランチ: `feature/add-blog-gemini-3-6-flash`
+
+### 背景
+
+- ユーザー依頼で、2026-07-21に発表されたGeminiの新モデル群に関するブログ記事を新規作成。「ファクトチェックして事実のみ書く」要件のため、一次情報と複数報道を突き合わせて執筆。
+
+### 実施内容
+
+- 新規記事 `content/blog/gemini-3-6-flash-3-5-flash-lite-july-2026.mdx` を追加（category: AIニュース / readingTime: 10）
+- 扱ったモデル: **Gemini 3.6 Flash**（出力トークン約17%削減・出力単価$9.00→$7.50・DeepSWE 37%→49% 等）、**3.5 Flash-Lite**（毎秒約350トークン・入力$0.30/出力$2.50）、**3.5 Flash Cyber**（脆弱性発見/修正特化・CodeMender経由で政府/パートナー限定）。加えて未発表の **3.5 Pro**（Bloomberg報道: 社内性能目標未達で遅延）と事前学習開始済みの **Gemini 4** にも言及
+- **ファクトチェック補正**: ①発表日は「今日」ではなく7/21 ②「3.6単体」ではなく3モデル同時発表 ③3.5 Proは未発表——をユーザーに共有のうえ訂正して執筆
+- 出典を本文にインライン明記（[Google公式ブログ](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/) / 9to5Google / TechCrunch）。ナレッジカットオフ（2025-01→2026-03）は公式ブログに記載がなく報道ベースのため、その旨を本文に注記
+- 内部リンク（GPT-5.6・Fable 5・ベンチマーク入門・課金上限・コーディングエージェント比較）＋FAQ 5問＋summary を付与しSEO/AIO対応
+
+### 検証
+
+- `pnpm build` 成功（EXIT=0・エラー/警告なし・静的生成 68/68、新記事HTML生成を確認）
