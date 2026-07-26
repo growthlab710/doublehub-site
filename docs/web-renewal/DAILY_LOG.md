@@ -3971,3 +3971,27 @@ App Store URL:
 ### 検証
 
 - `pnpm build` 成功（エラーなし。静的生成ルート一覧に `/privacy/trainnote` を確認）
+
+---
+
+## 2026-07-26 (JST) — 思想記事⑤「そのアプリは、あなたを"反省させる"ように作られている」を公開
+
+ブランチ: `feature/add-blame-vs-observe-technology`
+
+### 背景
+
+- 連載「責めない・観察するテクノロジー」第2回。原稿は `/Users/user/Development/Note/思想記事/philosophy-note-05.md`。
+- 2026-07-16 決定の**両載せ運用**（思想記事は doublehub.jp ブログ先出し → Note 転載）に従い、ブログ側を先に公開する。Note 転載はユーザーが後日実施予定。
+- 2026-07-17 決定で本記事（⑤）は「独立公開」指定（リリース同期不要）。⑥「相関は見せるが命じない」は DoubleHub 2.1.0 の告知施策と束ねる想定。
+
+### 実施内容
+
+- 新規記事 `content/blog/blame-vs-observe-technology.mdx` を追加（category: 思想 / series: 責めない・観察するテクノロジー / readingTime: 9）
+- 内容: "反省させる設計"の具体例（赤字警告・ストリーク・バッジ・朝の通知）→ 人は否定される場所から離れるため長期では失敗する → 同じデータから作れる"観察する技術"との対比 → **「それは監視では？」への正面回答**（目的が正反対／データの主導権が本人にあるか）→ 観察する技術が少ない理由（短期の数字を動かさない）
+- 内部リンク: 連載第1回 [money-self-introduction]、三部作①②③（ai-two-types-of-information / information-fatigue / grow-your-own-ai）、[/products/hubwallet/]
+- `summary` を付与（AIO 対応）。FAQ は思想カテゴリの既存記事（money-self-introduction）に合わせて非設置
+- 既存記事 `content/blog/money-self-introduction.mdx` の末尾を更新し、本記事への内部リンクを追加（「順次掲載していきます」→ 公開済み記事へのリンクに差し替え）
+
+### 検証
+
+- `pnpm build` 成功（EXIT=0・エラーなし。静的生成 45 記事、`/blog/blame-vs-observe-technology` の HTML 生成と sitemap 収録を確認）
