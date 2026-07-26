@@ -4022,3 +4022,26 @@ App Store URL:
 ### 検証
 
 - `pnpm build` 成功（EXIT=0・Compiled successfully、`/privacy/doublehub` の静的生成を確認）
+
+---
+
+## 2026-07-26 (JST) — Claude Opus 5 発表48時間レビュー記事を公開
+
+ブランチ: `feature/add-blog-claude-opus-5`
+
+### 背景
+
+米国時間2026年7月24日にAnthropicがClaude Opus 5をリリース。発表直後のリアルタイムな評判（X上の投稿、2026-07-26 9:30 JST時点にGrokで収集）を含む鮮度の高いAIニュース記事として追加する。SEOに加えAIO（AI検索最適化）を強化する方針。
+
+### 実施内容
+
+- `content/blog/claude-opus-5-review-july-2026.mdx` を新規作成（カテゴリ: AIニュース、readingTime 11）
+  - 公式ファクト（価格 $5/$25、1Mコンテキスト、Effort 5段階、Fast mode 約2.5倍速・価格2倍、misaligned スコア 2.3、サイバー分類器介入 Fable 5 比約85%減、ベンチマーク5種）は Anthropic 公式発表・API文書・複数報道で裏取りしたもののみ断定表記
+  - X由来の評判は「〜という声／報告」の伝聞形式に統一し、収集時点（2026-07-26 午前9時半 JST）を本文に明記
+  - AIO対策: frontmatter `summary`（自己完結の要約）+ `faq` 5問（FAQPage JSON-LD 自動生成）。回答に日付・数字を明記
+  - 内部リンク6本（Opus 4.7 レビュー / Fable 5 復活 / GPT-5.6 / Claude Code auto mode / Gemini 3.6 Flash / ベンチマーク入門）、外部リンクは Anthropic 公式発表
+- `public/llms.txt` の「AIニュース・AI情報」セクションに本記事を1行追記（AIO対策）
+
+### 検証
+
+- `pnpm build` 成功（ブログ生成パス 45→46、`claude-opus-5-review-july-2026` の HTML 生成と sitemap.xml 収録、FAQPage JSON-LD 5問の出力を確認）
