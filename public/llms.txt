@@ -18,6 +18,7 @@
 - [Claude Code「Auto Mode」登場](https://www.doublehub.jp/blog/claude-code-auto-mode/): Anthropicが2026年3月にリリースしたClaude Codeの新機能を解説
 - [Perplexity Computerとは何か](https://www.doublehub.jp/blog/perplexity-computer-guide/): 19のAIモデルを協調させる汎用デジタルワーカーを解説
 - [Claude Opus 4.7 リアルワールドレビュー](https://www.doublehub.jp/blog/claude-opus-4-7-real-world-review/): リリース1週間の実使用フィードバック
+- [Claude Opus 5 登場——半額フラッグシップの実力](https://www.doublehub.jp/blog/claude-opus-5-review-july-2026/): 2026年7月24日リリースのClaude Opus 5の公式スペックと発表48時間の評判
 
 ## 開発者
 Naoki：iOSアプリ個人開発者（Swift）。DoubleHubシリーズ作者。西日本在住。
