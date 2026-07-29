@@ -48,6 +48,69 @@ export default function SupportPage() {
         </Container>
       </Section>
 
+      {/*
+        機種変更・バックアップの案内。
+        アプリ内から /support#device-transfer で直接リンクするため、
+        アンカー ID `device-transfer` は固定で維持する。
+      */}
+      <Section spacing="md" id="device-transfer">
+        <Container width="narrow">
+          <h2 className="font-display text-lg font-semibold text-text">
+            機種変更・バックアップとデータのご案内（DoubleHub）
+          </h2>
+
+          <div className="mt-6 space-y-6">
+            <div>
+              <h3 className="font-display text-base font-semibold text-text">
+                日記データの保存場所
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                DoubleHubの日記（本文・写真・気分/充実度の記録）は、お使いの端末の中だけに保存されます。当社のサーバーには保存されません。
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-display text-base font-semibold text-text">
+                機種変更のとき
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                iPhoneのiCloudバックアップから新しい端末に復元すると、日記も一緒に引き継がれます。
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                機種変更の前に「設定 → 自分の名前 → iCloud → iCloudバックアップ」がオンになっていること、直近のバックアップが作成されていることをご確認ください。
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-display text-base font-semibold text-text">
+                大切なご注意
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                バックアップを取らずに端末を紛失・故障された場合、日記を復元する方法はありません。大切な記録を守るため、iCloudバックアップをオンにしておくことを強くおすすめします。
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-display text-base font-semibold text-text">
+                アカウントで戻るデータ
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                ToDo・メモ・チャット履歴・AIの記憶などは、新しい端末で同じアカウント（Appleでサインイン）にログインすると引き続きご利用いただけます。
+              </p>
+            </div>
+
+            <div>
+              <h3 className="font-display text-base font-semibold text-text">
+                ゲストでご利用の方へ
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-text-muted">
+                アカウント登録をせずゲストとしてご利用の場合、端末の変更・初期化でデータを引き継ぐことができません。機種変更の前に、設定画面からAppleでサインインしてください。
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
       {/* 補足情報 */}
       <Section spacing="lg">
         <Container width="narrow">
