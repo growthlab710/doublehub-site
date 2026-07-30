@@ -1,6 +1,7 @@
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
+import remarkCjkFriendly from 'remark-cjk-friendly';
 import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
@@ -29,6 +30,9 @@ export async function renderMarkdownToHtml(source: string): Promise<string> {
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
+    // 「」や "" 等の約物に隣接した **強調** を CommonMark の flanking 規則から
+    // 救済する。これが無いと `…**「例」**という…` の ** がそのまま表示される。
+    .use(remarkCjkFriendly)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
     .use(rehypeSlug)
