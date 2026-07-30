@@ -4081,3 +4081,57 @@ App Store URL:
 - `pnpm build` 成功（EXIT=0・Compiled successfully、`/support` の静的生成を確認）
 - 生成物 `.next/server/app/support.html` に `id="device-transfer"` の出力を確認
 - 全 5 段落について、レンダリング後の和文にスペース混入がないことを文字列一致で確認
+
+---
+
+## 2026-07-30 (JST) — 日本語の約物に隣接した太字（`**`）が描画されない不具合を修正
+
+ブランチ: `feature/fix-cjk-bold-rendering`
+
+### 背景
+
+- ブログ記事の一部で `**` がそのまま画面に表示されているとの指摘。
+- 原因は CommonMark の **delimiter run の flanking 規則**。`**` の内側に「」や "" 等の約物が来て、外側が日本語文字だと、開始／終了デリミタとして認識されない。
+  - 開始側が壊れる例: `…あなたを**"変えようとする"もの…`（`**` の直後が約物 `"`、直前が日本語文字）
+  - 終了側が壊れる例: `…理解しているか」**という競争軸…`（`**` の直前が約物 `」`、直後が日本語文字）
+- 記事本文は正しい Markdown のつもりで書かれており、**執筆側の書き方ではなくレンダラ側の CJK 非対応**が原因。今後の記事でも同じ形で再発するため、記事の個別書き換えではなくパイプラインで根本対処する方針とした。
+
+### 実施内容
+
+`src/lib/content/markdown.ts` のパイプラインに **`remark-cjk-friendly` (2.3.1)** を追加（`remarkGfm` の後、`remarkRehype` の前）。
+
+- 依存追加: `pnpm add remark-cjk-friendly`（dependencies）
+- 記事（`content/blog/*.mdx`）は **1 文字も変更していない**
+- 打消し線（`~~`）は全 46 記事で未使用のため、`remark-cjk-friendly-gfm-strikethrough` は導入不要と判断
+
+### 修正された箇所（12 記事 17 ペア）
+
+| ファイル | 行 |
+| --- | --- |
+| `ai-critical-thinking.mdx` | 13 |
+| `ai-two-types-of-information.mdx` | 104 |
+| `ai-workslop-bottleneck.mdx` | 13 |
+| `blame-vs-observe-technology.mdx` | 40, 62 |
+| `claude-opus-5-review-july-2026.mdx` | 115, 125 |
+| `gemini-3-6-flash-3-5-flash-lite-july-2026.mdx` | 50, 126 |
+| `gpt-5-6-sol-terra-luna.mdx` | 90, 154 |
+| `grow-your-own-ai.mdx` | 118 |
+| `information-fatigue.mdx` | 98 |
+| `money-self-introduction.mdx` | 110 |
+| `subscription-forget-prevention.mdx` | 57, 87 |
+| `trainnote-record-habit.mdx` | 90 |
+
+うち 2 箇所（`blame-vs-observe-technology.mdx` L62 / `money-self-introduction.mdx` L110）は、`**` が崩れた結果 **意図しない範囲（「と、あなたを」）が太字になっていた**。これも併せて正常化した。
+
+### 検証
+
+- 導入前後で全 46 記事を同一パイプラインで HTML 化して差分を取得。**変化したのは上記 17 ペアのみ**で、他記事・他要素への副作用がないことを確認
+- `pnpm build` 成功（46 記事の静的生成を確認）
+- 生成物 `.next/server/app/blog/*.html` の本文に `**` の残存がないことを確認
+
+### 積み残し（未対応・要判断）
+
+- frontmatter の `faq[].answer` に Markdown 記法が書かれている記事があり、**FAQPage の JSON-LD にそのまま `**` が出力**されている。
+  - `siri-gemini-2026.mdx`（1 箇所）、`gpt-5-5-agentic-coding.mdx`（4 箇所）
+  - `faq` は画面には描画されず構造化データ専用のため、**ページ表示への影響はない**
+  - ただし Google のリッチリザルトに `**` が露出する可能性があるため、frontmatter からアスタリスクを除去するか要検討
