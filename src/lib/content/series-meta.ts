@@ -27,4 +27,8 @@ export const SERIES_META: Record<string, SeriesMeta> = {
     tagline: '考える仕事をAIに渡したあと、人間には何が残るか',
     description: 'AIに仕事を任せると脳の使い方はどう変わるか。認知科学の研究から考察するシリーズ。',
   },
+  AIに感情はあるか: {
+    tagline: '感情も痛みも、「目的のためのプログラム」だとしたら',
+    description: '感情と痛みの正体を人間の側から問い直し、AIとの向き合い方まで考える全2回の思想シリーズ。',
+  },
 };
