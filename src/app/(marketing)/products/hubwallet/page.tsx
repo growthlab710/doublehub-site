@@ -621,7 +621,7 @@ export default function HubWalletPage() {
               まずは無料で、家計簿を始める。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              基本の記録機能とサブスク・固定費管理は Free プランから使えます。AI による OCR・音声入力・カテゴリ推定をたくさん使いたい方は、月額 ¥380 の Plus プランへ。
+              基本の記録機能とサブスク・固定費管理は Free プランから使えます。AI による OCR・音声入力・カテゴリ推定をたくさん使いたい方は、月額 ¥480 の Plus プランへ。
             </p>
             <p className="mt-3 text-xs text-text-faint">
               ※ 年額プランは提供していません。価格は執筆時点のもので、最新の料金は App Store 上の表示をご確認ください。
@@ -675,7 +675,7 @@ export default function HubWalletPage() {
               <h3 className="mt-2 font-display text-lg font-bold">Plus</h3>
               <div className="mt-4 flex items-baseline gap-1">
                 <span className="font-display text-4xl font-bold tracking-[-0.03em]">
-                  ¥380
+                  ¥480
                 </span>
                 <span className="text-sm text-text-muted">／ 月</span>
               </div>
