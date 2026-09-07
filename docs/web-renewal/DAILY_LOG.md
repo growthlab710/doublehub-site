@@ -4482,3 +4482,69 @@ TrainNote 4.0.0（Archive 済み・提出前）で「トレーニング日誌」
 **写真やユーザーデータの新しい外部送信経路を実装したら、その時点でサイトのポリシー更新を
 出荷チェックリスト側に置くこと。** 今回は App Store 提出直前のメタデータ突き合わせで発見できたが、
 アプリ側の説明文・審査メモだけ更新してポリシー本文が取り残される形になっていた。
+## 2026-09-07 (JST) — DoubleHub ポリシー第 4 項を Ver.2.10.0 の計測へそろえる（対比・has_*・レビュー依頼・AdServices）
+
+### 背景
+
+DoubleHub 第 4 項「利用状況データの収集について」は送信するイベント種別を**具体名で限定列挙する**
+書き方なので、`usage_events` にイベントを足すたびにサイト更新が要る（2026-08-31 の hitokoto 4 種と同じ理由）。
+
+前回（2026-08-31）は**公開と同時に食い違いが発生していたのを事後に是正**する形だった。今回はその反省から、
+**2.10.0 の提出より前に**ポリシー側を先に広げる。「アプリが送っているのにポリシーに書いていない」状態を
+一瞬も作らないためで、逆向き（ポリシーが実装より広い）は安全側に倒れる。
+
+同日、アプリ側で本番 Supabase へ migration 036（`review_prompt_requested`）・037（`install_attributions`）を
+適用し、`ReviewPromptAnalyticsGate` を `true` にした。これにより 2.10.0 で送るものが確定したため、
+「送る／送らない」を推測ではなくゲートの実状態で確定させた文面になっている
+（アプリ側の正本 = `docs/specs/app-store-submission-draft.md` §13 / `docs/supabase/MIGRATIONS.md`）。
+
+### 変更内容（`/privacy/doublehub/`）
+
+- 操作の種類に 3 つ追加
+  - 「過去の日記との対比の表示」「対比の詳細を開いたこと」（`diary_contrast_shown` / `diary_contrast_opened`）
+  - 「アプリ内でのレビューのお願いの表示」（`review_prompt_requested`）
+- 件数・区分に 4 つ追加
+  - 「日記に写真・気分・メモを添えたかどうかの別」（`diary_created` の `has_photo` / `has_mood` / `has_memo`）
+  - 「対比の種類」（`axis` = 去年の同じ日／似た日）
+  - 「対比に日記の一節を添えたかどうかの別」（`quote`）
+  - 「レビューのお願いのきっかけの区分と表示条件のバージョン番号」（`trigger` / `rule_version`）
+- 箇条書きに「対比についても中身は送らない」を追加（**対象の日付と引用した一節そのものは送らない**）
+- 第 4 項の末尾に **`<h3>` 広告経由でのインストールの計測について** を新設（AdServices）
+  - 記録するのは広告経由かどうかの判定、キャンペーン／広告グループ／キーワードの各識別子、
+    コンバージョン種別、クリック日、国または地域
+  - **IDFA は使用せず、他社アプリ・サイトを横断した追跡（トラッキング）ではない**こと、第三者提供もしないこと
+  - パーソナライズ広告オフ時は Apple がダミー値を返すため判定のみ記録すること
+  - 効果測定のみに使用し、広告の配信（ターゲティング）には使わないこと
+- `lastUpdated` を 2026-08-31 → 2026-09-07 へ
+
+### あえて書かなかったもの
+
+幸福アルバムの計測 4 種（`album_open` / `album_chapter_view` / `album_card_tap` / `album_card_hide`）は
+**migration 038 が未適用で `AlbumAnalyticsGate = false` のまま出荷する**ため記載していない。
+限定列挙の書き方なので、送らないものを先回りで書くと「送っている」と読める。
+038 を適用してゲートを開けるとき（2.10.x 以降）に、改めて第 4 項へ追記すること。
+
+### 検証
+
+- `pnpm build` 成功（`/privacy/doublehub` の静的生成が完了）
+- 生成物 `.next/server/app/privacy/doublehub.html` に新規文言（「広告経由でのインストールの計測について」
+  「レビューのお願いの表示」「過去の日記との対比」「IDFA」「パーソナライズされた広告」）が
+  すべて含まれることを確認
+- `<h3>` は同ページおよび `/privacy/hubwallet/` で既に使われている既存パターンで、`prose` が効く
+- **記載内容はアプリ側コードで実査済み**（公開する法的記述のため推測で書かない）:
+  - 送るイベントとパラメータ → `DoubleHub/Services/UsageAnalyticsService.swift`（`UsageEvent` と各ゲート）
+  - 対比カードのパラメータ → `DiaryViewModel.swift`（`axis` / `plan` / `quote` のみ・日付と原文は送らない）
+  - レビュー依頼のパラメータ → `ReviewRequestManager.recordRequestedEvent`（`trigger` / `plan` / `rule_version`）
+  - AdServices で端末から出るもの → `InstallAttributionService.swift`（帰属トークンとアプリバージョンのみ・IDFA 不使用）
+  - サーバーが保存する列 → `supabase/migrations/20260829020000_install_attributions.sql` と
+    `supabase/functions/resolve-install-attribution/index.ts`（ダミー値判定 `is_detailed` を含む）
+
+### 公開
+
+作業枝 `feature/update-doublehub-2-10-0` → `main` へ `--no-ff` マージして push（`d5e1829`）。
+**セッションが日付をまたいだため、main への反映は 2026-09-08 00:0x JST**。
+`lastUpdated` は文面を確定した 2026-09-07 のままにしてある。
+
+### 次にサイト側でやること
+
+- 038 適用＋`AlbumAnalyticsGate = true` のリリース時に、アルバムの計測 4 種を第 4 項へ追記する
