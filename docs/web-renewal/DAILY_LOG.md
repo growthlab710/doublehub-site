@@ -4548,3 +4548,28 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 次にサイト側でやること
 
 - 038 適用＋`AlbumAnalyticsGate = true` のリリース時に、アルバムの計測 4 種を第 4 項へ追記する
+
+---
+
+## 2026-09-08 (JST) — 思想記事の新シリーズ「幸せは、一度きりじゃない」第1回を公開
+
+ブランチ: `feature/add-blog-happiness-01`
+
+### 背景
+
+- DoubleHub の思想ブランディング用に起草した Note 新シリーズ「幸せは、一度きりじゃない」（全5回＋2.10 特別編）を、note 転載に先立ってブログへ両載せする運用（2026-07-16 決定）。
+- 第1回「「今日、いいことなんて何もなかった」——その夜に、本当は何が起きていたのか」（slug `happiness-noticed-count`・series「幸せは、一度きりじゃない」・category 思想）。
+- 以降の回（②〜⑤・特別編・続編③）は投稿日ごとに `feature/add-blog-happiness-02/03/04/05/special`・`feature/add-blog-show-but-dont-command` から順次マージする。日程の正本は `Note/思想記事/publishing-plan.md` 末尾。特別編と⑤は 2.10 の App Store 公開後のみ。
+
+### 実施内容
+
+- `content/blog/happiness-noticed-count.mdx` を新規追加（frontmatter＋本文。冒頭にシリーズナビの blockquote、末尾に次回案内。note 版のハッシュタグ行とブログ誘導行は除去、製品リンクは相対パス）。
+- 既存ファイルの変更なし。
+
+### 検証
+
+- `pnpm build` 成功（静的ページ 73 件・blog slug 49 件）。
+
+### 公開
+
+- `main` へ `--no-ff` マージして push（`80da10c`）。Vercel 自動デプロイ。URL: https://www.doublehub.jp/blog/happiness-noticed-count/
