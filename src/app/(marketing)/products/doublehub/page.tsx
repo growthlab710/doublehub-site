@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title:
     'DoubleHub — もう一人の自分が、毎日を整える。ToDo・日記・AI相棒アプリ',
   description:
-    'DoubleHub は、写真1枚と気分スタンプで残せる日記と、投げるだけで整う ToDo・メモを「もう一人の自分（ダブル）」が覚えていく iOS アプリ。日記の写真は端末から出ません。記録が集まった月には、あなたの日記から「もしもの続き」を想像した未来日記も届きます。広告ではなく直接課金で、滞在時間ではなくあなたの納得を優先します。',
+    'DoubleHub は、写真1枚と気分スタンプで残せる日記と、投げるだけで整う ToDo・メモを「もう一人の自分（ダブル）」が覚えていく iOS アプリ。日記の写真は端末の外に残りません。ダブルがあなたの日記から幸せの種を見つけて、月ごとのアルバムに貼っていきます。広告ではなく直接課金で、滞在時間ではなくあなたの納得を優先します。',
   keywords: [
     'DoubleHub',
     'ダブルハブ',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     '写真日記',
     '気分記録',
     'AI 日記',
-    '未来日記',
+    'アルバム',
     '三日坊主',
     'AI ToDo',
     'AI タスク管理',
@@ -109,28 +109,28 @@ const diaryPillars = [
   },
   {
     tag: 'プライバシー',
-    title: '日記の写真は、端末から出ません。',
+    title: '日記の写真は、端末の外に残りません。',
     body:
       '日記の写真は端末の中に保存され、外部に保存されることはありません。ダブルがリアクションを生成するときだけ縮小画像を一時送信し、サーバーには残りません。気分や傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
   },
 ];
 
-// 未来日記（2.1.0）の説明カード
-const futureDiaryPoints = [
+// アルバム（2.10.0）の説明カード
+const albumPoints = [
   {
-    title: '2つの「続き」が届く',
+    title: 'ダブルが、選んで貼る',
     body:
-      'あなたの記録から「このままの続き」と「分かれ目を変えた続き」、2つの未来を未来の日付の日記として綴ります。分かれ目は、実際の記録を根拠に選ばれます。',
+      'あなたの日記から、ダブルが幸せの種を見つけて、月ごとのページに貼っていきます。写真と、日付・場面の題、その日の手がかり（気分、一緒にいた相手、「はじめてのこと」「またやりたい」）。旅行は数日でひとつのページに。その日にダブルが返した一言と、あなたの一行が、そのままの言葉で添えられます（一言と章の便りは Plus）。',
   },
   {
-    title: '予測でも占いでもない',
+    title: '順位をつけない、数えない',
     body:
-      'これは想像上のシミュレーションであることを、誌面上でも明示しています。当てにいくのではなく、「もしもの続き」を読むことで、いまの自分をながめ直すための演出です。',
+      '星も、順位もありません。写真の上に文字を重ねず、AI の文には「AIによる生成」の表示、あなたの言葉は別の書体で貼られます。派手な旅行の日も、湯気の写真しかない火曜日も、同じ大きさで並びます。',
   },
   {
-    title: '翌月に答え合わせ',
+    title: '見たくないものは、見なくていい',
     body:
-      '想像した未来と、実際に過ごした1ヶ月。翌月に読み返すと、自分の分かれ目がどちらへ進んだのかを、日記の続きとして確かめられます。',
+      '日ごと・期間ごと・人やペットごとに非表示にできます（日記そのものは消えません）。死別や別れのような喪失の日は貼らず、その直後はアプリ側からの差し出しを止めます。閉じた月のページは、アプリを更新しても並びが変わりません。',
   },
 ];
 
@@ -279,15 +279,19 @@ const beforeAfter = [
 const faqs = [
   {
     q: 'DoubleHub は無料で使えますか？',
-    a: 'はい。無料プランでは、1日1枚の日記（写真・気分スタンプ・メモ）とダブルの写真リアクション（週 3 回）、日記のふり返り（記録が一定数ある週を対象に月 1 回）、AI による ToDo / メモの自動仕分け（月 20 回まで）、天気、ウィジェット、音声入力、ユーザー辞書などをお使いいただけます。未来日記も、初回の 1 通は無料でまるごと読めます。',
+    a: 'はい。無料プランでは、1日1枚の日記（写真・気分スタンプ・メモ）とダブルの写真リアクション（週 3 回）、日記のふり返り（記録が一定数ある週を対象に月 1 回）、AI による ToDo / メモの自動仕分け（月 20 回まで）、天気、ウィジェット、音声入力、ユーザー辞書などをお使いいただけます。アルバムの閲覧、1週間前・1ヶ月前・1年前の同じ日の想起、日記の検索、日記の書き出し（ZIP）も無料です。',
   },
   {
     q: '日記の写真はどこに保存されますか？',
-    a: '日記の写真は端末の中に保存され、端末から出ません。ダブルがリアクションを生成するときだけ縮小画像を一時送信し、サーバーには保存されません。気分や充実度の記録、傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
+    a: '日記の写真は端末の中に保存され、端末の外に残りません。ダブルがリアクションを生成するときだけ縮小画像を一時送信し、サーバーには保存されません。気分や充実度の記録、傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
   },
   {
-    q: '未来日記とはなんですか？',
-    a: '蓄積された日記から、「このままの続き」と「分かれ目を変えた続き」という 2 つの未来を、未来の日付の日記として想像するコンテンツです。予測や占いではなく、実際の記録を根拠にした想像上のシミュレーションであることを誌面上でも明示しています。日記の材料が集まった月に届き、無料では初回の 1 通をフルで体験できます。Plus では月 1 回フルで届き、翌月に「答え合わせ」として読み返せます。',
+    q: 'アルバムとはなんですか？',
+    a: 'ダブルがあなたの日記から幸せの種を見つけて、写真とその日の一言を月ごとのページに貼っていく場所です。星や順位はつけません。閲覧はすべてのプランででき、その日のダブルの一言と章の終わりの便りが付くのは Plus です。出したくない日・期間・人は非表示にでき、閉じた月のページはアプリを更新しても並びが変わりません。',
+  },
+  {
+    q: '未来日記はどうなりましたか？',
+    a: '2.10 で、新しい号の作成を終了しました。それまでに届いた号は、設定「ダブルの理解」の末尾からこれまでどおり読めます。ひと月に一度の物語より、自分の言葉と写真に何度も触れられる形のほうが残る、と判断し、その席をアルバムに譲りました。',
   },
   {
     q: 'BookCompass と連携すると何が変わりますか？',
@@ -295,7 +299,7 @@ const faqs = [
   },
   {
     q: 'Plus / Premium プランではなにが解放されますか？',
-    a: 'Plus（月 ¥480 / 年 ¥4,800）では、ダブルとの AI チャット（直近 7 日の日記も踏まえて応答）、日記 AI リアクションが毎日、日記のふり返りが毎週、日記のゲスト（選んだ偉人風の視点がひとことを添える）、日記から読み取った活動傾向、未来日記の月 1 回フル配信、AI 自動仕分けの無制限化が利用できます。Premium（月 ¥1,280 / 年 ¥12,800）では、Plus の全機能に加えて、複数の視点で考えを整理する「評議会」が使えます。',
+    a: 'Plus（月 ¥480 / 年 ¥4,800）では、ダブルとの AI チャット（直近 7 日の日記も踏まえて応答）、日記 AI リアクションが毎日、日記のふり返りが毎週、日記のゲスト（選んだ偉人風の視点がひとことを添える）、日記から読み取った活動傾向、似ている日の想起、ダブルのノート、写真で覚える、月のまとめ、あなたの法則、アルバムのダブルの一言と章の便り、AI 自動仕分けの無制限化が利用できます。Premium（月 ¥1,280 / 年 ¥12,800）では、Plus の全機能に加えて、複数の視点で考えを整理する「評議会」が使えます。',
   },
   {
     q: '対応 OS を教えてください。',
@@ -347,7 +351,7 @@ const vsTable = [
   },
   {
     category: '一般的な日記アプリ',
-    doublehub: '写真1枚とスタンプだけの日でも成立。ダブルからひと言が返ってきて、蓄積は未来日記につながる',
+    doublehub: '写真1枚とスタンプだけの日でも成立。ダブルからひと言が返ってきて、蓄積は、月ごとのアルバムになっていく',
   },
   {
     category: '他の AI 秘書アプリ',
@@ -407,7 +411,7 @@ const jsonLd = {
         '写真1枚と気分スタンプの日記と、投げるだけで整う ToDo・メモを「もう一人の自分（ダブル）」が覚えていく iOS アプリ。ヘルスケア・カレンダー・読書記録も束ねる、ToDo・日記・AI相棒。',
       url: 'https://www.doublehub.jp/products/doublehub/',
       image: 'https://www.doublehub.jp/images/doublehub-icon-rich.png',
-      softwareVersion: '2.1.0',
+      softwareVersion: '2.10.0',
       author: {
         '@type': 'Organization',
         name: 'GrowthLab',
@@ -451,7 +455,10 @@ const jsonLd = {
         'ダブルの写真リアクション',
         '日記カレンダー（気分の天気アイコン）',
         '週次ふり返り',
-        '未来日記（記録から「もしもの続き」を想像するシミュレーション）',
+        'アルバム（日記から見つけた幸せの種を、月ごとのページに）',
+        'ダブルの一言への返事と、1週間前・1ヶ月前・1年前の想起',
+        '日記の検索（端末内で完結）',
+        '日記の一括書き出し（ZIP）',
         'AI による ToDo / メモ自動仕分け',
         'ダブルとの AI チャット',
         'ヘルスケア連携（HealthKit / 読み取り専用）',
@@ -524,7 +531,7 @@ export default function DoubleHubPage() {
                 className="h-10 w-10 rounded-lg border border-border object-cover shadow-sm"
               />
               <span className="inline-flex items-center rounded-full border border-accent-product/30 bg-accent-product/10 px-3 py-1 text-xs font-semibold text-accent-product">
-                DoubleHub · Ver.2.1.0
+                DoubleHub · Ver.2.10.0
               </span>
             </div>
             <h1 className="mt-5 font-display text-[clamp(1.75rem,1rem+2.8vw,3rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
@@ -676,7 +683,7 @@ export default function DoubleHubPage() {
           </div>
 
           {/* 実際の画面 */}
-          <div className="mx-auto mt-14 grid max-w-4xl gap-10 sm:grid-cols-2">
+          <div className="mx-auto mt-14 grid max-w-4xl justify-items-center gap-10">
             <figure className="mx-auto w-full max-w-sm">
               <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
                 <Image
@@ -692,21 +699,7 @@ export default function DoubleHubPage() {
                 写真1枚とスタンプの投稿に、ダブルからひと言。選んだ偉人風のゲスト視点も添えられます（すべて AI 生成ラベルつき）。
               </figcaption>
             </figure>
-            <figure className="mx-auto w-full max-w-sm">
-              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
-                <Image
-                  src="/images/doublehub-diary-tab.jpg"
-                  alt="DoubleHub の日記タブ — 未来日記カード、ライフスキャン「最近の自分」、気分・充実度の推移、写真つきカレンダー"
-                  width={860}
-                  height={1786}
-                  className="h-auto w-full rounded-[1.5rem]"
-                  sizes="(min-width: 640px) 384px, 90vw"
-                />
-              </div>
-              <figcaption className="mt-3 text-center text-xs leading-[1.7] text-text-muted">
-                日記タブには、未来日記・「最近の自分」（気分と充実度の推移）・写真つきカレンダーが1画面に並びます。
-              </figcaption>
-            </figure>
+            {/* TODO(2.10): 日記ホーム（本棚の先頭にアルバム行）とアルバムの巻物のスクショをデモデータ・顔なしで撮影後、ここに追加 */}
           </div>
           <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-text-faint">
             ※ 画面は実際の利用イメージです。プライバシー保護のため一部をぼかしています。
@@ -714,59 +707,41 @@ export default function DoubleHubPage() {
         </Container>
       </Section>
 
-      {/* ========== 2.7. 未来日記（2.1.0） ========== */}
+      {/* ========== 2.7. アルバム（2.10.0） ========== */}
       <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-              Future Diary · New in 2.1.0
+              Album · New in 2.10.0
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-              記録から「もしもの続き」を想像する、
-              <br className="sm:hidden" />
-              未来日記。
+              あなたの日記から、幸せの種を。
             </h2>
             <p className="mt-5 text-sm leading-[1.9] text-text-muted md:text-base">
-              日記の材料が集まった月に、ダブルがあなたの記録の中の相関をながめて、「未来のある1日の日記」を綴って届けます。読み終えたあと、いまの自分を少しだけ違う場所からながめられる——そんな、想像上のシミュレーションです。
+              ダブルが、あなたの日記帳から思い出の写真と言葉を選んで、月ごとのページに貼り直します。「この日はこうだったね」と、一緒に見返す場所です。表紙には、ダブルの一行があります。「あなたの日記から幸せの種を見つけて、アルバムにまとめたよ」。
             </p>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-5xl items-center gap-10 md:grid-cols-[0.85fr_1.15fr]">
-            <figure className="mx-auto w-full max-w-sm">
-              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
-                <Image
-                  src="/images/doublehub-future-diary-cover.jpg"
-                  alt="未来日記の表紙ページ — 「一冊に、ふたつの未来。」の構成案内と、予測ではないことの明示"
-                  width={860}
-                  height={1794}
-                  className="h-auto w-full rounded-[1.5rem]"
-                  sizes="(min-width: 768px) 384px, 90vw"
-                />
-              </div>
-              <figcaption className="mt-3 text-center text-xs leading-[1.7] text-text-muted">
-                表紙ページ。「これは記録から想像した“もしもの続き”です。予測ではありません」を誌面上でも明示しています。
-              </figcaption>
-            </figure>
+          {/* TODO(2.10): アルバムの巻物のスクショ（デモデータ・顔なし）を撮影後に追加 */}
 
-            <div className="flex flex-col gap-5">
-              {futureDiaryPoints.map((p) => (
-                <article
-                  key={p.title}
-                  className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
-                >
-                  <h3 className="font-display text-base font-semibold leading-[1.4] tracking-[-0.01em] md:text-lg">
-                    {p.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-[1.85] text-text-muted">
-                    {p.body}
-                  </p>
-                </article>
-              ))}
-            </div>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-3">
+            {albumPoints.map((p) => (
+              <article
+                key={p.title}
+                className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
+              >
+                <h3 className="font-display text-base font-semibold leading-[1.4] tracking-[-0.01em] md:text-lg">
+                  {p.title}
+                </h3>
+                <p className="mt-3 text-sm leading-[1.85] text-text-muted">
+                  {p.body}
+                </p>
+              </article>
+            ))}
           </div>
 
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-[1.8] text-text-faint">
-            ※ 未来日記は毎月ではなく、日記の材料が集まった月に届きます。無料では初回の 1 通をフルで体験でき、Plus では月 1 回フルで届きます。
+            ※ 閲覧はすべてのプランでできます。その日のダブルの一言と、章の終わりの便りが付くのは Plus です。
           </p>
         </Container>
       </Section>
@@ -1183,7 +1158,7 @@ export default function DoubleHubPage() {
                   <Check /> 日記のふり返り 月 1 回（記録が一定数ある週が対象）
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 未来日記 初回 1 通をフル体験
+                  <Check /> アルバムの閲覧・節目の想起（1週間前・1ヶ月前・1年前）・日記の検索・書き出し
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> AI による ToDo / メモ自動仕分け（月 20 回まで）
@@ -1223,7 +1198,10 @@ export default function DoubleHubPage() {
                   <Check /> 日記 AI リアクション <strong className="font-semibold text-text">毎日</strong>・ふり返り <strong className="font-semibold text-text">毎週</strong>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 未来日記 月 1 回フル配信
+                  <Check /> アルバムのダブルの一言と章の便り・似ている日の想起・ダブルのノート・月のまとめ・あなたの法則
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 写真で覚える（端末内の被写体識別）
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 日記のゲスト（偉人風の視点）・活動傾向の読み取り
