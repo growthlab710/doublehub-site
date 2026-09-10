@@ -624,7 +624,7 @@ export default function DoubleHubPage() {
           </div>
 
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-[1.8] text-text-faint">
-            ※ 閲覧はすべてのプランでできます。その日のダブルの一言と、章の終わりの便りが付くのは Plus です。
+            ※ 閲覧はすべてのプランでできます。ページには、その日にダブルが読んで返した一言も入ります。章の終わりの便りが付くのは Plus です。
           </p>
         </Container>
       </Section>
