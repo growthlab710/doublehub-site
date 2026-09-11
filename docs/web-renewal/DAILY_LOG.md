@@ -4645,3 +4645,39 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 - migration 038 適用＋`AlbumAnalyticsGate = true` のリリース時に、アルバムの計測 4 種を第 4 項へ追記する
   （2026-09-07 の項から継続）。
 - 思想記事シリーズの ②〜⑤・特別編を、投稿日ごとに `feature/add-blog-happiness-02` 以降からマージする。
+
+---
+
+## 2026-09-12 (JST) — 思想記事シリーズ「幸せは、一度きりじゃない」第2回を公開
+
+ブランチ: `feature/add-blog-happiness-02`
+
+### 背景
+
+- 本来は 2026-09-10 に公開する予定だったが、2.10.0 の提出作業と重なって漏れていた。
+- 第2回「幸せは、一度きりじゃない。思い出すたびに、もう一度味わえる」（slug `happiness-not-once`）。
+- **特別編（`doublehub-album-2-10`）が本文 2 か所で第2回を参照し、ブログ版はシリーズナビから
+  `/blog/happiness-not-once/` へ内部リンクを張っている**。第2回を先に公開しないとリンク切れになるため、
+  特別編より先に出す。
+
+### 実施内容
+
+- `content/blog/happiness-not-once.mdx` を追加（2026-09-07 に作成済みの枝をそのままマージ）。
+- `publishedAt` / `updatedAt` を予定日の 2026-09-10 から**実際の公開日 2026-09-12** へ直した。
+- 既存ファイルの変更なし。
+
+### 検証
+
+- `pnpm build` 成功（静的ページ 74 件・第1回の 73 件から 1 件増）。
+
+### 公開
+
+- `main` へ `--no-ff` マージして push。Vercel 自動デプロイ。
+  URL: https://www.doublehub.jp/blog/happiness-not-once/
+
+### 次にサイト側でやること
+
+- 特別編 `feature/add-blog-happiness-special`（`doublehub-album-2-10`）を第2回の**あと**に公開する。
+  アルバムに表紙画面は無いため「開くと、表紙に」を「開くと、まず」へ直す修正は枝に入れ済み。
+  公開日を 9/13 以降にする場合は `publishedAt` を合わせること（現在 2026-09-12）。
+- ③以降は特別編から中 2 日以上を空ける（日程の正本は `Note/思想記事/publishing-plan.md` 末尾）。
