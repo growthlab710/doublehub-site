@@ -4573,3 +4573,75 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - `main` へ `--no-ff` マージして push（`80da10c`）。Vercel 自動デプロイ。URL: https://www.doublehub.jp/blog/happiness-noticed-count/
+
+---
+
+## 2026-09-12 (JST) — DoubleHub 製品ページを 2.10.0 の日記軸へ全面更新
+
+ブランチ: `feature/update-doublehub-products-2-10-0`（worktree `../doublehub-site-2-10`）
+
+### 背景
+
+- DoubleHub 2.10.0（アルバム追加・未来日記の新規生成を終了）が App Store で公開された。
+- 現行ページは 2.1.0 時点の構成で、ヒーローが「もう一人の自分が、毎日の頭の中を整える。」、主要メリットが
+  Capture / Chat / Memory の 3 枚。プロダクト方針メモ §1・§10-6（「日記アプリ」と言い切る・「ハブ」「生活アシスタント」退場）と、
+  伝達ブリーフ確定の一発メッセージ I1「日記は、写真1枚でいい。」に対して不一致だった。
+- 2.7.0 で公開済みの「つづきのある一言」「節目の想起」「日記の検索」がページに載っていなかった。
+
+### 実施内容
+
+- 節構成を 14 → 12 に再編。順序は 日記 → つづきのある一言 → 想起と検索 → アルバム → 週・月のまとめと法則 →
+  ダブルとは → 道具箱と連携 → 比較表 → Trust & Privacy → 依存させない設計 → プラン → FAQ → CTA。
+- ヒーローを I1「日記は、写真1枚でいい。」＋ ASC サブタイトル「広告なし。1日1枚の写真日記と、AIの相棒」へ。
+  動画スロット（`VideoSlot`）をやめ、日記ホームのスクリーンショットに差し替えた。
+- 削除した節: つながる情報 / Features（Capture・Chat・Memory）/ ホームの3カテゴリ / Scenes / Before After /
+  情報の向きを、あなた自身へ（ハブ図）/ BookCompass Link の Coming Soon / Ecosystem。
+  理由は「ハブ」「秘書」の対外語彙退場と、未実装機能・ロードマップを示唆しない方針。
+- 禁則語を一掃した。「整える・整う・整理」14 か所、「秘書」5 か所、「ハブ・束ねる・生活の中心」4 か所。
+- プラン表と FAQ を 2.10.0 の実物へ。写真は Free 1 枚・Plus 3 枚・Premium 5 枚、アルバムの閲覧と一言は全プラン、
+  Plus 限定は章の便り、Plus は「はじめの 1 ヶ月は無料」。
+- metadata・OGP・JSON-LD（description・featureList・`softwareVersion` 2.10.0）を更新。
+- `src/lib/site/config.ts` の DoubleHub カードを日記軸へ（tagline「日記は、写真1枚でいい。」・features から ToDo を外す）。
+- スクリーンショット 6 枚を追加（幅 860px・デモデータ・顔なし）:
+  `doublehub-diary-home` / `doublehub-diary-hitokoto` / `doublehub-album` / `doublehub-monthly-review` /
+  `doublehub-double-tab-laws` / `doublehub-toolbox`。
+- 旧画像（`doublehub-future-diary-cover` / `doublehub-diary-tab` / `doublehub-task` / `doublehub-chat` /
+  `doublehub-understanding-*` / `doublehub-integrations` / `doublehub-calendar` / `doublehub-diary-entry` /
+  `doublehub-user-centered-hub` / `DoubleHub-Concept`）は**参照を外しただけで削除していない**。
+
+### アプリ側のコードで確認して直した点（推測で書かない）
+
+- **アルバムに独立した表紙画面は無い**。あの一行は巻物の最上部にある（`AlbumContent.coverLine` は内部名で、
+  コメントも「巻物の最上部（全プラン・静的）」）。当初「表紙には、ダブルの一行があります」と書いていたので外した。
+- **アルバムの一言はプラン非依存**。`AlbumPageBuilder` にプラン分岐が無く、Free でもページに一言が入る。
+  Plus 限定は章の便り（月間まとめ由来）だけ。プラン表・FAQ・アルバム節の注記の計 5 か所を訂正した。
+- 写真の上限は `DiaryPhotoLimits`（Free 1・Plus 3・Premium 5）で確認。
+
+### プライバシーポリシーの要否（確認のみ・変更なし）
+
+2.10.0 公開時点で `/privacy/doublehub/` の修正は**不要**と確認した。
+
+- アルバムの計測 4 種は `AlbumAnalyticsGate.isEnabled = false` のまま出荷されており（`submitted/2.10.0-build1` で確認）、
+  送っていないので記載しないのが正しい。migration 038 適用時に追記する。
+- 第 4 項の「週次ふり返り・未来日記の閲覧」は**そのままでよい**。未来日記は新しい号の生成を終了しただけで、
+  過去の号は設定から読め、`FutureDiaryViewModel` が `future_diary_viewed` を今も送る。
+  伝達ブリーフ §D の「未来日記の閲覧イベントは 2.10 で送信元がなくなる」は誤りだった。
+- 対比カード・日記作成時の有無フラグ・レビュー依頼・AdServices は 2026-09-07 の更新で記載済み。
+
+### 検証
+
+- `pnpm build` 成功（静的ページ 73 件）。
+- `pnpm lint` は実行できない。Next 16 で `next lint` が廃止され、`package.json` の lint スクリプトが未追従のため
+  （`npx eslint` も ESLint 8 と `eslint-config-next@16` の組み合わせで設定読み込みに失敗する）。
+  `tsc --noEmit` と `next build` で代替検証した。**リポジトリ側の既存課題**。
+
+### 公開
+
+- `main` へ `--no-ff` マージして push（`90b8402`）。Vercel 自動デプロイ。
+  URL: https://www.doublehub.jp/products/doublehub/
+
+### 次にサイト側でやること
+
+- migration 038 適用＋`AlbumAnalyticsGate = true` のリリース時に、アルバムの計測 4 種を第 4 項へ追記する
+  （2026-09-07 の項から継続）。
+- 思想記事シリーズの ②〜⑤・特別編を、投稿日ごとに `feature/add-blog-happiness-02` 以降からマージする。
