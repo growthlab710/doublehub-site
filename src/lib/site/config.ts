@@ -36,18 +36,18 @@ export const products = [
   {
     slug: 'doublehub',
     name: 'DoubleHub',
-    tagline: 'もう一人の自分と、毎日を残す。',
+    tagline: '日記は、写真1枚でいい。',
     description:
-      '写真1枚と気分スタンプの日記、投げるだけで整う ToDo・メモ。記録をダブル（AI）が覚えて、あなたへの理解を深めていきます。',
+      '広告なし。写真1枚と気分スタンプの1日1枚日記に、ダブル（もう一人の自分）がひと言返します。写真は端末の外に残りません。',
     href: '/products/doublehub/',
     accentClass: 'theme-doublehub',
     icon: '🧠',
     appIcon: '/images/doublehub-icon.jpg',
     features: [
       '写真1枚と気分スタンプの1日1枚日記',
-      'ToDo・メモは投げるだけで AI が自動仕分け',
-      '未来日記——記録から「もしもの続き」を想像',
-      '写真は端末から出ないプライバシー設計',
+      '書いた日はダブルがひと言。返事ができて、後日つづく',
+      'アルバム——日記から見つけた幸せの種を、月ごとに',
+      '広告なし。写真は端末の外に残らない',
     ],
   },
   {
