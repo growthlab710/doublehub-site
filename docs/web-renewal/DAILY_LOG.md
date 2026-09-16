@@ -4681,3 +4681,65 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
   アルバムに表紙画面は無いため「開くと、表紙に」を「開くと、まず」へ直す修正は枝に入れ済み。
   公開日を 9/13 以降にする場合は `publishedAt` を合わせること（現在 2026-09-12）。
 - ③以降は特別編から中 2 日以上を空ける（日程の正本は `Note/思想記事/publishing-plan.md` 末尾）。
+
+---
+
+## 2026-09-17 (JST) — DoubleHub ポリシー第 4 項へ Ver.2.12.0 のアルバム・チャット過去窓の計測 7 種を追記
+
+ブランチ: `feature/update-privacy-2-12-0-usage-events`
+
+### 背景
+
+- 第 4 項「利用状況データの収集について」は送るイベント種別を**限定列挙**する書き方のため、
+  `usage_events` に種別を足すたびにサイト更新が要る（2026-08-31・2026-09-07 と同じ理由）。
+- 2026-09-07 の項で「アルバムの計測 4 種は `AlbumAnalyticsGate = false` のまま出荷するので、あえて書かない」
+  としていたもの。アプリ側で migration 038（アルバム 4 種）と 040（チャット過去窓 3 種）を
+  **2026-09-16 に本番へ適用**し、`AlbumAnalyticsGate` / `ChatRecallAnalyticsGate` を `true` にした
+  2.12.0 から送り始めるため、**提出より前に**ポリシー側を広げる（アプリ側の正本 =
+  `DoubleHub/Services/UsageAnalyticsService.swift` の `UsageEvent`・`docs/supabase/MIGRATIONS.md` 038／040 行・
+  `docs/specs/app-store-prelaunch-checklist.md` §5）。
+
+### 変更内容（`/privacy/doublehub/`）
+
+- 操作の種類に 7 つ追加
+  - アルバム: 「アルバムを開いたこと」「アルバムの章を読み終えたこと」「アルバムのページから日記を開いたこと」
+    「アルバムでの非表示の確定」（`album_open` / `album_chapter_view` / `album_card_tap` / `album_card_hide`）
+  - チャット過去窓: 「チャットでの過去の日記の参照」「参照の合図はあったが見送ったこと」
+    「チャットの返答に添えた日記写真のタップ」（`chat_recall_triggered` / `chat_recall_gate_closed` / `chat_recall_photo_tap`）
+- 件数・区分に 13 項目追加
+  - アルバム: 開いた入口の区分（`entry`）・載っている日の数の区分（`k_state` = zero / one / many）・ページの種別（`page_kind`）・
+    ページに添えた言葉の種別（`caption`）・原文の一節を添えていたかどうかの別（`quote`）・非表示にした範囲の区分（`scope`）
+  - チャット過去窓: 層の組み合わせと参照のきっかけの区分（`layers` / `opened_by`）・候補と引用した件数
+    （`candidate_count` / `injected_count`）・返答に含めた日付の件数（`mentioned_ref_count`）・似ている度合いの区分
+    （`top_score_band`）・参照できなかった理由の区分（`empty_reason`）・参照を差し控えたかどうかの別（`withheld`）・
+    タップした写真の日記が何日前かの区分（`days_ago_band`）
+- 箇条書きに 2 つ追加（2.10 の対比・一言と同じ作法）
+  - アルバム: **日付・本文・題や一言・原文の中身・被写体の識別子や名前・呼び方・非表示にした期間の日数は送らない**。
+    非表示の取り消しも送らない
+  - チャット過去窓: **発話・日付そのもの・日記の抜粋・似ている度合いの生の値は送らない**
+- 冒頭コメントに 2026-09-17 の行を追加。`lastUpdated` を 2026-09-07 → 2026-09-17 へ
+- AdServices の `<h3>` 節はそのまま
+
+### 検証
+
+- `pnpm build` 成功（静的ページ 74 件・`/privacy/doublehub` の静的生成完了）。
+- 生成物 `.next/server/app/privacy/doublehub.html` に新規文言（「アルバムを開いたこと」「アルバムでの非表示の確定」
+  「チャットでの過去の日記の参照」「参照の合図はあったが見送ったこと」「チャットの返答に添えた日記写真のタップ」
+  「非表示の取り消しは送信しません」「似ている度合いの生の値は送信しません」）と `2026-09-17` が含まれることを確認。
+- **記載内容はアプリ側コードで実査済み**: 7 件すべてに 2.12.0 の送信箇所がある
+  （`AlbumViewModel.recordOpen / recordChapterViewed / recordCardTap / recordHide`・
+  `ChatViewModel.recordRecallAnalytics / recordDiaryThumbnailTap`）。`UsageEvent` のコメントにある
+  「`chat_recall_photo_tap` は描画が S3 でこの版に送信箇所が無い」は古く、`recordDiaryThumbnailTap` が存在する。
+
+### 公開
+
+- 作業枝 → `main` へ `--no-ff` マージして push（`96da7be`）。Vercel 自動デプロイ。
+  URL: https://www.doublehub.jp/privacy/doublehub/
+- ⚠️ ローカル作業機の `main` には未 push のコミット `4ae2870`（2026-06-19「HubWallet連携のプライバシーポリシーを更新」）が
+  残っており origin/main と分岐している。origin 側の現行ポリシーに HubWallet の記載は無い。今回は
+  origin/main から枝を切り、ローカル `main` には触れていない（要ユーザー判断）。
+
+### 次にサイト側でやること
+
+- 2.12.0 の App Store 公開後、`app-store-prelaunch-checklist.md` §5 の全件照合で第 4 項と `UsageEvent` に差が無いことを再確認する。
+- 次に `usage_events` の種別を増やすときも「migration 適用 → ポリシー追記 → ゲート true のビルド提出」の順を守る。
