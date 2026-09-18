@@ -340,92 +340,8 @@ export default function HubWalletPage() {
         </div>
       </Container>
 
-      {/* ========== 2. Pain Points ========== */}
-      <Section spacing="md" surface="alt">
-        <Container width="wide">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-              Why HubWallet
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-              家計簿が続かないのは、入力が辛いから。
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              レシートを持ったその瞬間に、金額・店舗・カテゴリ・メモを全部入れ切る。続かないのは怠惰じゃなく、設計のせいだったかもしれません。
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-2">
-            {[
-              {
-                title: '入力が、その場ぜんぶ。',
-                body:
-                  'レシートを持った瞬間に金額・店・カテゴリ・メモ。1 件ずつでも辛いのに、買い物がまとめて続いた日は地獄です。',
-              },
-              {
-                title: '節約疲れと罪悪感。',
-                body:
-                  '開くたびに「使い過ぎ」「予算オーバー」と責められる。続けたい気持ちより、見たくない気持ちが勝ってしまう。',
-              },
-              {
-                title: '数字を見ても、で、どうすれば？',
-                body:
-                  '集計はできても、自分にとって何が改善ポイントか分からない。グラフを眺めるだけで終わりがち。',
-              },
-              {
-                title: '定期支出の毎月手入力。',
-                body:
-                  '家賃・光熱費・サブスクなど、毎月ほぼ同じ金額を手で入れ直すのは、純粋な作業コスト。',
-              },
-            ].map((p) => (
-              <article
-                key={p.title}
-                className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
-              >
-                <h3 className="font-display text-base font-semibold tracking-[-0.01em] md:text-lg">
-                  {p.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-text-muted">
-                  {p.body}
-                </p>
-              </article>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* ========== 3. Core Pillars ========== */}
-      <Section spacing="md">
-        <Container width="wide">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-              Core Experience
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-              続けるために、設計から見直した家計簿。
-            </h2>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
-            {pillars.map((p) => (
-              <article
-                key={p.title}
-                className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-accent-product/40 hover:shadow-md"
-              >
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-                  {p.label}
-                </p>
-                <h3 className="mt-3 font-display text-lg font-semibold leading-[1.3] tracking-[-0.01em]">
-                  {p.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-text-muted">
-                  {p.body}
-                </p>
-              </article>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* ========== 4. App Screenshots ========== */}
+      {/* ========== 2. App Screenshots ========== */}
+      {/* Why の長文より前に置く。ヒーロー直後が文章続きだと離脱しやすいので、先に画面（品名検索カード・紹介動画・ギャラリー）を見せる */}
       <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
@@ -576,6 +492,91 @@ export default function HubWalletPage() {
             >
               <polyline points="9 18 15 12 9 6" />
             </svg>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 3. Pain Points ========== */}
+      <Section spacing="md">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Why HubWallet
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              家計簿が続かないのは、入力が辛いから。
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+              レシートを持ったその瞬間に、金額・店舗・カテゴリ・メモを全部入れ切る。続かないのは怠惰じゃなく、設計のせいだったかもしれません。
+            </p>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-4 md:grid-cols-2">
+            {[
+              {
+                title: '入力が、その場ぜんぶ。',
+                body:
+                  'レシートを持った瞬間に金額・店・カテゴリ・メモ。1 件ずつでも辛いのに、買い物がまとめて続いた日は地獄です。',
+              },
+              {
+                title: '節約疲れと罪悪感。',
+                body:
+                  '開くたびに「使い過ぎ」「予算オーバー」と責められる。続けたい気持ちより、見たくない気持ちが勝ってしまう。',
+              },
+              {
+                title: '数字を見ても、で、どうすれば？',
+                body:
+                  '集計はできても、自分にとって何が改善ポイントか分からない。グラフを眺めるだけで終わりがち。',
+              },
+              {
+                title: '定期支出の毎月手入力。',
+                body:
+                  '家賃・光熱費・サブスクなど、毎月ほぼ同じ金額を手で入れ直すのは、純粋な作業コスト。',
+              },
+            ].map((p) => (
+              <article
+                key={p.title}
+                className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
+              >
+                <h3 className="font-display text-base font-semibold tracking-[-0.01em] md:text-lg">
+                  {p.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                  {p.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 4. Core Pillars ========== */}
+      <Section spacing="md" surface="alt">
+        <Container width="wide">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+              Core Experience
+            </p>
+            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+              続けるために、設計から見直した家計簿。
+            </h2>
+          </div>
+          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-2">
+            {pillars.map((p) => (
+              <article
+                key={p.title}
+                className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-accent-product/40 hover:shadow-md"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                  {p.label}
+                </p>
+                <h3 className="mt-3 font-display text-lg font-semibold leading-[1.3] tracking-[-0.01em]">
+                  {p.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-text-muted">
+                  {p.body}
+                </p>
+              </article>
+            ))}
           </div>
         </Container>
       </Section>
