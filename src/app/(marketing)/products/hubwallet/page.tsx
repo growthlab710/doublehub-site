@@ -10,6 +10,11 @@ const appStoreUrl = siteConfig.social.appStoreHubWallet;
 const appStoreBadge =
   'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
 
+// 品名検索（アプリ内の名称は「買ったものを探す」）は Plus の機能で、この日いっぱいまで Free にも開放されている。
+// 正本はアプリ側の `ItemMemoryAccess.freeAccessEndsAt`（2026-12-01 0:00 JST）。期限を変えるときはアプリと揃える。
+// TODO(2026-12-01 以降): オファー帯・探すブロック・料金表・FAQ から無料開放の文言を外す（この定数の参照箇所）
+const itemSearchFreeUntil = '2026年11月30日';
+
 export const metadata: Metadata = {
   title: 'HubWallet — 節約疲れしない家計簿。 | DoubleHub',
   description:
@@ -63,6 +68,12 @@ const screenshots = [
     alt: '音声で記録 — 話しかけるだけで未整理に保存',
     caption: '音声入力 — 話しかけて未整理に保存',
   },
+];
+
+const itemSearchPoints = [
+  '品名の一部で、撮ったレシートの品目を検索できます。',
+  '同じお店の同じ品なら、前回との差額も出ます（別のお店とは比べません）。',
+  '探せるのは、自分で撮ったレシートの品目。撮りためるほど、見つかるものが増えます。',
 ];
 
 const pillars = [
@@ -203,6 +214,10 @@ const faqs = [
     a: '全プランで広告は一切表示しません。Free プランも同じ条件です。',
   },
   {
+    q: '品名検索（買ったものを探す）は、いつまで無料で使えますか？',
+    a: `Plus プランの機能ですが、${itemSearchFreeUntil}までは無料プランでも使えます。それ以降は Plus プランの機能になります。レシートの撮影や仕分けなど、家計簿の基本機能はその後も無料プランのまま使えます。`,
+  },
+  {
     q: 'サブスクの解約もアプリからできますか？',
     a: 'いいえ。HubWallet が行うのは、無料トライアル終了日や更新日・解約期限が近づいたときの通知と、ホームでの「続ける／やめる」の確認までです。外部サービスの解約手続きそのものを代行することはありません。解約は各サービスの手順に沿って行ってください。',
   },
@@ -251,27 +266,63 @@ export default function HubWalletPage() {
               HubWallet は、レシートを「撮るだけ」で溜めて、隙間時間にまとめて仕分ける iOS の家計簿アプリです。サブスクや固定費の管理、「無料のつもりが課金開始」を防ぐ通知にも対応。銀行連携なし・全プラン広告ゼロで、お金の使い方を反省の対象から自己理解の手がかりへと変えていきます。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href={appStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex transition-transform hover:scale-[1.02]"
-                aria-label="App Store で HubWallet をダウンロード"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={appStoreBadge}
-                  alt="App Storeでダウンロード"
-                  style={{ height: 44, objectFit: 'contain' }}
-                />
-              </a>
+              <AppStoreBadgeLink />
               <Button asChild size="lg" variant="secondary">
                 <Link href="#plans">プランを見る</Link>
               </Button>
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-md">
+          {/* オファー帯。広告からの着地で最初に目に入れたいので、モバイルはコピー直下（スクショより上）に挟み、
+              md 以上はヒーロー 2 カラムの直下に全幅で置く。2 つは別のオファーなのでバッジの色を分けている */}
+          <aside
+            aria-label="いま無料で試せること"
+            className="-mt-4 rounded-2xl border-2 border-accent-product bg-surface p-4 shadow-md md:col-span-2 md:row-start-2 md:mt-0 md:p-6"
+          >
+            <div className="grid gap-4 md:grid-cols-2 md:gap-x-0 md:gap-y-5 lg:grid-cols-[1fr_1fr_auto] lg:items-center">
+              <div className="md:pr-6">
+                <span className="inline-flex items-center rounded-full bg-accent-product px-3 py-1 text-xs font-bold text-accent-product-fg">
+                  品名検索 無料開放中
+                </span>
+                {/* 日付の途中で折り返さないよう、文節ごとに inline-block で区切る */}
+                <p className="mt-2 text-sm font-semibold leading-relaxed text-text md:mt-3 md:text-base">
+                  <span className="inline-block">有料の検索機能が、</span>
+                  <span className="inline-block">{itemSearchFreeUntil}まで</span>
+                  <span className="inline-block">無料プランでも</span>
+                  <span className="inline-block">使えます。</span>
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-text-muted">
+                  <span className="inline-block">撮ったレシートの品目を検索。</span>
+                  <span className="inline-block">前回いつ・いくらで買ったかが出ます。</span>
+                </p>
+              </div>
+              <div className="border-t border-divider pt-4 md:border-l md:border-t-0 md:pl-6 md:pt-0">
+                <span className="inline-flex items-center rounded-full bg-accent-warm px-3 py-1 text-xs font-bold text-accent-product-fg">
+                  Plus 初月無料
+                </span>
+                <p className="mt-2 text-sm font-semibold leading-relaxed text-text md:mt-3 md:text-base">
+                  <span className="inline-block">Plus プランは、</span>
+                  <span className="inline-block">はじめて登録する方なら</span>
+                  <span className="inline-block">最初の1ヶ月が無料。</span>
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-text-muted">
+                  <span className="inline-block">無料期間のあとは月額 ¥480 で自動更新。</span>
+                  <span className="inline-block">いつでも解約できます。</span>
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-divider pt-4 md:col-span-2 md:pt-5 lg:col-span-1 lg:flex-col lg:items-start lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+                <AppStoreBadgeLink />
+                <Link
+                  href="#item-search"
+                  className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                >
+                  品名検索を詳しく見る ↓
+                </Link>
+              </div>
+            </div>
+          </aside>
+
+          <div className="relative mx-auto w-full max-w-md md:col-start-2 md:row-start-1">
             <div className="relative aspect-[9/19] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
               <Image
                 src="/images/hubwallet-screen-home.jpg"
@@ -388,6 +439,65 @@ export default function HubWalletPage() {
               ※ 画面の金額・サービス名はサンプルデータです。
             </p>
           </div>
+
+          {/* 品名検索（買ったものを探す）。「問い → 画面 → 要点」の順に読ませたいので、モバイルは DOM 順のまま縦積み、
+              md 以上はスクショを左カラムに 2 行ぶち抜きで置き、右カラムの上下 2 ブロックを行の境目に寄せて一続きに見せる */}
+          <article
+            id="item-search"
+            className="mx-auto mt-12 grid max-w-5xl scroll-mt-28 gap-8 rounded-3xl border border-border bg-surface p-6 shadow-md md:grid-cols-[0.8fr_1.2fr] md:gap-x-12 md:gap-y-6 md:p-10"
+          >
+            <div className="md:col-start-2 md:row-start-1 md:self-end">
+              <span className="inline-flex items-center rounded-full bg-accent-product px-3 py-1 text-xs font-bold text-accent-product-fg">
+                品名検索
+              </span>
+              <h3 className="mt-4 font-display text-[clamp(1.4rem,1rem+1.6vw,2rem)] font-semibold leading-[1.3] tracking-[-0.02em]">
+                醤油、前回いくら？
+                <br />
+                いつ買った？
+              </h3>
+              <p className="mt-4 text-pretty text-sm leading-relaxed text-text-muted md:text-base">
+                レシートを撮ると、品目まで残ります。あとから「買ったものを探す」で品名を検索すれば、前回いつ・どのお店で・いくらで買ったかが出てきます。
+              </p>
+            </div>
+
+            <figure className="mx-auto w-full max-w-xs md:col-start-1 md:row-span-2 md:row-start-1 md:max-w-none md:self-center">
+              <div className="overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
+                <Image
+                  src="/images/hubwallet-screen-item-search.png"
+                  alt="「買ったものを探す」の検索結果 — 「醤油」で検索すると、買った日・お店・金額と、同じお店での前回との差額が並ぶ"
+                  width={1206}
+                  height={1666}
+                  className="h-auto w-full"
+                  sizes="(min-width: 1024px) 380px, (min-width: 768px) 38vw, 320px"
+                />
+              </div>
+              <figcaption className="mt-3 text-center text-xs text-text-faint">
+                ※ 金額・店舗名はサンプルデータです。
+              </figcaption>
+            </figure>
+
+            <div className="md:col-start-2 md:row-start-2 md:self-start">
+              <ul className="flex flex-col gap-3 text-pretty text-sm text-text-muted">
+                {itemSearchPoints.map((t) => (
+                  <li key={t} className="flex items-start gap-2">
+                    <Check /> {t}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 rounded-2xl border border-border bg-surface-2 px-4 py-3 text-pretty text-sm leading-relaxed text-text">
+                <span className="mr-2 inline-flex items-center rounded-full bg-accent-product px-2.5 py-0.5 text-xs font-bold text-accent-product-fg">
+                  無料開放中
+                </span>
+                <span className="inline-block">Plus の機能ですが、</span>
+                <strong className="inline-block font-semibold">{itemSearchFreeUntil}まで</strong>
+                <span className="inline-block">は無料プランでも</span>
+                <span className="inline-block">使えます。</span>
+              </p>
+              <div className="mt-6">
+                <AppStoreBadgeLink />
+              </div>
+            </div>
+          </article>
 
           {/* 15 秒の紹介動画 */}
           <figure className="mx-auto mt-10 max-w-sm">
@@ -679,6 +789,11 @@ export default function HubWalletPage() {
                 </span>
                 <span className="text-sm text-text-muted">／ 月</span>
               </div>
+              <p className="mt-3">
+                <span className="inline-flex items-center rounded-full bg-accent-warm px-3 py-1 text-xs font-bold text-accent-product-fg">
+                  はじめて登録する方は初月無料
+                </span>
+              </p>
               <p className="mt-3 text-xs text-text-muted">
                 Plus は AI 機能を月 500 回までご利用いただけます。
               </p>
@@ -694,6 +809,9 @@ export default function HubWalletPage() {
                   <span>
                     <strong className="font-semibold text-text">予算管理は無制限カテゴリ</strong>
                   </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 品名検索（買ったものを探す）
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> サブカテゴリ追加（最大 30 件）
@@ -758,6 +876,11 @@ export default function HubWalletPage() {
                   <td className="px-4 py-3 text-center text-text-faint">—</td>
                   <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
                 </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">品名検索（買ったものを探す）</td>
+                  <td className="px-4 py-3 text-center text-text-muted">{itemSearchFreeUntil}まで</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -808,20 +931,7 @@ export default function HubWalletPage() {
               HubWallet は App Store で配信中です。撮って溜める家計簿を、まずは無料プランから試してみてください。
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <a
-                href={appStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex transition-transform hover:scale-[1.02]"
-                aria-label="App Store で HubWallet をダウンロード"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={appStoreBadge}
-                  alt="App Storeでダウンロード"
-                  style={{ height: 44, objectFit: 'contain' }}
-                />
-              </a>
+              <AppStoreBadgeLink />
               <Button asChild size="lg" variant="secondary">
                 <Link href="/#ecosystem">DoubleHub 全体構想を見る</Link>
               </Button>
@@ -830,6 +940,25 @@ export default function HubWalletPage() {
         </Container>
       </Section>
     </div>
+  );
+}
+
+function AppStoreBadgeLink() {
+  return (
+    <a
+      href={appStoreUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex transition-transform hover:scale-[1.02]"
+      aria-label="App Store で HubWallet をダウンロード"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={appStoreBadge}
+        alt="App Storeでダウンロード"
+        style={{ height: 44, objectFit: 'contain' }}
+      />
+    </a>
   );
 }
 
