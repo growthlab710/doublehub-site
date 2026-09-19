@@ -4842,3 +4842,59 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - **未公開**。PR #3 にコミットを追加したところまで。マージの条件（HubWallet 2.4.0 の App Store 公開後）は上の項と同じ。
+
+---
+
+## 2026-09-19 (JST) — HubWallet LP に計測パラメータを追加（Apple `ct` / Vercel Web Analytics）
+
+ブランチ: `feature/hubwallet-lp-measurement-20260919`（`main` 宛ての PR。**マージはユーザー判断**）
+前提: 上 2 項の PR #3 は `main` にマージ済み（`main` = 356fa0b）で、LP 本体はすでに公開されている。今回はその上に計測の仕込みだけを足す差分。
+
+### 背景
+
+- X 広告から HubWallet LP に流す準備として、「LP のどの導線から App Store に入ったか」を Apple 側で分けて見られるようにする。
+  **広告の出稿・配信は行っていない**（このコミットは計測の仕込みのみ）。実装ログはマーケ側
+  `マーケティング/10.情報/20260918_HW_XAds_バズ調査/14_claude_lp_measurement_log.md`。
+
+### 変更内容
+
+1. **App Store 導線 4 箇所に Apple のキャンペーンパラメータ**（`/products/hubwallet/`）
+   - 新規 `src/lib/site/appStoreLink.ts` の `withAppStoreCampaign()` で付与。`new URL()` + `searchParams.set()` なので、
+     既存クエリ（他アプリのリンクに付いている `itscg` / `itsct` 等）を壊さず同名キーだけ上書きする。
+   - 共通: `mt=8`（メディアタイプ = iOS App）。
+   - 位置別 `ct`: ヒーロー `hw_xads_lp_hero` / オファー帯 `hw_xads_lp_band` / 探すブロック `hw_xads_lp_search` /
+     最下部 CTA `hw_xads_lp_footer`。未指定のバッジを足したときは汎用の `hw_xads_lp` に落ちる。
+   - `page.tsx` の `AppStoreBadgeLink` に `placement` プロップを追加（既定値 `other` = `hw_xads_lp`）。バッジの見た目・文言・設置数は変更なし。
+   - `pt`（プロバイダトークン）は**コード側に値が無いため付けていない**。App Store Connect のキャンペーン画面で番号を確認したら
+     `withAppStoreCampaign(url, { ct, pt })` に渡すだけで付く。`pt` 無しでも `ct` 別の集計は App Analytics に出る。
+2. **Vercel Web Analytics をサイト全体に追加**
+   - `@vercel/analytics` 2.0.1 を依存に追加し、ルートレイアウト `src/app/layout.tsx` の `<body>` 末尾に
+     `<Analytics />`（`@vercel/analytics/next`）を置いた。marketing / app 両エリアに効く。
+   - 既存の GA4（`siteConfig.gaMeasurementId`）はそのまま。GA4 と併用する。
+   - ⚠️ 計測開始には **Vercel プロジェクト側で Web Analytics を有効化する操作が別途必要**（ダッシュボード → Analytics）。コード側だけでは数字が溜まらない。
+
+### 計測方針（広告の並走テスト時）
+
+- Apple 側（製品ページ表示 → ダウンロード）は `ct`、サイト側（流入・回遊）は着地 URL の `utm_*` で見る。2 つは独立した計測で、突き合わせはしない。
+- LP 着地 URL の例:
+  `https://www.doublehub.jp/products/hubwallet/?utm_source=x&utm_medium=paid&utm_campaign=hw_search_ab`
+- 着地 URL に utm を付けても App Store リンク側の `ct` は変わらない（`ct` は LP 内の設置位置に固定）。クリエイティブ別に App Store 側まで
+  分けたくなったら、`ct` に位置＋テスト名を持たせる設計へ変える必要がある（現状は未対応）。
+
+### 検証
+
+- `pnpm build` 成功（TypeScript OK）。
+- 生成物 `.next/server/app/products/hubwallet.html`: apps.apple.com リンクは 4 本のままで、`ct` が hero / band / search / footer の 4 種、
+  いずれも `mt=8` 付き。「ベータ」「価格メモ」「試験公開」は 0 件のまま（コピー・セクション順は無変更）。
+- `pnpm start` ＋ ヘッドレス Chrome（`--dump-dom`）で `/products/hubwallet/` と `/` を確認。ランタイムで
+  `<script src="/_vercel/insights/script.js" data-sdkn="@vercel/analytics/next" data-sdkv="2.0.1">` が挿入され、バッジの href も 4 種の `ct` のまま。
+
+### 公開
+
+- **未公開**。`main` 宛ての PR を作成したところまで。マージすると Vercel が自動デプロイされる。
+
+### 次にやること
+
+- Vercel ダッシュボードで Web Analytics を ON にする（コード側は準備済み）。
+- App Store Connect でプロバイダトークン（`pt`）を確認し、必要なら `withAppStoreCampaign` に渡す。
+- 他プロダクトの LP（BookCompass / TrainNote / DoubleHub）へ同じ `ct` 設計を広げるかは未着手。`withAppStoreCampaign` はそのまま使える。
