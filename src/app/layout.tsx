@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { siteConfig } from '@/lib/site/config';
 import '@/styles/globals.css';
@@ -84,6 +85,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
+        {/* Vercel Web Analytics。GA4 と併用し、広告流入のページ単位の数字を
+            Vercel 側でも見られるようにする（計測開始には Vercel プロジェクト側で
+            Web Analytics を有効化する操作が別途必要）。 */}
+        <Analytics />
       </body>
     </html>
   );
