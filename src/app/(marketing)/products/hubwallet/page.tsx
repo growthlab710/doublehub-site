@@ -5,10 +5,27 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { siteConfig } from '@/lib/site/config';
+import { withAppStoreCampaign } from '@/lib/site/appStoreLink';
 
 const appStoreUrl = siteConfig.social.appStoreHubWallet;
 const appStoreBadge =
   'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
+
+// App Store 導線の設置位置別キャンペーントークン（Apple の `ct`）。
+// 広告 → この LP → App Store の流れで、どの位置のバッジから入れたかを
+// App Store Connect の App Analytics 側で分けて見るために使う。
+// 未指定のバッジを足したときは汎用の `hw_xads_lp` に落ちる。
+//
+// 計測方針: Apple 側（製品ページ表示・ダウンロード）は `ct`、サイト側（GA4 の流入・回遊）は
+// 着地 URL の utm_* で見る。両者は独立しているので、広告の並走テストでは着地 URL に utm を付ける。
+// 例: https://www.doublehub.jp/products/hubwallet/?utm_source=x&utm_medium=paid&utm_campaign=hw_search_ab
+const campaignTokens = {
+  hero: 'hw_xads_lp_hero',
+  band: 'hw_xads_lp_band',
+  search: 'hw_xads_lp_search',
+  footer: 'hw_xads_lp_footer',
+  other: 'hw_xads_lp',
+} as const;
 
 // 品名検索（アプリ内の名称は「買ったものを探す」）は Plus の機能で、この日いっぱいまで Free にも開放されている。
 // 正本はアプリ側の `ItemMemoryAccess.freeAccessEndsAt`（2026-12-01 0:00 JST）。期限を変えるときはアプリと揃える。
@@ -266,7 +283,7 @@ export default function HubWalletPage() {
               HubWallet は、レシートを「撮るだけ」で溜めて、隙間時間にまとめて仕分ける iOS の家計簿アプリです。サブスクや固定費の管理、「無料のつもりが課金開始」を防ぐ通知にも対応。銀行連携なし・全プラン広告ゼロで、お金の使い方を反省の対象から自己理解の手がかりへと変えていきます。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
-              <AppStoreBadgeLink />
+              <AppStoreBadgeLink placement="hero" />
               <Button asChild size="lg" variant="secondary">
                 <Link href="#plans">プランを見る</Link>
               </Button>
@@ -311,7 +328,7 @@ export default function HubWalletPage() {
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-x-5 gap-y-3 border-t border-divider pt-4 md:col-span-2 md:pt-5 lg:col-span-1 lg:flex-col lg:items-start lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
-                <AppStoreBadgeLink />
+                <AppStoreBadgeLink placement="band" />
                 <Link
                   href="#item-search"
                   className="text-sm font-medium text-primary underline-offset-4 hover:underline"
@@ -410,7 +427,7 @@ export default function HubWalletPage() {
                 <span className="inline-block">使えます。</span>
               </p>
               <div className="mt-6">
-                <AppStoreBadgeLink />
+                <AppStoreBadgeLink placement="search" />
               </div>
             </div>
           </article>
@@ -932,7 +949,7 @@ export default function HubWalletPage() {
               HubWallet は App Store で配信中です。撮って溜める家計簿を、まずは無料プランから試してみてください。
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <AppStoreBadgeLink />
+              <AppStoreBadgeLink placement="footer" />
               <Button asChild size="lg" variant="secondary">
                 <Link href="/#ecosystem">DoubleHub 全体構想を見る</Link>
               </Button>
@@ -944,10 +961,14 @@ export default function HubWalletPage() {
   );
 }
 
-function AppStoreBadgeLink() {
+function AppStoreBadgeLink({
+  placement = 'other',
+}: {
+  placement?: keyof typeof campaignTokens;
+}) {
   return (
     <a
-      href={appStoreUrl}
+      href={withAppStoreCampaign(appStoreUrl, { ct: campaignTokens[placement] })}
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex transition-transform hover:scale-[1.02]"
