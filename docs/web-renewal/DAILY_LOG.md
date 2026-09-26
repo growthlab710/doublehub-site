@@ -4898,3 +4898,37 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 - Vercel ダッシュボードで Web Analytics を ON にする（コード側は準備済み）。
 - App Store Connect でプロバイダトークン（`pt`）を確認し、必要なら `withAppStoreCampaign` に渡す。
 - 他プロダクトの LP（BookCompass / TrainNote / DoubleHub）へ同じ `ct` 設計を広げるかは未着手。`withAppStoreCampaign` はそのまま使える。
+
+## 2026-09-26 (JST) — HubWallet ポリシーにアプリ内フィードバックと設定の行の記録を追記
+
+ブランチ: `feature/update-hubwallet-privacy-20260926`（`6b37ac0`・merge `5d77ace`）
+
+### 背景
+
+- HubWallet 2.4.0（2026-09-19 公開）から、β 機能の画面下にアプリ内フィードバックの送信フォームがある。
+  アプリ側の控え `HubWallet/docs/PRIVACY_POLICY.md` には 2026-09-14 に草案を入れていたが、公開ページは
+  2026-08-15 版のままで**未反映だった**（2026-09-26 に判明）。
+- 次の HubWallet のリリースで、設定「サービス情報」の「ご意見・サポート」「アプリの開発者を励ます」
+  「このアプリを紹介する」のタップと、紹介の共有シートでの送信完了を `settings_link_events` に記録する
+  （本番 DB へは 2026-09-26 に適用済み）。第 7 項は記録する利用状況を**限定列挙**する書き方なので、提出前に項目を足す。
+
+### 変更（`src/app/(marketing)/privacy/hubwallet/page.tsx`）
+
+- 最終更新日: 2026-08-15 → 2026-09-26
+- 第 2.3 項: 設定の 3 行のタップと、紹介の共有完了の記録（発生日時・項目の種類・共有先アプリの種類・アプリのバージョン）を追加
+- 第 2.5 項（新設）: アプリ内フィードバック（任意）で取得する内容と、送らない情報（氏名・メール・Apple ID・同期のユーザー ID・家計データ）
+- 第 5 項: フィードバックの中継（Cloudflare Workers）・保管（Supabase・東京）・開発者への新着通知（Discord Webhook）
+- 第 7 項: 設定の 3 行のタップと紹介の共有完了（共有先アプリの種類だけを記録し、送り先や共有した文章は送らない）
+- 改定履歴: 2026-09-26 の 1 行にフィードバックと設定の行の記録をまとめた（9/14 の日付では公開日とずれるため）
+- 9/14 草案の「正本はここに保存します」は利用者向けに「受け取ったフィードバックはここに保存します」へ言い換えた
+
+### 検証
+
+- `pnpm build` 成功。手元の `node_modules` に `@vercel/analytics`（2026-09-19 追加）が無くて一度失敗したため、
+  `pnpm install --frozen-lockfile` で lockfile どおりに入れ直した（lockfile の変更なし）。
+- 生成物 `.next/server/app/privacy/hubwallet.html` に 2026-09-26・第 2.5 項・Cloudflare Workers・Discord・
+  設定の 3 行の文言が入っていることを確認。
+
+### 公開
+
+- ユーザー承認のうえ、ローカルで `main` にマージして `git push`（GitHub コネクタが使えないセッションのため）。Vercel の自動デプロイ。
