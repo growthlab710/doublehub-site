@@ -32,15 +32,20 @@ const campaignTokens = {
 // TODO(2026-12-01 以降): オファー帯・探すブロック・料金表・FAQ から無料開放の文言を外す（この定数の参照箇所）
 const itemSearchFreeUntil = '2026年11月30日';
 
+// 無料プランの AI 利用は「標準は月 5 回。この日までは特別に月 10 回」（2.6.0 の表示）。
+// 正本はアプリ側の `FreeAIQuotaNotice`（2026-12-01 0:00 JST に表示が切り替わる）。
+// TODO(2026-12-01 以降): 料金カード・比較表・脚注から「特別に月 10 回」を外し、月 5 回だけにする（この定数の参照箇所）
+const aiFreeSpecialUntil = '2026年11月30日';
+
 export const metadata: Metadata = {
-  title: 'HubWallet — 節約疲れしない家計簿。 | DoubleHub',
+  title: 'HubWallet — 広告なしの家計簿。レシートは撮るだけ | DoubleHub',
   description:
-    'HubWallet は、レシートを「撮るだけ」で溜めて、隙間時間にまとめて仕分ける iOS 家計簿アプリです。サブスク・固定費の管理と、無料トライアル終了・更新前・解約期限の通知にも対応。銀行連携不要・全プラン広告ゼロで、お金の使い方を自己理解の手がかりに変えていきます。',
+    '広告が、ひとつも出ない iPhone の家計簿アプリ HubWallet。レシートは撮るだけで、仕分けは隙間時間にまとめて。サブスク・固定費の管理と、無料お試しの終了前・年額の更新前のお知らせにも対応しています。',
   alternates: { canonical: '/products/hubwallet/' },
   openGraph: {
-    title: 'HubWallet — 節約疲れしない家計簿。 | DoubleHub',
+    title: 'HubWallet — 広告なしの家計簿。レシートは撮るだけ | DoubleHub',
     description:
-      'レシートは「撮るだけ」、仕分けは隙間時間にまとめて。サブスクの解約忘れは通知で防ぐ。銀行連携なし・広告ゼロの iOS 家計簿アプリ。',
+      'レシートは撮るだけ、仕分けは隙間時間にまとめて。サブスクの終了前もお知らせ。広告が、ひとつも出ない iPhone の家計簿アプリ。',
     url: 'https://www.doublehub.jp/products/hubwallet/',
     type: 'website',
     siteName: 'DoubleHub',
@@ -49,41 +54,38 @@ export const metadata: Metadata = {
   },
 };
 
+// 2.6.0 の画面（2026-10-01 撮影・架空の店名とサンプルの金額）。撮影の記録は
+// マーケティング/30.画面素材/HubWallet/2.6.0/manifest.json。Plus の画面はキャプションに「Plus」と書く
 const screenshots = [
   {
-    src: '/images/hubwallet-recurring-dashboard.jpg',
-    alt: 'ホームの固定費・サブスク ミニダッシュボード — 月額換算・月額構成・30日以内の予定タイムラインと解約期限バッジ',
-    caption: '固定費・サブスク — 30日以内の予定と解約期限がひと目',
+    src: '/images/hubwallet-recurring-202610.jpg',
+    alt: 'ホームの「固定費・サブスク」— 月額換算・年額・月額構成と、30日以内の予定（無料お試しの終了日つき）',
+    caption: '固定費・サブスク — 次の予定と、お試しの終了日がひと目で',
   },
   {
-    src: '/images/hubwallet-screen-home.jpg',
-    alt: 'HubWallet ホーム画面 — 今月の支出と未整理',
-    caption: 'ホーム — 今月の支出と未整理がひと目で分かる',
+    src: '/images/hubwallet-home-202610.jpg',
+    alt: 'HubWallet のホーム — 今月の支出・予算の残り・残り日数・1日あたりの目安と、未整理の件数',
+    caption: 'ホーム — 今月の予算の残りと、1日あたりの目安',
   },
   {
-    src: '/images/hubwallet-screen-triage.jpg',
-    alt: '仕分け画面 — レシート画像から金額・店舗・カテゴリを推定',
-    caption: '仕分け — スワイプで「修正・保留・確定」',
+    src: '/images/hubwallet-unsorted-202610.jpg',
+    alt: '未整理の一覧 — 撮ったレシートが、仕分け前のまま並ぶ',
+    caption: '未整理 — 撮ったレシートは、ここに溜まる',
   },
   {
-    src: '/images/hubwallet-screen-monthly.jpg',
-    alt: '月次レポート — 月間支出と6ヶ月推移、カテゴリ別の進捗',
-    caption: '月次レポート — 6ヶ月推移とカテゴリ別の進捗',
+    src: '/images/hubwallet-sort-202610.jpg',
+    alt: '仕分け — 8%と10%の内訳が印字されたレシートを、食料品と消耗品の2件に分けて記録する提案',
+    caption: '仕分け — スワイプで確定。食品と日用品は分けて記録も',
   },
   {
-    src: '/images/hubwallet-screen-yearly.jpg',
-    alt: '年間レポート — 年間支出見込み・予算超過カテゴリ・来月の支出見込み',
-    caption: '年間ビュー — 支出見込みと来月予測',
+    src: '/images/hubwallet-monthly-202610.jpg',
+    alt: '月次レポート — 月間支出・カテゴリ構成・予算の進み・6ヶ月推移',
+    caption: '月次レポート — 今月の使いみちが、一枚に',
   },
   {
-    src: '/images/hubwallet-screen-categories.jpg',
-    alt: 'カテゴリ選択 — 食費・住居・交通・娯楽など 15 カテゴリ',
-    caption: 'カテゴリ — やわらかい配色の親カテゴリ 15 種',
-  },
-  {
-    src: '/images/hubwallet-screen-voice.jpg',
-    alt: '音声で記録 — 話しかけるだけで未整理に保存',
-    caption: '音声入力 — 話しかけて未整理に保存',
+    src: '/images/hubwallet-outlook-202610.jpg',
+    alt: '家計の見通し（Plus）— これから12ヶ月の固定費の予定と、1年間の予定額',
+    caption: '家計の見通し（Plus）— これから 12 ヶ月の固定費',
   },
 ];
 
@@ -107,16 +109,16 @@ const pillars = [
       '数字を見るたびに反省させない。HubWallet が見せたいのは、責められる予算ではなく「自分の使い方の輪郭」です。「即日整理 N 日連続 🎉」のようなポジティブな指標で、続けたくなる家計簿を目指しています。',
   },
   {
-    label: 'Local-First & Ad-Free',
-    title: 'データは端末ローカル。広告は一切なし。',
+    label: 'Ad-Free & Local-First',
+    title: '広告は一切なし。記録は手元に。',
     body:
-      'まずは端末ローカル（SwiftData）に保存。銀行口座やカード情報を渡す必要はありません。Free を含む全プランで広告は一切表示しないので、家計簿を開くたびに広告に邪魔されることもありません。',
+      'Free を含む全プランで広告を表示しないので、家計簿を開くたびに広告に邪魔されることもありません。家計データは端末に保存され、銀行口座やカードの情報を渡す必要もありません。機種変更や複数の端末に備えたいときは、Plus のクラウド同期を選んで使えます（レシート画像は端末だけに保存）。',
   },
   {
-    label: 'DoubleHub Ready',
-    title: '単体で完結。つなげればもっと深く。',
+    label: 'Standalone',
+    title: '家計簿は、これひとつで完結。',
     body:
-      'HubWallet は単体でも家計簿として完結します。将来 DoubleHub につながると、価値観や他領域の行動データと組み合わさり、「どんなお金の使い方が、自分を充電させているか」までを見渡せるようになります。',
+      '撮影・仕分け・予算・サブスク管理・レポートまで、HubWallet ひとつで使えます。DoubleHub と同じ GrowthLab がつくる、DoubleHub ファミリーのアプリです。',
   },
 ];
 
@@ -125,13 +127,13 @@ const features = [
     label: 'Input',
     title: 'カメラ、共有シート、音声、手入力。',
     body:
-      'カメラ撮影は連続可・撮った瞬間に未整理へ保存。Safari・メール・Files・写真からの共有シート、音声入力、手入力にも対応。コントロールセンターからのワンタップ撮影起動（iOS 18 以上）もでき、「一番ラクな入り口」をその時々で選べます。',
+      'カメラは連続撮影でき、撮った瞬間に未整理へ保存。横に構えれば、長いレシートも横向きのまま保存できます。Safari・メール・ファイル・写真からの共有、PDF の取り込み、音声入力、手入力にも対応。コントロールセンターからのワンタップ撮影起動（iOS 18 以上）もでき、「一番ラクな入り口」をその時々で選べます。',
   },
   {
     label: 'AI Recognition',
     title: 'AI が金額・日付・店舗・品目を読む。',
     body:
-      'レシート画像から金額・日付・店舗・品目を AI が抽出。さらに親カテゴリ（食費・交通・医療・健康など）を AI が推定し、店舗ごとの履歴から学習していきます。',
+      'レシート画像から金額・日付・店舗・品目を AI が読み取り、カテゴリ（食費・交通・医療・健康など）も推定します。店舗ごとの記録からも学習していきます。8%／10% の内訳が印字されたレシートでは、食品と日用品を 2 件に分けて記録する提案も出ます。',
   },
   {
     label: 'Triage',
@@ -143,7 +145,7 @@ const features = [
     label: 'Reports',
     title: '月次・6ヶ月推移・年間見込みを自動集計。',
     body:
-      '月間支出、6 ヶ月推移、親カテゴリ別の進捗、「ハイライト」章、「今月の発見」の数字サマリーを自動でまとめます。数値は集計のみで AI に渡さない事実ベース設計。数字を眺めるだけで、自分の生活コストの輪郭が見えてきます。',
+      '月間支出、6 ヶ月推移、動きの大きいカテゴリ、固定費と変動費、サブスクの棚卸しまで、毎月のレポートに自動でまとめます。レポートの集計は端末の中で行い、数字を眺めるだけで、自分の生活コストの輪郭が見えてきます。',
   },
   {
     label: 'Recurring',
@@ -155,7 +157,7 @@ const features = [
     label: 'Subscriptions',
     title: 'サブスクの「うっかり」を、通知で防ぐ。',
     body:
-      '外部サービスの無料トライアル終了日を登録すると、期限前に通知が届き、ホームで「続ける／やめる」を確認できます。年額更新の 1 週間前、解約期限の 5 日前などのリマインドにも対応。少額の月額は通知しない、ノイズを抑えた設計です。',
+      '外部サービスの無料トライアル終了日を登録しておくと、終了が近づいたらホームでお知らせし、「継続する／停止する」を選べます。通知をオンにすれば、終了の 5 日前と前日、年額更新の 1 週間前、解約期限の 5 日前などにリマインドも届きます。少額の月額は通知しない、ノイズを抑えた設計です。',
   },
   {
     label: 'Timeline & Cost View',
@@ -167,64 +169,46 @@ const features = [
     label: 'Insight',
     title: '事実ベースの軽い気づきを、押しつけずに。',
     body:
-      'カテゴリのスパイク、前月比、未使用の可能性があるサブスク、来月の支出見込みなど、事実ベースのインサイトを軽く表示。「節約しろ」ではなく「こうなっています」を伝えます。',
+      'カテゴリの急な増え方や前月比、定期支出の値上がり、来月の支出見込み、サブスクが収入に占める割合など、事実ベースの気づきを軽く表示。「節約しろ」ではなく「こうなっています」を伝えます。',
   },
 ];
 
+// 競合のアプリ名は書かない（HubWallet 伝達ブリーフ §8「競合名をメタデータ・対外素材に書かない」）
 const compare = [
   {
     type: '自動連携型',
-    examples: 'マネーフォワード ME, Zaim',
     diff:
       '銀行口座やカード情報を渡さなくていい。OCR・手入力・音声のみで、自分の手元だけで家計簿が完結します。',
   },
   {
     type: 'シンプル家計簿',
-    examples: 'Dr.Wallet など',
     diff:
       '入力と仕分けを一緒にやらない、独自のキャプチャ／仕分け分離モデル。続けやすさを設計の中心に置いています。',
   },
   {
     type: 'レシート特化',
-    examples: 'レシーピ! など',
     diff:
       'ポイント還元や特売情報ではなく、入力負担の軽減と「自分の使い方の自己理解」に振り切っています。',
   },
   {
     type: 'プライバシー重視',
-    examples: 'Moneytree など',
     diff:
       'ローカルファースト保存に加え、Free を含めた全プランで広告は一切なし。',
-  },
-];
-
-const flows = [
-  {
-    label: 'アプリ単体での価値',
-    desc: 'レシート撮影と仕分けの分離、定期支出の自動計上、月次・年間レポート、事実ベースの気づき。',
-  },
-  {
-    label: 'DoubleHub に渡す情報',
-    desc: 'カテゴリ別の支出傾向、続いた習慣／頓挫した習慣、自己投資と浪費の境目に関するシグナル。',
-  },
-  {
-    label: '将来返ってくる提案（順次拡張）',
-    desc: 'お金・時間・体調の関係を踏まえた、「どんな使い方が自分を充電させるか」の提案。',
   },
 ];
 
 const faqs = [
   {
     q: '銀行やクレジットカードと連携できますか？',
-    a: 'いいえ。連携は行わず、レシート撮影・手入力・音声入力のみで記録します。金融規制やプライバシーの観点から、当面はこの方針を維持します。',
+    a: 'いいえ。銀行口座やカードとは連携せず、レシートの撮影・PDF や写真の取り込み・音声入力・手入力で記録します。金融規制やプライバシーの観点から、当面はこの方針を維持します。',
   },
   {
     q: 'データは外部に送られますか？',
-    a: 'データは端末ローカル（SwiftData）に保存します。AI による OCR・カテゴリ推定や音声認識を行うときのみ、必要な画像やテキスト・音声を AI に送信します。',
+    a: '家計データは端末に保存します。外部に送るのは、AI 機能を使うときの画像やテキスト（音声は文字にしてから送ります）、Plus でクラウド同期を有効にしたときの同期データ、サービス改善のための最小限の利用状況（金額・店名などの家計データは含みません）、アプリ内フィードバックを送ったときのその内容です。詳しくはプライバシーポリシーをご覧ください。',
   },
   {
     q: 'Android 版はありますか？',
-    a: '初回リリースは iOS のみです（iOS 17.0 以上）。Android 版は現時点で予定していません。',
+    a: 'iPhone（iOS 17.0 以上）向けです。Android 版は現時点で予定していません。',
   },
   {
     q: '広告は表示されますか？',
@@ -236,7 +220,7 @@ const faqs = [
   },
   {
     q: 'サブスクの解約もアプリからできますか？',
-    a: 'いいえ。HubWallet が行うのは、無料トライアル終了日や更新日・解約期限が近づいたときの通知と、ホームでの「続ける／やめる」の確認までです。外部サービスの解約手続きそのものを代行することはありません。解約は各サービスの手順に沿って行ってください。',
+    a: 'いいえ。HubWallet が行うのは、無料トライアル終了日や更新日・解約期限が近づいたときのお知らせと、ホームでの「継続する／停止する」の確認までです。外部サービスの解約手続きそのものを代行することはありません。解約は各サービスの手順に沿って行ってください。',
   },
   {
     q: 'いつから使えますか？',
@@ -280,7 +264,7 @@ export default function HubWalletPage() {
               撮って溜める、あとで整理する。
             </h1>
             <p className="mt-5 max-w-lg text-text-muted">
-              HubWallet は、レシートを「撮るだけ」で溜めて、隙間時間にまとめて仕分ける iOS の家計簿アプリです。サブスクや固定費の管理、「無料のつもりが課金開始」を防ぐ通知にも対応。銀行連携なし・全プラン広告ゼロで、お金の使い方を反省の対象から自己理解の手がかりへと変えていきます。
+              HubWallet は、節約疲れしない iPhone の家計簿アプリです。無料プランのままでも、記録の途中に広告が割り込むことはありません。レシートは撮った瞬間に「未整理」へ保存され、仕分けは通勤中や寝る前の隙間時間にまとめて。サブスク・固定費の管理と、無料お試しの終了前のお知らせにも対応しています。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <AppStoreBadgeLink placement="hero" />
@@ -342,8 +326,8 @@ export default function HubWalletPage() {
           <div className="relative mx-auto w-full max-w-md md:col-start-2 md:row-start-1">
             <div className="relative aspect-[9/19] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
               <Image
-                src="/images/hubwallet-screen-home.jpg"
-                alt="HubWallet ホーム画面"
+                src="/images/hubwallet-home-202610.jpg"
+                alt="HubWallet のホーム画面 — 今月の支出・予算の残り・1日あたりの目安と、未整理のレシート"
                 fill
                 className="object-contain"
                 sizes="(min-width: 768px) 360px, 80vw"
@@ -351,7 +335,7 @@ export default function HubWalletPage() {
               />
             </div>
             <p className="mt-3 text-center text-xs text-text-faint">
-              ※ 画面はモックアップです。表示金額・店舗名はサンプルデータ。
+              ※ アプリの画面です。金額・店名はサンプルデータです。
             </p>
           </div>
         </div>
@@ -396,10 +380,10 @@ export default function HubWalletPage() {
             <figure className="mx-auto w-full max-w-xs md:col-start-1 md:row-span-2 md:row-start-1 md:max-w-none md:self-center">
               <div className="overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
                 <Image
-                  src="/images/hubwallet-screen-item-search.png"
+                  src="/images/hubwallet-item-search-202610.jpg"
                   alt="「買ったものを探す」の検索結果 — 「醤油」で検索すると、買った日・お店・金額と、同じお店での前回との差額が並ぶ"
-                  width={1206}
-                  height={1666}
+                  width={1080}
+                  height={1399}
                   className="h-auto w-full"
                   sizes="(min-width: 1024px) 380px, (min-width: 768px) 38vw, 320px"
                 />
@@ -432,24 +416,24 @@ export default function HubWalletPage() {
             </div>
           </article>
 
-          {/* 15 秒の紹介動画 */}
+          {/* 約 8.5 秒の紹介動画（2.6.0 の画面・2026-10-01 収録。未整理 → まとめて仕分け → ホーム） */}
           <figure className="mx-auto mt-10 max-w-sm">
             <div className="relative aspect-[9/19] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
               <video
                 className="absolute inset-0 h-full w-full object-cover"
-                src="/videos/hubwallet-product-intro.mp4"
-                poster="/images/hubwallet-screen-home.jpg"
+                src="/videos/hubwallet-product-intro-202610.mp4"
+                poster="/images/hubwallet-intro-poster-202610.jpg"
                 autoPlay
                 muted
                 loop
                 playsInline
                 controls
                 preload="metadata"
-                aria-label="HubWallet 15 秒紹介動画 — レシート撮影から仕分け、レポートまで"
+                aria-label="HubWallet 紹介動画 — 未整理のレシートを、スワイプでまとめて仕分け"
               />
             </div>
             <figcaption className="mt-3 text-center text-xs text-text-faint">
-              15 秒で見る HubWallet — 撮って溜めて、あとで整理する。
+              動画で見る HubWallet — 溜めたレシートを、あとでまとめて仕分け。
             </figcaption>
           </figure>
 
@@ -643,12 +627,12 @@ export default function HubWalletPage() {
               </h2>
               <ul className="mt-6 grid gap-3 sm:grid-cols-2">
                 {[
-                  '銀行・カード連携なし。OCR・手入力・音声のみ',
-                  'データは端末ローカル（SwiftData）に保存',
-                  'AI 処理時のみ、必要なデータを AI に送信',
-                  'Sign in with Apple に対応',
+                  '銀行口座・カードとは連携しません',
+                  '家計データは端末に保存（Plus のクラウド同期は任意）',
+                  'AI 機能を使うときだけ、必要な画像・テキストを AI に送信',
+                  'サインインは「Apple でサインイン」（メールアドレスの入力は不要）',
                   '全プランで広告は一切なし',
-                  '数値レポートは集計のみで AI に渡さない事実ベース設計',
+                  'レシート画像は端末だけに保存',
                 ].map((t) => (
                   <li
                     key={t}
@@ -679,7 +663,6 @@ export default function HubWalletPage() {
               <thead>
                 <tr className="border-b border-divider bg-surface-2 text-left">
                   <th className="px-4 py-3 font-semibold text-text">タイプ</th>
-                  <th className="px-4 py-3 font-semibold text-text-muted">代表例</th>
                   <th className="px-4 py-3 font-semibold text-accent-product">
                     HubWallet との違い
                   </th>
@@ -691,7 +674,6 @@ export default function HubWalletPage() {
                     <td className="whitespace-nowrap px-4 py-4 font-medium text-text">
                       {c.type}
                     </td>
-                    <td className="px-4 py-4 text-text-muted">{c.examples}</td>
                     <td className="px-4 py-4 leading-relaxed text-text">
                       {c.diff}
                     </td>
@@ -703,42 +685,10 @@ export default function HubWalletPage() {
         </Container>
       </Section>
 
-      {/* ========== 8. Flow Into DoubleHub ========== */}
-      <Section spacing="md" surface="alt">
-        <Container width="wide">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-              Flow Into DoubleHub
-            </p>
-            <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-              単体で完結。つなぐと、もっと深く。
-            </h2>
-            <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              HubWallet は単体でも家計簿として使えます。将来 DoubleHub につながると、お金の使い方は他の生活データと一緒に「自分の輪郭」をつくる素材になります。
-            </p>
-          </div>
-          <div className="mx-auto mt-12 grid max-w-5xl gap-6 md:grid-cols-3">
-            {flows.map((f) => (
-              <article
-                key={f.label}
-                className="rounded-2xl border border-border bg-surface p-6 shadow-sm"
-              >
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-                  {f.label}
-                </p>
-                <p className="mt-4 text-sm leading-relaxed text-text-muted">
-                  {f.desc}
-                </p>
-              </article>
-            ))}
-          </div>
-          <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-text-faint">
-            ※ DoubleHub との具体的な連携体験は、今後順次拡張していく予定です。
-          </p>
-        </Container>
-      </Section>
+      {/* 「Flow Into DoubleHub」節は 2026-10 に外した。2.6.0 では DoubleHub との連携画面も紹介カードも出ない
+          （アプリ側 `FeatureFlags.doubleHubLinkUIEnabled` / `crossPromoDoubleHubEnabled` が false）。連携を公開する版で改めて書く */}
 
-      {/* ========== 9. Plans ========== */}
+      {/* ========== 8. Plans ========== */}
       <Section spacing="md" id="plans">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
@@ -749,10 +699,10 @@ export default function HubWalletPage() {
               まずは無料で、家計簿を始める。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              基本の記録機能とサブスク・固定費管理は Free プランから使えます。AI による OCR・音声入力・カテゴリ推定をたくさん使いたい方は、月額 ¥480 の Plus プランへ。
+              記録と整理、サブスク・固定費の管理は Free プランから使えます。AI をたくさん使いたい方や、家計パートナー（これから 12 ヶ月の見通し・月に一度の面談）を使いたい方は、月額 ¥480 の Plus プランへ。
             </p>
             <p className="mt-3 text-xs text-text-faint">
-              ※ 年額プランは提供していません。価格は執筆時点のもので、最新の料金は App Store 上の表示をご確認ください。
+              ※ 価格は 2026 年 10 月時点のものです。最新の料金は App Store 上の表示をご確認ください。
             </p>
           </div>
           <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">
@@ -768,23 +718,26 @@ export default function HubWalletPage() {
                 </span>
               </div>
               <p className="mt-3 text-xs text-text-muted">
-                まずは無料で。AI 機能は月 10 回までお試しいただけます。
+                まずは無料で。AI 機能は月 5 回まで（{aiFreeSpecialUntil}までは特別に月 10 回）お使いいただけます。
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
                   <Check /> 手入力は無制限
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 月次・年間レポート（基本）
+                  <Check /> 月次レポートと、今年度の支出の振り返り
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 定期支出のテンプレート
+                  <Check /> 固定費・サブスクの管理とお知らせ
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 予算管理は 2 カテゴリまで
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> AI OCR・音声・カテゴリ推定 月 10 回まで
+                  <Check />
+                  <span>
+                    AI OCR・音声・カテゴリ推定 月 5 回まで（{aiFreeSpecialUntil}までは月 10 回）
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 広告は一切なし
@@ -825,6 +778,12 @@ export default function HubWalletPage() {
                 <li className="flex items-start gap-2">
                   <Check />
                   <span>
+                    <strong className="font-semibold text-text">家計パートナー（12 ヶ月の見通し・月に一度の面談・四半期のふりかえり便）</strong>
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check />
+                  <span>
                     <strong className="font-semibold text-text">予算管理は無制限カテゴリ</strong>
                   </span>
                 </li>
@@ -838,7 +797,13 @@ export default function HubWalletPage() {
                   <Check /> 親カテゴリ別レポート
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> いつでも解約可能・記録は端末に残る
+                  <Check /> CSV 書き出し
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> クラウド同期（任意・機種変更や複数の端末に）
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> いつでも解約でき、記録・整理の機能はそのまま使えます
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> もちろん広告なし
@@ -861,7 +826,10 @@ export default function HubWalletPage() {
               <tbody className="[&>tr]:border-b [&>tr]:border-divider [&>tr:last-child]:border-0">
                 <tr>
                   <td className="px-4 py-3 font-medium text-text">AI OCR・音声・カテゴリ推定</td>
-                  <td className="px-4 py-3 text-center text-text-muted">月 10 回</td>
+                  <td className="px-4 py-3 text-center text-text-muted">
+                    月 5 回
+                    <span className="block text-xs text-text-faint">{aiFreeSpecialUntil}までは月 10 回</span>
+                  </td>
                   <td className="px-4 py-3 text-center font-semibold text-accent-product">月 500 回</td>
                 </tr>
                 <tr>
@@ -890,7 +858,37 @@ export default function HubWalletPage() {
                   <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
                 </tr>
                 <tr>
+                  <td className="px-4 py-3 font-medium text-text">家計パートナーの月次面談</td>
+                  <td className="px-4 py-3 text-center text-text-faint">—</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">四半期のふりかえり便</td>
+                  <td className="px-4 py-3 text-center text-text-muted">見本を読める</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">家計の見通し</td>
+                  <td className="px-4 py-3 text-center text-text-muted">過去の年間実績</td>
+                  <td className="px-4 py-3 text-center font-semibold text-accent-product">これから 12 ヶ月まで</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">値上げ履歴（登録した定期支出・サブスク）</td>
+                  <td className="px-4 py-3 text-center text-text-faint">—</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
+                <tr>
                   <td className="px-4 py-3 font-medium text-text">親カテゴリ別レポート</td>
+                  <td className="px-4 py-3 text-center text-text-faint">—</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">CSV 書き出し</td>
+                  <td className="px-4 py-3 text-center text-text-faint">—</td>
+                  <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-medium text-text">クラウド同期</td>
                   <td className="px-4 py-3 text-center text-text-faint">—</td>
                   <td className="px-4 py-3 text-center"><PlanCheck on={true} accent /></td>
                 </tr>
@@ -902,11 +900,15 @@ export default function HubWalletPage() {
               </tbody>
             </table>
           </div>
+          {/* 脚注の文はアプリのプラン画面（2.6.0 の比較表の脚注）にそろえている */}
+          <p className="mx-auto mt-4 max-w-4xl text-xs leading-relaxed text-text-faint">
+            ※ 無料プランの AI 利用は月 5 回です。{aiFreeSpecialUntil}までは、特別に月 10 回ご利用いただけます。バージョン 2.6.0 より前からお使いの方は、12月以降も月 10 回のままです。AI が作る面談・便りは、家計の整理を助ける一般的な情報です。
+          </p>
 
         </Container>
       </Section>
 
-      {/* ========== 10. FAQ ========== */}
+      {/* ========== 9. FAQ ========== */}
       <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
@@ -938,7 +940,7 @@ export default function HubWalletPage() {
         </Container>
       </Section>
 
-      {/* ========== 11. Final CTA ========== */}
+      {/* ========== 10. Final CTA ========== */}
       <Section spacing="md">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
