@@ -49,8 +49,7 @@ export default function AboutPage() {
               TrainNote
             </div>
             <p className="mt-2 text-sm leading-relaxed text-text-muted">
-              筋トレ記録 × AI コーチ。トレーニング記録を超えて、あなたの「続け方」の特徴を残すサービス。AI
-              Coach V2 では、記録と会話をもとに育っていくパーソナルトレーナーを目指しています。
+              広告を表示しない筋トレ記録。前回の重量と伸び、部位ごとの回復がひと目でわかり、食事の記録やボディフォト、トレーニング日誌も残せます。AI コーチ（Plus）は、目標から逆算したロードマップと毎日のメッセージで伴走します。
             </p>
           </Link>
           <Link
@@ -61,8 +60,7 @@ export default function AboutPage() {
               Book Compass
             </div>
             <p className="mt-2 text-sm leading-relaxed text-text-muted">
-              読書記録 × AI
-              整理。読んだ本とメモを AI が整理し、思考や価値観の変化を可視化。「もう一人の自分が、自分の読書を理解してくれる」体験を目指しています。
+              読みながら一言呟く読書メモ。呟きは本ごとの「読みの現在地」や読書特集号として、あとから読み返せる形で返ってきます。「もう一人の自分が、自分の読書を理解してくれる」体験を目指しています。
             </p>
           </Link>
           <Link
@@ -73,8 +71,7 @@ export default function AboutPage() {
               DoubleHub
             </div>
             <p className="mt-2 text-sm leading-relaxed text-text-muted">
-              上記サービスのデータを横断する AI
-              秘書アプリ。ToDo、予定、対話をまとめて扱い、散らばった生活データから「もう一人の自分」を育てる中核サービスです。
+              写真1枚と気分スタンプの、広告なしの日記アプリ。書いた日はダブル（もう一人の自分）がひと言返し、ToDo・メモ・予定は道具箱に。BookCompass の読書記録ともつながる、シリーズの中核です。
             </p>
           </Link>
           <Link
@@ -85,7 +82,7 @@ export default function AboutPage() {
               HubWallet
             </div>
             <p className="mt-2 text-sm leading-relaxed text-text-muted">
-              節約疲れしない家計簿 × AI。レシートは撮るだけ、仕分けは隙間時間に。お金の使い方から「自分が何に充電されるか」を理解するための家計簿アプリです。
+              節約疲れしない、広告なしの家計簿。レシートは撮るだけ、仕分けは隙間時間に。お金の使い方から「自分が何に充電されるか」を理解するための家計簿アプリです。
             </p>
           </Link>
         </div>

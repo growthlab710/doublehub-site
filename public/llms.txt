@@ -1,12 +1,12 @@
 # DoubleHub
 
-> あなたを理解し、毎日を一緒に整える AI パートナー。学び（BookCompass）・身体（TrainNote）・お金（HubWallet）・タスク（DoubleHub）のサービスをつないで、あなた専用の「ダブル」を育てる iOS アプリエコシステム。
+> あなたを理解し、毎日を一緒に整える AI パートナー。学び（BookCompass）・身体（TrainNote）・お金（HubWallet）・日記（DoubleHub）のサービスをつないで、あなた専用の「ダブル」を育てる iOS アプリエコシステム。
 
 ## プロダクト
-- [TrainNote](https://www.doublehub.jp/products/trainnote/): 筋トレ記録×AIコーチアプリ。トレーニング記録とAIパーソナルコーチを組み合わせ、「続け方」の特徴を見つけていくサービス。
-- [BookCompass](https://www.doublehub.jp/products/bookcompass/): 読書記録×AI整理アプリ。読んだ本とメモをAIが整理し、思考や価値観の変化を可視化するサービス。
-- [HubWallet](https://www.doublehub.jp/products/hubwallet/): 節約疲れしない家計簿アプリ。レシートは撮るだけ、銀行連携不要・全プラン広告ゼロ。
-- [DoubleHub](https://www.doublehub.jp/products/doublehub/): 上記データを横断する AI 秘書アプリ。ToDo、予定、対話をまとめて扱う中核サービス。
+- [TrainNote](https://www.doublehub.jp/products/trainnote/): 広告を表示しない筋トレ記録アプリ。前回の重量と伸び・部位ごとの回復を見ながら記録でき、食事の写真からの kcal・PFC の目安推定、ボディフォト、トレーニング日誌、AI コーチ（Plus）にも対応。
+- [BookCompass](https://www.doublehub.jp/products/bookcompass/): 読みながら一言呟く読書メモアプリ。呟きは本ごとの「読みの現在地」や、複数の本をまたぐ読書特集号として読み返せる形で返ってくる。AI の読書パートナー（呟きへの返事・思考コーチの問い）と、本棚をもとに毎週並ぶ「探す」の棚（AI ではなく計算で選ぶ）がある。呟きは非公開・広告なし。
+- [HubWallet](https://www.doublehub.jp/products/hubwallet/): 広告が出ない iPhone の家計簿アプリ。レシートは撮るだけ、仕分けはあとでまとめて。サブスク・固定費の管理と終了前のお知らせ、銀行・カード連携なし。Plus では家計パートナー（12 ヶ月の見通し・月次面談）を利用できる。
+- [DoubleHub](https://www.doublehub.jp/products/doublehub/): 広告なしの写真日記アプリ。写真1枚と気分スタンプの1日1枚日記に、ダブル（もう一人の自分）がひと言返す。昔の日の想起・日記の検索・月ごとのアルバム・週と月のふり返り。ToDo・メモ・予定は道具箱に。日記の写真は DoubleHub のサーバーに保存されない。
 
 ## ブログ（AI・習慣化・自己理解・個人開発）
 - [ブログ一覧](https://www.doublehub.jp/blog/): AI活用・習慣化・ライフデータ管理・個人開発に関する記事一覧

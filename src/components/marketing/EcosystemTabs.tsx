@@ -50,8 +50,8 @@ const panels: InsightPanel[] = [
     understands: ['どんな負荷なら続けやすいか', '落ち込みやすいタイミング', '気合いより仕組みが効くタイプか'],
     visual: 'screenshots',
     screenshots: [
-      { src: '/images/trainnote-peak.webp', alt: 'TrainNote ホーム画面 — PEAK バッジと AI Coach' },
-      { src: '/images/trainnote-coach-detail.webp', alt: 'TrainNote AI Coach 提案画面' },
+      { src: '/images/trainnote-record-top-202610.jpg', alt: 'TrainNote の記録タブ — 今日の状態・部位ごとの回復・週と月の振り返り' },
+      { src: '/images/trainnote-record-prev-202610.jpg', alt: 'TrainNote の記録 — 前回の重量・ミニグラフ・自己ベスト' },
     ],
   },
   {
@@ -66,8 +66,8 @@ const panels: InsightPanel[] = [
     understands: ['いま伸ばしたい知的テーマ', '思考のクセや偏り', '次に読むべき一冊の方向性'],
     visual: 'screenshots',
     screenshots: [
-      { src: '/images/bookcompass-map.webp', alt: 'Book Compass ナレッジマップ' },
-      { src: '/images/bookcompass-explore.webp', alt: 'Book Compass 探す画面' },
+      { src: '/images/bookcompass-home-202610.jpg', alt: 'Book Compass のホーム——今週の棚と、読書の広がりを示すナレッジ・コンパス' },
+      { src: '/images/bookcompass-explore-202610.jpg', alt: 'Book Compass の探す——あなたの本棚をもとに毎週並ぶ棚' },
     ],
   },
   {
@@ -75,12 +75,12 @@ const panels: InsightPanel[] = [
     name: 'DoubleHub 本体',
     status: 'current',
     statusLabel: 'Current',
-    tabDesc: 'ToDo・メモ・予定・日記、ダブルとの対話',
+    tabDesc: '日記・ToDo・メモ・予定、ダブルとの対話',
     panelLabel: 'Input → Insight',
     title: 'DoubleHub 本体は、生活のリアルタイムな流れを残す。',
     inputs: [
-      '音声やテキストで投げた ToDo・メモ',
       '1日1枚の日記（写真・気分スタンプ・ひと言）',
+      '音声やテキストで投げた ToDo・メモ',
       'カレンダーの予定と期限の配置',
       'チャットで漏れる迷いや感情',
       '「覚えておいて」と伝えたメモリ',
@@ -92,8 +92,8 @@ const panels: InsightPanel[] = [
     ],
     visual: 'screenshots',
     screenshots: [
-      { src: '/images/doublehub-task.jpg', alt: 'DoubleHub タスク画面——テキストと音声で投げた ToDo・メモを自動仕分け' },
-      { src: '/images/doublehub-chat.jpg', alt: 'DoubleHub チャット画面——ダブルとの対話' },
+      { src: '/images/doublehub-diary-home-202610.jpg', alt: 'DoubleHub の日記ホーム——今日の写真と、写真と気分の天気アイコンが並ぶ月のカレンダー' },
+      { src: '/images/doublehub-diary-detail-202610.jpg', alt: 'DoubleHub の日記の1ページ——写真とあなたの言葉に、ダブルがひと言返す（AI による生成の表示つき）' },
     ],
   },
   {
@@ -144,8 +144,8 @@ const panels: InsightPanel[] = [
     ],
     visual: 'screenshots',
     screenshots: [
-      { src: '/images/hubwallet-screen-home.jpg', alt: 'HubWallet ホーム画面—今月の支出と未整理' },
-      { src: '/images/hubwallet-screen-categories.jpg', alt: 'HubWallet カテゴリ別レポート—親カテゴリ別の支出と進捗' },
+      { src: '/images/hubwallet-home-202610.jpg', alt: 'HubWallet ホーム画面—今月の支出・予算残と、未整理のレシート' },
+      { src: '/images/hubwallet-monthly-202610.jpg', alt: 'HubWallet 月次レポート—月間支出とカテゴリの構成、6ヶ月推移' },
     ],
   },
 ];
