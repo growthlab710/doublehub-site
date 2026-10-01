@@ -59,19 +59,19 @@ const diaryPillars = [
     tag: '1日1枚',
     title: '写真1枚と気分スタンプだけで、今日が残る。',
     body:
-      '文章が出てこない日は、今日撮った写真を1枚選んで、気分スタンプを1タップするだけでいい。それでもダブルがその日の記録にひと言添えてくれます。ことばで書きたい日は、ひと言メモも。Plus では写真を1日3枚まで、Premium では5枚まで貼れます。',
+      '文章が出てこない日は、今日撮った写真を1枚選んで、気分スタンプを1タップするだけでいい。それでも、ダブルがひと言添えます（無料プランは週に3日）。ことばで書きたい日は、ひと言メモも。Plus では写真を1日5枚まで、Premium では10枚まで貼れます。',
   },
   {
     tag: 'カレンダー',
     title: '月をながめるだけで、気分の波が見えてくる。',
     body:
-      'カレンダーには写真のサムネイルと、気分の「天気」アイコンが並びます。晴れの日、くもりの日。がんばって分析しなくても、ながめるだけで自分の1ヶ月の波が見えてきます。週のふり返りは、その週の写真から始まります。',
+      '日記ホームのいちばん上には、今日の1枚が大きく出ます。その下のカレンダーには写真のサムネイルと、気分の「天気」アイコンが並びます。晴れの日、くもりの日。がんばって分析しなくても、ながめるだけで自分の1ヶ月の波が見えてきます。週のふり返りは、その週の写真から始まります。',
   },
   {
     tag: 'プライバシー',
     title: '日記の写真は、端末の外に残りません。',
     body:
-      '日記の写真は端末の中に保存され、外部に保存されることはありません。ダブルがリアクションを生成するときだけ縮小画像を一時送信し、サーバーには残りません。気分や傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
+      '日記の写真は端末の中に保存され、DoubleHub のサーバーには保存されません。ダブルがリアクションを生成するときだけ縮小画像を一時送信し、サーバーには残りません。気分や傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
   },
 ];
 
@@ -90,30 +90,35 @@ const replyPoints = [
   {
     title: '後日、またふれる',
     body:
-      '返事をした話題に、ダブルが後日またふれます。「またやる」と答えたことが日記に現れたときは、ダブルがそっと気づきます。ダブルからの声は受信箱にまとまるので、あとから読み返せます。',
+      '返事をした話題に、ダブルが後日またふれます。「またやる」と答えたことが日記に現れたときは、ダブルがそっと気づきます。ダブルからの声はダブルの画面にまとまるので、あとから読み返せます。',
   },
 ];
 
 // 想起と検索
 const recallPoints = [
   {
-    title: '1週間前・1ヶ月前・1年前の同じ日',
+    title: '昔の1日に、また会える',
     body:
-      '同じ日の日記を、ダブルが持ってきます。「ちょうど1週間前の今日が、この日記の1ページ目だったんだよ」。すべてのプランで届きます。',
+      '日記が30日以上たまると、日記ホームのいちばん上を、30日前から1年前までのどこか1日に切り替えられます。どの日が出るかは日替わりで、ダブルの画面にも同じ日が出ることがあります。すべてのプランで使えます。',
   },
   {
     title: '今日と似ている日',
     body:
-      '今日の日記と似ている日を、ダブルが思い出して添えます。あなたが書いた一言ごと、2枚並べて見くらべられます（Plus）。',
+      '今日と似ている過去の日を、ダブルが思い出して、今日の日記のそばに出します。その日にあなたが書いた一言や、場面の題を添えて（Plus）。',
   },
   {
     title: '言葉でさがす',
     body:
       'あなたが書いた言葉からも、ダブルが写真から読み取った言葉からも、日記をさがせます。さがす処理は、端末の中だけで完結します。',
   },
+  {
+    title: 'チャットで聞く（Plus）',
+    body:
+      '「先週なにしてたっけ？」と聞くと、ダブルが日記から探して、日付つきで答えます。その日の写真は返事の下に添えるだけで、AI には送りません。',
+  },
 ];
 
-// アルバム（2.10.0）の説明カード
+// アルバムの説明カード
 const albumPoints = [
   {
     title: 'ダブルが、選んで貼る',
@@ -137,17 +142,17 @@ const summaryPoints = [
   {
     title: '週のふり返り',
     body:
-      'その週の写真から始まります。目次と、あなたの言葉の引用。気分にふれるのは、とてもいい週と、先週より上向いた週だけです。Plus は毎週、無料プランは月に1回。',
+      'その週の写真から始まります。目次と、あなたの言葉の引用。気分にふれるのは、とてもいい週と、先週より上向いた週だけです。Plus は毎週（その週に2日以上書いたとき）、無料プランは月に1回（4日以上書いた週があるとき）。',
   },
   {
     title: '月のまとめ',
     body:
-      'その月の写真から始まり、ダブルがその月について短く語ります。末尾から、アルバムの章へ移れます（Plus）。',
+      'その月の写真から始まり、ダブルがその月について短く語ります。写真の下の「アルバムで見る」から、その月の章へ移れます（Plus）。',
   },
   {
-    title: 'ダブルの気づきと、あなたの法則',
+    title: 'あなたの法則',
     body:
-      '「人と会った翌日は、気分が高めみたい」。根拠は、あなたがワンタップで付けた気分と充実度のスタンプだけです。日記の文章から感情を読み取ることはしません。根拠になった日数は、必ず一緒に表示します。同じ組み合わせがくり返し現れると「あなたの法則」としてカードにまとまり、月のまとめにも並びます（Plus）。',
+      '「人と会った翌日は、気分が高めみたい」。気分の根拠は、あなたがワンタップで付けた気分と充実度のスタンプだけです。日記の文章から感情を読み取ることはしません。根拠になった日数は、必ず一緒に表示します。同じ組み合わせがくり返し現れると「あなたの法則」としてカードにまとまり、月のまとめにも並びます（Plus）。',
   },
 ];
 
@@ -171,7 +176,7 @@ const toolboxPoints = [
   {
     title: 'BookCompass',
     body:
-      '読書記録アプリ BookCompass と連携すると、読書中に言葉にした気づきや最近の関心が、ダブルとの会話に文脈として流れ込みます。連携は任意で、いつでもオフにできます。',
+      '読書記録アプリ BookCompass と連携すると、読書中に言葉にした気づきや最近の関心が、ダブルとのチャット（Plus）や評議会（Premium）に、文脈として流れ込みます。連携は任意で、いつでもオフにできます。',
   },
 ];
 
@@ -179,7 +184,7 @@ const toolboxPoints = [
 const faqs = [
   {
     q: 'DoubleHub は無料で使えますか？',
-    a: 'はい。無料プランでは、1日1枚の日記（写真・気分スタンプ・メモ）、ダブルのひと言（週 3 日）と返事、1週間前・1ヶ月前・1年前の同じ日の想起、日記の検索、アルバムの閲覧、日記の書き出し（ZIP）、週のふり返り（月 1 回）、AI による ToDo / メモの自動仕分け（月 20 回まで）、天気、ウィジェット、音声入力などをお使いいただけます。',
+    a: 'はい。無料プランでは、1日1枚の日記（写真・気分スタンプ・メモ）、ダブルのひと言（週 3 日）と返事、昔の日の想起（日記が30日以上たまってから）、日記の検索、アルバムの閲覧、日記の書き出し（ZIP）、写真で覚える（1 体まで）、週のふり返り（月 1 回）、AI による ToDo / メモの自動仕分け（月 20 回まで）、天気、ウィジェット、音声入力などをお使いいただけます。',
   },
   {
     q: '日記の写真はどこに保存されますか？',
@@ -191,7 +196,7 @@ const faqs = [
   },
   {
     q: 'アルバムとはなんですか？',
-    a: 'ダブルがあなたの日記から幸せの種を見つけて、写真とその日の一言を月ごとのページに貼っていく場所です。星や順位はつけません。閲覧はすべてのプランででき、ページには、その日にダブルが読んで返した一言も入ります。章の終わりの便りが付くのは Plus です。出したくない日・期間・人は非表示にでき、閉じた月のページはアプリを更新しても並びが変わりません。',
+    a: 'ダブルがあなたの日記から幸せの種を見つけて、写真とその日の一言を月ごとのページに貼っていく場所です。星や順位はつけません。ページのもとになるのは、ダブルが読んだ日の日記です（無料プランは週に3日）。閲覧はすべてのプランででき、ページには、その日にダブルが読んで返した一言も入ります。章の終わりの便りが付くのは Plus です。出したくない日・期間・人は非表示にでき、閉じた月のページはアプリを更新しても並びが変わりません。',
   },
   {
     q: '未来日記はどうなりましたか？',
@@ -203,15 +208,15 @@ const faqs = [
   },
   {
     q: 'Plus / Premium プランではなにが解放されますか？',
-    a: 'Plus（月 ¥480 / 年 ¥4,800）では、ダブルのひと言が毎日になり、写真を1日3枚まで貼れます。似ている日の想起、ダブルのノート、写真で覚える、週のふり返り（毎週）、月のまとめ、あなたの法則、アルバムの章の便り、ダブルとの AI チャット、AI 自動仕分けの無制限化が利用できます。はじめの 1 ヶ月は無料でお試しいただけます。Premium（月 ¥1,280 / 年 ¥12,800）では、Plus の全機能に加えて、1日5枚までの写真日記と、ひとつの悩みを3つの視点でいっしょに考える「評議会」が使えます。',
+    a: 'Plus（月 ¥480 / 年 ¥4,800）では、ダブルのひと言が毎日になり、写真を1日5枚まで貼れます。似ている日の想起、ダブルのノート、写真で覚える（2 体目から）、週のふり返り（毎週）、月のまとめ、あなたの法則、アルバムの章の便り、ダブルとの AI チャット（過去の日記のことも聞けます）、AI 自動仕分けの無制限化が利用できます。はじめての方は、1 ヶ月無料でお試しいただけます。Premium（月 ¥1,280 / 年 ¥12,800）では、Plus の全機能に加えて、1日10枚までの写真日記と、ひとつの悩みを3つの視点でいっしょに考える「評議会」が使えます。',
   },
   {
     q: 'BookCompass と連携すると何が変わりますか？',
-    a: '同じあなたなのにアプリをまたぐと毎回ゼロから説明し直す——その負担がなくなります。BookCompass で読書中に言葉にした気づきや最近の関心テーマ、読んだ本の余韻が、ダブルとの会話に「文脈」として自然に流れ込みます。たとえば「最近自信がなくて…」と話したとき、過去に読書中にたどり着いていた答えを踏まえて受け止めてくれたり、「最近どう？」とダブルから話題を切り出してもらえたりします。連携は任意で、いつでもオフにできます。',
+    a: '同じあなたなのにアプリをまたぐと毎回ゼロから説明し直す——その負担がなくなります。BookCompass で読書中に言葉にした気づきや最近の関心テーマを、ダブルが参照できるようになり、チャット（Plus）では、たとえば「最近自信がなくて…」と話したとき、過去に読書中にたどり着いていた答えを踏まえて受け止めます。評議会（Premium）では、あなたの読書も議論の材料になります。連携は任意で、いつでもオフにできます。',
   },
   {
     q: '対応 OS を教えてください。',
-    a: 'iOS 17.0 以上の iPhone / iPad でお使いいただけます。Android 版の提供予定はありません。',
+    a: 'iOS 17.0 以上の iPhone でお使いいただけます（iPad でも iPhone 版として動作します）。Android 版の提供予定はありません。',
   },
   {
     q: 'ヘルスケアのデータは安全に扱われますか？',
@@ -265,7 +270,7 @@ const jsonLd = {
         '写真1枚と気分スタンプの1日1枚日記に、ダブル（もう一人の自分）がひと言返す、広告なしの iOS 日記アプリ。写真は端末の外に残らず、日記から見つけた幸せの種は月ごとのアルバムに。ToDo・メモ・予定、ヘルスケア、iOS カレンダー、読書記録（BookCompass）とも連携。',
       url: 'https://www.doublehub.jp/products/doublehub/',
       image: 'https://www.doublehub.jp/images/doublehub-icon-rich.png',
-      softwareVersion: '2.10.0',
+      softwareVersion: '2.13.0',
       author: {
         '@type': 'Organization',
         name: 'GrowthLab',
@@ -307,17 +312,19 @@ const jsonLd = {
       featureList: [
         '1日1枚の写真日記（写真・気分スタンプ・ひと言メモ）',
         'ダブルのひと言（AI 生成表示つき）と、返事・後日のつづき',
-        '1週間前・1ヶ月前・1年前の同じ日の想起',
-        '今日と似ている日の対比（Plus・2枚並べ）',
+        '30日前〜1年前の日記の想起（日替わりで1日）',
+        '今日と似ている過去の日の想起（Plus）',
         '日記の検索（端末内で完結）',
         'アルバム（日記から見つけた幸せの種を、月ごとのページに）',
         '日記カレンダー（気分の天気アイコン）',
         '週のふり返り・月のまとめ・あなたの法則',
-        'ダブルのノート・写真で覚える（特徴データは端末内）',
-        '写真 1 日 3 枚（Plus）／5 枚（Premium）',
+        'ダブルのノート（Plus）',
+        '写真で覚える（Free は1体まで・特徴データは端末内）',
+        '写真 1 日 5 枚（Plus）／10 枚（Premium）',
         '日記の一括書き出し（ZIP）',
         'ToDo / メモの AI 自動仕分け・音声入力・ウィジェット',
-        'ダブルとの AI チャット（Plus）',
+        'ダブルとの AI チャット（過去の日記のことも聞ける・Plus）',
+        '外観（ライト／ダーク／システム準拠）',
         'ヘルスケア連携（HealthKit / 読み取り専用）',
         'iOS カレンダー双方向同期（EventKit）',
         'BookCompass 連携',
@@ -386,7 +393,7 @@ export default function DoubleHubPage() {
                 className="h-10 w-10 rounded-lg border border-border object-cover shadow-sm"
               />
               <span className="inline-flex items-center rounded-full border border-accent-product/30 bg-accent-product/10 px-3 py-1 text-xs font-semibold text-accent-product">
-                DoubleHub · Ver.2.10.0
+                DoubleHub · Ver.2.13.0
               </span>
             </div>
             <h1 className="mt-5 font-display text-[clamp(1.75rem,1rem+2.8vw,3rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
@@ -427,10 +434,10 @@ export default function DoubleHubPage() {
           <figure className="mx-auto w-full max-w-sm">
             <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
               <Image
-                src="/images/doublehub-diary-home.jpg"
-                alt="DoubleHub の日記ホーム。写真つきのカレンダーと、日記の本棚（アルバム・週のふり返り・月のふり返り）"
-                width={860}
-                height={1782}
+                src="/images/doublehub-diary-home-202610.jpg"
+                alt="DoubleHub の日記ホーム。いちばん上に今日の写真が大きく出て、その下に写真と気分の天気アイコンが並ぶ月のカレンダー"
+                width={1080}
+                height={2063}
                 className="h-auto w-full rounded-[1.5rem]"
                 sizes="(min-width: 768px) 384px, 90vw"
                 priority
@@ -481,16 +488,16 @@ export default function DoubleHubPage() {
             <figure className="mx-auto w-full max-w-sm">
               <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
                 <Image
-                  src="/images/doublehub-diary-hitokoto.jpg"
-                  alt="DoubleHub の日記。写真1枚と、ダブルが推定した日のタグ、ダブルからのひと言（AI による生成の表示つき）"
-                  width={860}
-                  height={1777}
+                  src="/images/doublehub-diary-detail-202610.jpg"
+                  alt="DoubleHub の日記の1ページ。写真が画面の上いっぱいに広がり、日付と気分、その下にあなたの言葉、罫線の下にダブルからのひと言（AIによる生成の表示つき）"
+                  width={1080}
+                  height={2244}
                   className="h-auto w-full rounded-[1.5rem]"
                   sizes="(min-width: 640px) 384px, 90vw"
                 />
               </div>
               <figcaption className="mt-3 text-center text-xs leading-[1.7] text-text-muted">
-                写真1枚の日記に、ダブルからひと言。「人と会った」「外出」などの日のタグはダブルの推定で、違っていればタップで直せます。
+                写真が主役の1ページ。あなたの言葉の下に、ダブルのひと言。「人と会った」「外出」などの日のタグはダブルの推定で、違っていればタップで直せます。
               </figcaption>
             </figure>
           </div>
@@ -552,7 +559,7 @@ export default function DoubleHubPage() {
             </p>
           </div>
 
-          <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-3">
+          <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-2">
             {recallPoints.map((p) => (
               <article
                 key={p.title}
@@ -574,12 +581,12 @@ export default function DoubleHubPage() {
         </Container>
       </Section>
 
-      {/* ========== 5. アルバム（2.10.0） ========== */}
+      {/* ========== 5. アルバム ========== */}
       <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-              Album · New in 2.10.0
+              Album
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
               あなたの日記から、幸せの種を。
@@ -593,10 +600,10 @@ export default function DoubleHubPage() {
             <figure className="mx-auto w-full max-w-sm">
               <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
                 <Image
-                  src="/images/doublehub-album.jpg"
-                  alt="DoubleHub のアルバム。6月の章に「外に出た日」のページ。主役の写真と、その日の写真3枚、日付と気分、その日にダブルが返した一言"
-                  width={860}
-                  height={1777}
+                  src="/images/doublehub-album-202610.jpg"
+                  alt="DoubleHub のアルバム。6月の章の「外に出た日」のページ。場面の題と、その日の主役の写真"
+                  width={1080}
+                  height={713}
                   className="h-auto w-full rounded-[1.5rem]"
                   sizes="(min-width: 768px) 384px, 90vw"
                 />
@@ -624,7 +631,7 @@ export default function DoubleHubPage() {
           </div>
 
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-[1.8] text-text-faint">
-            ※ 閲覧はすべてのプランでできます。ページには、その日にダブルが読んで返した一言も入ります。章の終わりの便りが付くのは Plus です。
+            ※ 閲覧はすべてのプランでできます。ページのもとになるのは、ダブルが読んだ日の日記です（無料プランは週に3日）。ページには、その日にダブルが返した一言も入ります。章の終わりの便りが付くのは Plus です。残したい日は、カードにして LINE などで渡せます。ダブルのひと言を入れるかは選べます。
           </p>
         </Container>
       </Section>
@@ -667,25 +674,25 @@ export default function DoubleHubPage() {
             <figure className="mx-auto w-full max-w-sm">
               <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
                 <Image
-                  src="/images/doublehub-monthly-review.jpg"
-                  alt="DoubleHub の月のふり返り。その月の写真から始まり、「アルバムで見る」のリンクと、ダブルからの語り"
-                  width={860}
-                  height={1783}
+                  src="/images/doublehub-monthly-review-202610.jpg"
+                  alt="DoubleHub の月のふり返り。その月のベストデイに添えたダブルの一言（AIによる生成の表示つき）と、見えてきた法則「よく歩いた日は、気分が高めみたい」と該当する日"
+                  width={1080}
+                  height={718}
                   className="h-auto w-full rounded-[1.5rem]"
                   sizes="(min-width: 640px) 384px, 90vw"
                 />
               </div>
               <figcaption className="mt-3 text-center text-xs leading-[1.7] text-text-muted">
-                月のふり返りは写真から始まり、ダブルの語りが続きます。末尾からアルバムの章へ。
+                月のふり返り。その月のベストデイと、見えてきた法則が並びます。
               </figcaption>
             </figure>
             <figure className="mx-auto w-full max-w-sm">
               <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
                 <Image
-                  src="/images/doublehub-double-tab-laws.jpg"
-                  alt="DoubleHub のダブル画面。期限ボード、きょうのあなた、あなたの法則「人と会った翌日は、気分が高めみたい」と根拠の日数"
-                  width={860}
-                  height={1778}
+                  src="/images/doublehub-double-tab-202610.jpg"
+                  alt="DoubleHub のダブル画面。きょうのあなたと、あなたの法則「土曜日は、充実度が高めみたい」と根拠の日数（土曜日5日・それ以外の日10日）"
+                  width={1080}
+                  height={918}
                   className="h-auto w-full rounded-[1.5rem]"
                   sizes="(min-width: 640px) 384px, 90vw"
                 />
@@ -733,7 +740,7 @@ export default function DoubleHubPage() {
             />
             <ConceptCard
               title="育っていく"
-              body="日記に何度も出てくる人・場所・話題を、ダブルが短いノートにまとめます（Plus）。覚えたことは設定の「カルテ」からいつでも見られ、直したり消したりできます。「この話はもう出さない」と伝えれば、ダブルからは触れなくなります。"
+              body="日記に何度も出てくる人・場所・話題を、ダブルが短いノートにまとめます（Plus）。覚えたことは設定の「カルテ」からいつでも見られ、どこで覚えたか（会話・日記・自分で・写真）も分かります。まだ確かめていないことは「合っていますか」と聞き、合っているとわかるまで返事には使いません。直したり消したりもでき、「この話はもう出さない」と伝えれば、ダブルからは触れなくなります。"
             />
           </div>
 
@@ -785,10 +792,10 @@ export default function DoubleHubPage() {
             <figure className="mx-auto w-full max-w-sm">
               <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
                 <Image
-                  src="/images/doublehub-toolbox.jpg"
-                  alt="DoubleHub の道具箱タブ。入力欄と AI の自動仕分け、ToDo の一覧"
-                  width={860}
-                  height={1783}
+                  src="/images/doublehub-toolbox-202610.jpg"
+                  alt="DoubleHub の道具箱タブ。天気、入力欄と ToDo・メモの自動仕分け、期限つきの ToDo の一覧"
+                  width={1080}
+                  height={2209}
                   className="h-auto w-full rounded-[1.5rem]"
                   sizes="(min-width: 768px) 384px, 90vw"
                 />
@@ -816,7 +823,7 @@ export default function DoubleHubPage() {
           </div>
 
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-[1.8] text-text-faint">
-            ※ ダブルとのチャット（Plus）では、直近7日の日記や ToDo・予定を踏まえて相談できます。
+            ※ ダブルとのチャット（Plus）では、直近の日記や ToDo・予定を踏まえて相談できます。「先週なにしてたっけ？」のように、過去の日記のことも聞けます。
           </p>
         </Container>
       </Section>
@@ -897,7 +904,10 @@ export default function DoubleHubPage() {
                 <Check /> 課金は App Store 経由のみ。広告・外部決済はありません
               </li>
               <li className="flex items-start gap-2 text-sm text-text-muted">
-                <Check /> 「写真で覚える」の参考写真と、顔・被写体の特徴データは端末の中だけに保存され、送信されません（Plus）
+                <Check /> 「写真で覚える」の参考写真と、顔・被写体の特徴データは端末の中だけに保存され、送信されません
+              </li>
+              <li className="flex items-start gap-2 text-sm text-text-muted">
+                <Check /> 困ったときは、設定の「サポート・お問い合わせ」から。開発者が確認してお返事します
               </li>
             </ul>
           </div>
@@ -935,7 +945,7 @@ export default function DoubleHubPage() {
                 プル型のお知らせ。
               </h3>
               <p className="mt-3 text-sm leading-[1.85] text-text-muted">
-                ダブルからの声は、受信箱にまとまります。あなたが開いたときに並ぶプル型で、プッシュで横から割り込んで、注意を引きにいくような作りにはしていません。
+                ダブルからの声は、ダブルの画面にまとまります。あなたが開いたときに並ぶプル型で、プッシュで横から割り込んで、注意を引きにいくような作りにはしていません。
               </p>
             </article>
             <article className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
@@ -998,10 +1008,13 @@ export default function DoubleHubPage() {
                   <Check /> ダブルのひと言 週 3 日・返事とつづき
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 1週間前・1ヶ月前・1年前の想起・日記の検索
+                  <Check /> 昔の日の想起・日記の検索
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> アルバムの閲覧・日記の書き出し（ZIP）
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check /> 写真で覚える（1 体まで）
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 週のふり返り 月 1 回
@@ -1031,17 +1044,20 @@ export default function DoubleHubPage() {
                 年額 ¥4,800 なら実質 ¥400 / 月（17%OFF）
               </div>
               <p className="mt-2 text-xs font-semibold text-accent-product">
-                はじめの 1 ヶ月は無料でお試しいただけます
+                はじめての方は、1 ヶ月無料でお試しいただけます
               </p>
               <p className="mt-3 text-xs text-text-muted">
                 ダブルの声が、毎日になる
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
-                  <Check /> ダブルのひと言 <strong className="font-semibold text-text">毎日</strong>・写真 1 日 <strong className="font-semibold text-text">3 枚</strong>
+                  <Check />
+                  <span>
+                    ダブルのひと言 <strong className="font-semibold text-text">毎日</strong>・写真 1 日 <strong className="font-semibold text-text">5 枚</strong>
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 似ている日の想起（2 枚並べて見くらべ）・ダブルのノート・写真で覚える
+                  <Check /> 似ている日の想起・ダブルのノート・写真で覚える（2 体目から）
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 週のふり返り 毎週・月のまとめ・あなたの法則
@@ -1053,7 +1069,10 @@ export default function DoubleHubPage() {
                   <Check /> 日記のゲスト（偉人風の視点）
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> ダブルとの AI チャット・AI 自動仕分け <strong className="font-semibold text-text">無制限</strong>
+                  <Check />
+                  <span>
+                    ダブルとの AI チャット（過去の日記のことも聞ける）・AI 自動仕分け <strong className="whitespace-nowrap font-semibold text-text">無制限</strong>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -1074,20 +1093,23 @@ export default function DoubleHubPage() {
                 年額 ¥12,800 プランもあります
               </div>
               <p className="mt-3 text-xs text-text-muted">
-                Plus の全機能に、写真 5 枚と評議会
+                Plus の全機能に、写真 10 枚と評議会
               </p>
               <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
                 <li className="flex items-start gap-2">
                   <Check /> Plus の全機能
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 写真日記 1 日 5 枚
+                  <Check /> 写真日記 1 日 10 枚
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> <strong className="font-semibold text-text">評議会</strong>——ひとつの悩みを、3つの視点を持つ AI がいっしょに考える
+                  <Check />
+                  <span>
+                    <strong className="font-semibold text-text">評議会</strong>——ひとつの悩みを、3つの視点を持つ AI がいっしょに考える
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> BookCompass 連携中は、読んだ本の視点も議論に加わる
+                  <Check /> BookCompass と連携していると、あなたの読書も議論の材料になる
                 </li>
               </ul>
             </div>
@@ -1096,6 +1118,9 @@ export default function DoubleHubPage() {
           <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center gap-3 text-center text-xs text-text-faint">
             <p>
               課金は App Store 経由のみ。解約は iOS の「設定 ＞ Apple ID ＞ サブスクリプション」からいつでも可能です。
+            </p>
+            <p>
+              価格は日本の App Store での税込価格です。最新の価格は App Store の表示をご確認ください。
             </p>
           </div>
         </Container>
