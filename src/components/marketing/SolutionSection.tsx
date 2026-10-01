@@ -6,10 +6,11 @@ import { SectionEyebrow } from '@/components/marketing/SectionEyebrow';
 import { VideoSlot } from '@/components/marketing/VideoSlot';
 
 // 動画アセット差し替えポイント:
-//   public/videos/doublehub-home-solution.mp4 を置けば自動でループ再生に切り替わる。
-//   未配置の場合は posterSrc の既存スクショ（doublehub-memory.webp）にフォールバック。
-const HOME_SOLUTION_VIDEO = '/videos/doublehub-home-solution.mp4';
-const HOME_SOLUTION_POSTER = '/images/doublehub-memory.webp';
+//   DoubleHub 2.13.0 の実画面（日記ホーム → あなたの法則 → ダブルのひと言）の 9 秒ループ（2026-10-01）。
+//   読み込めない場合と reduced-motion のときは posterSrc（1 コマ目と同じ画面）にフォールバック。
+//   旧動画 doublehub-home-solution.mp4（ToDo 時代の画面）は参照をやめただけで残している。
+const HOME_SOLUTION_VIDEO = '/videos/doublehub-home-solution-202610.mp4';
+const HOME_SOLUTION_POSTER = '/images/doublehub-home-solution-poster-202610.jpg';
 
 /**
  * Solution セクション
@@ -104,7 +105,7 @@ export function SolutionSection() {
                 <VideoSlot
                   videoSrc={HOME_SOLUTION_VIDEO}
                   posterSrc={HOME_SOLUTION_POSTER}
-                  alt="DoubleHub があなたを理解している画面"
+                  alt="DoubleHub の画面。写真の日記が並ぶ日記ホーム、ダブルが記録から見つけた「あなたの法則」、日記に返すダブルのひと言（AI による生成）"
                   width={800}
                   height={1400}
                   sizes="(min-width: 768px) 420px, 80vw"

@@ -30,28 +30,28 @@ const spotlights: Spotlight[] = [
   {
     badge: 'TrainNote',
     iconSrc: '/images/trainnote-app-icon.jpg',
-    titleLines: ['5人の専門AIコーチが、', 'あなたの筋トレを変える。'],
+    titleLines: ['ジムで、', '音楽は止まらない。'],
     desc:
-      '190以上の科学論文を参照する5名のAIコーチが、記録・栄養・回復・計画・心理の6領域であなたの筋トレを個別サポート。ボディフォトの蓄積と AI ボディ変化レポートで、体重だけでは分からない前進も振り返れます。',
+      '広告を表示しない筋トレ記録アプリ。前回の重量が同じ画面に出て、伸びと部位ごとの回復がひと目でわかり、食事の記録やボディフォト、トレーニング日誌、AI コーチ（Plus）までひとつのアプリで使えます。',
     href: '/products/trainnote/',
     appStoreUrl:
       'https://apps.apple.com/us/app/trainnote/id6759539755?itscg=30200&itsct=apps_box_artwork&mttnsubad=6759539755',
     appStoreLabel: 'TrainNote',
-    image: '/images/trainnote-peak.webp',
-    imageAlt: 'TrainNote ホーム画面 — PEAK バッジと AI Coach',
+    image: '/images/trainnote-hero-202610.jpg',
+    imageAlt: 'TrainNote の記録タブ — 今日の日付・コンディション・部位ごとの回復状態',
   },
   {
     badge: 'Book Compass',
     iconSrc: '/images/bookcompass-app-icon.jpg',
-    titleLines: ['読書記録ではなく、', '思考の流れを残す地図。'],
+    titleLines: ['読みながら一言。', 'あとから、読み返せる。'],
     desc:
-      '読んだ本、残したメモ、繰り返し考えるテーマから、価値観の移り変わりを可視化。呟きは AI が「読書特集号」として、あなたを主役にした1冊の特集誌に編み上げます。DoubleHub に接続すると「何を大事にしているか」が輪郭を持ちはじめます。',
+      '読んだのに、頭に残らない——その手前で、読みながら一言だけ呟く読書メモです。残した一言は、本ごとの「読みの現在地」や、複数の本をまたぐ読書特集号になって返ってきます。呟きは他のユーザーに公開されず、広告も表示しません。',
     href: '/products/bookcompass/',
     appStoreUrl:
       'https://apps.apple.com/us/app/bookcompass-%E8%AA%AD%E6%9B%B8%E7%9F%A5%E8%AD%98%E3%83%9E%E3%83%83%E3%83%97/id6760604663?itscg=30200&itsct=apps_box_badge&mttnsubad=6760604663',
     appStoreLabel: 'BookCompass',
-    image: '/images/bookcompass-map.webp',
-    imageAlt: 'Book Compass アプリ画面',
+    image: '/images/bookcompass-hero-202610.jpg',
+    imageAlt: 'Book Compass の本の詳細——読みながら残した呟きの一覧と、呟きの入力欄',
     reverse: true,
   },
   {
@@ -59,13 +59,13 @@ const spotlights: Spotlight[] = [
     iconSrc: '/images/hubwallet-app-icon.jpg',
     titleLines: ['お金の使い方を、', '理解するための家計簿。'],
     desc:
-      'レシートは撮るだけ、仕分けは隙間時間に。サブスクや固定費の更新・解約期限は通知でお知らせ。銀行連携不要・全プラン広告ゼロで、支出の傾向から「どんな使い方が自分を充電させるか」が見えてきます。DoubleHub につながると、お金の選択も「もう一人の自分」と一緒に考えられるようになります。',
+      'レシートは撮るだけ、仕分けは隙間時間にスワイプでまとめて。サブスクや固定費は月額換算と30日以内の予定で見渡せ、無料お試しの終了前にはホームでお知らせします。銀行連携なし・全プラン広告なしで、支出の傾向から「どんな使い方が自分を充電させるか」が見えてきます。',
     href: '/products/hubwallet/',
     appStoreUrl:
       'https://apps.apple.com/jp/app/hubwallet-ai%E5%AE%B6%E8%A8%88%E7%B0%BF/id6766543029',
     appStoreLabel: 'HubWallet',
-    image: '/images/hubwallet-recurring-dashboard.jpg',
-    imageAlt: 'HubWallet ホームの固定費・サブスク ミニダッシュボード — 30日以内の予定と解約期限バッジ',
+    image: '/images/hubwallet-recurring-202610.jpg',
+    imageAlt: 'HubWallet ホームの固定費・サブスク — 月額換算と、30日以内の予定（無料お試しの終了日つき）',
   },
 ];
 

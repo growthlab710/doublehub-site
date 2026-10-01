@@ -27,10 +27,10 @@ const phases: Phase[] = [
     title: '各サービスをリリースし、磨き込み中',
     desc: 'TrainNote / Book Compass / DoubleHub 本体 / HubWallet はいずれもリリース済み。単体で使える状態を保ちながら、改善を重ねています。',
     checks: [
-      { text: 'TrainNote — AI Coach Plus（5名の専門コーチ）', state: 'done' },
-      { text: 'Book Compass — AI 読書整理', state: 'done' },
-      { text: 'DoubleHub 本体 — ToDo・日記・AI相棒', state: 'done' },
-      { text: 'HubWallet — AI 家計簿', state: 'done' },
+      { text: 'TrainNote — 広告なしの筋トレ記録・食事の記録・AI コーチ（Plus）', state: 'done' },
+      { text: 'Book Compass — 呟く読書メモと読み返し', state: 'done' },
+      { text: 'DoubleHub 本体 — 写真1枚の日記・AI相棒・道具箱', state: 'done' },
+      { text: 'HubWallet — 広告なしの家計簿', state: 'done' },
     ],
   },
   {
