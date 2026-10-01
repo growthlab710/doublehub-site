@@ -38,12 +38,12 @@ const itemSearchFreeUntil = '2026年11月30日';
 const aiFreeSpecialUntil = '2026年11月30日';
 
 export const metadata: Metadata = {
-  title: 'HubWallet — 広告なしの家計簿。レシートは撮るだけ | DoubleHub',
+  title: 'HubWallet — 広告なしの家計簿。レシートは撮るだけ',
   description:
     '広告が、ひとつも出ない iPhone の家計簿アプリ HubWallet。レシートは撮るだけで、仕分けは隙間時間にまとめて。サブスク・固定費の管理と、無料お試しの終了前・年額の更新前のお知らせにも対応しています。',
   alternates: { canonical: '/products/hubwallet/' },
   openGraph: {
-    title: 'HubWallet — 広告なしの家計簿。レシートは撮るだけ | DoubleHub',
+    title: 'HubWallet — 広告なしの家計簿。レシートは撮るだけ',
     description:
       'レシートは撮るだけ、仕分けは隙間時間にまとめて。サブスクの終了前もお知らせ。広告が、ひとつも出ない iPhone の家計簿アプリ。',
     url: 'https://www.doublehub.jp/products/hubwallet/',
