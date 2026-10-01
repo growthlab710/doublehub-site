@@ -4,16 +4,25 @@ import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
+import { VideoSlot } from '@/components/marketing/VideoSlot';
 
+/**
+ * /products/trainnote/
+ *
+ * 2026-10-01: App Store で公開中の TrainNote 4.2.0（build 2・2026-09-29 公開）に合わせて改訂。
+ *   事実の根拠は TrainNote リポジトリのタグ v4.2.0-build2（購入画面 PlanPaywallView・TrialManager・AppConfigStore など）。
+ *   入口は伝達ブリーフの確定メッセージ「ジムで、音楽は止まらない。」。料金は 2026 年 10 月時点の日本の App Store の価格。
+ *   変更の記録は _site-refresh-20261001/plans/trainnote.md の「変更記録」。
+ */
 export const metadata: Metadata = {
-  title: 'TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える',
+  title: 'TrainNote — 広告なしの筋トレ記録。前回の重量と伸びが見える',
   description:
-    '190以上の科学論文を参照する5人の専門AIコーチと、ボディフォト × AIボディ変化レポート。写真と記録で体の変化を見逃さない、iOS専用の筋トレ記録×AIコーチングアプリ。',
+    '広告を表示しない iOS の筋トレ記録アプリ。前回の重量が同じ画面に出て、ボリュームの伸びと部位ごとの回復がひと目でわかります。食事の写真から kcal・PFC の目安を推定する食事の記録、ボディフォト、トレーニング日誌、AI コーチ（Plus）にも対応。',
   alternates: { canonical: '/products/trainnote/' },
   openGraph: {
-    title: 'TrainNote — 5人の専門AIコーチが、あなたの筋トレを変える',
+    title: 'TrainNote — 広告なしの筋トレ記録。前回の重量と伸びが見える',
     description:
-      '190以上の科学論文を参照する5人の専門AIコーチと、ボディフォト × AIボディ変化レポート。写真と記録で体の変化を見逃さない筋トレアプリ。',
+      '広告を表示しない筋トレ記録アプリ。前回の重量と伸び、部位ごとの回復がひと目で。食事の記録・ボディフォト・トレーニング日誌も。',
     url: 'https://www.doublehub.jp/products/trainnote/',
     type: 'website',
     siteName: 'DoubleHub',
@@ -27,99 +36,166 @@ const appStoreUrl =
 const appStoreBadge =
   'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
 
+const MEAL_VIDEO = '/videos/trainnote-meal-estimate-202610.mp4';
+const MEAL_POSTER = '/images/trainnote-meal-result-202610.jpg';
+
 const stats = [
-  { number: '190+', label: '参照する科学論文・エビデンス' },
-  { number: '5名', label: '専属のAIコーチ' },
-  { number: '6領域', label: 'トレーニング / 栄養 / 休養 / 研究 / 計画 / 心理' },
+  { number: '0', label: 'アプリ内に表示される広告' },
+  { number: '6部位', label: '部位ごとの記録と回復の表示（有酸素も記録できます）' },
+  { number: '30日', label: '購入前に記録を試せる体験期間' },
 ];
 
-const coaches = [
+const recordPoints = [
   {
-    icon: '🎯',
-    name: 'パーソナル メインコーチ',
-    tag: 'MAIN',
-    desc:
-      '今日の提案と調整。種目・重量・フォームの具体的なアクションまで、あなたの記録をもとに毎日アドバイス。',
+    tag: 'PREV',
+    title: '前回の記録が、すぐ上に',
+    desc: '種目を追加すると、前回の日付・重量・回数が入力欄のすぐ上に並びます。',
   },
   {
-    icon: '📋',
-    name: 'プランコーチ',
-    desc:
-      '週間・月間の組み立て。部位分け、頻度設計、長期的なプログレッションを設計。',
+    tag: '×2',
+    title: '両手モード',
+    desc: 'ダンベル種目は、左右の合計でボリュームを数えます。',
   },
   {
-    icon: '🥗',
-    name: '栄養・回復コーチ',
-    desc:
-      '食事・睡眠・回復のアドバイス。トレーニングに合わせた栄養と回復の最適化。',
+    tag: 'BW%',
+    title: '自重の負荷割合',
+    desc: '懸垂やディップスも、体重の何％を負荷にするかを決めて記録できます。',
   },
   {
-    icon: '🔥',
-    name: 'モチベーションコーチ',
-    desc:
-      '継続と成長の確認。心理面の伴走で、やる気が落ちたときも前に進める。',
+    tag: 'PR',
+    title: 'ミニグラフと自己ベスト',
+    desc: '直近 4 回と今日のボリュームを並べて表示。自己ベストを更新すると「更新」が付きます。',
   },
   {
-    icon: '📚',
-    name: '知識スペシャリストコーチ',
-    desc:
-      '信頼できるエビデンス。190以上の科学論文を参照し、実践に結びつける。',
+    tag: '+1',
+    title: '6 部位と有酸素',
+    desc: '胸・背中・脚・肩・腕・腹筋に加えて、有酸素運動も記録できます。',
   },
+];
+
+const mealPoints = [
+  '写真 1 枚で目安。品ごとの内訳つきで、食べた量やご飯・麺の量はタップで直せます。',
+  'パッケージの成分表示を撮って記録。一緒に足したもの（割った豆乳など）も、一文で書けば推定します。',
+  '体重とトレーニングの記録から、1 日の必要量の目安を計算（計算は端末の中だけ）。その日の合計とくらべられます。',
+  'カロリーと PFC の推移を、7 日・30 日で振り返れます。',
 ];
 
 const features = [
   {
     label: 'Muscle Status & PEAK',
-    title: '部位ごとの回復状態が一目でわかる。',
+    title: '部位ごとの回復が、一目でわかる。',
     body:
-      '胸・背中・脚・肩・腕・腹筋の6部位をリアルタイムに追跡。前回からの経過日数をもとに、十分に回復した部位には PEAK バッジが表示。次に鍛えるべき部位が直感的にわかります。',
+      '胸・背中・脚・肩・腕・腹筋の 6 部位について、前回からの経過日数と回復の進み具合を表示します。日数が十分に空いた部位には PEAK が付くので、次に鍛える部位を選びやすくなります。',
   },
   {
-    label: 'Smart Logging',
-    title: '前回の重量を見ながら、迷わず記録。',
+    label: 'Calendar',
+    title: ['カレンダーで流れを見る。', '過去にも遡れる。'],
     body:
-      '前回データを常に確認しながら記録できるから、成長の実感がすぐ得られます。両手ダンベルの合計計算や、自重負荷割合の設定にも対応。実態に近い正確な記録が残せます。',
+      '月のカレンダーに、部位ごとの色で通った日が並びます。日付を選ぶとその日の種目とボリュームを確認でき、過去の日付に記録を足すこともできます。',
   },
   {
-    label: 'Calendar & History',
-    title: 'カレンダーで流れを見る。過去にも遡れる。',
+    label: 'Condition',
+    title: '調子と量を、同じ期間で。',
     body:
-      'カレンダー表示で部位ごとのトレーニング頻度と回復サイクルを可視化。日付カードをタップすれば過去の日付に遡って記録を入力・確認できます。',
-  },
-  {
-    label: 'Review & Graph',
-    title: 'ウィークリー/マンスリーで成長を実感。',
-    body:
-      'ホーム画面からチップを切り替えるだけで、今週と今月のレビューを即確認。ボリューム推移と変化率のグラフで、トレーニングの成長を直感的に把握できます。',
+      'コンディションを 5 段階でさっと記録。トレーニングのボリュームと同じ期間で並べて見られるので、調子と量の関係に気づきやすくなります。',
   },
   {
     label: 'Body Photo',
-    title: '写真と記録で、体の変化を見逃さない。',
+    title: '体の変化は、写真と記録で。',
     body:
-      'ボディフォトを撮影・保存して、月別グリッドや向きタグで整理。2〜4枚を並べて比較できます。写真は TrainNote の中だけに保存され、外には出ません。体重・体脂肪率もホイールピッカーでさっと記録でき、ボディタブの TODAY カードに今日の状況がまとまります。',
+      'ボディフォトは撮影日と向き（正面・側面・背面）で整理され、2〜4 枚を選んで、切り替えながら見比べられます。写真は TrainNote のアプリ専用の領域に保存され、iOS の写真ライブラリには残りません。撮って見比べるだけなら、写真が外に送られることはありません（送るのは、ビジュアルスコアの採点、食事の推定や成分表示の読み取り、日誌の物語の生成を実行したときだけです）。体重・体脂肪率もさっと記録でき、ボディタブの TODAY カードに今日の状況がまとまります。',
   },
   {
-    label: 'AI Body Report',
-    title: '体重だけでは分からない前進を、AIと振り返る。',
+    label: 'Visual Score（AI Coach Plus）',
+    title: ['最初の写真を基準に、', '同じ軸で見比べる。'],
     body:
-      'Before/After の写真と記録から、AIが変化レポートを生成（AI Coach Plus）。Visual XP・Training XP などのスコアと PR ハイライトで「見える変化」と「積み上げ」を言語化し、継続の振り返りを手伝います。身体を評価するのではなく、続けてきた歩みを一緒に見返すためのレポートです。',
+      'ボディフォトから、部位ごとの見た目の変化を自分専用のスコアとして記録します（月 30 枚まで）。推移グラフとレーダーチャートで、期間をまたいだ変化を振り返れます。スコアはあなただけの記録で、他のユーザーと比較されることはありません。見た目の変化の目安であって、測定でも診断でもありません。採点するときだけ、その写真と基準の写真が解析のために送信されます（解析後は保存されません。初回は確認画面が出ます）。',
   },
   {
-    label: 'Coach Check-in',
-    title: '16の質問カタログから、今日の相談を始める。',
+    label: 'Training Journal',
+    title: '記録が、1 ページずつ残る。',
     body:
-      'フォーム・栄養・回復など、よくある相談の質問カタログからワンタップでコーチチェックイン（AI Coach Plus）。回答には参照した知識の出典チップが付き、根拠を確かめながら読み進められます。',
+      '記録は「章」としてたまり、決めた回数で章が閉じるたびに、その期間の量・通った日・自己ベストの更新が 1 ページにまとまります。いくつかの章が集まって「編」になり、起点と編末に写真を添えておけば、完成の日に並べて見返せます。AI Coach Plus では、編が完成するたびに短い物語を受け取れ、記録 3 回ごとに章の添え書きも付きます（最初の 1 編の物語は、契約前でもお試しできます）。',
   },
 ];
 
+const coachPoints = [
+  'ロードマップと 4 週間ごとのフェーズ（プランは作り直すこともできます）',
+  '記録と回復をもとにした、今日のセッション提案',
+  '毎日のコーチメッセージとチェックイン、週のはじめの微調整',
+  '出典つきの知識ライブラリ（全 190 項目。Plus でなくても、記録に合わせた学びを毎週 3 つまで読めます）',
+  '通信できないときは、記録をもとにした提案に自動で戻ります',
+];
+
 const screenshots = [
-  { src: '/images/trainnote-peak.jpg', alt: 'ホーム画面 — PEAK バッジとAI Coach', caption: 'ホーム — PEAK と AI コーチ' },
-  { src: '/images/trainnote-training.jpg', alt: 'トレーニング記録画面', caption: '記録 — セット・レップ・重量' },
-  { src: '/images/trainnote-coach-detail.jpg', alt: 'AI Coach 詳細画面', caption: 'AI Coach — 提案と根拠' },
-  { src: '/images/trainnote-coaches-list.jpg', alt: '5名のAIコーチ一覧', caption: 'AI Coach — 5名の専門コーチ' },
-  { src: '/images/trainnote-coach-chat.png', alt: 'AI Coach チャット画面', caption: 'チャット — 深掘り相談' },
-  { src: '/images/trainnote-calendar.jpg', alt: 'カレンダー画面', caption: 'カレンダー — 継続の可視化' },
-  { src: '/images/trainnote-graph.jpg', alt: 'グラフ画面', caption: 'グラフ — 重量・ボリューム推移' },
+  { src: '/images/trainnote-record-top-202610.jpg', alt: '記録タブ — 今日の日付・コンディション・部位ごとの回復状態', caption: '記録 — 今日の状態と部位ごとの回復' },
+  { src: '/images/trainnote-record-prev-202610.jpg', alt: '記録タブ — 前回の重量・ミニグラフ・自己ベスト、両手モードと自重の種目', caption: '記録 — 前回の重量・ミニグラフ・自己ベスト' },
+  { src: '/images/trainnote-trends-202610.jpg', alt: '推移 — 種目ごとの最大重量と週ごとのボリューム', caption: '推移 — 最大重量と週ごとのボリューム' },
+  { src: '/images/trainnote-calendar-202610.jpg', alt: 'カレンダー — 部位ごとの色で通った日と、選んだ日の記録', caption: 'カレンダー — 通った日とその日の記録' },
+  { src: '/images/trainnote-meal-result-202610.jpg', alt: '食事の記録 — 写真から推定した kcal と PFC の目安、品ごとの内訳', caption: '食事 — 写真からの推定（目安）' },
+  { src: '/images/trainnote-meal-trends-202610.jpg', alt: '栄養の推移 — PFC の 7 日間の推移と必要量の範囲', caption: '食事 — PFC の推移' },
+  { src: '/images/trainnote-bodyphoto-compare-202610.jpg', alt: 'ボディフォト — 2 枚を選んで切り替えながら比較', caption: 'ボディフォト — 写真の比較' },
+  { src: '/images/trainnote-visualscore-sample-202610.jpg', alt: 'ビジュアルスコアの見本画面 — スコアの推移と部位バランス', caption: 'ビジュアルスコア — 見本（Plus）' },
+  { src: '/images/trainnote-coach-sample-202610.jpg', alt: 'AI コーチの見本 — 毎日のコーチメッセージの例', caption: 'AI コーチ — 見本（Plus）' },
+];
+
+const plans = [
+  {
+    eyebrow: 'One-time Purchase',
+    name: 'TrainNote Pro',
+    price: '¥800',
+    unit: '／ 買い切り',
+    tagline: '月額なしで、ずっと記録できる',
+    items: [
+      'トレーニングの記録・カレンダー・グラフを、ずっと',
+      'トレーニング日誌（章と編）を積み続けられる',
+      '追加の課金なし',
+    ],
+    note: undefined as string | undefined,
+  },
+  {
+    eyebrow: 'Subscription',
+    name: 'AI Coach Plus',
+    price: '¥480',
+    unit: '／ 月',
+    tagline: 'AI コーチ＋記録',
+    items: [
+      'ロードマップ・4 週間フェーズ・今日のセッション提案',
+      '毎日のコーチメッセージとチェックイン・週のはじめの微調整',
+      '知識ライブラリの全件・プランの作り直し',
+      'ビジュアルスコア（月 30 枚まで）',
+      '日誌の物語・章の添え書き',
+      'トレーニング仲間',
+      '記録も、このプランで続けられる',
+    ],
+    note: undefined as string | undefined,
+  },
+  {
+    eyebrow: 'Subscription',
+    name: '栄養',
+    price: '¥480',
+    unit: '／ 月',
+    tagline: '食事の AI 推定＋記録',
+    items: [
+      '食事の写真から kcal・PFC の目安を推定（1 日 15 回まで）',
+      '成分表示の読み取り・足したものの推定',
+      '記録も、このプランで続けられる',
+    ],
+    note: '食事の AI 推定は、契約前でも 21 回お試しできます。',
+  },
+  {
+    eyebrow: 'Subscription',
+    name: 'Plus＋栄養 セット',
+    price: '¥680',
+    unit: '／ 月',
+    tagline: 'AI コーチと食事の AI 推定、どちらも',
+    items: [
+      'Plus のすべて（AI コーチ・ビジュアルスコア・日誌の物語）',
+      '食事の AI 推定 1 日 15 回・成分表示の読み取り',
+      '記録も、このプランだけで続けられる',
+    ],
+    note: undefined as string | undefined,
+  },
 ];
 
 export default function TrainNotePage() {
@@ -148,12 +224,15 @@ export default function TrainNotePage() {
               </span>
             </div>
             <h1 className="mt-5 font-display text-[clamp(1.75rem,1rem+2.8vw,3rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
-              5人の専門AIコーチが、
+              ジムで、
               <br />
-              あなたの筋トレを変える。
+              音楽は止まらない。
             </h1>
             <p className="mt-5 max-w-lg text-text-muted">
-              筋トレ記録とAIコーチングが一体化した iOS アプリ。190以上の科学論文をもとに、あなたの記録・傾向に合わせた個別提案を届けます。ボディフォトと記録の蓄積から、体重だけでは分からない前進も AI と一緒に振り返れます。
+              TrainNote は、広告を表示しない筋トレ記録アプリです。セット間に開いても、音楽が止まったり、広告に手を止められたりしません。前回の重量が同じ画面に出るので、思い出さずに次のセットへ進めます。
+            </p>
+            <p className="mt-3 max-w-lg text-sm text-text-muted">
+              食事の記録、ボディフォト、トレーニング日誌、AI コーチ（Plus）まで、ひとつのアプリで。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
@@ -179,10 +258,10 @@ export default function TrainNotePage() {
           <div className="relative mx-auto w-full max-w-md">
             <div className="relative aspect-[3/4] overflow-hidden rounded-3xl border border-border bg-surface-2 shadow-xl">
               <Image
-                src="/images/trainnote-peak.jpg"
-                alt="TrainNote ホーム画面 — PEAK バッジと AI Coach"
+                src="/images/trainnote-hero-202610.jpg"
+                alt="TrainNote の記録タブ — 今日の日付・コンディション・部位ごとの回復状態と振り返り"
                 fill
-                className="object-cover"
+                className="object-cover object-top"
                 sizes="(min-width: 768px) 420px, 100vw"
                 priority
               />
@@ -210,42 +289,35 @@ export default function TrainNotePage() {
         </Container>
       </Section>
 
-      {/* ========== 3. AI Coach Plus ========== */}
-      <Section spacing="md" surface="alt" id="ai-coach">
+      {/* ========== 3. Record ========== */}
+      <Section spacing="md" surface="alt" id="features">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-              AI Coach Plus
+              Record
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-              専属の5名が、あなただけのチームに。
+              前回の重量が、そのまま出る。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              それぞれ異なる専門領域を持つAIコーチが、あなたのトレーニング履歴と目標に合わせて連携。定型のアドバイスではなく、今のあなたに最適な提案を届けます。
+              セットを入れるだけでボリュームを自動で計算し、入力内容は自動で保存されます。ジムで迷わず、次のセットに進むための記録です。
             </p>
           </div>
 
           <div className="mt-12 grid items-start gap-10 lg:grid-cols-2">
             <div className="flex flex-col gap-3">
-              {coaches.map((c) => (
+              {recordPoints.map((p) => (
                 <div
-                  key={c.name}
+                  key={p.title}
                   className="flex items-start gap-4 rounded-2xl border border-border bg-surface p-5 transition hover:border-accent-product/60 hover:shadow-md"
                 >
-                  <div className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-lg bg-accent-product/10 text-xl">
-                    {c.icon}
+                  <div className="grid h-10 w-10 flex-shrink-0 place-items-center rounded-lg bg-accent-product/10 font-display text-[0.7rem] font-bold tracking-wider text-accent-product">
+                    {p.tag}
                   </div>
                   <div>
-                    <div className="font-display text-sm font-bold">
-                      {c.name}
-                      {c.tag && (
-                        <span className="ml-2 inline-block rounded-full bg-accent-product/10 px-1.5 py-[1px] text-[0.625rem] font-semibold uppercase tracking-wider text-accent-product">
-                          {c.tag}
-                        </span>
-                      )}
-                    </div>
+                    <div className="font-display text-sm font-bold">{p.title}</div>
                     <div className="mt-1 text-xs leading-relaxed text-text-muted">
-                      {c.desc}
+                      {p.desc}
                     </div>
                   </div>
                 </div>
@@ -255,40 +327,43 @@ export default function TrainNotePage() {
             <div className="mx-auto w-full max-w-sm">
               <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
                 <Image
-                  src="/images/trainnote-coaches-list.jpg"
-                  alt="5名のAIコーチ一覧"
-                  width={800}
-                  height={1400}
+                  src="/images/trainnote-record-prev-202610.jpg"
+                  alt="記録タブ — ベンチプレスの前回の記録・ミニグラフ・自己ベスト、両手モードのダンベルプレス、自重の懸垂"
+                  width={1080}
+                  height={1919}
+                  sizes="(min-width: 1024px) 384px, 90vw"
                   className="h-auto w-full rounded-[1.5rem]"
                 />
               </div>
             </div>
           </div>
 
-          {/* Chat Showcase */}
+          {/* Progress */}
           <div className="mt-14 grid items-center gap-10 rounded-3xl border border-border bg-surface p-8 md:grid-cols-2 md:p-10">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
-                Chat
+                Progress
               </p>
               <h3 className="mt-3 font-display text-[clamp(1.35rem,1rem+1.2vw,1.75rem)] font-semibold leading-[1.25] tracking-[-0.02em]">
-                提案で終わらない。
+                前回より、
                 <br />
-                チャットで深掘りできる。
+                伸びているか。
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-                「なぜこの種目？」「重量を変えるべき？」「来週のプランは？」
-                <br />
-                気になったことをその場でコーチに相談。提案の理由から次のアクションまで、会話で整理できます。
+                記録タブの振り返りカードで、今週・今月のボリュームと、前の期間からの変化がわかります。過去の週や月も選んで見返せます。
+              </p>
+              <p className="mt-3 text-sm leading-relaxed text-text-muted md:text-base">
+                カレンダーには部位ごとの色で通った日が並び、ボディタブの「推移を見る」では、種目ごとの最大重量や週ごとのボリューム、体重・体脂肪率の推移をグラフで振り返れます。
               </p>
             </div>
             <div className="mx-auto w-full max-w-xs">
               <div className="overflow-hidden rounded-[2rem] border border-border bg-surface-2 p-3 shadow-lg">
                 <Image
-                  src="/images/trainnote-coach-chat.png"
-                  alt="AIコーチとのチャット画面"
-                  width={800}
-                  height={1400}
+                  src="/images/trainnote-review-202610.jpg"
+                  alt="振り返りカード — 9 月を選んだ月のボリュームと前月からの変化、ベンチプレスの前回比"
+                  width={1080}
+                  height={1105}
+                  sizes="(min-width: 768px) 320px, 80vw"
                   className="h-auto w-full rounded-[1.5rem]"
                 />
               </div>
@@ -297,28 +372,87 @@ export default function TrainNotePage() {
         </Container>
       </Section>
 
-      {/* ========== 4. Core Features ========== */}
-      <Section spacing="md" id="features">
+      {/* ========== 4. Meals ========== */}
+      <Section spacing="md" id="meals">
+        <Container width="wide">
+          <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.8fr]">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+                Meals
+              </p>
+              <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+                食事も、
+                <br />
+                トレーニングと同じ日付で。
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+                食事の写真を撮ると、kcal と PFC（たんぱく質・脂質・炭水化物）の目安を AI が推定し、体重やトレーニングと同じ日付で残せます。
+              </p>
+              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                {mealPoints.map((m) => (
+                  <li key={m} className="flex items-start gap-2">
+                    <Check /> {m}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-6 rounded-2xl border border-border bg-surface p-5 text-xs leading-relaxed text-text-faint">
+                食事の AI 推定は「栄養」または「Plus＋栄養 セット」で 1 日 15 回まで使えます。契約前でも 21 回お試しできます。写真は推定や成分表示の読み取りを実行したときだけ送られ、解析後はサーバーに保存されません（初回は送信内容の確認画面が出ます）。推定の結果は目安で、栄養の測定や、医学的な栄養指導・食事療法を目的とするものではありません。
+              </div>
+            </div>
+
+            <div className="mx-auto w-full max-w-xs">
+              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
+                <div className="relative aspect-[720/1436] w-full overflow-hidden rounded-[1.5rem]">
+                  <VideoSlot
+                    videoSrc={MEAL_VIDEO}
+                    posterSrc={MEAL_POSTER}
+                    alt="食事の写真を選んで推定し、kcal と PFC の目安が出るまでの画面"
+                    width={720}
+                    height={1436}
+                    sizes="(min-width: 1024px) 320px, 80vw"
+                    mediaClassName="rounded-[1.5rem]"
+                    className="absolute inset-0 rounded-[1.5rem]"
+                  />
+                </div>
+              </div>
+              <p className="mt-3 text-center text-xs text-text-faint">
+                <span className="inline-block">写真からの推定です。</span>
+                <span className="inline-block">結果は食べた量やチップで直せます。</span>
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 5. Features ========== */}
+      <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
               Features
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-              記録も、振り返りも、直感的に。
+              体の変化も、積み上げも。
             </h2>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             {features.map((f) => (
               <article
-                key={f.title}
+                key={f.label}
                 className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-accent-product/40 hover:shadow-md"
               >
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
                   {f.label}
                 </p>
                 <h3 className="mt-3 font-display text-lg font-semibold leading-[1.3] tracking-[-0.01em]">
-                  {f.title}
+                  {/* 句読点の位置で折り返す（語の途中で切れないように） */}
+                  {Array.isArray(f.title)
+                    ? f.title.map((t) => (
+                        <span key={t} className="inline-block">
+                          {t}
+                        </span>
+                      ))
+                    : f.title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-text-muted">
                   {f.body}
@@ -329,7 +463,52 @@ export default function TrainNotePage() {
         </Container>
       </Section>
 
-      {/* ========== 5. App Screenshots ========== */}
+      {/* ========== 6. AI Coach Plus ========== */}
+      <Section spacing="md" id="ai-coach">
+        <Container width="wide">
+          <div className="grid items-center gap-12 lg:grid-cols-[1fr_0.8fr]">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
+                AI Coach Plus
+              </p>
+              <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
+                目標から、今日の 1 回まで。
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
+                メインゴールを決めると、AI コーチが 3〜12 か月のロードマップを作り、4 週間ごとのフェーズに分けて進めます。記録をもとに今日のセッションを提案し、毎日のコーチメッセージで、その日の状況に合わせて声をかけます。
+              </p>
+              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                {coachPoints.map((c) => (
+                  <li key={c} className="flex items-start gap-2">
+                    <Check /> {c}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 border-t border-divider pt-4 text-xs leading-relaxed text-text-faint">
+                AI コーチの提案は、トレーニングを続けるための一般的なものです。医療判断・診断・治療を目的とするものではありません。
+              </p>
+            </div>
+
+            <div className="mx-auto w-full max-w-xs">
+              <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-3 shadow-xl">
+                <Image
+                  src="/images/trainnote-coach-sample-202610.jpg"
+                  alt="AI コーチの見本 — 毎日のコーチメッセージの例（Plus に加入する前に表示される見本）"
+                  width={1080}
+                  height={1368}
+                  sizes="(min-width: 1024px) 320px, 80vw"
+                  className="h-auto w-full rounded-[1.5rem]"
+                />
+              </div>
+              <p className="mt-3 text-center text-xs text-text-faint">
+                Plus に加入する前に表示される見本（コーチタブ）
+              </p>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* ========== 7. App Screenshots ========== */}
       <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
@@ -364,7 +543,7 @@ export default function TrainNotePage() {
         </Container>
       </Section>
 
-      {/* ========== 6. Plans ========== */}
+      {/* ========== 8. Plans ========== */}
       <Section spacing="md" id="plans">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
@@ -372,154 +551,67 @@ export default function TrainNotePage() {
               Plans
             </p>
             <h2 className="mt-3 font-display text-[clamp(1.6rem,1rem+2vw,2.5rem)] font-semibold leading-[1.2] tracking-[-0.02em]">
-              まずは 30 日間、無料で試せる。
+              記録は、どのプランでも。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              基本機能は「買い切り 800 円」がベースで、最初の 30 日間は無料で試せます。AI コーチとチャットを使いたい場合は、買い切りに加えて月額 480 円のサブスクリプション（初回 2 ヶ月 50% OFF）を併用します。
+              はじめの 30 日は体験期間で、購入しなくても記録を試せます。そのあとも記録を続けるには、買い切りの TrainNote Pro か、月額プラン（AI Coach Plus・栄養・Plus＋栄養 セット）のどれかを選びます。
             </p>
           </div>
-          <div className="mx-auto mt-14 grid max-w-6xl gap-6 md:grid-cols-3">
-            {/* 30 日間無料体験 */}
-            <div className="rounded-2xl border border-border bg-surface p-8 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-                Free Trial
-              </p>
-              <h3 className="mt-2 font-display text-lg font-bold">30 日間無料体験</h3>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="font-display text-4xl font-bold tracking-[-0.03em]">¥0
-                </span>
-                <span className="text-sm text-text-muted">／ 30 日間</span>
+          <div className="mx-auto mt-14 grid max-w-6xl gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {plans.map((p) => (
+              <div
+                key={p.name}
+                className="flex flex-col rounded-2xl border border-border bg-surface p-6 shadow-sm"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
+                  {p.eyebrow}
+                </p>
+                <h3 className="mt-2 font-display text-lg font-bold">{p.name}</h3>
+                <div className="mt-4 flex items-baseline gap-1">
+                  <span className="font-display text-4xl font-bold tracking-[-0.03em]">
+                    {p.price}
+                  </span>
+                  <span className="text-sm text-text-muted">{p.unit}</span>
+                </div>
+                <p className="mt-3 text-xs text-text-muted">{p.tagline}</p>
+                <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
+                  {p.items.map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <Check /> {item}
+                    </li>
+                  ))}
+                </ul>
+                {p.note && (
+                  <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
+                    {p.note}
+                  </p>
+                )}
               </div>
-              <p className="mt-3 text-xs text-text-muted">
-                買い切りプランの内容をまるごと無料体験
-              </p>
-              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
-                <li className="flex items-start gap-2">
-                  <Check /> トレーニングの記録・編集
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 部位ごとの回復状況・PEAK バッジ
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> グラフ・ウィークリー/マンスリーレビュー
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> ボディフォトの撮影・比較、体重・体脂肪率の記録
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> カレンダー表示・過去日の記録作成
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 30 日経過後は有料プランを選択
-                </li>
-              </ul>
-              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
-                ※ AI コーチ・チャットは含まれません。試したい場合はサブスクリプションの初回 2 ヶ月割引をご利用ください。
-              </p>
-            </div>
-
-            {/* 買い切り */}
-            <div className="relative rounded-2xl border-2 border-border bg-surface p-8 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-                One-time Purchase
-              </p>
-              <h3 className="mt-2 font-display text-lg font-bold">買い切りプラン</h3>
-              <div className="mt-4 flex items-baseline gap-1">
-                <span className="font-display text-4xl font-bold tracking-[-0.03em]">¥800
-                </span>
-                <span className="text-sm text-text-muted">／ 買い切り</span>
-              </div>
-              <p className="mt-3 text-xs text-text-muted">
-                一度の支払いで、記録・分析機能をずっと
-              </p>
-              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
-                <li className="flex items-start gap-2">
-                  <Check /> トレーニングの記録・編集
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 部位ごとの回復状況・PEAK バッジ
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> グラフ・ウィークリー/マンスリーレビュー
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> ボディフォトの撮影・比較、体重・体脂肪率の記録
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> カレンダー表示・過去日の記録作成
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 月額・年額の継続課金なし
-                </li>
-              </ul>
-              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
-                ※ AI コーチ・チャットは含まれません。必要な場合はサブスクリプションプランをご選択ください。
-              </p>
-            </div>
-
-            {/* サブスクリプション（買い切りに追加） */}
-            <div className="relative rounded-2xl border-2 border-accent-product bg-surface p-8 shadow-lg">
-              <span className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full bg-accent-product px-4 py-1 text-xs font-bold text-white">
-                AI コーチアドオン
-              </span>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent-product">
-                Subscription
-              </p>
-              <h3 className="mt-2 font-display text-lg font-bold">AI コーチプラン</h3>
-              <div className="mt-4 flex items-baseline flex-wrap gap-x-2">
-                <span className="text-sm text-text-muted">買い切り ¥800 +</span>
-              </div>
-              <div className="mt-1 flex items-baseline gap-1">
-                <span className="font-display text-4xl font-bold tracking-[-0.03em]">¥480
-                </span>
-                <span className="text-sm text-text-muted">／ 月</span>
-              </div>
-              <div className="mt-2 inline-flex items-center rounded-full bg-accent-product/10 px-2.5 py-1 text-[0.7rem] font-semibold text-accent-product">
-                初回 2 ヶ月 50% OFF（¥240 / 月）
-              </div>
-              <p className="mt-3 text-xs text-text-muted">
-                買い切りに加えて、AI コーチ・チャットを利用
-              </p>
-              <ul className="mt-6 flex flex-col gap-3 text-sm text-text-muted">
-                <li className="flex items-start gap-2">
-                  <Check /> <strong className="font-semibold text-text">5 名の専門 AI コーチ</strong>によるサポート
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> <strong className="font-semibold text-text">AI ボディ変化レポート</strong>（写真と記録から生成）
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> コーチチェックイン（16 の質問カタログ・出典チップつき）
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> チャットで深掘り相談
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> 190 以上の論文に基づくアドバイス
-                </li>
-                <li className="flex items-start gap-2">
-                  <Check /> いつでも解約可能
-                </li>
-              </ul>
-              <p className="mt-6 border-t border-divider pt-4 text-xs text-text-faint">
-                ※ このプランは買い切りプラン（¥800）に追加するサブスクリプションです。AI コーチのみの単独利用はできません。
-              </p>
-            </div>
+            ))}
           </div>
-          <p className="mx-auto mt-8 max-w-3xl text-center text-xs text-text-faint">
-            ※ TrainNote の基本機能は買い切りプラン（¥800）がベースとなります。AI コーチプランはその上に重ねてご利用いただく追加オプションで、AI コーチ機能だけを単独で購入することはできません。価格は執筆時点のもので、最新の料金や課金サイクルは App Store 上の表示をご確認ください。
+
+          <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-accent-product/30 bg-accent-product/5 p-6 text-center">
+            <p className="font-display text-base font-semibold">あとから取り上げません。</p>
+            <p className="mt-2 text-sm leading-relaxed text-text-muted">
+              体験が終わっても、プランをやめても、これまでの記録・日誌のページ・写真はそのまま読めます。
+            </p>
+          </div>
+
+          <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-relaxed text-text-faint">
+            ※ 月額プラン（AI Coach Plus・栄養・Plus＋栄養 セット）は自動更新のサブスクリプションです。期間終了の 24 時間以上前に解約しない限り、自動で更新されます。解約は App Store のサブスクリプション設定からいつでも行えます。上限: 食事の AI 推定は 1 日 15 回、ビジュアルスコアは月 30 枚。価格は 2026 年 10 月時点の日本の App Store の価格です。最新の料金は App Store の表示をご確認ください。
           </p>
         </Container>
       </Section>
 
-      {/* ========== 7. Final CTA ========== */}
+      {/* ========== 9. Final CTA ========== */}
       <Section spacing="md" surface="alt">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="font-display text-[clamp(1.5rem,1rem+1.5vw,2.25rem)] font-bold leading-[1.25] tracking-[-0.02em]">
-              記録するだけの筋トレは、もう終わりにしよう。
+              記録は、伸ばすためにある。
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-text-muted md:text-base">
-              AIコーチと一緒に、あなたのトレーニングを次のレベルへ。
+              前回の重量から、今日の 1 回へ。広告に止められない記録を、ジムで。
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a
