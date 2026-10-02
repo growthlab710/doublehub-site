@@ -13,6 +13,10 @@ import { PrivacyLayout } from '../_components/PrivacyLayout';
  *   ③取引番号による購入の確認（App Store Server API）④利用状況の計測 ⑤AdServices による広告経由の計測
  *   ⑥保存期間の項を新設 ⑦「AI機能を利用しない限り外部送信は行われません」を、内容の送信と通信の種類を分けた書き方に改めた。
  *   ⑧外部 AI 事業者は有料の API 契約で学習に使われない（ユーザー確認 2026-09-27）旨を第 3.2 項に明記。
+ *
+ * 2026-10-02: 食事を「テキストで記録」する機能（写真のない食事を、入力したテキストだけで推定する）の追加に伴い改訂。
+ *   第 1 項の食事の記録と第 2 項の利用目的に「テキストで入力した食事の内容」を追記。送信（第 3.2 項）と注意書き（第 8 項）は今の文で足りる。
+ *   項目レベルの正本は TrainNote リポジトリ docs/data-transmission-inventory.md §6.4。
  */
 export const metadata: Metadata = {
   title: 'TrainNote プライバシーポリシー',
@@ -26,7 +30,7 @@ export default function TrainNotePrivacyPage() {
     <PrivacyLayout
       title="TrainNote プライバシーポリシー"
       productLabel="TrainNote"
-      lastUpdated="2026-09-27"
+      lastUpdated="2026-10-02"
     >
       <p>
         GrowthLab（以下「当方」）は、TrainNote（以下「本アプリ」）で取り扱う情報について、以下のとおり定めます。
@@ -48,7 +52,7 @@ export default function TrainNotePrivacyPage() {
           ビジュアルスコアの採点結果（部位ごとのスコア、基準として登録した写真の指定、採点日時）
         </li>
         <li>
-          食事の記録（食事の写真、成分表示の写真、メモ、選んだ条件、推定の結果など）（利用時のみ）
+          食事の記録（食事の写真、成分表示の写真、テキストで入力した食事の内容、メモ、選んだ条件、推定の結果など）（利用時のみ）
         </li>
         <li>購入・トライアル関連情報（課金状態、トライアル開始日、Apple が発行する取引番号）</li>
         <li>
@@ -70,7 +74,7 @@ export default function TrainNotePrivacyPage() {
         </li>
         <li>ビジュアルスコアの採点、推移表示およびAIによる補助的な所見生成</li>
         <li>
-          食事の写真や成分表示からの、エネルギー（kcal）とPFC（たんぱく質・脂質・炭水化物）の目安の推定
+          食事の写真や成分表示、テキストで入力した食事の内容からの、エネルギー（kcal）とPFC（たんぱく質・脂質・炭水化物）の目安の推定
         </li>
         <li>購入機能、トライアル機能、Pro 特典の提供と、契約状態の確認</li>
         <li>AI機能の回数の上限の管理と、不正利用の防止</li>
@@ -243,6 +247,9 @@ export default function TrainNotePrivacyPage() {
       <ul>
         <li>
           2026-09-27: バージョン4.2.0（食事の記録・料金プランの追加）に伴い、食事の写真などの送信、AI機能の回数の管理、購入の確認、利用状況の計測、広告経由のインストールの計測、保存期間を追記し、外部送信に関する記述を改めました。
+        </li>
+        <li>
+          2026-10-02: 写真のない食事をテキストで記録する機能の追加に伴い、取得する情報と利用目的に、テキストで入力した食事の内容を追記しました。
         </li>
       </ul>
 
