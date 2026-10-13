@@ -22,7 +22,7 @@ export default function HubWalletPrivacyPage() {
     <PrivacyLayout
       title="HubWallet プライバシーポリシー"
       productLabel="HubWallet"
-      lastUpdated="（公開日）"
+      lastUpdated="2026-10-13"
     >
       <p>
         本ポリシーは、iOS アプリ「HubWallet」（以下「本アプリ」）における個人情報および利用者データの取扱いについて定めるものです。本アプリの利用にあたっては本ポリシーをご確認のうえ、内容に同意されるものとします。
@@ -434,7 +434,7 @@ export default function HubWalletPrivacyPage() {
           プランの機能案内の表示・閉じた記録を個別に明記し（第2.3項・第7項）、満足度タグの記録に後からタグを付けた場合も含むことを明記（第7項）
         </li>
         <li>
-          （公開日）
+          2026-10-13
           当社の別アプリ「DoubleHub」との端末内の共有（利用者の任意）の記載を追加（第3項・第4.1項・第4.3項・第5項・第8項・第9項）。あわせて、その利用状況の記録の記載を追加（第2.3項・第7項）
         </li>
       </ul>
