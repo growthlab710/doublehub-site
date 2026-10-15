@@ -5195,3 +5195,29 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ユーザー承認のうえ、ブランチ `feature/update-trainnote-privacy-4-5-0`（`a12d917`）をローカルで `main` にマージして `git push`（`a607b31`・GitHub コネクタが使えないセッションのため）。Vercel の自動デプロイ。
+
+## 2026-10-15 (JST) — アプリ連携ガイドを DoubleHub 2.15.0（HubWallet との端末内の連携）に合わせて改訂
+
+### 背景
+
+- DoubleHub 2.15.0（2026-10-13 公開）で、HubWallet 2.7.0 との端末内の連携（「お金と、いい日」）が使えるようになった。連携ガイドは BookCompass の手順だけで、HubWallet は「今後対応予定」のままだった（2026-10-14 時点で公開ページに「共有する」「つながる」が 0 件）。
+- 文面の正本は DoubleHub リポジトリの `docs/specs/hubwallet-local-link-publish-texts.md` §2。手順 01 は 2026-10-14 に直した版（HubWallet の次の版で設定の欄の名前が「家計簿 × 日記」に変わるため、欄の名前を書かず、見出し「DoubleHub 連携」とボタン「共有する…」を指す）。ユーザー承認済み（2026-10-15）。
+
+### 変更（`src/app/(marketing)/app-linking/page.tsx`）
+
+- `metadata.description`・ヒーローの段落・ファイル冒頭のコメント: HubWallet との端末内の連携に対応したことと、家計の記録を AI やサーバーへ送らないこと
+- メリット: 3 つ目に「HubWallet との連携は DoubleHub の「つながる」タブ」、4 つ目を「使ったお金と、日記のいい日を並べる（HubWallet）」に差し替え
+- 手順: 「連携の手順（HubWallet × DoubleHub）」の 3 ステップ（文字だけのカード・`#hubwallet`）と、見出しの下の 1 行（連携コード・サインインが要らないこと、DoubleHub Ver.2.15.0 以降・HubWallet Ver.2.7.0 以降）
+- 対応アプリ: HubWallet を「対応済み（端末内の連携）」に
+- FAQ: 費用（Plus 以上で見られる範囲）・解除（両アプリでのやめ方）を直し、「HubWallet との連携で、家計の記録はどこかへ送られますか？」を足す。「今後どのアプリ」から HubWallet を外す
+- CTA: 文を「つなぎたいアプリを App Store から入れてから、連携してください。」に、ボタン「HubWallet を入手」とリンク「HubWallet の詳細」を足す
+- キーワードに「HubWallet 連携」
+- ボタン名はアプリの実物と突き合わせた（DoubleHub 2.15.0 の `LinkContent`、HubWallet `v2.7.0` の設定と同意シート）。欄の名前「DoubleHub と共有」はページに書いていない
+
+### 検証
+
+- `pnpm build` 成功（枝と、`main` にマージした後の 2 回）。生成物 `.next/server/app/app-linking.html` に「共有する…」「同意して読み取る」「つながっています」「対応済み（端末内の連携）」があり、「DoubleHub と共有」「家計簿 × 日記」が 0 件であることを確認。ローカルの `pnpm start` で HubWallet の手順の段の見た目を確認。
+
+### 公開
+
+- ユーザー承認のうえ、ブランチ `feature/update-app-linking-2-15-0`（`6356d2c`。作業ツリー `../doublehub-site-app-linking`）をローカルで `main` にマージして `git push`（`897130f`・GitHub コネクタが使えないセッションのため）。Vercel の自動デプロイ。
