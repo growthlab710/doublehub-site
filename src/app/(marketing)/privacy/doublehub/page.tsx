@@ -25,6 +25,9 @@ import { PrivacyLayout } from '../_components/PrivacyLayout';
  * 2026-10-12: Ver.2.15.0 の提出に先立ち、当方の別アプリ HubWallet との端末内の連携（任意・既定オフ）について、
  *   第 1 項（読み取る記録）・第 2 項（利用目的）・第 3 項（保存と送信・端末に残すもの）・第 4 項（連携の利用状況 15 種）・
  *   第 6 項（やめ方・アンインストール）を追記。
+ * 2026-10-18: チャット（ダブルとの会話）の応答をサーバー側で Anthropic の Claude API に切り替えるのに先立ち、
+ *   第 3 項の外部 AI サービスの記載（送り先・ヘルスケアの要約の送り先・カレンダーを送らない旨）を更新。
+ *   Claude API で応答できなかった回は Gemini API で応答する。アプリの更新は伴わない。
  */
 export const metadata: Metadata = {
   title: 'DoubleHub プライバシーポリシー',
@@ -38,7 +41,7 @@ export default function DoubleHubPrivacyPage() {
     <PrivacyLayout
       title="DoubleHub プライバシーポリシー"
       productLabel="DoubleHub"
-      lastUpdated="2026-10-12"
+      lastUpdated="2026-10-18"
     >
       <p>
         GrowthLab（以下「当方」）は、DoubleHub（以下「本アプリ」）で取り扱う情報について、以下のとおり定めます。
@@ -160,18 +163,17 @@ export default function DoubleHubPrivacyPage() {
         <li>
           AI
           機能を利用した場合、ユーザー入力、会話内容、関連する ToDo・メモ・辞書・要約情報など、応答生成や整理に必要な範囲のデータが、外部
-          AI サービスへ送信されることがあります。現時点では Google が提供する Gemini API
-          を利用する構成を含みます。
+          AI サービスへ送信されることがあります。現時点では、チャット（ダブルとの会話）には Anthropic が提供する Claude API を、そのほかの AI 機能には Google が提供する Gemini API を利用しています。チャットで Claude API が応答できなかった場合は、その回に限り Gemini API で応答します。
         </li>
         <li>
           ヘルスケアデータ（歩数、睡眠、ワークアウトの日次サマリ）は、ユーザーが連携を許可した場合に限り、当方が管理するサーバー環境へ同期・保存されます。また、チャット応答の文脈反映のために、直近数日分のサマリが
-          Gemini API
+          外部 AI サービス（Claude API。応答できなかった場合は Gemini API）
           へ送信されることがあります。端末の「ヘルスケア」アプリから直接取得した生データそのものを外部へ送信することはありません。
         </li>
         <li>
           カレンダー情報（iOS
           カレンダーの予定）は、ユーザーが連携を許可した場合に限り、双方向同期のために当方が管理するサーバー環境へ保存されます。カレンダー情報そのものを
-          Gemini API など外部 AI サービスへ送信することはありません。
+          Claude API・Gemini API など外部 AI サービスへ送信することはありません。
         </li>
         <li>
           日記機能の写真・動画は、端末内（および iOS
