@@ -5262,3 +5262,25 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ユーザー承認のうえ、ブランチ `feature/update-bookcompass-privacy-usage-events`（`22ce205`）をローカルで `main` にマージして `git push`（`330e071`・GitHub コネクタが使えないセッションのため）。Vercel の自動デプロイ。
+
+## 2026-10-18 (JST) — DoubleHub ポリシーに、チャットの送り先として Anthropic の Claude API を追記（サーバー側の切り替えの前）
+
+### 背景
+
+- DoubleHub のチャット（ダブルとの会話）の応答を、サーバー（`gemini-proxy`）だけで gemini-2.5-flash から claude-haiku-5-5 に切り替える（アプリの更新なし）。比較と判断は iOS-Apps の `LLM管理/03_切り替え検討_2026-10.md`、設計は DoubleHub の `docs/specs/chat-haiku-switch-design.md`。公開ページは「現時点では Google が提供する Gemini API を利用」と書いていたため、切り替えより先に更新した。ユーザー承認のうえ（2026-10-18）。
+
+### 変更（`src/app/(marketing)/privacy/doublehub/page.tsx`・第 3 項だけ）
+
+- AI 機能の送り先: 「チャット（ダブルとの会話）には Anthropic が提供する Claude API を、そのほかの AI 機能には Google が提供する Gemini API を利用」「チャットで Claude API が応答できなかった場合は、その回に限り Gemini API で応答」
+- ヘルスケアの要約の送り先: 「Gemini API」→「外部 AI サービス（Claude API。応答できなかった場合は Gemini API）」
+- カレンダーを送らない旨: 「Gemini API など」→「Claude API・Gemini API など」
+- 最終更新日 2026-10-18・ファイル冒頭のコメント。日記の写真・場所・被写体の記載は送り先が変わらないので触れていない
+
+### 検証
+
+- `pnpm build` 成功。公開後に `https://www.doublehub.jp/privacy/doublehub/` を取得し、3 か所の新しい文と最終更新日 2026-10-18 が出ていることを確認。
+
+### 公開
+
+- ユーザー承認のうえ、ブランチ `feature/update-doublehub-privacy-chat-claude`（`065c8ec`）をローカルで `main` にマージして `git push`（`9ea50d5`・GitHub コネクタが使えないセッションのため）。Vercel の自動デプロイ。
+- 注意: サーバー側の切り替え（`CHAT_PROVIDER=anthropic`）はこのあと行う。それまでの間、チャットは引き続き Gemini で答える（ページの「現時点では Claude API」と一時的に食い違う）。
