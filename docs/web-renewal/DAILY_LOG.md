@@ -5351,3 +5351,25 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 
 - ユーザー承認のうえ、ブランチ `feature/update-hubwallet-privacy-intro`（`4f8459a`）をローカルで `main` にマージして `git push`（`fbdc578`・GitHub コネクタが使えないセッションのため）。Vercel の自動デプロイ。
 - HubWallet の次の版（「最初の 1 件の版」）の追記（CMO 確定文の第 2 部）は、その版の公開日に出す。
+
+## 2026-10-22 (JST) — BookCompass ポリシーに、読む前の問いと、書き直したときの前の問いの記録を追記（DB の変更の前）
+
+### 背景
+
+- BookCompass は、読む前の問い（`books.reading_intent`）を書き直したときに前の問いを残す表（`reading_intent_events`・books のトリガーで書く）を本番に入れる（ユーザー決定・2026-10-22。設計は BookCompass の下書き `Design/mock/flow/FLOW_VIEW_DESIGN_draft.md` §17-8-5・§17-12-4、実行記録は iOS repo `READING_INTENT_DESIGN.md` §5）。ポリシーに書いていない記録を本番で持たないよう、DB の変更より先に公開する。
+- 文はユーザー承認（2026-10-22）。A の版（流れる見せ方）の改訂とは分けた、小さな改訂。
+
+### 変更（`src/app/(marketing)/privacy/bookcompass/page.tsx`）
+
+- 第 1 項: 読む前の問いと、書き直したときの前の問い・日時（10 分以内の書き直しは 1 つにまとめる）
+- 第 3 項: AI 処理サービスの行に「読む前の問い」を足した（分析・コーチ・ドキュメンタリーなどで、すでに送っていたのに書かれていなかった）。前の問いはクラウドデータベースに保存するだけで外部へ送らず、画面にもまだ出さない、の 1 段
+- 第 5 項: 問いを空にして保存すると、その本の前の問いの記録もすべて消える・本を消したときも消える
+- 最終更新日 2026-10-22・ファイル冒頭のコメント
+
+### 検証
+
+- `pnpm build` 成功（枝とマージ後の main の両方・74 ページ）。公開後に `https://www.doublehub.jp/privacy/bookcompass/` を取得し、4 か所の新しい文と最終更新日 2026-10-22 が出ていることを確認。
+
+### 公開
+
+- ユーザー承認のうえ、ブランチ `feature/update-bookcompass-privacy-intent-history`（`be2b011`）をローカルで `main` にマージして `git push`（`0ba26dc`・GitHub コネクタが使えないセッションのため）。Vercel の自動デプロイ。
