@@ -5373,3 +5373,26 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ユーザー承認のうえ、ブランチ `feature/update-bookcompass-privacy-intent-history`（`be2b011`）をローカルで `main` にマージして `git push`（`0ba26dc`・GitHub コネクタが使えないセッションのため）。Vercel の自動デプロイ。
+
+## 2026-10-25 (JST) — BookCompass ポリシーに、2.9.0 のふり返りと AI の使い方の選択を追記
+
+### 背景
+
+- BookCompass 2.9.0（ふり返り〈流れる見せ方〉と、AI に送る前の同意）の提出の前に、公開ページを実際の送り先・記録に合わせる（release-check のデータ収集ゲート）。
+- 文はユーザー承認（2026-10-25）。案の正は BookCompass の `APPSTORE_SUBMISSION.md` §21・`FLOW_VIEW_DESIGN.md` §17-12-4。
+
+### 変更（`src/app/(marketing)/privacy/bookcompass/page.tsx`）
+
+- 第 1 項: 呟きの出どころ（入口・音声・追い問いの文の写し）・問いかけへの答えと出どころ・内省ノートの種類（読了の振り返り・ふり返りで残した気づき）・ふり返りで残したときに見ていたもの・AI の使い方の選択
+- 第 2 項: ふり返り機能・AI を使う機能（2.9.0 以降は「AI あり」のとき）
+- 第 3 項: AI の送り先を「Google の Gemini API と Anthropic の Claude API」に。送るものと送る場面・書誌は選択にかかわらず送ること・学習の言い方・DoubleHub 連携・見ていたものと出どころは外へ送らないこと・小見出し「AI の使い方の選択について」・利用状況の記録の一覧（ふり返り・呟き・問い・書かずに閉じた・AI の使い方の選択など）
+- 第 5 項: 出どころ・種類・見ていたものの消え方、問いかけへの答えは本と一緒に消えること、AI の使い方はいつでも変えられること
+- 最終更新日 2026-10-25・ファイル冒頭のコメント
+
+### 検証
+
+- `pnpm build` 成功（枝とマージ後の main の両方・74 ページ）。公開後に `https://www.doublehub.jp/privacy/bookcompass/` を取得し、最終更新日 2026-10-25・「AI の使い方の選択について」・Anthropic・ふり返り・見ていたもの・取り消しの但し書きの文が出ていることを確かめた。
+
+### 公開
+
+- ユーザー承認のうえ、ブランチ `feature/update-bookcompass-privacy-2-9-0`（`107822e`）をローカルで `main` にマージして `git push`（`a36ff17`）。
