@@ -58,7 +58,7 @@ export default function DoubleHubPrivacyPage() {
     <PrivacyLayout
       title="DoubleHub プライバシーポリシー"
       productLabel="DoubleHub"
-      lastUpdated="2026-10-28"
+      lastUpdated="2026-10-29"
     >
       <p>
         GrowthLab（以下「当方」）は、DoubleHub（以下「本アプリ」）で取り扱う情報について、以下のとおり定めます。
