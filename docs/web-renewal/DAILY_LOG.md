@@ -5466,3 +5466,25 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ユーザー承認のうえ、ブランチ `feature/update-doublehub-privacy-made-album`（`8550d7d`・`edeaab5`・`de51e84`・最終更新日の直し）を origin/main（`2fa80c8`）の上で合流して `git push origin HEAD:main`（`6e2fde4`。ローカルの `main` には origin に無いコミットがあるため、前回と同じく使わない）。ブランチも push 済み。
+
+## 2026-10-29 (JST) — TrainNote ポリシーに、4.6.0 の記録の書き出しと一括削除の事実を反映
+
+### 背景
+
+- TrainNote 4.6.0 で、食事の記録（品目・日ごとの合計・サプリ・プロテインを含む）と体重・体脂肪率・体調の記録を、設定から JSON・CSV で書き出せるようにした（TrainNote の `docs/nutrition-long-term-meal-log-plan.md` P1）。ファイルは端末の中で作り、共有先は利用者が選ぶ（当方には送らない＝収集に当たらない）。
+- 第 7 項の「現在、全件一括削除機能は提供していません。」は、アプリの設定の「食事記録を全削除」と合っていなかった（TrainNote の P1-6）。提出の前に直す（release-check の指摘）。
+
+### 変更（`src/app/(marketing)/privacy/trainnote/page.tsx`）
+
+- 第 7 項: 書き出しの 1 行を足した。「全件一括削除機能は提供していません」を「食事の記録（推定値・よく使う食事・サプリ・プロテイン・端末内の食事写真を含む）は、設定から一括で削除できます。トレーニング記録など、そのほかの記録の一括削除機能は現在提供していません。」に直した
+- 第 9 項: 「2026-10-29: バージョン4.6.0（食事の記録の書き出しの追加）に伴い、記録の書き出しと一括削除の記述を改めました。」
+- 最終更新日 2026-10-29・ファイル冒頭のコメント
+
+### 検証
+
+- `pnpm build` 成功（枝で実施）。公開後に `https://www.doublehub.jp/privacy/trainnote/` を取得し、最終更新日・書き出しの文・一括削除の文・古い文が無いこと・改定の行を確かめた（10:08 JST に反映）。
+
+### 公開
+
+- ユーザー承認のうえ、ブランチ `feature/update-trainnote-privacy-export`（`323ab89`）をローカルで `main` にマージして `git push`（`41e620d`・ローカルの main は origin と同じだった。GitHub コネクタが使えないセッションのため）。ブランチも push 済み。
+- TrainNote リポジトリの写し（`PRIVACY-POLICY.md`・`docs/index.html`）も同じ文にそろえた。
