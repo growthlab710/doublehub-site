@@ -5488,3 +5488,22 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 
 - ユーザー承認のうえ、ブランチ `feature/update-trainnote-privacy-export`（`323ab89`）をローカルで `main` にマージして `git push`（`41e620d`・ローカルの main は origin と同じだった。GitHub コネクタが使えないセッションのため）。ブランチも push 済み。
 - TrainNote リポジトリの写し（`PRIVACY-POLICY.md`・`docs/index.html`）も同じ文にそろえた。
+
+## 2026-10-30 (JST) — HubWallet ポリシーに 2.9.0（買い物アルバムと 60 日の版）の記録を反映
+
+### 背景
+
+- HubWallet 2.9.0 が 2026-10-30 07:58 JST に App Store で公開された（公開 API の `currentVersionReleaseDate` で確認）。新しく送る記録（「買ったものを探す」・買い物アルバム・価格メモの使われ方、購入記憶の件数の集計、月次レポートの見られ方）をポリシーに書く。機能より先には出さない約束のため、公開の日に出した。
+
+### 変更（`src/app/(marketing)/privacy/hubwallet/page.tsx`）
+
+- 第 2.3 項・第 4.2 項・第 7 項に 2.9.0 の記録を追記（CMO 確定文。ブランチ `feature/update-hubwallet-privacy-album` の `5490714`）
+- 最終更新日と改定履歴の最後の行の「（公開日）」を 2026-10-30 に置き換えた（`65eb9f4`）
+
+### 検証
+
+- `pnpm build` 成功（枝とマージ後の main の両方・74 ページ）。公開後に `https://www.doublehub.jp/privacy/hubwallet/` を取得して確かめる。
+
+### 公開
+
+- ユーザー承認（2026-10-30）のうえ、ブランチをローカルの `main` に `--no-ff` でマージして `git push`（ローカルの main は origin と同じだった）。
