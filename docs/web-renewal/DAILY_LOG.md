@@ -5540,3 +5540,19 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ユーザー承認（2026-11-02「公開して進める」）のうえ、ブランチ `feature/update-dh-privacy-2-19-0` を `main` に `--no-ff` でマージして `git push`（`d4475a2`）。
+
+## 2026-11-03 TrainNote ポリシーに 4.7.0 の食事のまとめて推定で送る写真を足す
+
+### 変更（`src/app/(marketing)/privacy/trainnote/page.tsx`）
+
+- 第 3.2 項の「写真が送信されるのは」に、食事のまとめて推定で送る写真（「まとめて推定」を押したときの撮りためた写真・1 回に最大 8 枚・推定の手がかりとして同じ回の 1 つ前の写真を一緒に送ることがある・撮りためている間は端末の中だけ）を足した
+- 確認画面の文の「食事の推定」に「まとめて推定を含みます」、第 7 項の「写真が外部へ送信されない」条件の並びに「まとめて推定」を足した
+- 最終更新日を 2026-11-03 に、改定履歴に 1 行。正本は TrainNote `docs/nutrition-batch-capture-plan.md`・`docs/data-transmission-inventory.md` §6.5。TrainNote 4.7.0 の提出より先に公開する（TrainNote `docs/appstore-metadata.md` のリリース前チェックのやり直し #7）
+
+### 検証
+
+- `pnpm build` 成功（枝とマージのあとの両方）
+
+### 公開
+
+- ユーザー承認（2026-11-03「公開して」）のうえ、ブランチ `feature/update-tn-privacy-batch` を `main` に `--no-ff` でマージして `git push`（`1a09c0d`）。
