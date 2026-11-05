@@ -9,7 +9,7 @@ import { siteConfig } from '@/lib/site/config';
 export const metadata: Metadata = {
   title: 'DoubleHub — 日記は、写真1枚でいい。広告なしの写真日記と、AIの相棒',
   description:
-    '日記は、写真1枚でいい。気分はワンタップ、文章はなくてもかまいません。広告なし。書いた日はダブル（もう一人の自分）がひと言返し、写真は端末の外に残りません。日記から見つけた幸せの種は、月ごとのアルバムに。iOS の日記アプリ DoubleHub。',
+    '日記は、写真1枚でいい。気分はワンタップ、文章はなくてもかまいません。広告なし。書いた日はダブル（もう一人の自分）がひと言返し、写真は DoubleHub のサーバーに残りません。日記から見つけた幸せの種は、月ごとのアルバムに。iOS の日記アプリ DoubleHub。',
   keywords: [
     'DoubleHub',
     'ダブルハブ',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'DoubleHub — 日記は、写真1枚でいい。',
     description:
-      '広告なし。1日1枚の写真日記と、AIの相棒。書いた日はダブルがひと言返し、写真は端末の外に残りません。',
+      '広告なし。1日1枚の写真日記と、AIの相棒。書いた日はダブルがひと言返し、写真は DoubleHub のサーバーに残りません。',
     url: 'https://www.doublehub.jp/products/doublehub/',
     type: 'website',
     siteName: 'DoubleHub',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'DoubleHub — 日記は、写真1枚でいい。',
     description:
-      '広告なし。1日1枚の写真日記と、AIの相棒。書いた日はダブルがひと言返し、写真は端末の外に残りません。',
+      '広告なし。1日1枚の写真日記と、AIの相棒。書いた日はダブルがひと言返し、写真は DoubleHub のサーバーに残りません。',
     images: ['/images/og-default.jpg'],
   },
 };
@@ -69,9 +69,9 @@ const diaryPillars = [
   },
   {
     tag: 'プライバシー',
-    title: '日記の写真は、端末の外に残りません。',
+    title: '日記の写真は、DoubleHub のサーバーに残りません。',
     body:
-      '日記の写真は端末の中に保存され、DoubleHub のサーバーには保存されません。ダブルがリアクションを生成するときだけ縮小画像を一時送信し、サーバーには残りません。気分や傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
+      '日記の写真は端末の中に保存されます。ダブルが読むときは、あなたが選んだときだけ縮小画像を外部の AI サービスに送り、DoubleHub のサーバーには残りません。気分や傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
   },
 ];
 
@@ -188,7 +188,7 @@ const faqs = [
   },
   {
     q: '日記の写真はどこに保存されますか？',
-    a: '日記の写真は端末の中に保存され、端末の外に残りません。ダブルがリアクションを生成するときだけ縮小画像を一時送信し、サーバーには保存されません。気分や充実度の記録、傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
+    a: '日記の写真は端末の中に保存され、DoubleHub のサーバーには残りません。ダブルが読むときは、あなたが選んだときだけ縮小画像を外部の AI サービスに送ります。気分や充実度の記録、傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
   },
   {
     q: '日記を書かなかった日はどうなりますか？',
@@ -267,7 +267,7 @@ const jsonLd = {
       applicationCategory: 'LifestyleApplication',
       operatingSystem: 'iOS 17.0 以上',
       description:
-        '写真1枚と気分スタンプの1日1枚日記に、ダブル（もう一人の自分）がひと言返す、広告なしの iOS 日記アプリ。写真は端末の外に残らず、日記から見つけた幸せの種は月ごとのアルバムに。ToDo・メモ・予定、ヘルスケア、iOS カレンダー、読書記録（BookCompass）とも連携。',
+        '写真1枚と気分スタンプの1日1枚日記に、ダブル（もう一人の自分）がひと言返す、広告なしの iOS 日記アプリ。写真は DoubleHub のサーバーに残らず、日記から見つけた幸せの種は月ごとのアルバムに。ToDo・メモ・予定、ヘルスケア、iOS カレンダー、読書記録（BookCompass）とも連携。',
       url: 'https://www.doublehub.jp/products/doublehub/',
       image: 'https://www.doublehub.jp/images/doublehub-icon-rich.png',
       softwareVersion: '2.13.0',
@@ -405,7 +405,7 @@ export default function DoubleHubPage() {
               広告なし。1日1枚の写真日記と、AIの相棒
             </p>
             <p className="mt-5 max-w-lg text-text-muted">
-              気分はワンタップ。文章はなくてもかまいません。書いた日は、ダブル（もう一人の自分）が短いひと言を返します。日記の写真は、端末の外に残りません。
+              気分はワンタップ。文章はなくてもかまいません。書いた日は、ダブル（もう一人の自分）が短いひと言を返します。日記の写真は、DoubleHub のサーバーに残りません。
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
@@ -883,7 +883,7 @@ export default function DoubleHubPage() {
                 <Check /> 個人情報や健康データを広告目的で利用することは一切ありません
               </li>
               <li className="flex items-start gap-2 text-sm text-text-muted">
-                <Check /> 日記の写真は端末の中に保存。AI 解析時のみ縮小画像を一時送信し、サーバーには残りません
+                <Check /> 日記の写真は端末の中に保存。ダブルが読むときは、あなたが選んだときだけ縮小画像を外部の AI サービスに送り、DoubleHub のサーバーには残りません
               </li>
               <li className="flex items-start gap-2 text-sm text-text-muted">
                 <Check /> 気分・充実度の記録と傾向の分析は端末の中で完結。心理データを新規にサーバー保存しません

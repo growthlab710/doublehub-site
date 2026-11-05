@@ -255,14 +255,7 @@ export function MarketingHeader() {
                 <span>ログイン</span>
               </Link>
             </Button>
-          ) : (
-            <span
-              className="hidden md:inline-flex items-center gap-1 rounded-full border border-border bg-surface px-3 py-1 text-xs text-text-muted"
-              title="ブラウザからログインして使える Web アプリは近日公開予定"
-            >
-              ログインページ準備中
-            </span>
-          )}
+          ) : null}
 
           {/* Mobile toggle */}
           <button
