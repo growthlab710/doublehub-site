@@ -3,11 +3,11 @@
  */
 export const siteConfig = {
   name: 'DoubleHub',
-  // ヒーローコピー（あなたを理解し、毎日を一緒に整える AI パートナー。）に合わせた短縮版。
+  // トップの軸（2026-11「幸せのコンテキスト」版）。
   // page title `${name} — ${tagline}` として SERP / ブラウザタブに表示される。
-  tagline: 'あなたを理解し、毎日を一緒に整える AI パートナー',
+  tagline: '幸せのコンテキストを、あなたの側に',
   description:
-    '学び（BookCompass）、身体（TrainNote）、お金（HubWallet）、日記・タスク——複数のサービスをつないで、あなた専用の AI パートナーを育てる DoubleHub のエコシステム。',
+    '写真1枚の日記、レシート、読みながらの一言、筋トレの記録。いつもの記録を、あなたのための「幸せのコンテキスト」として貯めていく 4 つのアプリ（DoubleHub・HubWallet・BookCompass・TrainNote）。どれも広告なし。',
   // canonical ホストは www 付き。apex は Vercel 側で 308 → www に転送されるため、
   // sitemap / OGP / 構造化データの URL は全て www に揃え、GSC の
   // 「ページにリダイレクトがあります」を発生させない。
@@ -38,7 +38,7 @@ export const products = [
     name: 'DoubleHub',
     tagline: '日記は、写真1枚でいい。',
     description:
-      '広告なし。写真1枚と気分スタンプの1日1枚日記に、ダブル（もう一人の自分）がひと言返します。写真は端末の外に残りません。',
+      '広告なし。写真1枚と気分スタンプの1日1枚日記に、ダブル（もう一人の自分）がひと言返します。写真は DoubleHub のサーバーに残りません。',
     href: '/products/doublehub/',
     accentClass: 'theme-doublehub',
     icon: '🧠',
@@ -47,7 +47,7 @@ export const products = [
       '写真1枚と気分スタンプの1日1枚日記',
       '書いた日はダブルがひと言。返事ができて、後日つづく',
       'アルバム——日記から見つけた幸せの種を、月ごとに',
-      '広告なし。写真は端末の外に残らない',
+      '広告なし。写真は DoubleHub のサーバーに残らない',
     ],
   },
   {
