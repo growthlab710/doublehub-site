@@ -5628,3 +5628,21 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ユーザー承認（2026-11-06「公開してよい」）のうえ、ブランチ `feature/update-bc-privacy-2-11` を `main` に `--no-ff` でマージして `git push`（`379f085`）。本番の反映は 2026-11-06 18:16 ごろ（Vercel・「知らせ（通知）について」と最終更新日 2026-11-06 を本番のページで確認）。共有の作業フォルダは触らず、worktree `doublehub-site-bc-privacy-211` で作業した。
+
+## 2026-11-06 about・ブログ・製品ページの帯をトップと同じ誌面のデザインにそろえる
+
+### 変更
+
+- about とブログ（一覧・連載・記事のページ）を、トップ（2026-11-05）と同じ「誌面」のデザイン（白と墨・明朝の見出し・角を丸めない・番号つきの罫線の区切り）に組み直した。共通の部品は `src/components/marketing/editorial/editorial.module.css`。ブログの絞り込みは文字の切り替え（選んでいるものに下線）、一覧は目次の形。記事の本文は変えていない
+- 4 つの製品ページの下に「このアプリで貯まる、幸せのコンテキスト」の帯（`ContextBand`）を足した。各ページの見出しは変えていない
+- DoubleHub の製品ページの「気分・充実度の分析は端末の中で完結」3 か所を、ポリシーどおりに直した（DoubleHub のサーバーには残らない・ダブルに読んでもらうときだけ日記と一緒に外部の AI サービスに送る・学習には使われない）
+- 使わなくなった古いトップの部品 15 個（Hero・IdealSection・ProblemSection・SolutionSection・DailyChoices・ProactiveSupport・EcosystemTabs・EcosystemSection・ProductCards・SpotlightSection・RoadmapSection・VisionSection・FaqSection・BlogTeaser・CtaSection）を消した
+
+### 検証
+
+- `pnpm build` 成功（枝とマージのあとの両方）
+- 枝のビルドを手元で起動し、PC とスマホ・明るい表示と暗い表示で about・ブログ一覧・記事・製品ページを撮影
+
+### 公開
+
+- ユーザー承認（2026-11-06「おすすめでお願いします」＝DH の帯も含めて今まとめて公開）のうえ、ブランチ `feature/update-site-editorial-pages` を `main` に `--no-ff` でマージして `git push`（`c88fc72`）。本番の反映は 2026-11-06 19:30 ごろ（about・ブログ・4 つの製品ページの帯・DH の言い方を本番で確認）。
