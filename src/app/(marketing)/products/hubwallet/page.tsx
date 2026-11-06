@@ -6,6 +6,7 @@ import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { siteConfig } from '@/lib/site/config';
 import { withAppStoreCampaign } from '@/lib/site/appStoreLink';
+import { ContextBand } from '@/components/marketing/ContextBand';
 
 const appStoreUrl = siteConfig.social.appStoreHubWallet;
 const appStoreBadge =
@@ -959,6 +960,7 @@ export default function HubWalletPage() {
           </div>
         </Container>
       </Section>
+      <ContextBand app="hubwallet" />
     </div>
   );
 }

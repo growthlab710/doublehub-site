@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
 import type { BlogPostMeta } from '@/lib/content/blog';
+import s from '@/components/marketing/editorial/editorial.module.css';
 
 /** 公開からこの日数以内は NEW バッジ＋相対日付で表示 */
 const NEW_WINDOW_DAYS = 14;
@@ -20,11 +21,8 @@ function formatPublished(iso: string, now: number | null): string {
     if (d === 1) return '昨日';
     if (d >= 2 && d < NEW_WINDOW_DAYS) return `${d}日前`;
   }
-  return new Date(iso).toLocaleDateString('ja-JP', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+  const d = new Date(iso);
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 }
 
 interface CategoryCount {
@@ -85,9 +83,18 @@ export function BlogExplorer({ posts, categories, tags, archives }: BlogExplorer
   const hasActiveFilter = category !== ALL || tag !== null || archive !== null;
 
   return (
-    <div className="mt-10">
-      {/* カテゴリタブ */}
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label="カテゴリで絞り込み">
+    <section aria-labelledby="posts-heading">
+      <div className={s.secHead}>
+        <span className={s.secNo}>02</span>
+        <span id="posts-heading">記事の一覧</span>
+        <span className={s.secHeadAside}>
+          {filtered.length} / {posts.length} 件
+        </span>
+      </div>
+
+      {/* カテゴリ */}
+      <div className={s.filters} role="tablist" aria-label="カテゴリで絞り込み">
+        <span className={s.filterLabel}>カテゴリ</span>
         <CategoryChip
           label="すべて"
           count={posts.length}
@@ -105,10 +112,10 @@ export function BlogExplorer({ posts, categories, tags, archives }: BlogExplorer
         ))}
       </div>
 
-      {/* タグ行 */}
+      {/* タグ */}
       {tags.length > 0 && (
-        <div className="mt-4 flex flex-wrap items-center gap-2">
-          <span className="text-xs text-text-faint">タグ:</span>
+        <div className={s.filters}>
+          <span className={s.filterLabel}>タグ</span>
           {tags.map((t) => {
             const active = tag === t.name;
             return (
@@ -116,25 +123,20 @@ export function BlogExplorer({ posts, categories, tags, archives }: BlogExplorer
                 key={t.name}
                 type="button"
                 onClick={() => setTag(active ? null : t.name)}
-                className={cn(
-                  'rounded-full border px-2.5 py-0.5 text-xs transition',
-                  active
-                    ? 'border-primary/60 bg-primary-soft text-primary'
-                    : 'border-border bg-surface text-text-muted hover:border-primary/40 hover:text-primary',
-                )}
+                className={cn(s.filter, active && s.filterActive)}
                 aria-pressed={active}
               >
                 #{t.name}
-                <span className="ml-1 text-[0.65rem] text-text-faint">{t.count}</span>
+                <span className={s.filterCount}>{t.count}</span>
               </button>
             );
           })}
         </div>
       )}
 
-      {/* アーカイブ + リセット行 */}
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="text-xs text-text-faint">公開月:</span>
+      {/* 公開月 */}
+      <div className={s.filters}>
+        <span className={s.filterLabel}>公開月</span>
         {archives.map((a) => {
           const active = archive === a.ym;
           return (
@@ -142,91 +144,47 @@ export function BlogExplorer({ posts, categories, tags, archives }: BlogExplorer
               key={a.ym}
               type="button"
               onClick={() => setArchive(active ? null : a.ym)}
-              className={cn(
-                'rounded-full border px-2.5 py-0.5 text-xs transition',
-                active
-                  ? 'border-primary/60 bg-primary-soft text-primary'
-                  : 'border-border bg-surface text-text-muted hover:border-primary/40 hover:text-primary',
-              )}
+              className={cn(s.filter, active && s.filterActive)}
               aria-pressed={active}
             >
               {a.label}
-              <span className="ml-1 text-[0.65rem] text-text-faint">{a.count}</span>
+              <span className={s.filterCount}>{a.count}</span>
             </button>
           );
         })}
         {hasActiveFilter && (
-          <button
-            type="button"
-            onClick={resetAll}
-            className="ml-auto rounded-full border border-border bg-surface px-2.5 py-0.5 text-xs text-text-muted transition hover:border-primary/40 hover:text-primary"
-          >
+          <button type="button" onClick={resetAll} className={cn(s.filter, s.link)}>
             絞り込みをリセット
           </button>
         )}
       </div>
 
-      {/* 結果サマリ */}
-      <p className="mt-6 text-xs text-text-faint">
-        {filtered.length} / {posts.length} 件
-      </p>
-
-      {/* 記事グリッド */}
+      {/* 一覧（目次の形） */}
       {filtered.length === 0 ? (
-        <div className="mt-6 rounded-xl border border-dashed border-border bg-surface p-10 text-center text-sm text-text-muted">
+        <p className={s.small} style={{ marginTop: 32 }}>
           条件に合う記事が見つかりませんでした。
-        </div>
+        </p>
       ) : (
-        <div className="mt-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className={s.toc} style={{ marginTop: 28 }}>
           {filtered.map((post) => (
-            <Link
-              key={post.slug}
-              href={`/blog/${post.slug}/`}
-              className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex flex-wrap items-center gap-1.5">
-                  {now !== null && daysSince(post.publishedAt, now) < NEW_WINDOW_DAYS && (
-                    <span className="rounded-full bg-primary px-2 py-0.5 text-[0.65rem] font-semibold text-white">
-                      NEW
-                    </span>
-                  )}
-                  {post.category ? (
-                    <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary">
-                      {post.category}
-                    </span>
-                  ) : (
-                    post.tags.slice(0, 3).map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full bg-primary-soft px-2 py-0.5 text-[0.65rem] font-medium text-primary"
-                      >
-                        {t}
-                      </span>
-                    ))
-                  )}
-                </div>
-                <time
-                  dateTime={post.publishedAt}
-                  className="shrink-0 pt-0.5 text-xs text-text-faint"
-                >
-                  {formatPublished(post.publishedAt, now)}
-                </time>
-              </div>
-              <h2 className="mt-4 font-display text-lg font-semibold leading-snug group-hover:text-primary">
-                {post.title}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-text-muted line-clamp-3">
-                {post.description}
-              </p>
-              <div className="mt-auto flex items-center justify-end pt-6 text-xs text-text-faint">
-                {post.readingTime && <span>{post.readingTime} 分</span>}
-              </div>
+            <Link key={post.slug} href={`/blog/${post.slug}/`} className={s.tocRow}>
+              <span className={s.tocDate}>
+                <time dateTime={post.publishedAt}>{formatPublished(post.publishedAt, now)}</time>
+                {now !== null && daysSince(post.publishedAt, now) < NEW_WINDOW_DAYS && (
+                  <span className={s.tocNew}>NEW</span>
+                )}
+              </span>
+              <span className={s.tocCat}>{post.category ?? post.tags[0] ?? ''}</span>
+              <span className={s.tocMain}>
+                <span className={s.tocTitle}>{post.title}</span>
+                {post.description && <span className={s.tocDesc}>{post.description}</span>}
+              </span>
+              <span className={s.tocMin}>{post.readingTime ? `${post.readingTime} 分` : ''}</span>
             </Link>
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }
 
@@ -244,22 +202,10 @@ function CategoryChip({ label, count, active, onClick }: CategoryChipProps) {
       role="tab"
       aria-selected={active}
       onClick={onClick}
-      className={cn(
-        'inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm transition',
-        active
-          ? 'border-primary bg-primary text-white shadow-sm'
-          : 'border-border bg-surface text-text-muted hover:border-primary/40 hover:text-primary',
-      )}
+      className={cn(s.filter, active && s.filterActive)}
     >
-      <span>{label}</span>
-      <span
-        className={cn(
-          'rounded-full px-1.5 text-[0.65rem] font-medium',
-          active ? 'bg-white/20 text-white' : 'bg-primary-soft text-primary',
-        )}
-      >
-        {count}
-      </span>
+      {label}
+      <span className={s.filterCount}>{count}</span>
     </button>
   );
 }

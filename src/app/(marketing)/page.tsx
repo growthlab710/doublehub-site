@@ -9,8 +9,7 @@ export const metadata: Metadata = {
  * トップページ（2026-11「幸せのコンテキスト」版・誌面のデザイン）
  *
  * 中身と並びは `HomeContent` にまとめている。
- * 2026-11 までのトップの部品（Hero・IdealSection・DailyChoices・RoadmapSection など）は、
- * このページからは使っていない（片付けは別の作業で）。
+ * 2026-11 までのトップの部品（Hero・IdealSection・DailyChoices・RoadmapSection など 15 個）は 2026-11-06 に片付けた。
  */
 export default function HomePage() {
   return <HomeContent />;
