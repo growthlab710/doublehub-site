@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Container } from '@/components/ui/Container';
-import { Section } from '@/components/ui/Section';
-import { Button } from '@/components/ui/Button';
+import s from '@/components/marketing/editorial/editorial.module.css';
 
 export const metadata: Metadata = {
   title: 'About — Naoki / GrowthLab について',
@@ -11,85 +10,89 @@ export const metadata: Metadata = {
   alternates: { canonical: '/about/' },
 };
 
+const apps = [
+  {
+    word: '日々',
+    name: 'DoubleHub',
+    icon: '/images/doublehub-icon.jpg',
+    href: '/products/doublehub/',
+    text: '写真1枚と気分スタンプの、広告なしの日記アプリ。書いた日はダブル（もう一人の自分）がひと言返し、ToDo・メモ・予定は道具箱に。BookCompass の読書記録ともつながる、シリーズの中核です。',
+  },
+  {
+    word: 'お金',
+    name: 'HubWallet',
+    icon: '/images/hubwallet-app-icon.jpg',
+    href: '/products/hubwallet/',
+    text: '節約疲れしない、広告なしの家計簿。レシートは撮るだけ、仕分けは隙間時間に。お金の使い方から「自分が何に充電されるか」を理解するための家計簿アプリです。',
+  },
+  {
+    word: 'ことば',
+    name: 'BookCompass',
+    icon: '/images/bookcompass-app-icon.jpg',
+    href: '/products/bookcompass/',
+    text: '読みながら一言呟く読書メモ。呟きは本ごとの「読みの現在地」や読書特集号として、あとから読み返せる形で返ってきます。「もう一人の自分が、自分の読書を理解してくれる」体験を目指しています。',
+  },
+  {
+    word: 'からだ',
+    name: 'TrainNote',
+    icon: '/images/trainnote-app-icon.jpg',
+    href: '/products/trainnote/',
+    text: '広告を表示しない筋トレ記録。前回の重量と伸び、部位ごとの回復がひと目でわかり、食事の記録やボディフォト、トレーニング日誌も残せます。AI コーチ（Plus）は、目標から逆算したロードマップと毎日のメッセージで伴走します。',
+  },
+];
+
 export default function AboutPage() {
   return (
-    <Section spacing="lg">
-      <Container width="narrow">
-        {/* Hero */}
-        <div>
-          <span className="text-xs font-semibold uppercase tracking-wider text-primary">
-            Author / Developer
-          </span>
-          <h1 className="mt-2 font-display text-4xl font-semibold md:text-5xl">
-            Naoki
-          </h1>
+    <div className={`${s.root} ${s.page}`}>
+      <div className={s.wrap}>
+        <p className={s.masthead}>
+          <span>開発者について</span>
+          <span className={s.mastheadLatin}>Author / Developer</span>
+        </p>
+        <h1 className={s.title}>Naoki</h1>
+        <p className={s.lead}>
+          iOS アプリ個人開発者。西日本在住。Swift を中心に、写真1枚の日記 DoubleHub
+          をはじめ、家計・読書・筋トレの 4 つのアプリを作っています。テーマは「幸せのコンテキストを、あなたの側に」です。
+        </p>
+
+        <div className={s.secHead}>
+          <span className={s.secNo}>01</span>
+          <span>はじまり</span>
         </div>
-
-        <div className="prose prose-neutral mt-10 max-w-none dark:prose-invert">
+        <div className={`${s.body} ${s.narrow}`}>
           <p>
-            iOS アプリ個人開発者。西日本在住。Swift を中心に、写真1枚の日記 DoubleHub
-            をはじめ、家計・読書・筋トレの 4 つのアプリを作っています。テーマは「幸せのコンテキストを、あなたの側に」です。
+            「テクノロジーで人間の可能性をバージョンアップさせたい」——その思いから DoubleHub
+            プロジェクトは始まりました。いまは、その可能性を「幸せ」の側から考えています。
           </p>
-
           <p>
-            「テクノロジーで人間の可能性をバージョンアップさせたい」——その思いから
-            DoubleHub
-            プロジェクトは始まりました。いまは、その可能性を「幸せ」の側から考えています。日記、家計、読書、筋トレ。いつもの記録を、その人が何で幸せだったかを知るための材料として、本人の側に貯めていく。それが
+            日記、家計、読書、筋トレ。いつもの記録を、その人が何で幸せだったかを知るための材料として、本人の側に貯めていく。それが
             4 つのアプリに共通する目的です。
           </p>
-
-          <h2>開発しているプロダクト</h2>
         </div>
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2">
-          <Link
-            href="/products/trainnote/"
-            className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
-          >
-            <div className="font-display text-lg font-semibold group-hover:text-primary">
-              TrainNote
-            </div>
-            <p className="mt-2 text-sm leading-relaxed text-text-muted">
-              広告を表示しない筋トレ記録。前回の重量と伸び、部位ごとの回復がひと目でわかり、食事の記録やボディフォト、トレーニング日誌も残せます。AI コーチ（Plus）は、目標から逆算したロードマップと毎日のメッセージで伴走します。
-            </p>
-          </Link>
-          <Link
-            href="/products/bookcompass/"
-            className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
-          >
-            <div className="font-display text-lg font-semibold group-hover:text-primary">
-              Book Compass
-            </div>
-            <p className="mt-2 text-sm leading-relaxed text-text-muted">
-              読みながら一言呟く読書メモ。呟きは本ごとの「読みの現在地」や読書特集号として、あとから読み返せる形で返ってきます。「もう一人の自分が、自分の読書を理解してくれる」体験を目指しています。
-            </p>
-          </Link>
-          <Link
-            href="/products/doublehub/"
-            className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
-          >
-            <div className="font-display text-lg font-semibold group-hover:text-primary">
-              DoubleHub
-            </div>
-            <p className="mt-2 text-sm leading-relaxed text-text-muted">
-              写真1枚と気分スタンプの、広告なしの日記アプリ。書いた日はダブル（もう一人の自分）がひと言返し、ToDo・メモ・予定は道具箱に。BookCompass の読書記録ともつながる、シリーズの中核です。
-            </p>
-          </Link>
-          <Link
-            href="/products/hubwallet/"
-            className="group flex h-full flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg"
-          >
-            <div className="font-display text-lg font-semibold group-hover:text-primary">
-              HubWallet
-            </div>
-            <p className="mt-2 text-sm leading-relaxed text-text-muted">
-              節約疲れしない、広告なしの家計簿。レシートは撮るだけ、仕分けは隙間時間に。お金の使い方から「自分が何に充電されるか」を理解するための家計簿アプリです。
-            </p>
-          </Link>
+        <div className={s.secHead}>
+          <span className={s.secNo}>02</span>
+          <span>開発しているアプリ</span>
+        </div>
+        <div className={s.cols}>
+          {apps.map((a) => (
+            <Link key={a.name} href={a.href} className={s.col}>
+              <div className={s.word}>{a.word}</div>
+              <div className={s.app}>
+                <Image src={a.icon} alt="" width={24} height={24} />
+                {a.name}
+              </div>
+              <p className={s.colText}>{a.text}</p>
+              <span className={s.more}>{a.name} を見る</span>
+            </Link>
+          ))}
         </div>
 
-        <div className="prose prose-neutral mt-12 max-w-none dark:prose-invert">
-          <h2>大事にしていること</h2>
+        <div className={s.secHead}>
+          <span className={s.secNo}>03</span>
+          <span>大事にしていること</span>
+        </div>
+        <div className={`${s.body} ${s.narrow}`}>
           <p>
             AI
             に仕事を任せるために、仕事のコンテキストを貯める流れは、これから大きくなっていきます。私が作りたいのは、もう一方の記録です。あなたが何で笑い、誰といた日がよかったか——AI
@@ -103,20 +106,24 @@ export default function AboutPage() {
             個人開発だからこそ、自分自身が最初のユーザーです。実際に使って感じた課題や発見をそのままプロダクトに反映し、一次情報として記事にも残しています。Build
             in Public のスタイルで、開発の裏側も共有していきます。
           </p>
+        </div>
 
-          <h2>このブログについて</h2>
+        <div className={s.secHead}>
+          <span className={s.secNo}>04</span>
+          <span>このブログについて</span>
+        </div>
+        <div className={`${s.body} ${s.narrow}`}>
           <p>
             幸せと記録についての考え、AI
             の動き、個人開発の実践知を中心に記事を書いています。開発者としての一次情報や、実際にプロダクトを作りながら気づいたことを、できるだけ具体的に共有することを心がけています。
           </p>
         </div>
-
-        <div className="mt-10">
-          <Button asChild>
-            <Link href="/blog/">ブログ記事を読む</Link>
-          </Button>
+        <div style={{ marginTop: 28 }}>
+          <Link className={s.btn} href="/blog/">
+            記事を読む <span aria-hidden="true">→</span>
+          </Link>
         </div>
-      </Container>
-    </Section>
+      </div>
+    </div>
   );
 }

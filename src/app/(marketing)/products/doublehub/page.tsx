@@ -5,6 +5,7 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { siteConfig } from '@/lib/site/config';
+import { ContextBand } from '@/components/marketing/ContextBand';
 
 export const metadata: Metadata = {
   title: 'DoubleHub — 日記は、写真1枚でいい。広告なしの写真日記と、AIの相棒',
@@ -71,7 +72,7 @@ const diaryPillars = [
     tag: 'プライバシー',
     title: '日記の写真は、DoubleHub のサーバーに残りません。',
     body:
-      '日記の写真は端末の中に保存されます。ダブルが読むときは、あなたが選んだときだけ縮小画像を外部の AI サービスに送り、DoubleHub のサーバーには残りません。気分や傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
+      '日記の写真は端末の中に保存されます。ダブルが読むときは、あなたが選んだときだけ縮小画像を外部の AI サービスに送り、DoubleHub のサーバーには残りません。気分や充実度も DoubleHub のサーバーには残りません（ダブルに読んでもらうときは、日記と一緒に外部の AI サービスに送ります。学習には使われません）。',
   },
 ];
 
@@ -188,7 +189,7 @@ const faqs = [
   },
   {
     q: '日記の写真はどこに保存されますか？',
-    a: '日記の写真は端末の中に保存され、DoubleHub のサーバーには残りません。ダブルが読むときは、あなたが選んだときだけ縮小画像を外部の AI サービスに送ります。気分や充実度の記録、傾向の分析も端末の中で完結し、心理データを新規にサーバー保存することはありません。',
+    a: '日記の写真は端末の中に保存され、DoubleHub のサーバーには残りません。ダブルが読むときは、あなたが選んだときだけ縮小画像を外部の AI サービスに送ります。気分や充実度の記録も DoubleHub のサーバーには残りません（ダブルに読んでもらうときは、日記と一緒に外部の AI サービスに送ります。学習には使われません）。',
   },
   {
     q: '日記を書かなかった日はどうなりますか？',
@@ -886,7 +887,7 @@ export default function DoubleHubPage() {
                 <Check /> 日記の写真は端末の中に保存。ダブルが読むときは、あなたが選んだときだけ縮小画像を外部の AI サービスに送り、DoubleHub のサーバーには残りません
               </li>
               <li className="flex items-start gap-2 text-sm text-text-muted">
-                <Check /> 気分・充実度の記録と傾向の分析は端末の中で完結。心理データを新規にサーバー保存しません
+                <Check /> 気分・充実度の記録は DoubleHub のサーバーに残りません。外部の AI サービスに送るのは、ダブルに読んでもらうときだけ
               </li>
               <li className="flex items-start gap-2 text-sm text-text-muted">
                 <Check /> ヘルスケアデータは読み取り専用・生データの保存なし
@@ -1197,6 +1198,7 @@ export default function DoubleHubPage() {
           </div>
         </Container>
       </Section>
+      <ContextBand app="doublehub" />
     </div>
   );
 }

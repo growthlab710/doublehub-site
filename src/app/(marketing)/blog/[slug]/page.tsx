@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
+import s from '@/components/marketing/editorial/editorial.module.css';
 import { MDXRenderer } from '@/components/marketing/MDXRenderer';
 import { FloatingToc } from '@/components/marketing/FloatingToc';
 import { getAllSlugs, getPostBySlug, getLatestPosts } from '@/lib/content/blog';
@@ -43,6 +44,11 @@ export async function generateMetadata(props: {
     },
     other: post.category ? { 'article:section': post.category } : undefined,
   };
+}
+
+function fmt(iso: string) {
+  const d = new Date(iso);
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 }
 
 export default async function BlogPostPage(props: {
@@ -145,107 +151,67 @@ export default async function BlogPostPage(props: {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Container width="narrow">
-        <Link
-          href="/blog/"
-          className="text-xs text-text-muted transition hover:text-primary"
-        >
-          ← Blog 一覧に戻る
-        </Link>
-
-        {post.category && (
-          <div className="mt-4">
-            <span className="rounded-full bg-primary-soft px-2.5 py-0.5 text-[0.7rem] font-medium text-primary">
-              {post.category}
-            </span>
-          </div>
-        )}
-
-        <h1 className="mt-4 font-display text-3xl font-semibold leading-tight md:text-4xl">
-          {post.title}
-        </h1>
-
-        {post.description && (
-          <p className="mt-4 text-base text-text-muted md:text-lg">
-            {post.description}
+      <div className={s.root}>
+        <Container width="narrow">
+          <p className={s.masthead}>
+            <Link href="/blog/" className={s.postBack}>
+              ← 記事の一覧へ
+            </Link>
+            {post.category && <span style={{ color: 'var(--warm)' }}>{post.category}</span>}
           </p>
-        )}
 
-        <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-text-faint">
-          <time dateTime={post.publishedAt}>
-            {new Date(post.publishedAt).toLocaleDateString('ja-JP', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </time>
-          {post.updatedAt && post.updatedAt !== post.publishedAt && (
-            <>
-              <span aria-hidden>·</span>
-              <span>
-                更新:{' '}
-                {new Date(post.updatedAt).toLocaleDateString('ja-JP', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </span>
-            </>
-          )}
-          {post.readingTime && (
-            <>
-              <span aria-hidden>·</span>
-              <span>{post.readingTime} 分で読めます</span>
-            </>
-          )}
-        </div>
+          <h1 className={s.title} style={{ fontSize: 'clamp(1.7rem, 3.6vw, 2.5rem)', lineHeight: 1.5 }}>
+            {post.title}
+          </h1>
 
-        <hr className="my-8 border-divider" />
+          {post.description && <p className={s.lead}>{post.description}</p>}
 
-        <article>
-          <MDXRenderer source={post.content} />
-        </article>
+          <div className={s.postMeta}>
+            <time dateTime={post.publishedAt}>{fmt(post.publishedAt)}</time>
+            {post.updatedAt && post.updatedAt !== post.publishedAt && (
+              <span>更新 {fmt(post.updatedAt)}</span>
+            )}
+            {post.readingTime && <span>{post.readingTime} 分で読めます</span>}
+          </div>
 
-        {/* Liquid Glass のフローティング目次
-            - 見出し 3 つ以上の記事でのみ表示
-            - クライアントコンポーネント（article の後ろに置いても fixed 配置となる） */}
-        <FloatingToc />
+          <hr style={{ margin: '28px 0 32px', border: 0, borderTop: '1px solid var(--rule)' }} />
 
-        {related.length > 0 && (
-          <section className="mt-16 border-t border-divider pt-10">
-            <h2 className="font-display text-xl font-semibold">関連記事</h2>
-            <ul className="mt-6 space-y-4">
-              {related.map((p) => (
-                <li key={p.slug}>
-                  <Link
-                    href={`/blog/${p.slug}/`}
-                    className="group block rounded-lg border border-border bg-surface p-4 transition hover:border-primary hover:shadow-sm"
-                  >
-                    <span className="text-[0.7rem] text-text-faint">
-                      {p.category || 'Blog'}
+          <article className={s.article}>
+            <MDXRenderer source={post.content} />
+          </article>
+
+          {/* Liquid Glass のフローティング目次
+              - 見出し 3 つ以上の記事でのみ表示
+              - クライアントコンポーネント（article の後ろに置いても fixed 配置となる） */}
+          <FloatingToc />
+
+          {related.length > 0 && (
+            <section>
+              <div className={s.secHead}>
+                <span className={s.secNo}>—</span>
+                <span>関連する記事</span>
+              </div>
+              <div className={s.toc}>
+                {related.map((p) => (
+                  <Link key={p.slug} href={`/blog/${p.slug}/`} className={s.tocRow} style={{ gridTemplateColumns: '84px minmax(0, 1fr)' }}>
+                    <span className={s.tocCat}>{p.category || '記事'}</span>
+                    <span className={s.tocMain}>
+                      <span className={s.tocTitle}>{p.title}</span>
+                      {p.description && <span className={s.tocDesc}>{p.description}</span>}
                     </span>
-                    <h3 className="mt-1 font-medium text-text group-hover:text-primary">
-                      {p.title}
-                    </h3>
-                    <p className="mt-1 line-clamp-2 text-sm text-text-muted">
-                      {p.description}
-                    </p>
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+                ))}
+              </div>
+            </section>
+          )}
 
-        <div className="mt-12">
-          <Link
-            href="/blog/"
-            className="text-xs text-text-muted transition hover:text-primary"
-          >
-            ← Blog 一覧に戻る
-          </Link>
-        </div>
-      </Container>
+          <div style={{ marginTop: 48 }}>
+            <Link href="/blog/" className={s.link}>
+              ← 記事の一覧へ
+            </Link>
+          </div>
+        </Container>
+      </div>
     </Section>
   );
 }

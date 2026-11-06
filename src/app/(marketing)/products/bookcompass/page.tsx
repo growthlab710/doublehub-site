@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
+import { ContextBand } from '@/components/marketing/ContextBand';
 
 // タイトルの末尾「— DoubleHub」はルートの metadata.title.template が付ける
 const pageTitle = 'Book Compass — 読みながら一言、あとから読み返せる読書メモ';
@@ -1147,6 +1148,7 @@ export default function BookCompassPage() {
           </div>
         </Container>
       </Section>
+      <ContextBand app="bookcompass" />
     </div>
   );
 }
