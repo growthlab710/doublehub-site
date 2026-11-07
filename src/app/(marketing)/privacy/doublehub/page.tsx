@@ -58,6 +58,7 @@ import { PrivacyLayout } from '../_components/PrivacyLayout';
  * 2026-11-03: Ver.2.20.0 の提出に先立ち、第 3 項のチャットの段落へ、話題に出た週のふり返り・一冊・ショートの内容
  *   （ダブルが日記から作ったもの）も同じ条件（「ダブルに読んでもらう」がオンの場合）で送信することを追記。
  *   送信先・計測・サーバーは変わらないため、ほかの項は改めていない。
+ * 2026-11-07: 問い合わせ先のメールを、これまでの Gmail のアドレスから support@doublehub.jp（独自ドメイン）へ改めた。
  */
 export const metadata: Metadata = {
   title: 'DoubleHub プライバシーポリシー',
@@ -71,7 +72,7 @@ export default function DoubleHubPrivacyPage() {
     <PrivacyLayout
       title="DoubleHub プライバシーポリシー"
       productLabel="DoubleHub"
-      lastUpdated="2026-11-03"
+      lastUpdated="2026-11-07"
     >
       <p>
         GrowthLab（以下「当方」）は、DoubleHub（以下「本アプリ」）で取り扱う情報について、以下のとおり定めます。
@@ -517,7 +518,7 @@ export default function DoubleHubPrivacyPage() {
         <li>事業者名: GrowthLab</li>
         <li>
           連絡先:{' '}
-          <a href="mailto:growthlab116710@gmail.com">growthlab116710@gmail.com</a>
+          <a href="mailto:support@doublehub.jp">support@doublehub.jp</a>
         </li>
       </ul>
     </PrivacyLayout>

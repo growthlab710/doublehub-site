@@ -31,7 +31,7 @@ export default function HubWalletPrivacyPage() {
     <PrivacyLayout
       title="HubWallet プライバシーポリシー"
       productLabel="HubWallet"
-      lastUpdated="2026-11-04"
+      lastUpdated="2026-11-07"
     >
       <p>
         本ポリシーは、iOS アプリ「HubWallet」（以下「本アプリ」）における個人情報および利用者データの取扱いについて定めるものです。本アプリの利用にあたっては本ポリシーをご確認のうえ、内容に同意されるものとします。
@@ -488,7 +488,7 @@ export default function HubWalletPrivacyPage() {
         <li>運営者: GrowthLab</li>
         <li>
           お問い合わせ先メール:{' '}
-          <a href="mailto:growthlab116710@gmail.com">growthlab116710@gmail.com</a>
+          <a href="mailto:support@doublehub.jp">support@doublehub.jp</a>
         </li>
         <li>
           サポートページ:{' '}
@@ -545,6 +545,7 @@ export default function HubWalletPrivacyPage() {
           2026-11-04
           「買ったものを探す」・買い物アルバム・価格メモの使われ方の記録に、図鑑を品の種類で絞ったこと、品の詳細を開いたこと、図鑑に新しく入った品のお知らせを表示したこと・押したこと、種類の棚を開いたこと、棚から品の種類を開いたこと、棚の段がそろったこと、品の種類を直したことを加えました。あわせて、クラウド同期で保存されないデータに、直した品の種類を加えました（第2.3項・第4.2項・第7項）
         </li>
+        <li>2026-11-07 お問い合わせ先メールを support@doublehub.jp に変更しました</li>
       </ul>
     </PrivacyLayout>
   );

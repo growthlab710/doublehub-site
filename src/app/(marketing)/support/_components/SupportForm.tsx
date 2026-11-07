@@ -59,7 +59,7 @@ export function SupportForm() {
     }
 
     // ボットによる収集を避けるためメールアドレスを実行時に組み立てる
-    const mailAddress = 'growthlab116710' + '@' + 'gmail.com';
+    const mailAddress = 'support' + '@' + 'doublehub.jp';
 
     const subject = `[${service}] ${category}`;
     const body = [

@@ -135,10 +135,10 @@ export default function PrivacyHubPage() {
             <li>
               お問い合わせ:{' '}
               <a
-                href="mailto:growthlab116710@gmail.com"
+                href="mailto:support@doublehub.jp"
                 className="text-primary hover:underline"
               >
-                growthlab116710@gmail.com
+                support@doublehub.jp
               </a>
               （
               <Link href="/support/" className="text-primary hover:underline">
