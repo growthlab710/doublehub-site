@@ -5666,3 +5666,27 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ユーザー承認（2026-11-06「足して公開」）のうえ、ブランチ `feature/update-bc-privacy-2-11-1` を `main` に `--no-ff` でマージして `git push`（`7ed8a6b`）。本番の反映は 2026-11-06 23:58 ごろ（Vercel・開いた経路の文と最終更新日 2026-11-07 を本番のページで確認。日付の境目の直前に出たが、最終更新日は 11/7 のままとした）。共有の作業フォルダは触らず、worktree `doublehub-site-bc-privacy-2111` で作業した。
+
+## 2026-11-07 (JST) — 問い合わせ先のメールを support@doublehub.jp に切り替え
+
+### 背景
+
+- Gmail の認証の確認が続き、Gmail が使えなくなる危険に備えて、独自ドメインのメール（iCloud+ のカスタムメールドメイン）を 2026-11-07 に開通した。公開している問い合わせ先を、これまでの Gmail から `support@doublehub.jp` に移す。旧 Gmail は切り替えの期間中も受信を確認する。
+
+### 変更
+
+- `src/app/(marketing)/privacy/page.tsx`（共通の事項のお問い合わせ）・`doublehub`・`hubwallet`・`trainnote`・`bookcompass` の各ポリシーの連絡先
+- `src/app/(marketing)/support/_components/SupportForm.tsx`: フォームが組み立てる mailto の宛先（HubWallet・BookCompass・TrainNote のアプリ内「サポート」はこのページを開く）
+- 最終更新日を 2026-11-07 に（BookCompass は同日の改定で既に 11-07）。HubWallet・TrainNote は見える改定履歴に 1 行、DoubleHub・BookCompass はファイル冒頭のコメントに 1 行
+- `legacy/privacy.html`・`legacy/support.html`（配信していない控え）も同じアドレスに揃えた
+- この DAILY_LOG の過去の行（2026-04 ごろの「問合せ先メールを … に修正」）は記録なので変えていない
+
+### 検証
+
+- `pnpm build` 成功（枝とマージのあとの両方）
+- 本番で 5 つのポリシーのページに新しいアドレスが出て旧アドレスが無いこと、サポートページの JS の宛先が `mailto:support@doublehub.jp` になっていることを確認
+
+### 公開
+
+- ユーザー承認（2026-11-07「今日公開」）のうえ、ブランチ `feature/update-contact-email` を `main` に `--no-ff` でマージして `git push`（`710e8f9`）。本番の反映は 2026-11-07 17:45 ごろ。共有の作業フォルダは触らず、worktree で作業した。
+- アプリ側（DoubleHub の設定のメール・TrainNote のアプリ内ポリシー）は各アプリの次の版に乗る。App Store Connect のサポート URL・連絡先メールの確認はユーザーの手作業。
