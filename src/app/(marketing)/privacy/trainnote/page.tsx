@@ -50,7 +50,7 @@ export default function TrainNotePrivacyPage() {
     <PrivacyLayout
       title="TrainNote プライバシーポリシー"
       productLabel="TrainNote"
-      lastUpdated="2026-11-03"
+      lastUpdated="2026-11-07"
     >
       <p>
         GrowthLab（以下「当方」）は、TrainNote（以下「本アプリ」）で取り扱う情報について、以下のとおり定めます。
@@ -294,6 +294,9 @@ export default function TrainNotePrivacyPage() {
         <li>
           2026-11-03: バージョン4.7.0（食事のまとめて推定の追加）に伴い、写真の送信の記述に、まとめて推定で送る写真を追記しました。
         </li>
+        <li>
+          2026-11-07: お問い合わせ先のメールを support@doublehub.jp に変更しました。
+        </li>
       </ul>
 
       <h2>10. お問い合わせ先</h2>
@@ -301,7 +304,7 @@ export default function TrainNotePrivacyPage() {
         <li>事業者名: GrowthLab</li>
         <li>
           連絡先:{' '}
-          <a href="mailto:growthlab116710@gmail.com">growthlab116710@gmail.com</a>
+          <a href="mailto:support@doublehub.jp">support@doublehub.jp</a>
         </li>
         <li>
           当方が確認する情報は、お問い合わせメールでユーザーが任意に送信した情報と、本ポリシーに記載した当方のサーバーに保存される記録に限られます。端末内のトレーニング記録・写真・食事の記録を当方が閲覧することはありません。

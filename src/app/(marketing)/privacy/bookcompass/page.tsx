@@ -36,6 +36,7 @@ import { PrivacyLayout } from '../_components/PrivacyLayout';
  * 2026-11-07: Ver.2.11.1 の提出に先立ち、利用状況の記録の一覧の「アプリを開いたこと」に、その日に初めて開いたときの
  *   開いた経路（通常の起動・バックグラウンドからの復帰・知らせ・ウィジェット）を足した（正本は BookCompass リポジトリ
  *   APPSTORE_SUBMISSION.md §25・CLIENT_EVENTS_TRACKING.md）。
+ * 2026-11-07: 問い合わせ先のメールを、これまでの Gmail のアドレスから support@doublehub.jp（独自ドメイン）へ改めた。
  */
 export const metadata: Metadata = {
   title: 'BookCompass プライバシーポリシー',
@@ -311,7 +312,7 @@ export default function BookCompassPrivacyPage() {
         <li>事業者名: GrowthLab</li>
         <li>
           連絡先:{' '}
-          <a href="mailto:growthlab116710@gmail.com">growthlab116710@gmail.com</a>
+          <a href="mailto:support@doublehub.jp">support@doublehub.jp</a>
         </li>
         <li>
           当方が閲覧し得る情報は、クラウドデータベースに保存されたアプリデータ、およびお問い合わせメールでユーザーが任意に送信した情報に限られます。
