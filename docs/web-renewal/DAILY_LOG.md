@@ -5808,3 +5808,27 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ブランチ `feature/update-bookcompass-privacy-custom-cover` を `main` に `--no-ff` でマージして `git push`（`3602548`）。本番の反映は Vercel の自動デプロイ（1〜2 分）
+
+## 2026-11-16 (JST) — DoubleHub ポリシーに 2.22.0 の体験ずかん
+
+### 背景
+
+- DoubleHub 2.22.0（体験ずかん）の提出に先立つ追記。文は CMO の文言表 Z10（2026-11-16 版・`CMO回答_体験ずかん_提出前_2026-11-16.md`）。公開は利用者の承認（2026-11-16「公開してよい」）
+
+### 変更
+
+- `src/app/(marketing)/privacy/doublehub/page.tsx`:
+  - 第 1 項に体験ずかんの内容（端末内・送らない）
+  - 第 2 項に体験に名前を付けてまとめて表示する目的
+  - 第 3 項の AI 機能の段に体験ずかんの名前付け（Claude API・答えられなくても Gemini へは送らない）・体験ずかんの段（送る条件と送るもの）・記憶情報の送り先・iCloud 自動バックアップと完全バックアップファイルに含めるもの
+  - 第 4 項に計測 13 種と区分・送らないもの
+  - 第 6 項に外す・消す・名前を直す・送るのをやめる方法
+  - 最終更新日を 2026-11-16 に。ファイル冒頭のコメントに改定の記録
+
+### 検証
+
+- `pnpm build` 成功（枝と合流後）。出力の `privacy/doublehub.html` に新しい文があることを確かめた。計測の 13 種と区分は、アプリの送る値（`ExperienceZukanAnalytics`）と migration と 1 つずつ突き合わせた
+
+### 公開
+
+- ブランチ `feature/update-doublehub-privacy-experience-zukan` を `main` に `--no-ff` でマージして `git push`（`65d18e9`）。公開ページで最終更新日 2026-11-16 と新しい文を確かめた
