@@ -126,5 +126,6 @@ export const footerNav = {
     { label: 'Support', href: '/support/' },
     { label: 'App Linking', href: '/app-linking/' },
     { label: 'Privacy', href: '/privacy/' },
+    { label: '特定商取引法に基づく表記', href: '/tokushoho/' },
   ],
 } as const;

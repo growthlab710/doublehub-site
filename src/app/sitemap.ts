@@ -33,6 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/privacy/trainnote/',
     '/privacy/bookcompass/',
     '/privacy/hubwallet/',
+    '/tokushoho/',
   ];
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((p) => ({
     // trailingSlash: true と揃えるため、ホームも `/` 末尾を維持。

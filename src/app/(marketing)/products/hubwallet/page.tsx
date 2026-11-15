@@ -703,7 +703,7 @@ export default function HubWalletPage() {
               記録と整理、サブスク・固定費の管理は Free プランから使えます。AI をたくさん使いたい方や、家計パートナー（これから 12 ヶ月の見通し・月に一度の面談）を使いたい方は、月額 ¥480 の Plus プランへ。
             </p>
             <p className="mt-3 text-xs text-text-faint">
-              ※ 価格は 2026 年 10 月時点のものです。最新の料金は App Store 上の表示をご確認ください。
+              ※ 価格は 2026 年 10 月時点のものです。最新の料金は App Store 上の表示をご確認ください。{' '}回数の上限・支払いの時期・解約と返金は{' '}<Link href="/tokushoho/#hubwallet" className="underline underline-offset-2">特定商取引法に基づく表記</Link>をご覧ください。
             </p>
           </div>
           <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-2">

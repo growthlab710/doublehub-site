@@ -290,8 +290,8 @@ const comparisonRows = [
   { feature: 'ナレッジ・コンパス（レーダーチャート）', free: '無制限', pro: '無制限' },
   { feature: '知的ポジション（特性分析）', free: '10 冊まで', pro: '無制限' },
   { feature: '読みの現在地', free: '10 冊まで', pro: '無制限' },
-  { feature: 'バディの返事', free: 'じっくり月 20 回＋相槌は無制限', pro: 'じっくり無制限' },
-  { feature: '思考コーチの問い', free: '月 10 回', pro: '無制限' },
+  { feature: 'バディの返事', free: 'じっくり月 20 回＋相槌', pro: 'じっくりも月の上限なし（返事は 1 日 35 回まで）' },
+  { feature: '思考コーチの問い', free: '月 10 回', pro: '月の上限なし（1 日 30 回まで）' },
   { feature: '内省ノート・ウィジェット', free: '利用可', pro: '利用可' },
   { feature: '探すの棚（毎週）', free: '利用可', pro: '利用可' },
   { feature: '読書特集号（複数の本の横断編集）', free: '半年に 1 号', pro: '90 日ごと' },
@@ -985,7 +985,7 @@ export default function BookCompassPage() {
                   <Check /> 知的ポジション・読みの現在地は 10 冊まで
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> バディの返事 じっくり月 20 回（相槌は無制限）
+                  <Check /> バディの返事 じっくり月 20 回（ほかは短い相槌）
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 思考コーチの問い 月 10 回
@@ -1032,7 +1032,7 @@ export default function BookCompassPage() {
                   <Check /> 知的ポジションと読みの現在地を全冊で
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> じっくりした返事と思考コーチの問いが無制限
+                  <Check /> じっくりした返事と思考コーチの問いに月の上限なし（1 日 35 回・30 回まで）
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 読書ドキュメンタリー 月 15 回・読書特集号 90 日ごと
@@ -1096,11 +1096,11 @@ export default function BookCompassPage() {
               </div>
               <div>
                 <dt className="font-semibold text-text">期間</dt>
-                <dd className="mt-1">1 ヶ月（自動更新）</dd>
+                <dd className="mt-1">月額は 1 ヶ月・年額は 1 年（どちらも自動更新）</dd>
               </div>
               <div>
                 <dt className="font-semibold text-text">価格</dt>
-                <dd className="mt-1">¥880 / 月（税込）・初回登録は最初の 3 ヶ月 ¥480 / 月</dd>
+                <dd className="mt-1">月額 ¥880（税込）・初回登録は最初の 3 ヶ月 ¥480 / 月。年額 ¥5,800（税込）</dd>
               </div>
               <div>
                 <dt className="font-semibold text-text">自動更新・解約</dt>
@@ -1110,7 +1110,7 @@ export default function BookCompassPage() {
               </div>
             </dl>
             <p className="mt-4 text-xs text-text-faint">
-              年額プランと無料トライアルはありません。価格は執筆時点のもので、最新の料金は App Store 上の表示をご確認ください。
+              無料トライアルはありません。価格は執筆時点のもので、最新の料金は App Store 上の表示をご確認ください。{' '}回数の上限・支払いの時期・解約と返金は{' '}<Link href="/tokushoho/#bookcompass" className="underline underline-offset-2">特定商取引法に基づく表記</Link>をご覧ください。
             </p>
           </div>
         </Container>

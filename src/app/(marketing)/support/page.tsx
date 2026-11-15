@@ -136,6 +136,12 @@ export default function SupportPage() {
             >
               プライバシーポリシー
             </Link>
+            <Link
+              href="/tokushoho/"
+              className="text-primary underline-offset-4 hover:underline"
+            >
+              特定商取引法に基づく表記
+            </Link>
             <a
               href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
               target="_blank"
