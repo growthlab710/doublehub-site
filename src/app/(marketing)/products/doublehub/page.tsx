@@ -1072,7 +1072,7 @@ export default function DoubleHubPage() {
                 <li className="flex items-start gap-2">
                   <Check />
                   <span>
-                    ダブルとの AI チャット（過去の日記のことも聞ける）・AI 自動仕分け <strong className="whitespace-nowrap font-semibold text-text">無制限</strong>
+                    ダブルとの AI チャット（過去の日記のことも聞ける・1 日 80 回まで）・AI 自動仕分け <strong className="whitespace-nowrap font-semibold text-text">無制限</strong>
                   </span>
                 </li>
               </ul>
@@ -1122,6 +1122,13 @@ export default function DoubleHubPage() {
             </p>
             <p>
               価格は日本の App Store での税込価格です。最新の価格は App Store の表示をご確認ください。
+            </p>
+            <p>
+              回数の上限・支払いの時期・解約と返金は{' '}
+              <Link href="/tokushoho/#doublehub" className="underline underline-offset-2">
+                特定商取引法に基づく表記
+              </Link>
+              をご覧ください。
             </p>
           </div>
         </Container>

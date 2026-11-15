@@ -147,6 +147,12 @@ export default function PrivacyHubPage() {
               からも受け付けています）
             </li>
             <li>
+              価格・支払い・解約と返金・回数の上限:{' '}
+              <Link href="/tokushoho/" className="text-primary hover:underline">
+                特定商取引法に基づく表記
+              </Link>
+            </li>
+            <li>
               いずれのプロダクトでも、法令に基づく場合を除きユーザー情報を第三者へ販売することはなく、広告目的で個人情報を提供することもありません。
             </li>
             <li>

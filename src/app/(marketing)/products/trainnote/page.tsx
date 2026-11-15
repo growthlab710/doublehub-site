@@ -599,7 +599,7 @@ export default function TrainNotePage() {
           </div>
 
           <p className="mx-auto mt-8 max-w-3xl text-center text-xs leading-relaxed text-text-faint">
-            ※ 月額プラン（AI Coach Plus・栄養・Plus＋栄養 セット）は自動更新のサブスクリプションです。期間終了の 24 時間以上前に解約しない限り、自動で更新されます。解約は App Store のサブスクリプション設定からいつでも行えます。上限: 食事の AI 推定は 1 日 15 回、ビジュアルスコアは月 30 枚。価格は 2026 年 10 月時点の日本の App Store の価格です。最新の料金は App Store の表示をご確認ください。
+            ※ 月額プラン（AI Coach Plus・栄養・Plus＋栄養 セット）は自動更新のサブスクリプションです。期間終了の 24 時間以上前に解約しない限り、自動で更新されます。解約は App Store のサブスクリプション設定からいつでも行えます。上限: 食事の AI 推定は 1 日 15 回、ビジュアルスコアは 1 日 9 枚・月 30 枚（基準の写真の設定は 3 枚と数えます）。価格は 2026 年 10 月時点の日本の App Store の価格です。最新の料金は App Store の表示をご確認ください。{' '}回数の上限・支払いの時期・解約と返金は{' '}<Link href="/tokushoho/#trainnote" className="underline underline-offset-2">特定商取引法に基づく表記</Link>をご覧ください。
           </p>
         </Container>
       </Section>
