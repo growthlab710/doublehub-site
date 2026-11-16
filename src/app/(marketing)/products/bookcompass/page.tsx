@@ -286,7 +286,7 @@ const flows = [
 
 const comparisonRows = [
   { feature: '本の登録', free: '無制限', pro: '無制限' },
-  { feature: '呟き（読書メモ）', free: '10 件 / 日', pro: '30 件 / 日' },
+  { feature: '呟き（読書メモ）', free: '10 件 / 日', pro: '100 件 / 日' },
   { feature: 'ナレッジ・コンパス（レーダーチャート）', free: '無制限', pro: '無制限' },
   { feature: '知的ポジション（特性分析）', free: '10 冊まで', pro: '無制限' },
   { feature: '読みの現在地', free: '10 冊まで', pro: '無制限' },
@@ -1026,7 +1026,7 @@ export default function BookCompassPage() {
                   <Check /> <strong className="font-semibold text-text">本の深掘りチャット 30 件 / 日</strong>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check /> 呟きの日次上限を 30 件 / 日に拡張
+                  <Check /> 呟きの日次上限を 100 件 / 日に拡張
                 </li>
                 <li className="flex items-start gap-2">
                   <Check /> 知的ポジションと読みの現在地を全冊で
