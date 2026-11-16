@@ -5878,3 +5878,23 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ブランチ `feature/update-doublehub-privacy-zukan-name-ordinal` を `main` に `--no-ff` でマージして `git push`（`d526663`）。本番の反映は Vercel の自動デプロイ（1〜2 分）
+
+## 2026-11-16 BookCompass の Compass Pro の呟きの上限を 1 日 100 件に直した（2.13.0 の公開のあと）
+
+### 背景
+
+- BookCompass 2.13.0（2026-11-16 公開）で、Compass Pro の呟きの上限を 1 日 30 件から 100 件に上げた（利用者の問い合わせから）。公開のあとに直すことは、提出の記録（BookCompass の `APPSTORE_SUBMISSION.md` §28）で決めてあった。利用者の承認（2026-11-16「両方進めて」）。
+
+### 変更
+
+- `src/app/(marketing)/products/bookcompass/page.tsx`: 料金の比較表の「呟き（読書メモ）」の Pro を「100 件 / 日」に、Compass Pro の特典の「呟きの日次上限を 100 件 / 日に拡張」に直した。
+- `src/app/(marketing)/tokushoho/page.tsx`: BookCompass の「提供の条件（回数の上限）」の呟きを「Compass Pro は 1 日 100 件まで（無料プランは 1 日 10 件）」に直した。
+- 変えなかったもの: 本の深掘りチャットの「1 日 30 件」（2.13.0 では変えていない）。無料プランの呟きの 10 件。
+
+### 検証
+
+- `pnpm build` 成功。
+
+### 公開
+
+- ブランチ `feature/update-bookcompass-mutter-limit-100` を `main` に `--no-ff` でマージして `git push`（`cbb5ecf`）。本番の反映は Vercel の自動デプロイ（1〜2 分）
