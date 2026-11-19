@@ -9,7 +9,9 @@ import { smartAppBannerContent } from '@/lib/site/appStoreLink';
 import { buildProductJsonLd } from '@/lib/site/productJsonLd';
 
 // タイトルの末尾「— DoubleHub」はルートの metadata.title.template が付ける
-const pageTitle = 'Book Compass — 読みながら一言、あとから読み返せる読書メモ';
+// 題に「読書記録」を入れている（2026-11-19）。Search Console で、探す人の語は「読書メモ」より
+// 「読書記録」「読書ノート」のほうが多かったため。
+const pageTitle = 'Book Compass — 読みながら一言の読書メモ・読書記録アプリ';
 const pageDescription =
   '読んだのに、頭に残らない——その手前で、読みながら一言だけ呟く読書メモアプリ。呟きは本ごとの「読みの現在地」や読書特集号として、あとから読み返せる形で返ってきます。呟きは他のユーザーに公開されず、広告も表示しません。';
 
