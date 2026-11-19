@@ -5938,3 +5938,26 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 
 - ブランチ `feature/update-doublehub-privacy-first-photo-2-24-0` を `main` に `--no-ff` でマージして `git push`（`6dfef60`）。本番の反映は Vercel の自動デプロイ（1〜2 分）
 - このセッションはローカルの clone（`DoubleHub/site/doublehub-site`）の main を使わず、`origin/main` から切った別の作業場所で作業した。ローカルの clone の main には 2026-06-19 の未 push のコミット `4ae2870`（HubWallet 連携のポリシー）が残っていて `origin/main` と分かれているため（触っていない）。
+
+## 2026-11-19 製品ページに構造化データと Safari のアプリの帯を足し、BookCompass の題に「読書記録」を入れた
+
+### 背景
+
+- 利用者の相談「アプリの流入を増やすのに、サイトの SEO は有効か」を調べた結果、記事を増やす形の SEO は見送り、製品ページの小さな仕上げだけを行うことにした（調査と Search Console の実測は `マーケティング/10.情報/20261119_サイトSEOの調査/`）。利用者の承認（2026-11-19「両方 OK です」）で公開した。
+
+### 変更
+
+- `src/lib/site/productJsonLd.ts`（新規）: 製品ページの JSON-LD（SoftwareApplication・BreadcrumbList・あれば FAQPage）を作る関数。特徴の一覧とアイコンは `config.ts` の `products` から取る。評価の星など、ページに無いものは入れない。
+- `products/hubwallet`・`products/bookcompass`・`products/trainnote`: 上の関数で JSON-LD を足した。価格は各ページの料金の節と同じ（HubWallet は Free・Plus 月額 ¥480／BookCompass は Free・Compass Pro 月額 ¥880・年額 ¥5,800／TrainNote は `plans` からそのまま）。FAQPage は「よくある質問」の節がある HubWallet だけ。
+- 4 つの製品ページ: Smart App Banner（`<meta name="apple-itunes-app">`）を足した。iPhone・iPad の Safari で、ページの上に App Store への帯が出る。計測は `pt=128581523` と `ct=<アプリ>_site_banner`（`dh`・`hw`・`bc`・`tn`）。値は `src/lib/site/appStoreLink.ts` の `smartAppBannerContent` で作る。
+- `products/doublehub`: JSON-LD に古いまま残っていた `softwareVersion: '2.13.0'` を外した。
+- `products/bookcompass`: 題を「Book Compass — 読みながら一言の読書メモ・読書記録アプリ」にした（前は「…あとから読み返せる読書メモ」）。Search Console で、探す人の語は「読書メモ」より「読書記録」「読書ノート」のほうが多かったため。
+
+### 検証
+
+- `pnpm typecheck`・`pnpm build` 成功。ビルドした HTML から、4 ページの帯の meta と JSON-LD の中身（価格・特徴・パンくず・HubWallet の質問 7 件）を読み取って確かめた。
+
+### 公開
+
+- ブランチ `feature/add-product-jsonld-app-banner` を `origin/main` に `--no-ff` でマージして `git push`（`5ec5777`）。本番の反映は Vercel の自動デプロイ（1〜2 分）
+- ローカルの clone（`iOS-Apps/doublehub-site`）の main は使わず、`origin/main` から切った別の作業場所（`iOS-Apps/doublehub-site-seo-finish`）で作業した。
