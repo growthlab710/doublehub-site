@@ -6,6 +6,7 @@ import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { siteConfig } from '@/lib/site/config';
 import { ContextBand } from '@/components/marketing/ContextBand';
+import { smartAppBannerContent } from '@/lib/site/appStoreLink';
 
 export const metadata: Metadata = {
   title: 'DoubleHub — 日記は、写真1枚でいい。広告なしの写真日記と、AIの相棒',
@@ -31,6 +32,8 @@ export const metadata: Metadata = {
     'GrowthLab',
   ],
   alternates: { canonical: '/products/doublehub/' },
+  // iPhone・iPad の Safari で、ページの上に App Store への帯を出す
+  other: { 'apple-itunes-app': smartAppBannerContent('6761981050', 'dh_site_banner') },
   openGraph: {
     title: 'DoubleHub — 日記は、写真1枚でいい。',
     description:
@@ -271,7 +274,6 @@ const jsonLd = {
         '写真1枚と気分スタンプの1日1枚日記に、ダブル（もう一人の自分）がひと言返す、広告なしの iOS 日記アプリ。写真は DoubleHub のサーバーに残らず、日記から見つけた幸せの種は月ごとのアルバムに。ToDo・メモ・予定、ヘルスケア、iOS カレンダー、読書記録（BookCompass）とも連携。',
       url: 'https://www.doublehub.jp/products/doublehub/',
       image: 'https://www.doublehub.jp/images/doublehub-icon-rich.png',
-      softwareVersion: '2.13.0',
       author: {
         '@type': 'Organization',
         name: 'GrowthLab',

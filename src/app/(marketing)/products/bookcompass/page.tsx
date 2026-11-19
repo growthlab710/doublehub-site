@@ -5,9 +5,13 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { ContextBand } from '@/components/marketing/ContextBand';
+import { smartAppBannerContent } from '@/lib/site/appStoreLink';
+import { buildProductJsonLd } from '@/lib/site/productJsonLd';
 
 // タイトルの末尾「— DoubleHub」はルートの metadata.title.template が付ける
-const pageTitle = 'Book Compass — 読みながら一言、あとから読み返せる読書メモ';
+// 題に「読書記録」を入れている（2026-11-19）。Search Console で、探す人の語は「読書メモ」より
+// 「読書記録」「読書ノート」のほうが多かったため。
+const pageTitle = 'Book Compass — 読みながら一言の読書メモ・読書記録アプリ';
 const pageDescription =
   '読んだのに、頭に残らない——その手前で、読みながら一言だけ呟く読書メモアプリ。呟きは本ごとの「読みの現在地」や読書特集号として、あとから読み返せる形で返ってきます。呟きは他のユーザーに公開されず、広告も表示しません。';
 
@@ -15,6 +19,8 @@ export const metadata: Metadata = {
   title: pageTitle,
   description: pageDescription,
   alternates: { canonical: '/products/bookcompass/' },
+  // iPhone・iPad の Safari で、ページの上に App Store への帯を出す
+  other: { 'apple-itunes-app': smartAppBannerContent('6760604663', 'bc_site_banner') },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
@@ -300,9 +306,28 @@ const comparisonRows = [
   { feature: 'これまでの会話の閲覧', free: '可', pro: '可' },
 ];
 
+// 構造化データ（JSON-LD）。価格は料金の節と購入条件の表（Compass Pro 月額 ¥880・年額 ¥5,800）と揃える。
+// このページに「よくある質問」の節は無いので、FAQ は入れない
+const jsonLd = buildProductJsonLd({
+  slug: 'bookcompass',
+  applicationCategory: 'LifestyleApplication',
+  operatingSystem: 'iOS',
+  description: pageDescription,
+  offers: [
+    { name: 'Free', price: '0' },
+    { name: 'Compass Pro (月額)', price: '880' },
+    { name: 'Compass Pro (年額)', price: '5800' },
+  ],
+  downloadUrl: appStoreUrl,
+});
+
 export default function BookCompassPage() {
   return (
     <div className="theme-bookcompass">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ========== 1. Hero ========== */}
       <Container width="wide" className="relative pt-16 pb-14 md:pt-24 md:pb-20">
         <div

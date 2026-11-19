@@ -6,6 +6,8 @@ import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { VideoSlot } from '@/components/marketing/VideoSlot';
 import { ContextBand } from '@/components/marketing/ContextBand';
+import { smartAppBannerContent } from '@/lib/site/appStoreLink';
+import { buildProductJsonLd } from '@/lib/site/productJsonLd';
 
 /**
  * /products/trainnote/
@@ -15,11 +17,15 @@ import { ContextBand } from '@/components/marketing/ContextBand';
  *   入口は伝達ブリーフの確定メッセージ「ジムで、音楽は止まらない。」。料金は 2026 年 10 月時点の日本の App Store の価格。
  *   変更の記録は _site-refresh-20261001/plans/trainnote.md の「変更記録」。
  */
+const pageDescription =
+  '広告を表示しない iOS の筋トレ記録アプリ。前回の重量が同じ画面に出て、ボリュームの伸びと部位ごとの回復がひと目でわかります。食事の写真から kcal・PFC の目安を推定する食事の記録、ボディフォト、トレーニング日誌、AI コーチ（Plus）にも対応。';
+
 export const metadata: Metadata = {
   title: 'TrainNote — 広告なしの筋トレ記録。前回の重量と伸びが見える',
-  description:
-    '広告を表示しない iOS の筋トレ記録アプリ。前回の重量が同じ画面に出て、ボリュームの伸びと部位ごとの回復がひと目でわかります。食事の写真から kcal・PFC の目安を推定する食事の記録、ボディフォト、トレーニング日誌、AI コーチ（Plus）にも対応。',
+  description: pageDescription,
   alternates: { canonical: '/products/trainnote/' },
+  // iPhone・iPad の Safari で、ページの上に App Store への帯を出す
+  other: { 'apple-itunes-app': smartAppBannerContent('6759539755', 'tn_site_banner') },
   openGraph: {
     title: 'TrainNote — 広告なしの筋トレ記録。前回の重量と伸びが見える',
     description:
@@ -199,9 +205,27 @@ const plans = [
   },
 ];
 
+// 構造化データ（JSON-LD）。価格は上の plans（料金の節に出しているもの）からそのまま作る。
+// このページに「よくある質問」の節は無いので、FAQ は入れない
+const jsonLd = buildProductJsonLd({
+  slug: 'trainnote',
+  applicationCategory: 'HealthApplication',
+  operatingSystem: 'iOS',
+  description: pageDescription,
+  offers: plans.map((p) => ({
+    name: `${p.name}（${p.unit.replace('／', '').trim()}）`,
+    price: p.price.replace(/[^0-9]/g, ''),
+  })),
+  downloadUrl: appStoreUrl,
+});
+
 export default function TrainNotePage() {
   return (
     <div className="theme-trainnote">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ========== 1. Hero ========== */}
       <Container width="wide" className="relative pt-16 pb-14 md:pt-24 md:pb-20">
         <div
