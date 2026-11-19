@@ -5,7 +5,8 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { siteConfig } from '@/lib/site/config';
-import { withAppStoreCampaign } from '@/lib/site/appStoreLink';
+import { smartAppBannerContent, withAppStoreCampaign } from '@/lib/site/appStoreLink';
+import { buildProductJsonLd } from '@/lib/site/productJsonLd';
 import { ContextBand } from '@/components/marketing/ContextBand';
 
 const appStoreUrl = siteConfig.social.appStoreHubWallet;
@@ -38,11 +39,15 @@ const itemSearchFreeUntil = '2026年11月30日';
 // TODO(2026-12-01 以降): 料金カード・比較表・脚注から「特別に月 10 回」を外し、月 5 回だけにする（この定数の参照箇所）
 const aiFreeSpecialUntil = '2026年11月30日';
 
+const pageDescription =
+  '広告が、ひとつも出ない iPhone の家計簿アプリ HubWallet。レシートは撮るだけで、仕分けは隙間時間にまとめて。サブスク・固定費の管理と、無料お試しの終了前・年額の更新前のお知らせにも対応しています。';
+
 export const metadata: Metadata = {
   title: 'HubWallet — 広告なしの家計簿。レシートは撮るだけ',
-  description:
-    '広告が、ひとつも出ない iPhone の家計簿アプリ HubWallet。レシートは撮るだけで、仕分けは隙間時間にまとめて。サブスク・固定費の管理と、無料お試しの終了前・年額の更新前のお知らせにも対応しています。',
+  description: pageDescription,
   alternates: { canonical: '/products/hubwallet/' },
+  // iPhone・iPad の Safari で、ページの上に App Store への帯を出す
+  other: { 'apple-itunes-app': smartAppBannerContent('6766543029', 'hw_site_banner') },
   openGraph: {
     title: 'HubWallet — 広告なしの家計簿。レシートは撮るだけ',
     description:
@@ -229,9 +234,27 @@ const faqs = [
   },
 ];
 
+// 構造化データ（JSON-LD）。価格は料金の節（Free ¥0・Plus 月額 ¥480）と揃える
+const jsonLd = buildProductJsonLd({
+  slug: 'hubwallet',
+  applicationCategory: 'FinanceApplication',
+  operatingSystem: 'iOS 17.0 以上',
+  description: pageDescription,
+  offers: [
+    { name: 'Free', price: '0' },
+    { name: 'Plus (月額)', price: '480' },
+  ],
+  downloadUrl: appStoreUrl,
+  faqs,
+});
+
 export default function HubWalletPage() {
   return (
     <div className="theme-hubwallet">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ========== 1. Hero ========== */}
       <Container width="wide" className="relative pt-16 pb-14 md:pt-24 md:pb-20">
         <div
