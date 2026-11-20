@@ -5979,3 +5979,21 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ブランチ `feature/update-bookcompass-privacy-2-14-0` を `main` に `--no-ff` でマージした。`git push` で公開（Vercel の自動デプロイ・1〜2 分）。
+
+## 2026-11-21 (JST) — HubWallet ポリシーに 2.12.3 の追記
+
+### 背景
+
+- HubWallet 2.12.3（撮った直後の発見と ♡）を 2026-11-21 07:27 JST に App Store で公開した（公開 API の `currentVersionReleaseDate` = 2026-11-20T22:27:47Z・手動でリリース）。ポリシーの追記（枝 `feature/update-hubwallet-privacy-2-12-3`・`1a0e4bc`・CMO 確定文 2026-11-20）を、公開と同じ日に出す
+
+### 変更
+
+- `src/app/(marketing)/privacy/hubwallet/page.tsx`: 最終更新日と改定履歴の最後の行の「（公開日）」を 2026-11-21 に。ファイル冒頭のコメントに公開日を書き足した（中身の文は `1a0e4bc` のまま。第 2.3 項・第 7 項に、保存した直後のお知らせの前の記録とつながる 1 行・「また買いたい」の印を付けられる品・印を付けた品の種類の内訳の記録）
+
+### 検証
+
+- `pnpm build` 成功（枝）。出力の `privacy/hubwallet.html` に最終更新日 2026-11-21 と新しい文があり、「（公開日）」が残っていないことを確かめた
+
+### 公開
+
+- ブランチ `feature/update-hubwallet-privacy-2-12-3` を `main` に `--no-ff` でマージして `git push`。本番の反映は Vercel の自動デプロイ（1〜2 分）
