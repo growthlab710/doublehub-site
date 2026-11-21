@@ -5997,3 +5997,21 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ブランチ `feature/update-hubwallet-privacy-2-12-3` を `main` に `--no-ff` でマージして `git push`。本番の反映は Vercel の自動デプロイ（1〜2 分）
+
+## 2026-11-21 (JST) — 特定商取引法に基づく表記の HubWallet に年額プラン
+
+### 背景
+
+- HubWallet の節の「販売価格」が月額プランだけで、8 月から売っている年額プランの行が無かった。HubWallet 2.13.0（2026-11-30 までに審査へ・12/1 以降に公開）から購入画面がこのページへリンクするので、その前に足す（CMO の指摘・利用者の承認 2026-11-21）
+
+### 変更
+
+- `src/app/(marketing)/tokushoho/page.tsx`: HubWallet の「販売価格」に「Plus 年額プラン　年 3,800 円（1 年ごとに自動更新）」を月額の行の下に足した（DoubleHub の節の書き方にそろえた）。価格は ASC の `hubwallet_plus_annual`（日本 ¥3,800・今後の変更なし）で確かめた。最終更新日を 2026-11-21 に
+
+### 検証
+
+- `pnpm build` 成功（枝）
+
+### 公開
+
+- ブランチ `feature/update-hubwallet-tokushoho-annual` を `main` に `--no-ff` でマージして `git push`。本番の反映は Vercel の自動デプロイ（1〜2 分）
