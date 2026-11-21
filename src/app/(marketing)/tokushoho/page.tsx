@@ -18,7 +18,7 @@ import { Section } from '@/components/ui/Section';
  * - 価格は税込。実際の価格は App Store の表示に従う。
  */
 
-const LAST_UPDATED = '2026-11-16';
+const LAST_UPDATED = '2026-11-21';
 
 export const metadata: Metadata = {
   title: '特定商取引法に基づく表記',
@@ -192,7 +192,14 @@ const apps: AppSection[] = [
     rows: [
       {
         label: '販売価格',
-        value: <Lines items={['Plus 月額プラン　月 480 円（1 か月ごとに自動更新）']} />,
+        value: (
+          <Lines
+            items={[
+              'Plus 月額プラン　月 480 円（1 か月ごとに自動更新）',
+              'Plus 年額プラン　年 3,800 円（1 年ごとに自動更新）',
+            ]}
+          />
+        ),
       },
       {
         label: '無料期間',
