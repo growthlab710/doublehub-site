@@ -7,6 +7,7 @@ doublehub.jp/
 ├── /                          ← ハブトップ（Hero + Ecosystem + 遷移カード）
 ├── /products/
 │   ├── /bookcompass/          ← BookCompass LP（旧 /bookcompass.html を移行）
+│   │   └── /hoshizora/        ← 読書の星空の広告（Meta）の着地（2026-11-22〜・noindex・サイトマップに入れない）
 │   ├── /trainnote/            ← TrainNote LP（旧 /trainnote.html を移行）
 │   └── /doublehub/            ← DoubleHub 本体 LP（新規）
 ├── /blog/                     ← ブログ一覧
