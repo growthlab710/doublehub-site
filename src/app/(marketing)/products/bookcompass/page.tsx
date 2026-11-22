@@ -5,6 +5,11 @@ import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
 import { ContextBand } from '@/components/marketing/ContextBand';
+import {
+  HoshizoraHero,
+  HoshizoraPlates,
+  bookCompassStoreUrl,
+} from '@/components/marketing/bookcompass/Hoshizora';
 import { smartAppBannerContent } from '@/lib/site/appStoreLink';
 import { buildProductJsonLd } from '@/lib/site/productJsonLd';
 
@@ -28,26 +33,42 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'DoubleHub',
     locale: 'ja_JP',
-    images: [{ url: '/images/og-default.jpg', width: 1200, height: 630 }],
+    // 共有したときの画像は、読書の星空の実画面（2026-11-22〜。広告の着地ページと同じ）
+    images: [{ url: '/images/og-bookcompass-hoshizora.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: pageTitle,
+    description: pageDescription,
+    images: ['/images/og-bookcompass-hoshizora.jpg'],
   },
 };
 
-const appStoreUrl =
-  'https://apps.apple.com/us/app/bookcompass-%E8%AA%AD%E6%9B%B8%E7%9F%A5%E8%AD%98%E3%83%9E%E3%83%83%E3%83%97/id6760604663?itscg=30200&itsct=apps_box_badge&mttnsubad=6760604663';
+// ストアのボタンは日本のストアへ。ct（来た道の印）は、帯の `bc_site_banner` と分けてこのページのボタンで 1 つ
+// （置き場所ごとに分けると件数が少なく、Apple の閾値で行ごと出なくなるため）。2026-11-22 に米国のストアのリンクから替えた
+const appStoreCampaignToken = 'bc_site_product';
+const appStoreUrl = bookCompassStoreUrl(appStoreCampaignToken);
 const appStoreBadge =
   'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
 
-// 画面はすべて 2.6.0。先頭の 3 枚は AI が主役でない画面にしている（入口で AI を主語にしない）
+// 先頭の 3 枚（ホーム・読書の星空・星座）は 2.14.0、ほかは 2.6.0（2026-11-22 にユーザーの依頼で
+// 「はじめての一冊」と「本からの問いかけ」を外し、星空の 2 枚に替えた）。
+// 先頭の 3 枚は AI が主役でない画面にしている（入口で AI を主語にしない）
 const screenshots = [
   {
-    src: '/images/bookcompass-home-202610.jpg',
-    alt: 'ホーム画面。今週の棚、今月と今週の記録、ナレッジ・コンパス',
-    caption: 'ホーム — 今週の棚と、読書の広がり',
+    src: '/images/bookcompass-home-202611.jpg',
+    alt: 'ホーム画面。今月の登録と今週の呟き、灯った星の数が出る読書の星空の窓、最近読んだ本',
+    caption: 'ホーム — 読書の星空と、最近読んだ本',
   },
   {
-    src: '/images/bookcompass-first-book-202610.jpg',
-    alt: 'はじめて起動したときの「最近、なに読んでる？」の画面',
-    caption: 'はじめての一冊 — 「最近、なに読んでる？」',
+    src: '/images/bookcompass-allsky-202611.jpg',
+    alt: '読書の星空の「ぜんぶ」。14 の分野の空に灯った星と、線でつないだ 2 つの星座（見本）',
+    caption: '読書の星空 — 一言のテーマに、星が灯る',
+  },
+  {
+    src: '/images/bookcompass-constellation-202611.jpg',
+    alt: '星座の画面。「習慣と決断の星座」の形と育ちの記録、別々の本に書いた言葉の道すじ（見本）',
+    caption: '星座 — 本をまたいだ言葉が、ひとつに',
   },
   {
     src: '/images/bookcompass-library-202610.jpg',
@@ -58,11 +79,6 @@ const screenshots = [
     src: '/images/bookcompass-reply-202610.jpg',
     alt: '呟きを送った直後に、ブックバディの返事が入力欄の上に届いた画面',
     caption: '返事 — 呟くと、その場でひと言（AI が生成）',
-  },
-  {
-    src: '/images/bookcompass-question-202610.jpg',
-    alt: '本の詳細の上部。タグ、この本への問い、この本からの問いかけ',
-    caption: '本からの問いかけ — タップで答えられる（AI が生成）',
   },
   {
     src: '/images/bookcompass-trait-202610.jpg',
@@ -318,7 +334,7 @@ const jsonLd = buildProductJsonLd({
     { name: 'Compass Pro (月額)', price: '880' },
     { name: 'Compass Pro (年額)', price: '5800' },
   ],
-  downloadUrl: appStoreUrl,
+  downloadUrl: 'https://apps.apple.com/jp/app/id6760604663',
 });
 
 export default function BookCompassPage() {
@@ -328,78 +344,17 @@ export default function BookCompassPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* ========== 1. Hero ========== */}
-      <Container width="wide" className="relative pt-16 pb-14 md:pt-24 md:pb-20">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-        >
-          <div className="absolute left-[-5%] top-[-10%] h-[480px] w-[480px] rounded-full bg-accent-product/15 blur-[120px]" />
-        </div>
-        <div className="mx-auto grid max-w-content-wide items-center gap-12 md:grid-cols-[1fr_0.9fr]">
-          <div>
-            <div className="inline-flex items-center gap-2">
-              <Image
-                src="/images/bookcompass-app-icon.jpg"
-                alt="Book Compass アプリアイコン"
-                width={44}
-                height={44}
-                className="h-10 w-10 rounded-lg border border-border object-cover shadow-sm"
-              />
-              <span className="inline-flex items-center rounded-full border border-accent-product/30 bg-accent-product/10 px-3 py-1 text-xs font-semibold text-accent-product">
-                Book Compass
-              </span>
-            </div>
-            <h1 className="mt-5 font-display text-[clamp(1.75rem,1rem+2.8vw,3rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
-              読んだのに、
-              <br />
-              頭に残らない。
-            </h1>
-            <p className="mt-5 max-w-lg text-text-muted">
-              読みながら一言だけ。呟きは、あとから読み返せる誌面になって返ってきます。
-            </p>
-            <p className="mt-3 max-w-lg text-sm leading-relaxed text-text-muted">
-              きれいな感想文は要りません。呟きは他のユーザーに公開されず、広告も表示しません。
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href={appStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex transition-transform hover:scale-[1.02]"
-                aria-label="App Store で Book Compass をダウンロード"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={appStoreBadge}
-                  alt="App Storeでダウンロード"
-                  style={{ height: 44, objectFit: 'contain' }}
-                />
-              </a>
-              <Button asChild size="lg" variant="secondary">
-                <Link href="/#ecosystem">全体構想に戻る</Link>
-              </Button>
-            </div>
-          </div>
-
-          <div className="relative mx-auto w-full max-w-[300px] md:max-w-[320px]">
-            <div className="overflow-hidden rounded-[2rem] border border-border bg-surface p-2.5 shadow-xl">
-              <Image
-                src="/images/bookcompass-hero-202610.jpg"
-                alt="Book Compass の本の画面。読みながら残した呟きの一覧と、280字までの入力欄"
-                width={1080}
-                height={2206}
-                className="h-auto w-full rounded-[1.5rem]"
-                sizes="(min-width: 768px) 320px, 300px"
-                priority
-              />
-            </div>
-          </div>
-        </div>
-      </Container>
+      {/* ========== 1. ファーストビュー: 読書の星空（2.14.0〜） ========== */}
+      {/* 2026-11-22: 主役を「読書の星空」に替えた（ストアの 1〜3 枚目・プレビュー動画・広告とそろえる）。
+          部品は Meta 広告の着地（/products/bookcompass/hoshizora/）と共通 */}
+      <HoshizoraHero
+        ct={appStoreCampaignToken}
+        secondaryLink={{ href: '#how-it-works', label: '読書メモとしての使い方 ↓' }}
+      />
+      <HoshizoraPlates />
 
       {/* ========== 2. Concept (入口 / 中段 / 出口) ========== */}
-      <Section spacing="md">
+      <Section spacing="md" id="how-it-works" className="scroll-mt-20">
         <Container width="wide">
           <div className="mx-auto max-w-2xl text-center">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent-product">
@@ -510,7 +465,7 @@ export default function BookCompassPage() {
             </svg>
           </div>
           <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-text-faint">
-            ※ 画面はバージョン 2.6.0 のものです。表示している本や呟きはテスト用の記録です。
+            ※ ホームと読書の星空・星座の画面はバージョン 2.14.0、ほかは 2.6.0 のものです。表示している本や呟きはテスト用の記録で、星空と星座は見本です。星座は、2冊以上に書いて線をつなぐとできます。
           </p>
         </Container>
       </Section>

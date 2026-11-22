@@ -1,0 +1,442 @@
+/*
+ * BookCompass「読書の星空」（2.14.0〜）の部品。製品ページのファーストビューと、
+ * Meta 広告の着地ページ（/products/bookcompass/hoshizora/）で使い回す。
+ *
+ * 方向はトップと同じ「誌面」: 角を丸めない・影なし・区切りは罫線・見出しは明朝。
+ * 地だけはアプリの夜空の紺（#0D132C＝実画面と X・Meta の広告の静止画と同じ）にして、
+ * 実画面が地に溶けるようにしている（広告で見た絵と、着いた先の絵をそろえる）。
+ * サイトの明るい表示・暗い表示のどちらでも、この帯は同じ色。
+ */
+
+.root {
+  --night: #0d132c;
+  --night-2: #141b3a;
+  --star: #f3eadb;
+  --star-2: #b9b3a6;
+  --faint: #8d8c9c;
+  --gold: #e7c987;
+  --gold-2: #cfb274;
+  --hair: rgba(243, 234, 219, 0.18);
+  --mincho: 'Hiragino Mincho ProN', 'Hiragino Mincho Pro', 'Yu Mincho', 'YuMincho',
+    'Noto Serif JP', 'Noto Serif CJK JP', serif;
+
+  background: var(--night);
+  color: var(--star);
+  line-break: strict;
+  letter-spacing: 0.03em;
+}
+
+.root * {
+  border-radius: 0;
+}
+
+.root img {
+  display: block;
+  max-width: 100%;
+}
+
+.jp {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: strict;
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ===== ファーストビュー ===== */
+.hero {
+  border-bottom: 1px solid var(--hair);
+}
+
+.heroGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  grid-template-areas:
+    'head fig'
+    'body fig'
+    'rest fig';
+  grid-template-rows: auto auto 1fr;
+  column-gap: 56px;
+  padding: 28px 0 56px;
+}
+
+.heroHead {
+  grid-area: head;
+}
+
+.heroBody {
+  grid-area: body;
+}
+
+.heroRest {
+  grid-area: rest;
+}
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 40px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hair);
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  color: var(--star-2);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* アプリアイコンだけは iOS の形のまま（角丸）にする */
+.root .brand img {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.brandName {
+  font-weight: 600;
+  color: var(--star);
+  letter-spacing: 0.04em;
+}
+
+.brandSub {
+  color: var(--star-2);
+}
+
+.mastheadRight {
+  color: var(--gold-2);
+  white-space: nowrap;
+  font-family: var(--mincho);
+  letter-spacing: 0.16em;
+}
+
+.title {
+  font-family: var(--mincho);
+  font-weight: 600;
+  font-size: clamp(2rem, 1.1rem + 3vw, 3.3rem);
+  line-height: 1.42;
+  letter-spacing: 0.05em;
+  margin: 0;
+  color: var(--star);
+}
+
+.gold {
+  color: var(--gold);
+}
+
+.lead {
+  margin: 32px 0 0;
+  max-width: 30em;
+  font-size: 1.02rem;
+  line-height: 2;
+  color: var(--star);
+}
+
+.sub {
+  margin: 12px 0 0;
+  max-width: 32em;
+  font-size: 0.86rem;
+  line-height: 1.95;
+  color: var(--star-2);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  margin-top: 32px;
+}
+
+.badge {
+  display: inline-flex;
+  transition: opacity 0.2s;
+}
+
+.badge:hover {
+  opacity: 0.85;
+}
+
+.badge img {
+  height: 48px;
+  width: auto;
+}
+
+.link {
+  color: var(--star);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1px;
+}
+
+.link:hover {
+  color: var(--gold);
+}
+
+.free {
+  margin: 20px 0 0;
+  font-size: 0.82rem;
+  color: var(--star-2);
+}
+
+/* 実画面（「ぜんぶ」の空）。端を地の色に溶かし、描き足しはしない */
+.heroFig {
+  grid-area: fig;
+  position: relative;
+  margin: 0;
+  align-self: center;
+}
+
+.sky {
+  position: relative;
+  aspect-ratio: 1204 / 1180;
+}
+
+.sky::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 36px 28px var(--night);
+}
+
+.sky img {
+  object-fit: cover;
+}
+
+.figNote {
+  position: absolute;
+  right: 4px;
+  bottom: 2px;
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--faint);
+  letter-spacing: 0.04em;
+}
+
+/* ===== 2 枚の実画面（灯る・星座） ===== */
+.plates {
+  padding: 64px 0 72px;
+}
+
+.platesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--hair);
+}
+
+.plate {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  padding: 28px 32px 0 0;
+}
+
+.plate + .plate {
+  border-left: 1px solid var(--hair);
+  padding-left: 32px;
+  padding-right: 0;
+}
+
+.plateImg {
+  position: relative;
+  border: 1px solid var(--hair);
+}
+
+.plateImg img {
+  width: 100%;
+  height: auto;
+}
+
+.plateH {
+  font-family: var(--mincho);
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  margin: 0;
+  color: var(--star);
+}
+
+.plateBody {
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+  line-height: 2;
+  color: var(--star-2);
+}
+
+.plateNote {
+  margin: 12px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.8;
+  color: var(--gold-2);
+}
+
+.platesFoot {
+  margin: 28px 0 0;
+  font-size: 0.74rem;
+  color: var(--faint);
+}
+
+/* ===== スマホ ===== */
+@media (max-width: 860px) {
+  .wrap {
+    padding: 0 20px;
+  }
+
+  .heroGrid {
+    grid-template-columns: minmax(0, 1fr);
+    /* スマホ: 見出し → 本文とボタン → 空 → 補足。ボタンを最初の画面に入れ、空の上の方も見えるようにする */
+    grid-template-areas:
+      'head'
+      'body'
+      'fig'
+      'rest';
+    grid-template-rows: auto;
+    padding: 16px 0 36px;
+  }
+
+  .sub {
+    margin-top: 16px;
+  }
+
+  .masthead {
+    margin-bottom: 22px;
+    font-size: 0.7rem;
+  }
+
+  .brandSub {
+    display: none;
+  }
+
+  .title {
+    font-size: clamp(1.9rem, 1rem + 4.6vw, 2.6rem);
+    line-height: 1.45;
+  }
+
+  /* 空は画面の端まで広げる */
+  .heroFig {
+    margin: 14px -20px 0;
+  }
+
+  .sky::after {
+    box-shadow: inset 0 0 24px 18px var(--night);
+  }
+
+  .figNote {
+    right: 20px;
+  }
+
+  .lead {
+    margin-top: 18px;
+    font-size: 0.98rem;
+    line-height: 1.95;
+  }
+
+  .actions {
+    margin-top: 22px;
+  }
+
+  .plates {
+    padding: 8px 0 48px;
+  }
+
+  .platesGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .plate,
+  .plate + .plate {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: 18px;
+    padding: 24px 0;
+    border-left: 0;
+  }
+
+  .plate + .plate {
+    border-top: 1px solid var(--hair);
+  }
+
+  .plateH {
+    font-size: 1.08rem;
+  }
+
+  .plateBody {
+    font-size: 0.84rem;
+    line-height: 1.9;
+  }
+}
+
+/* ===== 着地ページの締め ===== */
+.closing {
+  padding: 0 0 88px;
+}
+
+.closingInner {
+  border-top: 1px solid var(--hair);
+  padding-top: 48px;
+  max-width: 720px;
+}
+
+.closingH {
+  font-family: var(--mincho);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 1rem + 2vw, 2.1rem);
+  line-height: 1.55;
+  letter-spacing: 0.05em;
+  margin: 0;
+  color: var(--star);
+}
+
+.closingBody {
+  margin: 18px 0 0;
+  font-size: 0.96rem;
+  line-height: 2;
+  color: var(--star);
+}
+
+.notes {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  font-size: 0.78rem;
+  line-height: 1.9;
+  color: var(--star-2);
+}
+
+.closingLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin-top: 36px;
+}
+
+.closingLinks .link {
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--star-2);
+}
+
+@media (max-width: 860px) {
+  .closing {
+    padding-bottom: 64px;
+  }
+
+  .closingInner {
+    padding-top: 36px;
+  }
+}
