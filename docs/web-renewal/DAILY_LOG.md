@@ -6070,3 +6070,32 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ブランチ `feature/update-privacy-dh-2-26-0` を `main` に `--no-ff` でマージして `git push`。本番の反映は Vercel の自動デプロイ（1〜2 分）
+
+## 2026-11-22 (JST) — BookCompass の製品ページの最初の画面を読書の星空に・広告（Meta）の着地ページを新設
+
+### 背景
+
+- BookCompass 2.14.0（2026-11-20 公開）から主役は「読書の星空」（一言を書くとテーマに星が灯り、本をまたいで星座ができる）。ストアの 1〜3 枚目とプレビュー動画も星空になったが、製品ページの最初の画面は「読んだのに、頭に残らない。」と 2.6.0 の画面のままで、良さが伝わっていなかった（利用者の判断）
+- Meta（Instagram のフィード・Threads）の広告は、SDK を入れていないアプリでは App Store の URL を直接入れられない（トラフィック目的のエラー #1487810）。そこで星空の専用ページを 1 枚挟んでストアへ送る（利用者の決定）。広告の計画は `マーケティング/10.情報/20261120_BC_読書の星空の広告/01_広告計画.md`
+
+### 変更
+
+- 新規 `src/components/marketing/bookcompass/Hoshizora.tsx`・`hoshizora.module.css`: 読書の星空のファーストビュー（見出し「読んだ本の一言が、星になる。」・本文・ストアのボタン・「ぜんぶ」の空の実画面）と、実画面 2 枚（全体・星座）の段、着地ページの締め。誌面の作り（角なし・影なし・罫線・明朝）で、地はアプリの夜空の紺 `#0D132C`（広告の静止画と同じ）。スマホでは「見出し → 本文とボタン → 空」の順にして、最初の画面にボタンと空の上の方が入るようにした
+- `src/app/(marketing)/products/bookcompass/page.tsx`: 1 節のヒーローを上の部品に替えた。ストアのボタン 2 か所を米国のストアのリンクから `https://apps.apple.com/jp/app/id6760604663?pt=128581523&ct=bc_site_product&mt=8` に（ct は置き場所で分けず 1 つ。件数が少ないと Apple の閾値で行ごと出なくなるため）。構造化データの downloadUrl は ct なしの日本のストア。OG と X のカードの画像を星空（`og-bookcompass-hoshizora.jpg`）に。「主な画面」は利用者の依頼で、1 枚目のホームを 2.14.0（ナレッジ・コンパスの代わりに読書の星空の窓）に替え、「はじめての一冊」と「本からの問いかけ」を外して読書の星空（ぜんぶ）と星座の画面に替えた。注記を版の混在・見本・星座のでき方に合わせた
+- 新規 `src/app/(marketing)/products/bookcompass/hoshizora/page.tsx`: Meta 広告の着地。ストアのボタンと Smart App Banner の ct は `bc_meta_hoshi_img_1122`（Meta の下書きの広告と同じ）。`noindex, follow`・サイトマップに入れない・計測のタグやピクセルは足さない（サイト共通の GA4 と Vercel Analytics だけ）
+- 画像（`public/images/`）: `bookcompass-hoshizora-sky/overview/constellation-202611.jpg`・`bookcompass-allsky/constellation-202611.jpg`・`og-bookcompass-hoshizora.jpg` は 2.14.0 の実画面（見本データ `-ZukanOverviewFixture`）の切り出しと縮小だけで、生成画像は使っていない。作り方は `マーケティング/10.情報/20261120_BC_読書の星空の広告/build_site_images.py`。`bookcompass-home-202611.jpg` は公開版のコミット `1c4618f` の Debug ビルドを iPhone 16e（開発用アカウント 636ff4c3・集計から除外）で撮った。星空の窓だけ見本（`-ZukanSkyFixture`）。元は `マーケティング/30.画面素材/BookCompass/2.14.0/home_sky_window.png`
+- `docs/web-renewal/02-architecture.md`: URL の一覧に `/products/bookcompass/hoshizora/` を足した
+- 言い方の線（`BC_PMF検証計画_2026-11.md` §2-6）: 約束は最初の日に届くこと（星が灯る・前の言葉に戻れる）まで。星座には「※星座は、2冊以上に書いて線をつなぐとできます」を添える。「孤独」なし・AI を主語にしない・深掘りを「何冊でも」と読める言い方をしない
+
+### 検証
+
+- `pnpm typecheck`・`pnpm build` 成功（枝と main）。`next start` で 390〜393px と 1280px の見た目を確かめた（ページ全体のスクショは利用者に見せて承認を得た）。HTML でストアのリンク・noindex・canonical・OG の画像・Smart App Banner の ct を確かめた。日本のストアのリンクが BookCompass のページに着くことを確かめた
+
+### 公開
+
+- ブランチ `feature/update-bookcompass-hoshizora` を `main` に `--no-ff` でマージして `git push`（利用者の承認 2026-11-22「公開して」）。本番の反映は Vercel の自動デプロイ（1〜2 分）
+
+### 残り
+
+- 製品ページの 2 節より下は、角丸のカードと「01/02/03」の札の作りと 2.6.0 の画面のまま（今回の範囲は最初の画面と主な画面だけ）。機能の節と料金の比べに読書の星空が無い
+- Meta で動画の広告もこのページに送るときは、ボタンの ct が静止画のものに固定なので、ページを分けるか ct を替える
