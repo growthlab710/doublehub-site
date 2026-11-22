@@ -51,17 +51,24 @@ const appStoreUrl = bookCompassStoreUrl(appStoreCampaignToken);
 const appStoreBadge =
   'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/ja-jp?releaseDate=1774224000';
 
-// 画面はすべて 2.6.0。先頭の 3 枚は AI が主役でない画面にしている（入口で AI を主語にしない）
+// 先頭の 3 枚（ホーム・読書の星空・星座）は 2.14.0、ほかは 2.6.0（2026-11-22 にユーザーの依頼で
+// 「はじめての一冊」と「本からの問いかけ」を外し、星空の 2 枚に替えた）。
+// 先頭の 3 枚は AI が主役でない画面にしている（入口で AI を主語にしない）
 const screenshots = [
   {
-    src: '/images/bookcompass-home-202610.jpg',
-    alt: 'ホーム画面。今週の棚、今月と今週の記録、ナレッジ・コンパス',
-    caption: 'ホーム — 今週の棚と、読書の広がり',
+    src: '/images/bookcompass-home-202611.jpg',
+    alt: 'ホーム画面。今月の登録と今週の呟き、灯った星の数が出る読書の星空の窓、最近読んだ本',
+    caption: 'ホーム — 読書の星空と、最近読んだ本',
   },
   {
-    src: '/images/bookcompass-first-book-202610.jpg',
-    alt: 'はじめて起動したときの「最近、なに読んでる？」の画面',
-    caption: 'はじめての一冊 — 「最近、なに読んでる？」',
+    src: '/images/bookcompass-allsky-202611.jpg',
+    alt: '読書の星空の「ぜんぶ」。14 の分野の空に灯った星と、線でつないだ 2 つの星座（見本）',
+    caption: '読書の星空 — 一言のテーマに、星が灯る',
+  },
+  {
+    src: '/images/bookcompass-constellation-202611.jpg',
+    alt: '星座の画面。「習慣と決断の星座」の形と育ちの記録、別々の本に書いた言葉の道すじ（見本）',
+    caption: '星座 — 本をまたいだ言葉が、ひとつに',
   },
   {
     src: '/images/bookcompass-library-202610.jpg',
@@ -72,11 +79,6 @@ const screenshots = [
     src: '/images/bookcompass-reply-202610.jpg',
     alt: '呟きを送った直後に、ブックバディの返事が入力欄の上に届いた画面',
     caption: '返事 — 呟くと、その場でひと言（AI が生成）',
-  },
-  {
-    src: '/images/bookcompass-question-202610.jpg',
-    alt: '本の詳細の上部。タグ、この本への問い、この本からの問いかけ',
-    caption: '本からの問いかけ — タップで答えられる（AI が生成）',
   },
   {
     src: '/images/bookcompass-trait-202610.jpg',
@@ -463,7 +465,7 @@ export default function BookCompassPage() {
             </svg>
           </div>
           <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-text-faint">
-            ※ 画面はバージョン 2.6.0 のものです。表示している本や呟きはテスト用の記録です。
+            ※ ホームと読書の星空・星座の画面はバージョン 2.14.0、ほかは 2.6.0 のものです。表示している本や呟きはテスト用の記録で、星空と星座は見本です。星座は、2冊以上に書いて線をつなぐとできます。
           </p>
         </Container>
       </Section>
