@@ -53,9 +53,10 @@ const appStoreBadge =
 const appStoreBadgeWhite =
   'https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/white/ja-jp?releaseDate=1774224000';
 
-// 先頭の 3 枚（ホーム・読書の星空・星座）は 2.14.0、ほかは 2.6.0（2026-11-22 にユーザーの依頼で
-// 「はじめての一冊」と「本からの問いかけ」を外し、星空の 2 枚に替えた）。
-// 先頭の 3 枚は AI が主役でない画面にしている（入口で AI を主語にしない）
+// 画面はすべて 2.14.0（2026-11-22）。先頭の 3 枚（ホーム・読書の星空・星座）は AI が主役でない画面にしている
+// （入口で AI を主語にしない）。4 枚目からは同じ日に、公開版のコミットの Debug ビルドを計測から除外している
+// 開発用アカウントで撮り直した。2.14.0 の本のページから外れた「知的ポジション」と、AI が問いを出す
+// 「内省ノート（思考コーチ）」の画面は外した（思考コーチは「できること」の一覧で書いている）
 const screenshots = [
   {
     src: '/images/bookcompass-home-202611.jpg',
@@ -73,38 +74,28 @@ const screenshots = [
     caption: '星座 — 本をまたいだ言葉が、ひとつに',
   },
   {
-    src: '/images/bookcompass-library-202610.jpg',
-    alt: 'ライブラリ。本ごとにジャンルと「読みたい」「読書中」などの状態が並ぶ',
+    src: '/images/bookcompass-library-202611.jpg',
+    alt: 'ライブラリ。本ごとにジャンルと「読みたい」「読書中」などの状態が並び、上に「2026 年の本棚をふり返る」',
     caption: 'ライブラリ — 読みたい・読書中・読了',
   },
   {
-    src: '/images/bookcompass-reply-202610.jpg',
-    alt: '呟きを送った直後に、ブックバディの返事が入力欄の上に届いた画面',
-    caption: '返事 — 呟くと、その場でひと言（AI が生成）',
+    src: '/images/bookcompass-reply-202611.jpg',
+    alt: '本のページの呟きの一覧。いちばん新しい呟きの下に、ブックバディの返事が並ぶ',
+    caption: '返事 — 呟きに、ブックバディのひと言（AI が生成）',
   },
   {
-    src: '/images/bookcompass-trait-202610.jpg',
-    alt: '本ごとの知的ポジション。個人努力と環境設計、理論と実践の軸',
-    caption: '知的ポジション — この本での読み方の傾き（AI が分析）',
-  },
-  {
-    src: '/images/bookcompass-explore-202610.jpg',
-    alt: '探すタブ。あなたの本棚に近い新刊などの棚が並ぶ',
+    src: '/images/bookcompass-explore-202611.jpg',
+    alt: '探すタブ。あなたの本棚に近い新刊、いちばん読んでいる分野の新刊などの棚が並ぶ',
     caption: '探す — あなたの本棚から、毎週の棚',
   },
   {
-    src: '/images/bookcompass-shelf-sheet-202610.jpg',
+    src: '/images/bookcompass-shelf-sheet-202611.jpg',
     alt: '棚の本の詳細。この本について、なぜこの棚に、読みたいに追加',
     caption: 'なぜこの棚に — 選ばれた理由が読める',
   },
   {
-    src: '/images/bookcompass-coach-202610.jpg',
-    alt: '内省ノートで思考コーチから書き出しの問いを受け取った画面',
-    caption: '内省ノート — 書けない日は、問いから（AI が生成）',
-  },
-  {
-    src: '/images/bookcompass-widget-202610.jpg',
-    alt: 'ホーム画面ウィジェット「いま読んでいる本」の中サイズ',
+    src: '/images/bookcompass-widget-202611.jpg',
+    alt: 'ウィジェットの一覧の「いま読んでいる本」（中サイズ・3 冊）',
     caption: 'ウィジェット — いま読んでいる本をホーム画面に',
   },
 ];
@@ -310,7 +301,7 @@ export default function BookCompassPage() {
           </section>
 
           {/* ========== 3. 主な画面 ========== */}
-          {/* 画像と説明文は 2026-11-22 の版のまま。枠だけ誌面に合わせた（角なし・影なし・左寄せの見出し） */}
+          {/* 枠は誌面（角なし・影なし・左寄せの見出し）。画面は 2026-11-22 に全部 2.14.0 にした */}
           <section aria-labelledby="bc-screens">
             <div className={e.secHead}>
               <span>主な画面</span>
@@ -338,7 +329,7 @@ export default function BookCompassPage() {
               ← 横にスワイプして {screenshots.length} 枚の画面を見る →
             </p>
             <p className={p.foot}>
-              ※ ホームと読書の星空・星座の画面はバージョン 2.14.0、ほかは 2.6.0 のものです。表示している本や呟きはテスト用の記録で、星空と星座は見本です。星座は、2冊以上に書いて線をつなぐとできます。
+              ※ 画面はバージョン 2.14.0 のものです。表示している本や呟きはテスト用の記録で、星空と星座は見本です。星座は、2冊以上に書いて線をつなぐとできます。
             </p>
           </section>
 
