@@ -1,0 +1,518 @@
+/*
+ * BookCompass の製品ページの、星空の帯より下（2026-11-22〜）。
+ * 共通の誌面の部品（editorial.module.css: 地と墨の色・節の頭・見出し・罫線の段）に、
+ * このページだけの部品（できることの一覧・図版の段・料金の 2 段と表）を足す。
+ * 角を丸めない・影なし・区切りは罫線・見出しは明朝。番号の札は付けない。
+ */
+
+/* ===== 節のあいだ ===== */
+.lead {
+  margin: -8px 0 0;
+  max-width: 38em;
+  font-size: 0.98rem;
+  line-height: 2;
+  color: var(--ink-2);
+}
+
+.foot {
+  margin: 20px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.9;
+  color: var(--faint);
+}
+
+/* ===== 罫線で区切った 3 段（使い方・あとから読み返す） ===== */
+.cols3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.cols3 > * {
+  padding: 26px 24px 28px;
+  border-left: 1px solid var(--hair);
+}
+
+.cols3 > :first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.cols3 > :last-child {
+  padding-right: 0;
+}
+
+.colTitle {
+  font-family: var(--mincho);
+  font-weight: 600;
+  font-size: 1.12rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  margin: 0 0 10px;
+}
+
+.colText {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 2;
+  color: var(--ink-2);
+}
+
+.colNote {
+  margin: 10px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.8;
+  color: var(--faint);
+}
+
+/* ===== 主な画面 ===== */
+.gallery {
+  display: flex;
+  gap: 20px;
+  margin: 40px -16px 0;
+  padding: 0 16px 8px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.shot {
+  flex: 0 0 72%;
+  margin: 0;
+  scroll-snap-align: center;
+}
+
+.shotImg {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border: 1px solid var(--hair);
+  background: var(--paper-2);
+}
+
+.shotImg img {
+  object-fit: contain;
+}
+
+.shotCap {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: var(--ink-2);
+}
+
+.swipeHint {
+  margin: 14px 0 0;
+  font-size: 0.76rem;
+  color: var(--faint);
+}
+
+@media (min-width: 640px) {
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 28px;
+    margin: 40px 0 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .shot {
+    flex: none;
+  }
+
+  .swipeHint {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .gallery {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* ===== できること（罫線の一覧） ===== */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 15em) minmax(0, 1fr);
+  gap: 8px 40px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.rowName {
+  font-family: var(--mincho);
+  font-weight: 600;
+  font-size: 1.06rem;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.rowText {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 2;
+  color: var(--ink-2);
+}
+
+.rowNote {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--faint);
+}
+
+/* ===== あとから読み返す（図版の段） ===== */
+
+.plateImg {
+  border: 1px solid var(--hair);
+  margin-bottom: 18px;
+  max-width: 260px;
+}
+
+.plateImg img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ===== AI の使い方（罫線の箇条） ===== */
+.points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 40px;
+}
+
+.points li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 0.9rem;
+  line-height: 1.95;
+}
+
+/* ===== 料金 ===== */
+.plans {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.plan {
+  padding: 28px 32px 28px 0;
+}
+
+.plan + .plan {
+  border-left: 1px solid var(--hair);
+  padding: 28px 0 28px 32px;
+}
+
+.planName {
+  font-family: var(--mincho);
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.price {
+  margin: 14px 0 0;
+  font-family: var(--latin);
+  font-size: 2.2rem;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.priceUnit {
+  margin-left: 6px;
+  font-family: inherit;
+  font-size: 0.86rem;
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+}
+
+.priceNote {
+  margin: 8px 0 0;
+  font-size: 0.84rem;
+  line-height: 1.8;
+  color: var(--ink-2);
+}
+
+.planList {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--hair);
+}
+
+.planList li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 0.88rem;
+  line-height: 1.85;
+}
+
+.planList b {
+  font-weight: 600;
+}
+
+.tableTitle {
+  font-family: var(--mincho);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  margin: 56px 0 16px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.table th,
+.table td {
+  padding: 12px 12px 12px 0;
+  border-bottom: 1px solid var(--hair);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table thead th {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+}
+
+.table th:first-child {
+  width: 40%;
+}
+
+.table tbody th {
+  font-weight: 500;
+}
+
+@media (max-width: 600px) {
+  .table {
+    font-size: 0.8rem;
+  }
+
+  .table th,
+  .table td {
+    padding-right: 8px;
+  }
+}
+
+.table td {
+  color: var(--ink-2);
+}
+
+.table td:last-child {
+  color: var(--ink);
+}
+
+.subs {
+  margin: 48px 0 0;
+  border-top: 1px solid var(--rule);
+  padding-top: 16px;
+}
+
+.subsLabel {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-2);
+}
+
+.subsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
+  margin: 0;
+}
+
+.subsGrid div {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--hair);
+}
+
+.subsGrid dt {
+  font-weight: 600;
+  font-size: 0.84rem;
+}
+
+.subsGrid dd {
+  margin: 4px 0 0;
+  font-size: 0.86rem;
+  line-height: 1.85;
+  color: var(--ink-2);
+}
+
+.inlineLink {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ===== 締め ===== */
+.closing {
+  border-top: 1px solid var(--rule);
+  margin: 96px 0 0;
+  padding: 48px 0 24px;
+  max-width: 760px;
+}
+
+.closingH {
+  font-family: var(--mincho);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.55;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.closingBody {
+  margin: 18px 0 0;
+  font-size: 0.98rem;
+  line-height: 2;
+  color: var(--ink-2);
+}
+
+.badge {
+  display: inline-flex;
+  margin-top: 28px;
+  transition: opacity 0.2s;
+}
+
+.badge:hover {
+  opacity: 0.8;
+}
+
+.badge img {
+  height: 48px;
+  width: auto;
+}
+
+/* 暗い表示では、黒いバッジの代わりに白いバッジを出す */
+.badgeDark {
+  display: none;
+}
+
+:global([data-theme='dark']) .badgeLight {
+  display: none;
+}
+
+:global([data-theme='dark']) .badgeDark {
+  display: block;
+}
+
+/* ===== スマホ ===== */
+@media (max-width: 960px) {
+  .cols3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cols3 > * {
+    border-left: 0;
+    padding: 22px 0 24px;
+  }
+
+  .cols3 > * + * {
+    border-top: 1px solid var(--hair);
+  }
+
+  .points {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    padding: 18px 0;
+  }
+
+  .plans {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .plan,
+  .plan + .plan {
+    padding: 24px 0;
+    border-left: 0;
+  }
+
+  .plan + .plan {
+    border-top: 1px solid var(--hair);
+  }
+
+  .subsGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 960px) and (min-width: 600px) {
+  /* 図版の段は、タブレットの幅では画像を小さくして横に置く */
+  .plate {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+    gap: 24px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .plate .plateImg {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 599px) {
+  .plate {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    gap: 16px;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+
+  .plate .plateImg {
+    margin-bottom: 0;
+  }
+
+  .closing {
+    margin-top: 72px;
+    padding-top: 36px;
+  }
+}
