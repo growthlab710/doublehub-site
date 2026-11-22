@@ -6152,3 +6152,25 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 
 - ブログの記事 3 本（`content/blog/bookcompass-reading-memo.mdx`・`reading-habit-log-review.mdx`・`reading-log-what-to-record.mdx`）に「280字」が残っている
 - 製品ページの説明文（meta description）は読みの現在地と特集号の話のままで、読書の星空に触れていない
+
+## 2026-11-22 (JST) — BookCompass のブログ 3 本から呟きの字数（280字）を外す
+
+### 背景
+
+- BookCompass 2.14.0 では呟きは 1,000 字まで。ブログの記事 3 本に「280字（まで）のつぶやき型メモ」が残っていた（上の節の「残り」）。利用者の依頼（「ここで直す」）
+
+### 変更
+
+- `content/blog/bookcompass-reading-memo.mdx`・`reading-habit-log-review.mdx`・`reading-log-what-to-record.mdx`: 13 か所の「280字」を外し、「一言のつぶやき型メモ」「短い一言を前提にしたつぶやき型メモ」などに言い直した。見出し「280字のつぶやき型メモ」は「一言のつぶやき型メモ」に。「書く前のハードルを物理的に下げています」は、字数の上限を根拠にしていたので「入力欄は感想文ではなく一言を前提にしています」「ハードルを下げています」に。記事の主張（短く残せることが続けるレバー）は変えていない。3 本の updatedAt を 2026-11-22 に
+
+### 検証
+
+- `pnpm build` 成功（枝）。直した文を利用者に見せて承認を得た（2026-11-22「このまま公開する」）。公開後、本番の 3 本に「280字」が無いことを curl で確かめた
+
+### 公開
+
+- ブランチ `feature/update-bookcompass-lower` を `main` に `--no-ff` でマージして `git push`
+
+### 残り
+
+- BC 製品ページの説明文（meta description）は読書の星空に触れていない
