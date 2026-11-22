@@ -6188,3 +6188,17 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ブランチ `feature/update-bookcompass-lower` を `main` に `--no-ff` でマージして `git push`。作業用コピー `doublehub-site-bc-lower` は利用者の了承のうえ片付けた（ブランチは GitHub に残っている）
+
+## 2026-11-23 (JST) — BookCompass のポリシー: AIチャットで送るものと送り先（Claude・応答できないときは Gemini）
+
+### 変更
+
+- `src/app/(marketing)/privacy/bookcompass/page.tsx`: 第 3 項の AI処理サービスの行を 2 か所直した。①AIチャットで送るものに「読む前の問い・以前のAIチャットから取り出した気づき（関心や問いなど）」を足し、「AIチャットの応答には主に Anthropic（Claude）を使い、応答できなかったときは同じ内容を Google（Gemini）に送って応答し直します。」を足した ②「このまま話す」の送り先「（現在は Google の Gemini）」を「（上記の Anthropic の Claude。応答できなかったときは Google の Gemini）」に。最終更新日を 2026-11-23 に。BookCompass の会話の AI を Gemini 2.5 Flash から Claude Haiku 5.5 に替える（Gemini 2.5 Flash は 2026-12-01 に別のモデルへ自動で回される）のに先立つ改訂（正本は BookCompass リポジトリ `BookCompass/CHAT_RETHINK.md` §6）
+
+### 検証
+
+- `pnpm build` 成功（枝）。出力の HTML に新しい文が入っていることを確かめた。文は利用者に見せて承認を得た（2026-11-23「この文で公開して」）
+
+### 公開
+
+- ブランチ `feature/update-bookcompass-privacy-chat` を `main` に `--no-ff` でマージして `git push`。本番の反映は Vercel の自動デプロイ（1〜2 分）
