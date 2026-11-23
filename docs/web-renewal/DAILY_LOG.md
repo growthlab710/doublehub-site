@@ -6216,3 +6216,17 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ブランチ `feature/update-bookcompass-privacy-2-14-1` を `main` に `--no-ff` でマージして `git push`。本番の反映は Vercel の自動デプロイ（1〜2 分）
+
+## 2026-11-23 (JST) — BookCompass のポリシー: 本の分類と分析の書誌の送り先（Claude・応答できないときは Gemini）
+
+### 変更
+
+- `src/app/(marketing)/privacy/bookcompass/page.tsx`: 第 3 項の AI処理サービスの行と「AI の使い方の選択について」の 2 か所で、本の分類と分析のために送る書誌情報（AI の使い方の選択にかかわらず送るもの）の送り先を「Google（Gemini）に送信します」から「Anthropic（Claude）に送信します（応答できなかったときは、同じ内容を Google（Gemini）に送信します）」に直した。最終更新日は 2026-11-23 のまま（同じ日の改訂）。BookCompass のサーバーで 2026-11-23 07:49 に本の分類と分析を Claude 先に切り替えたのに合わせた（正本は BookCompass リポジトリ `LLM_SYSTEM_DESIGN_OVERVIEW.md` §0・アプリの同意の表も 2.14.1 で同じく直した）
+
+### 検証
+
+- `pnpm build` 成功（枝）。文は利用者に見せて承認を得た（2026-11-23「公開して」）
+
+### 公開
+
+- ブランチ `feature/update-bookcompass-privacy-book-metadata` を `main` に `--no-ff` でマージして `git push`。本番の反映は Vercel の自動デプロイ（1〜2 分）
