@@ -6202,3 +6202,17 @@ DoubleHub 第 4 項「利用状況データの収集について」は送信す�
 ### 公開
 
 - ブランチ `feature/update-bookcompass-privacy-chat` を `main` に `--no-ff` でマージして `git push`。本番の反映は Vercel の自動デプロイ（1〜2 分）
+
+## 2026-11-23 (JST) — BookCompass のポリシー: 購入画面の操作の記録と RevenueCat からの購入の知らせの記録（Ver.2.14.1）
+
+### 変更
+
+- `src/app/(marketing)/privacy/bookcompass/page.tsx`: 第 3 項を 2 か所足した。①利用状況の記録の一覧に「1 日の呟きの上限のお知らせを表示したことと選んだ操作・上限の数、本の深掘りチャットの Compass Pro の案内を表示したこと（過去のチャットがあるか）、Compass Pro の購入画面での操作（プランの選び直し・登録・購入の復元を押したこと）とその結果（購入できたか・やめたか・失敗したか・試しの購入か）と選んだプラン」②RevenueCat（米国）の行に「購入・更新・解約・払い戻しなどの知らせを RevenueCat から受け取り、当方のサーバーに記録します（商品・期間の種類・金額・通貨・日時・RevenueCat の識別子など）」。最終更新日は 2026-11-23 のまま（同じ日の改訂）。BookCompass 2.14.1（課金への入口の小さい直し）の提出に先立つ改訂で、RevenueCat の知らせはすでに本番で受けている分に合わせた（正本は BookCompass リポジトリ `マーケティング/10.情報/20261122_BC_課金への入口/04_実装担当の計画と見本.md` §6・`REVENUECAT_WEBHOOK.md`）
+
+### 検証
+
+- `pnpm build` 成功（枝・`/privacy/bookcompass` が静的に出力された）。文は計画書 §6 の案のとおりで、利用者の承認を得た（2026-11-23「公開して」）
+
+### 公開
+
+- ブランチ `feature/update-bookcompass-privacy-2-14-1` を `main` に `--no-ff` でマージして `git push`。本番の反映は Vercel の自動デプロイ（1〜2 分）
